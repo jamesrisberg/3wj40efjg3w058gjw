@@ -16,8 +16,6 @@
     CGPoint _positionAtStartOfSingleTouchTimer;
 }
 
-@property (nonatomic) Drawable *selection;
-
 @end
 
 @implementation Canvas
@@ -76,6 +74,7 @@
         self.selection.center = CGPointMake(self.selection.center.x + pos.x - prevPos.x, self.selection.center.y + pos.y - prevPos.y);
     }
     // TODO: three-finger aspect-ratio-insensitive scaling
+    self.selectionRectNeedUpdate();
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -101,6 +100,22 @@
 
 - (void)longPress {
     
+}
+
+#pragma mark Selection
+
+- (void)setSelection:(Drawable *)selection {
+    _selection = selection;
+    self.selectionRectNeedUpdate();
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveEaseInOut animations:^{
+        selection.scale *= 0.9;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            selection.scale /= 0.9;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }];
 }
 
 #pragma mark Geometry

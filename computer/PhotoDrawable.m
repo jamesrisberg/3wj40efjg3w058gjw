@@ -23,10 +23,8 @@
 }
 
 - (void)primaryEditAction {
-    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
-    pickerVC.delegate = (id)self;
-    // pickerVC.allowsEditing = YES;
-    [[self vcForPresentingModals] presentViewController:pickerVC animated:YES completion:nil];
+    // TODO: show an action sheet
+    [self promptToPickPhotoWithSource:UIImagePickerControllerSourceTypePhotoLibrary];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
@@ -59,6 +57,14 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.imageView.frame = self.bounds;
+}
+
+- (void)promptToPickPhotoWithSource:(UIImagePickerControllerSourceType)source {
+    UIImagePickerController *pickerVC = [[UIImagePickerController alloc] init];
+    pickerVC.delegate = (id)self;
+    // pickerVC.allowsEditing = YES;
+    pickerVC.sourceType = source;
+    [[self vcForPresentingModals] presentViewController:pickerVC animated:YES completion:nil];
 }
 
 @end

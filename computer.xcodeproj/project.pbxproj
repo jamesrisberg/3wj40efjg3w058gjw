@@ -22,6 +22,7 @@
 		5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */; };
 		5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */; };
 		5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */; };
+		5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,8 @@
 		5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEditorViewController.h; sourceTree = "<group>"; };
 		5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextEditorViewController.m; sourceTree = "<group>"; };
 		5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
+		5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertItemViewController.h; sourceTree = "<group>"; };
+		5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertItemViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
 				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
 				5FEAF8201B978BF50071BC08 /* IconBar.m */,
+				5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */,
+				5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
@@ -201,6 +206,7 @@
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
+				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,

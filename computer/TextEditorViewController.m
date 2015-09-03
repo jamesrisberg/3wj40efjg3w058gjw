@@ -38,6 +38,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.textView becomeFirstResponder];
+    self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

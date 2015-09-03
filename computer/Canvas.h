@@ -12,5 +12,7 @@
 @interface Canvas : UIView
 
 - (void)insertDrawable:(Drawable *)drawable;
+@property (nonatomic) Drawable *selection;
+@property (nonatomic,copy) void (^selectionRectNeedUpdate)();
 
 @end

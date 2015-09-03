@@ -11,6 +11,7 @@
 #import "PhotoDrawable.h"
 #import "EditorViewController.h"
 #import "TextDrawable.h"
+#import "InsertItemViewController.h"
 
 @interface IconBarModel : NSObject
 
@@ -64,12 +65,23 @@
             d.bounds = CGRectMake(0, 0, 250, 250);
             [weakSelf.editor.canvas insertDrawable:d];
         };
+        IconBarModel *scroll = [IconBarModel new];
+        scroll.image = [UIImage imageNamed:@"Scroll"];
+        IconBarModel *done = [IconBarModel new];
+        done.image = [UIImage imageNamed:@"Grid"];
+        IconBarModel *add = [IconBarModel new];
+        add.image = [UIImage imageNamed:@"Add"];
+        add.action = ^{
+            InsertItemViewController *inserter = [InsertItemViewController new];
+            inserter.editorVC = weakSelf.editor;
+            [inserter present];
+        };
         IconBarModel *options = [IconBarModel new];
         options.image = [UIImage imageNamed:@"Controls"];
         IconBarModel *share = [IconBarModel new];
         share.image = [UIImage imageNamed:@"Share"];
-        IconBarModel *divider = [IconBarModel new];
-        self.models = @[undo, options, divider, addText, addImage, divider, share];
+        // IconBarModel *divider = [IconBarModel new];
+        self.models = @[done, share, scroll, options, add];
     }
 }
 
