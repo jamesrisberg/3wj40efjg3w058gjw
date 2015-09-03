@@ -23,6 +23,8 @@
 		5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */; };
 		5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */; };
 		5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */; };
+		5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8391B98EAE10071BC08 /* OptionsView.m */; };
+		5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,10 @@
 		5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertItemViewController.h; sourceTree = "<group>"; };
 		5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertItemViewController.m; sourceTree = "<group>"; };
+		5FEAF8381B98EAE10071BC08 /* OptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsView.h; sourceTree = "<group>"; };
+		5FEAF8391B98EAE10071BC08 /* OptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsView.m; sourceTree = "<group>"; };
+		5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
+		5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +101,10 @@
 				5FEAF8201B978BF50071BC08 /* IconBar.m */,
 				5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */,
 				5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */,
+				5FEAF8381B98EAE10071BC08 /* OptionsView.h */,
+				5FEAF8391B98EAE10071BC08 /* OptionsView.m */,
+				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
+				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
@@ -208,7 +218,9 @@
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
+				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
+				5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

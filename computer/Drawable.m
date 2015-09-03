@@ -47,4 +47,10 @@
     return self.window.rootViewController;
 }
 
+#pragma mark Options
+
+- (NSArray *)optionsCellModels {
+    return @[]; // TODO
+}
+
 @end

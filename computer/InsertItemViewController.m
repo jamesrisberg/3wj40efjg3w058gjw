@@ -164,7 +164,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-    return 0.7;
+    return 0.4;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -177,7 +177,7 @@
         self.view.backgroundColor = [UIColor clearColor];
         [self makeIconsFlyIn:YES withDuration:duration];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            self.view.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.7];
+            self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         } completion:^(BOOL finished) {
             
         }];
@@ -198,9 +198,11 @@
 - (void)makeIconsFlyIn:(BOOL)flyIn withDuration:(NSTimeInterval)duration {
     [self.view layoutIfNeeded];
     NSArray *cells = self.collectionView.visibleCells;
+    CGFloat flight = 0.3;
     for (UICollectionViewCell *cell in cells) {
         if (flyIn) {
-            cell.transform = CGAffineTransformMakeTranslation(0, self.view.bounds.size.height);
+            cell.transform = CGAffineTransformMakeTranslation(0, self.view.bounds.size.height * flight);
+            cell.alpha = 0;
         }
         CGFloat maxDelay = duration * 0.3;
         NSTimeInterval delay = maxDelay * RAND_FLOAT;
@@ -209,8 +211,9 @@
             if (flyIn) {
                 cell.transform = CGAffineTransformIdentity;
             } else {
-                cell.transform = CGAffineTransformMakeTranslation(0, self.view.bounds.size.height);
+                cell.transform = CGAffineTransformMakeTranslation(0, self.view.bounds.size.height * flight);
             }
+            cell.alpha = flyIn ? 1 : 0;
         } completion:^(BOOL finished) {
             
         }];

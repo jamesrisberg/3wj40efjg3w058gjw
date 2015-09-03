@@ -14,5 +14,6 @@
 - (void)setup; // override this
 @property (nonatomic) CGFloat rotation, scale;
 - (UIViewController *)vcForPresentingModals;
+- (NSArray *)optionsCellModels;
 
 @end
