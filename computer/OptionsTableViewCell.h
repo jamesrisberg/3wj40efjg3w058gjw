@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Drawable.h"
+@class Drawable;
 
 @interface OptionsTableViewCell : UITableViewCell
 
 @property (nonatomic) Drawable *drawable;
 - (void)setup;
+@property (nonatomic) UIBlurEffect *underlyingBlurEffect;
+- (UIColor *)highlightedBackgroundColor;
 
 @end

@@ -50,7 +50,15 @@
 #pragma mark Options
 
 - (NSArray *)optionsCellModels {
-    return @[]; // TODO
+    OptionsViewCellModel *model = [OptionsViewCellModel new];
+    model.onCreate = ^(OptionsTableViewCell *cell) {
+        cell.textLabel.text = @"Sample option 1";
+    };
+    OptionsViewCellModel *model2 = [OptionsViewCellModel new];
+    model2.onCreate = ^(OptionsTableViewCell *cell) {
+        cell.textLabel.text = @"Sample option 2!!!";
+    };
+    return @[model, model2];
 }
 
 @end

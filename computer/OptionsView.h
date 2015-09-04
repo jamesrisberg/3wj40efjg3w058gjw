@@ -23,5 +23,8 @@
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) Drawable *drawable;
+@property (nonatomic) CGFloat height;
+@property (nonatomic,copy) void (^onDismiss)();
+@property (nonatomic) UIBlurEffect *underlyingBlurEffect;
 
 @end

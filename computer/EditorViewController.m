@@ -10,12 +10,17 @@
 #import "Canvas.h"
 #import "IconBar.h"
 #import "Drawable.h"
+#import <ReactiveCocoa.h>
+#import "OptionsView.h"
 
 @interface EditorViewController ()
 
 @property (nonatomic) UIVisualEffectView *toolbar;
+@property (nonatomic) UIView *toolbarView;
 @property (nonatomic) IconBar *iconBar;
 @property (nonatomic) UIView *selectionRect;
+@property (nonatomic) OptionsView *optionsView;
+@property (nonatomic) CGFloat toolbarHeight;
 
 @end
 
@@ -31,11 +36,24 @@
     [self.view addSubview:self.toolbar];
     self.iconBar = [IconBar new];
     self.iconBar.editor = self;
-    [self.toolbar addSubview:self.iconBar];
+    
     __weak EditorViewController *weakSelf = self;
     self.canvas.selectionRectNeedUpdate = ^{
         [weakSelf updateSelectionRect];
     };
+    
+    self.optionsView = [OptionsView new];
+    self.optionsView.tableView.separatorInset = UIEdgeInsetsZero;
+    self.optionsView.underlyingBlurEffect = (UIBlurEffect *)self.toolbar.effect;
+    [self rac_liftSelector:@selector(selectionChanged:) withSignals:RACObserve(self.canvas, selection), nil];
+    self.optionsView.onDismiss = ^{
+        weakSelf.toolbarView = weakSelf.iconBar;
+    };
+    RAC(self.optionsView, drawable) = RACObserve(self.canvas, selection);
+    
+    [UIView performWithoutAnimation:^{
+        self.toolbarView = self.iconBar;
+    }];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -47,8 +65,9 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.canvas.frame = self.view.bounds;
-    self.toolbar.frame = CGRectMake(0, self.view.bounds.size.height-44, self.view.bounds.size.width, 44);
-    self.iconBar.frame = self.toolbar.bounds;
+    self.toolbar.frame = CGRectMake(0, self.view.bounds.size.height-self.toolbarHeight, self.view.bounds.size.width, self.toolbarHeight);
+    self.toolbarView.frame = self.toolbar.bounds;
+    self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
 - (void)updateSelectionRect {
@@ -65,6 +84,45 @@
         self.selectionRect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
         self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
         self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
+    }
+}
+
+#pragma mark Selection
+- (void)selectionChanged:(Drawable *)selection {
+    if (self.toolbarView == self.optionsView) {
+        self.toolbarView = self.iconBar;
+    }
+}
+
+#pragma mark Toolbar
+- (void)showOptions {
+    if (self.canvas.selection) {
+        self.toolbarView = self.optionsView;
+    }
+}
+
+- (void)setToolbarView:(UIView *)toolbarView {
+    if (toolbarView != _toolbarView) {
+        UIView *oldToolbarView = _toolbarView;
+        _toolbarView = toolbarView;
+        
+        [self.toolbar addSubview:toolbarView];
+        CGFloat newToolbarHeight = 44;
+        if (toolbarView == self.optionsView) {
+            newToolbarHeight = 120;
+        }
+        self.toolbarHeight = newToolbarHeight;
+        toolbarView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, newToolbarHeight);
+        toolbarView.alpha = 0;
+        [UIView animateWithDuration:0.3 delay:0 options:0 animations:^{
+            oldToolbarView.alpha = 0;
+            toolbarView.alpha = 1;
+            [self.view setNeedsLayout];
+            [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            oldToolbarView.alpha = 1;
+            [oldToolbarView removeFromSuperview];
+        }];
     }
 }
 

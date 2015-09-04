@@ -25,9 +25,14 @@
 		5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */; };
 		5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8391B98EAE10071BC08 /* OptionsView.m */; };
 		5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */; };
+		5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */; };
+		5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */; };
+		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-computer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.release.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.release.xcconfig"; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -61,6 +66,11 @@
 		5FEAF8391B98EAE10071BC08 /* OptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsView.m; sourceTree = "<group>"; };
 		5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
 		5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
+		5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiButtonOptionsTableViewCell.h; sourceTree = "<group>"; };
+		5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiButtonOptionsTableViewCell.m; sourceTree = "<group>"; };
+		5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtras.h; sourceTree = "<group>"; };
+		5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtras.m; sourceTree = "<group>"; };
+		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +90,8 @@
 			children = (
 				5FEAF7FE1B9788910071BC08 /* computer */,
 				5FEAF7FD1B9788910071BC08 /* Products */,
+				68F6F971700B15AF4B74FDF2 /* Pods */,
+				AD684AA11226C19892CD1B67 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +116,10 @@
 				5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */,
 				5FEAF8381B98EAE10071BC08 /* OptionsView.h */,
 				5FEAF8391B98EAE10071BC08 /* OptionsView.m */,
+				5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */,
+				5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */,
+				5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */,
+				5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */,
 				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
 				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
@@ -137,6 +154,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		68F6F971700B15AF4B74FDF2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */,
+				36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		AD684AA11226C19892CD1B67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +178,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5FEAF8131B9788910071BC08 /* Build configuration list for PBXNativeTarget "computer" */;
 			buildPhases = (
+				D4D04DB208BB624ACDE91F4F /* Check Pods Manifest.lock */,
 				5FEAF7F81B9788910071BC08 /* Sources */,
 				5FEAF7F91B9788910071BC08 /* Frameworks */,
 				5FEAF7FA1B9788910071BC08 /* Resources */,
+				BAC5D1E6A5B047165F0E04EA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,6 +239,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		BAC5D1E6A5B047165F0E04EA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-computer/Pods-computer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D4D04DB208BB624ACDE91F4F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5FEAF7F81B9788910071BC08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -213,9 +282,11 @@
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
+				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
+				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
 				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
@@ -329,6 +400,7 @@
 		};
 		5FEAF8141B9788910071BC08 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = computer/Info.plist;
@@ -340,6 +412,7 @@
 		};
 		5FEAF8151B9788910071BC08 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = computer/Info.plist;
@@ -368,6 +441,7 @@
 				5FEAF8151B9788910071BC08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

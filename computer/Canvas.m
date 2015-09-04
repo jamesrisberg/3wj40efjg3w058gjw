@@ -8,12 +8,14 @@
 
 #import "Canvas.h"
 #import "Drawable.h"
+#import "CGPointExtras.h"
 
 @interface Canvas () {
     BOOL _setup;
     NSMutableSet *_touches;
     NSTimer *_singleTouchPressTimer;
     CGPoint _positionAtStartOfSingleTouchTimer;
+    BOOL _currentGestureTransformsDrawableAboutTouchPoint;
 }
 
 @end
@@ -43,6 +45,9 @@
     }
     if (_touches.count > 1) {
         [_singleTouchPressTimer invalidate];
+        NSArray *down = _touches.allObjects;
+        CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
+        _currentGestureTransformsDrawableAboutTouchPoint = [self.selection pointInside:[self.selection convertPoint:touchMidpoint fromView:self] withEvent:nil];
     }
 }
 
@@ -69,8 +74,21 @@
         CGFloat prevScale = sqrt(pow(t2prev.x - t1prev.x, 2) + pow(t2prev.y - t1prev.y, 2));
         CGPoint pos = CGPointMake((t1.x + t2.x)/2, (t1.y + t2.y)/2);
         CGPoint prevPos = CGPointMake((t1prev.x + t2prev.x)/2, (t1prev.y + t2prev.y)/2);
-        self.selection.rotation += rotation - prevRotation;
-        self.selection.scale *= scale / prevScale;
+        CGFloat toRotate = rotation - prevRotation;
+        CGFloat toScale = scale / prevScale;
+        self.selection.rotation += toRotate;
+        self.selection.scale *= toScale;
+        
+        if (_currentGestureTransformsDrawableAboutTouchPoint) {
+            CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
+            CGPoint drawableOffset = CGPointMake(self.selection.center.x - touchMidpoint.x, self.selection.center.y - touchMidpoint.y);
+            drawableOffset = CGPointScale(drawableOffset, toScale);
+            CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
+            CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
+            drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
+            self.selection.center = CGPointAdd(touchMidpoint, drawableOffset);
+        }
+        
         self.selection.center = CGPointMake(self.selection.center.x + pos.x - prevPos.x, self.selection.center.y + pos.y - prevPos.y);
     }
     // TODO: three-finger aspect-ratio-insensitive scaling
@@ -107,11 +125,11 @@
 - (void)setSelection:(Drawable *)selection {
     _selection = selection;
     self.selectionRectNeedUpdate();
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveEaseInOut animations:^{
-        selection.scale *= 0.9;
+    [UIView animateWithDuration:0.05 delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveEaseInOut animations:^{
+        selection.scale *= 0.94;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            selection.scale /= 0.9;
+        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            selection.scale /= 0.94;
         } completion:^(BOOL finished) {
             
         }];
@@ -149,6 +167,7 @@
     } completion:^(BOOL finished) {
         
     }];
+    self.selection = drawable;
 }
 
 @end

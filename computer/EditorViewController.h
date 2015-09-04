@@ -12,5 +12,6 @@
 @interface EditorViewController : UIViewController
 
 @property (nonatomic) Canvas *canvas;
+- (void)showOptions;
 
 @end

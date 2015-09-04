@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OptionsView.h"
 
 @interface Drawable : UIView
 

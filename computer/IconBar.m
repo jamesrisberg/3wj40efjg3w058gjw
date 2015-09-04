@@ -78,6 +78,9 @@
         };
         IconBarModel *options = [IconBarModel new];
         options.image = [UIImage imageNamed:@"Controls"];
+        options.action = ^{
+            [weakSelf.editor showOptions];
+        };
         IconBarModel *share = [IconBarModel new];
         share.image = [UIImage imageNamed:@"Share"];
         // IconBarModel *divider = [IconBarModel new];
