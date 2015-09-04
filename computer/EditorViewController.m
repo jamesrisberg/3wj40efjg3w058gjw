@@ -12,6 +12,7 @@
 #import "Drawable.h"
 #import <ReactiveCocoa.h>
 #import "OptionsView.h"
+#import "ShapeStackList.h"
 
 @interface EditorViewController ()
 
@@ -21,6 +22,8 @@
 @property (nonatomic) UIView *selectionRect;
 @property (nonatomic) OptionsView *optionsView;
 @property (nonatomic) CGFloat toolbarHeight;
+@property (nonatomic) Canvas *canvas;
+@property (nonatomic) ShapeStackList *shapeStackList;
 
 @end
 
@@ -54,6 +57,14 @@
     [UIView performWithoutAnimation:^{
         self.toolbarView = self.iconBar;
     }];
+    
+    self.shapeStackList = [[ShapeStackList alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:self.shapeStackList];
+    self.shapeStackList.hidden = YES;
+    self.shapeStackList.onDrawableSelected = ^(Drawable *drawable){
+        weakSelf.canvas.selection = drawable;
+    };
+    self.canvas.editorShapeStackList = self.shapeStackList;
 }
 
 - (BOOL)prefersStatusBarHidden {

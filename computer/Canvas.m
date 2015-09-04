@@ -9,6 +9,7 @@
 #import "Canvas.h"
 #import "Drawable.h"
 #import "CGPointExtras.h"
+#import "ShapeStackList.h"
 
 @interface Canvas () {
     BOOL _setup;
@@ -117,7 +118,8 @@
 }
 
 - (void)longPress {
-    
+    self.editorShapeStackList.drawables = [self allHitsAtPoint:[_touches.anyObject locationInView:self]];
+    [self.editorShapeStackList show];
 }
 
 #pragma mark Selection
@@ -138,14 +140,19 @@
 
 #pragma mark Geometry
 
-- (Drawable *)doHitTest:(CGPoint)pos {
+- (NSArray *)allHitsAtPoint:(CGPoint)pos {
+    NSMutableArray *hits = [NSMutableArray new];
     for (Drawable *d in self.subviews.reverseObjectEnumerator) {
         // TODO: take into account transforms; don't use UIView's own math
         if ([d pointInside:[d convertPoint:pos fromView:self] withEvent:nil]) {
-            return d;
+            [hits addObject:d];
         }
     }
-    return nil;
+    return hits;
+}
+
+- (Drawable *)doHitTest:(CGPoint)pos {
+    return [self allHitsAtPoint:pos].firstObject;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {

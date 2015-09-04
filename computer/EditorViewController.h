@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class Canvas;
+@class ShapeStackList;
 
 @interface EditorViewController : UIViewController
 
-@property (nonatomic) Canvas *canvas;
+@property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;
 
 @end

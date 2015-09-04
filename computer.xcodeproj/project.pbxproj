@@ -27,6 +27,7 @@
 		5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */; };
 		5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */; };
 		5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */; };
+		5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,8 @@
 		5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiButtonOptionsTableViewCell.m; sourceTree = "<group>"; };
 		5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtras.h; sourceTree = "<group>"; };
 		5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtras.m; sourceTree = "<group>"; };
+		5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeStackList.h; sourceTree = "<group>"; };
+		5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeStackList.m; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +125,8 @@
 				5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */,
 				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
 				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
+				5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */,
+				5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
@@ -286,6 +291,7 @@
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
+				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,
 				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,

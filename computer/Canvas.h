@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Drawable;
+@class Drawable, ShapeStackList;
 
 @interface Canvas : UIView
 
 - (void)insertDrawable:(Drawable *)drawable;
 @property (nonatomic) Drawable *selection;
 @property (nonatomic,copy) void (^selectionRectNeedUpdate)();
+
+@property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 
 @end
