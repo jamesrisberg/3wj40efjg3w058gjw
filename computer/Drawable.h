@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "OptionsView.h"
 
+@class Canvas;
 @interface Drawable : UIView
 
 - (void)primaryEditAction;
@@ -16,5 +17,7 @@
 @property (nonatomic) CGFloat rotation, scale;
 - (UIViewController *)vcForPresentingModals;
 - (NSArray *)optionsCellModels;
+- (Canvas *)canvas;
+@property (nonatomic,copy) void (^onShapeUpdate)();
 
 @end

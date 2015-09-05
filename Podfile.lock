@@ -1,4 +1,9 @@
 PODS:
+  - AsyncImageView (1.5.1)
+  - AZEncodeURIComponent (1.1.0)
+  - NSDictionaryAsURLQuery (0.1.0):
+    - AZEncodeURIComponent
+  - OpenCV (2.4.9)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -8,9 +13,16 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
+  - AsyncImageView
+  - NSDictionaryAsURLQuery
+  - OpenCV (= 2.4.9)
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
+  AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
+  AZEncodeURIComponent: 6cacefb75b101041004189b15575200ba0f10985
+  NSDictionaryAsURLQuery: a0e636080627272d8ed24ab63f3db4d671ffeba7
+  OpenCV: bb17904e55fc19b1f0f6c3e29bc04a7dd31eddb9
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
 
 COCOAPODS: 0.38.2

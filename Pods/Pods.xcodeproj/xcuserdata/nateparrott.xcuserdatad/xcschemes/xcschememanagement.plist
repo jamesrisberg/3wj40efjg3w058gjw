@@ -4,6 +4,21 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>AZEncodeURIComponent.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>AsyncImageView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>NSDictionaryAsURLQuery.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-computer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,7 +37,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B2392900FB457D2E414BA70E127CF085</key>
+		<key>6A6780FAC0A2974A8418B2A3ABD9308A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9B79D6BE07D01764008EA55B8D8FB729</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AA746AA7736B5E8E6FCD00F22F0C4B3A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9C53622D298FEC85FBAD416B37E0B18</key>
 		<dict>
 			<key>primary</key>
 			<true/>

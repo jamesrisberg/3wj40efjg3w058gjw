@@ -22,5 +22,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Sticker Extract View Controller-->
+        <scene sceneID="Df7-PX-19U">
+            <objects>
+                <viewController storyboardIdentifier="StickerExtractVC" id="9qB-iy-oZm" customClass="StickerExtractViewController" customModule="computer" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KG8-z0-gd4"/>
+                        <viewControllerLayoutGuide type="bottom" id="1dZ-WT-98i"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fch-oJ-8sa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dBZ-LM-KTB">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <animations/>
+                                <items>
+                                    <navigationItem title="Title" id="Rc6-w0-nUq"/>
+                                </items>
+                                <connections>
+                                    <outlet property="delegate" destination="9qB-iy-oZm" id="zD2-6i-uP0"/>
+                                </connections>
+                            </navigationBar>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dBZ-LM-KTB" firstAttribute="top" secondItem="KG8-z0-gd4" secondAttribute="bottom" id="Aro-Qk-Tk6"/>
+                            <constraint firstAttribute="trailing" secondItem="dBZ-LM-KTB" secondAttribute="trailing" id="Dq4-og-gbg"/>
+                            <constraint firstItem="dBZ-LM-KTB" firstAttribute="leading" secondItem="fch-oJ-8sa" secondAttribute="leading" id="Yp0-Wm-h4r"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="navBar" destination="dBZ-LM-KTB" id="hWh-x3-Nxd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wxU-aF-yYq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="389" y="903"/>
+        </scene>
     </scenes>
 </document>

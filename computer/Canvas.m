@@ -125,7 +125,12 @@
 #pragma mark Selection
 
 - (void)setSelection:(Drawable *)selection {
+    _selection.onShapeUpdate = nil;
     _selection = selection;
+    __weak Canvas *weakSelf = self;
+    _selection.onShapeUpdate = ^{
+        weakSelf.selectionRectNeedUpdate();
+    };
     self.selectionRectNeedUpdate();
     [UIView animateWithDuration:0.05 delay:0 options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionCurveEaseInOut animations:^{
         selection.scale *= 0.94;

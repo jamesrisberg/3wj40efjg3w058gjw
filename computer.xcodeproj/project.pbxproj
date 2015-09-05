@@ -28,6 +28,15 @@
 		5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */; };
 		5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */; };
 		5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */; };
+		5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */; };
+		5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8491B9AD96E0071BC08 /* AddSubtractToggle.swift */; };
+		5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF84A1B9AD96E0071BC08 /* DrawingView.swift */; };
+		5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF84B1B9AD96E0071BC08 /* UIImage+SubImage.swift */; };
+		5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF84D1B9AD96E0071BC08 /* Grabcut.mm */; };
+		5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF84E1B9AD96E0071BC08 /* UIImageView+ImageRect.swift */; };
+		5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */; };
+		5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */; };
+		5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +82,19 @@
 		5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtras.m; sourceTree = "<group>"; };
 		5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeStackList.h; sourceTree = "<group>"; };
 		5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeStackList.m; sourceTree = "<group>"; };
+		5FEAF8471B9AD96D0071BC08 /* computer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "computer-Bridging-Header.h"; sourceTree = "<group>"; };
+		5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerExtractViewController.swift; sourceTree = "<group>"; };
+		5FEAF8491B9AD96E0071BC08 /* AddSubtractToggle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSubtractToggle.swift; sourceTree = "<group>"; };
+		5FEAF84A1B9AD96E0071BC08 /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		5FEAF84B1B9AD96E0071BC08 /* UIImage+SubImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+SubImage.swift"; sourceTree = "<group>"; };
+		5FEAF84C1B9AD96E0071BC08 /* Grabcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grabcut.h; sourceTree = "<group>"; };
+		5FEAF84D1B9AD96E0071BC08 /* Grabcut.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Grabcut.mm; sourceTree = "<group>"; };
+		5FEAF84E1B9AD96E0071BC08 /* UIImageView+ImageRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+ImageRect.swift"; sourceTree = "<group>"; };
+		5FEAF8551B9ADA3A0071BC08 /* UIImage+Trim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Trim.h"; sourceTree = "<group>"; };
+		5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Trim.m"; sourceTree = "<group>"; };
+		5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchForwardingView.h; sourceTree = "<group>"; };
+		5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchForwardingView.m; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,8 +131,19 @@
 		5FEAF7FE1B9788910071BC08 /* computer */ = {
 			isa = PBXGroup;
 			children = (
+				5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */,
+				5FEAF8491B9AD96E0071BC08 /* AddSubtractToggle.swift */,
+				5FEAF84A1B9AD96E0071BC08 /* DrawingView.swift */,
+				5FEAF84B1B9AD96E0071BC08 /* UIImage+SubImage.swift */,
+				5FEAF8551B9ADA3A0071BC08 /* UIImage+Trim.h */,
+				5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */,
+				5FEAF84C1B9AD96E0071BC08 /* Grabcut.h */,
+				5FEAF84D1B9AD96E0071BC08 /* Grabcut.mm */,
+				5FEAF84E1B9AD96E0071BC08 /* UIImageView+ImageRect.swift */,
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
+				5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */,
+				5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */,
 				5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */,
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
 				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
@@ -141,12 +174,14 @@
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
 				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
+				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
 				5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */,
 				5FEAF8081B9788910071BC08 /* Main.storyboard */,
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
 				5FEAF80D1B9788910071BC08 /* LaunchScreen.storyboard */,
 				5FEAF8101B9788910071BC08 /* Info.plist */,
 				5FEAF7FF1B9788910071BC08 /* Supporting Files */,
+				5FEAF8471B9AD96D0071BC08 /* computer-Bridging-Header.h */,
 			);
 			path = computer;
 			sourceTree = "<group>";
@@ -204,6 +239,7 @@
 		5FEAF7F41B9788910071BC08 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Nate Parrott";
 				TargetAttributes = {
@@ -285,9 +321,15 @@
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
+				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
+				5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
+				5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
+				5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */,
+				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
+				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
@@ -295,8 +337,11 @@
 				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
+				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
 				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
+				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
+				5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */,
 				5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,
 			);
@@ -409,10 +454,14 @@
 			baseConfigurationReference = EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = computer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nateparrott.computer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "computer/computer-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -421,10 +470,13 @@
 			baseConfigurationReference = 36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = computer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nateparrott.computer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "computer/computer-Bridging-Header.h";
 			};
 			name = Release;
 		};

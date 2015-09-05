@@ -68,6 +68,7 @@
         self.tableView.dataSource = self;
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
+        self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
     }
     return _tableView;
 }

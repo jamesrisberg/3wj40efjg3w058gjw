@@ -7,6 +7,7 @@
 //
 
 #import "PhotoDrawable.h"
+#import "computer-Swift.h"
 
 @interface PhotoDrawable () <UIImagePickerControllerDelegate>
 
@@ -29,6 +30,13 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     UIImage *image = info[UIImagePickerControllerOriginalImage];
+    if (image) {
+        [self setImage:image];
+        [picker dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)setImage:(UIImage *)image {
     CGFloat oldAspectRatio = self.imageView.image.size.width / self.imageView.image.size.height;
     CGFloat aspectRatio = image.size.width / image.size.height;
     CGSize size = self.bounds.size;
@@ -41,7 +49,8 @@
     }
     self.imageView.image = image;
     self.bounds = CGRectMake(0, 0, size.width, size.height);
-    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    if (self.onShapeUpdate) self.onShapeUpdate();
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -65,6 +74,33 @@
     // pickerVC.allowsEditing = YES;
     pickerVC.sourceType = source;
     [[self vcForPresentingModals] presentViewController:pickerVC animated:YES completion:nil];
+}
+
+- (NSArray *)optionsCellModels {
+    NSMutableArray *options = [super optionsCellModels].mutableCopy;
+    
+    __weak PhotoDrawable *weakSelf = self;
+    OptionsViewCellModel *cutOut = [OptionsViewCellModel new];
+    cutOut.onCreate = ^(OptionsTableViewCell *cell) {
+        cell.textLabel.text = @"Cut out…";
+    };
+    cutOut.onSelect = ^(OptionsTableViewCell *cell) {
+        [weakSelf cutOut];
+    };
+    [options addObject:cutOut];
+    
+    return options;
+}
+
+- (void)cutOut {
+    StickerExtractViewController *extractVC = (id)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"StickerExtractVC"];
+    extractVC.onExtractedSticker = ^(UIImage *sticker) {
+        if (sticker) {
+            [self setImage:sticker];
+        }
+    };
+    extractVC.originalImage = [self.imageView.image resizedWithMaxDimension:400];
+    [[self vcForPresentingModals] presentViewController:extractVC animated:YES completion:nil];
 }
 
 @end
