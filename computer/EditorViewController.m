@@ -13,9 +13,12 @@
 #import <ReactiveCocoa.h>
 #import "OptionsView.h"
 #import "ShapeStackList.h"
+#import "CGPointExtras.h"
 
 @interface EditorViewController () <UIScrollViewDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
+    CGFloat _scrollViewPreviousZoomScale;
+    UIView *_dummyScrollViewZoomingView;
 }
 
 @property (nonatomic) UIVisualEffectView *toolbar;
@@ -159,8 +162,10 @@
             self.dummyScrollView.directionalLockEnabled = NO;
             CGFloat aBigNumber = 20 * 1000 * 1000;
             self.dummyScrollView.contentSize = CGSizeMake(aBigNumber, aBigNumber);
-            _scrollViewPreviousContentOffset = CGPointMake(aBigNumber/2, aBigNumber/2);
-            self.dummyScrollView.contentOffset = _scrollViewPreviousContentOffset;
+            _dummyScrollViewZoomingView = [UIView new];
+            _dummyScrollViewZoomingView.frame = CGRectMake(0, 0, aBigNumber, aBigNumber);
+            [self.dummyScrollView addSubview:_dummyScrollViewZoomingView];
+            [self _resetDummyScrollViewPositioning];
             self.dummyScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
             
             self.canvas.selection = nil;
@@ -177,11 +182,47 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGPoint translation = CGPointMake(scrollView.contentOffset.x - _scrollViewPreviousContentOffset.x, scrollView.contentOffset.y - _scrollViewPreviousContentOffset.y);
-    _scrollViewPreviousContentOffset = scrollView.contentOffset;
-    for (UIView *view in self.canvas.subviews) {
-        view.center = CGPointMake(view.center.x - translation.x, view.center.y - translation.y);
+    if (scrollView.isZooming || scrollView.isZoomBouncing || scrollView.dragging || scrollView.isDecelerating) {
+        
+        CGPoint correctedOffset = CGPointMake(scrollView.contentOffset.x / scrollView.zoomScale, scrollView.contentOffset.y / scrollView.zoomScale);
+        CGPoint translation = CGPointZero;
+        if (!scrollView.isZooming) {
+            translation = CGPointMake(correctedOffset.x - _scrollViewPreviousContentOffset.x, correctedOffset.y - _scrollViewPreviousContentOffset.y);
+        }
+        _scrollViewPreviousContentOffset = correctedOffset;
+        CGFloat zoom = scrollView.zoomScale / _scrollViewPreviousZoomScale;
+        _scrollViewPreviousZoomScale = scrollView.zoomScale;
+        
+        CGPoint zoomCenter = [scrollView.pinchGestureRecognizer locationInView:self.canvas];
+        
+        for (Drawable *d in self.canvas.subviews) {
+            CGPoint offsetFromPinch = CGPointMake(d.center.x - zoomCenter.x, d.center.y - zoomCenter.y);
+            CGPoint newOffsetFromPinch = CGPointMake(offsetFromPinch.x * zoom, offsetFromPinch.y * zoom);
+            d.center = CGPointMake(d.center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x, d.center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y);
+            d.scale *= zoom;
+        }
     }
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    [self _resetDummyScrollViewPositioning];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self _resetDummyScrollViewPositioning];
+}
+
+- (void)_resetDummyScrollViewPositioning {
+    _scrollViewPreviousZoomScale = 1;
+    self.dummyScrollView.zoomScale = 1;
+    _scrollViewPreviousContentOffset = CGPointMake(self.dummyScrollView.contentSize.width/2, self.dummyScrollView.contentSize.height/2);
+    self.dummyScrollView.contentOffset = _scrollViewPreviousContentOffset;
+    self.dummyScrollView.minimumZoomScale = 0.01;
+    self.dummyScrollView.maximumZoomScale = 100;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return _dummyScrollViewZoomingView;
 }
 
 @end
