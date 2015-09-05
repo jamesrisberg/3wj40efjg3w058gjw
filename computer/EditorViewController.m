@@ -14,7 +14,9 @@
 #import "OptionsView.h"
 #import "ShapeStackList.h"
 
-@interface EditorViewController ()
+@interface EditorViewController () <UIScrollViewDelegate> {
+    CGPoint _scrollViewPreviousContentOffset;
+}
 
 @property (nonatomic) UIVisualEffectView *toolbar;
 @property (nonatomic) UIView *toolbarView;
@@ -24,6 +26,7 @@
 @property (nonatomic) CGFloat toolbarHeight;
 @property (nonatomic) Canvas *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
+@property (nonatomic) UIScrollView *dummyScrollView;
 
 @end
 
@@ -78,7 +81,8 @@
     self.canvas.frame = self.view.bounds;
     self.toolbar.frame = CGRectMake(0, self.view.bounds.size.height-self.toolbarHeight, self.view.bounds.size.width, self.toolbarHeight);
     self.toolbarView.frame = self.toolbar.bounds;
-    self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin; // set the autoresizing mask so that this view is positioned currently during the transition to a NEW toolbarView; when the toolbar's height changes, the old toolbar view should stay in the middle
+    self.dummyScrollView.frame = self.view.bounds;
 }
 
 - (void)updateSelectionRect {
@@ -134,6 +138,49 @@
             oldToolbarView.alpha = 1;
             [oldToolbarView removeFromSuperview];
         }];
+    }
+}
+
+#pragma mark Scrolling
+- (void)setScrollModeActive:(BOOL)scrollModeActive {
+    if (scrollModeActive != _scrollModeActive) {
+        _scrollModeActive = scrollModeActive;
+        if (scrollModeActive) {
+            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+            done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
+            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+            [done addTarget:self action:@selector(exitScrollMode) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = done;
+            
+            self.dummyScrollView = [UIScrollView new];
+            [self.view insertSubview:self.dummyScrollView aboveSubview:self.canvas];
+            self.dummyScrollView.delegate = self;
+            self.dummyScrollView.showsHorizontalScrollIndicator = self.dummyScrollView.showsVerticalScrollIndicator = NO;
+            self.dummyScrollView.directionalLockEnabled = NO;
+            CGFloat aBigNumber = 20 * 1000 * 1000;
+            self.dummyScrollView.contentSize = CGSizeMake(aBigNumber, aBigNumber);
+            _scrollViewPreviousContentOffset = CGPointMake(aBigNumber/2, aBigNumber/2);
+            self.dummyScrollView.contentOffset = _scrollViewPreviousContentOffset;
+            self.dummyScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+            
+            self.canvas.selection = nil;
+        } else {
+            self.toolbarView = self.iconBar;
+            [self.dummyScrollView removeFromSuperview];
+            self.dummyScrollView = nil;
+        }
+    }
+}
+
+- (void)exitScrollMode {
+    self.scrollModeActive = NO;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint translation = CGPointMake(scrollView.contentOffset.x - _scrollViewPreviousContentOffset.x, scrollView.contentOffset.y - _scrollViewPreviousContentOffset.y);
+    _scrollViewPreviousContentOffset = scrollView.contentOffset;
+    for (UIView *view in self.canvas.subviews) {
+        view.center = CGPointMake(view.center.x - translation.x, view.center.y - translation.y);
     }
 }
 

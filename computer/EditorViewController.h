@@ -14,5 +14,6 @@
 
 @property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;
+@property (nonatomic) BOOL scrollModeActive;
 
 @end

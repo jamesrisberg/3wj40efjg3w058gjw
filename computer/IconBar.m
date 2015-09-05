@@ -67,6 +67,9 @@
         };
         IconBarModel *scroll = [IconBarModel new];
         scroll.image = [UIImage imageNamed:@"Scroll"];
+        scroll.action = ^{
+            weakSelf.editor.scrollModeActive = YES;
+        };
         IconBarModel *done = [IconBarModel new];
         done.image = [UIImage imageNamed:@"Grid"];
         IconBarModel *add = [IconBarModel new];
