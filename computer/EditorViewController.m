@@ -181,35 +181,50 @@
     self.scrollModeActive = NO;
 }
 
+- (BOOL)isScrollViewMoving:(UIScrollView *)scrollView {
+    return scrollView.isZooming || scrollView.isZoomBouncing || scrollView.dragging || scrollView.isDecelerating;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView.isZooming || scrollView.isZoomBouncing || scrollView.dragging || scrollView.isDecelerating) {
+    if ([self isScrollViewMoving:scrollView]) {
         
         CGPoint correctedOffset = CGPointMake(scrollView.contentOffset.x / scrollView.zoomScale, scrollView.contentOffset.y / scrollView.zoomScale);
-        CGPoint translation = CGPointZero;
-        if (!scrollView.isZooming) {
-            translation = CGPointMake(correctedOffset.x - _scrollViewPreviousContentOffset.x, correctedOffset.y - _scrollViewPreviousContentOffset.y);
-        }
+        CGPoint translation = CGPointMake(correctedOffset.x - _scrollViewPreviousContentOffset.x, correctedOffset.y - _scrollViewPreviousContentOffset.y);
         _scrollViewPreviousContentOffset = correctedOffset;
         CGFloat zoom = scrollView.zoomScale / _scrollViewPreviousZoomScale;
         _scrollViewPreviousZoomScale = scrollView.zoomScale;
         
         CGPoint zoomCenter = [scrollView.pinchGestureRecognizer locationInView:self.canvas];
         
+        CGPoint originOffsetFromPinch = CGPointMake(-zoomCenter.x, -zoomCenter.y);
+        CGPoint newOriginOffsetFromPinch = CGPointMake(-zoomCenter.x * zoom, -zoomCenter.y * zoom);
+        CGPoint translationCorrection = CGPointMake(newOriginOffsetFromPinch.x - originOffsetFromPinch.x, newOriginOffsetFromPinch.y - originOffsetFromPinch.y);
+        
         for (Drawable *d in self.canvas.subviews) {
             CGPoint offsetFromPinch = CGPointMake(d.center.x - zoomCenter.x, d.center.y - zoomCenter.y);
             CGPoint newOffsetFromPinch = CGPointMake(offsetFromPinch.x * zoom, offsetFromPinch.y * zoom);
-            d.center = CGPointMake(d.center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x, d.center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y);
+            d.center = CGPointMake(d.center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x - translationCorrection.x, d.center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y - translationCorrection.y);
             d.scale *= zoom;
         }
     }
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    [self _resetDummyScrollViewPositioning];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (![self isScrollViewMoving:scrollView]) {
+        [self _resetDummyScrollViewPositioning];
+    }
 }
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self _resetDummyScrollViewPositioning];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (![self isScrollViewMoving:scrollView]) {
+        [self _resetDummyScrollViewPositioning];
+    }
+}
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+    if (![self isScrollViewMoving:scrollView]) {
+        [self _resetDummyScrollViewPositioning];
+    }
 }
 
 - (void)_resetDummyScrollViewPositioning {
