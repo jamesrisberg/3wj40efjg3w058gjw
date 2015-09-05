@@ -41,7 +41,7 @@
     [_touches addObjectsFromArray:touches.allObjects];
     if (hadZeroTouches && _touches.count == 1) {
         // this was the first touch down
-        _singleTouchPressTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(longPress) userInfo:nil repeats:NO];
+        _singleTouchPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(longPress) userInfo:nil repeats:NO];
         _positionAtStartOfSingleTouchTimer = [[touches anyObject] locationInView:self];
     }
     if (_touches.count > 1) {

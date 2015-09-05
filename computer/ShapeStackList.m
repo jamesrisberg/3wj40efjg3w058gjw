@@ -66,8 +66,8 @@
 }
 
 - (void)show {
-    CGFloat fadeDuration = 0.15;
-    CGFloat flyDuration = 0.4;
+    CGFloat fadeDuration = 0.2;
+    CGFloat flyDuration = 0.3;
     
     [self.tableView layoutIfNeeded];
     [self layoutIfNeeded];
@@ -75,6 +75,7 @@
     UIView *animationRootView = [UIView new];
     [self.superview addSubview:animationRootView];
     animationRootView.frame = animationRootView.superview.bounds;
+    animationRootView.alpha = 0;
     
     for (UITableViewCell *cell in self.tableView.visibleCells.reverseObjectEnumerator) {
         UIView *snapshotInCell = [cell viewWithTag:SnapshotViewTag];
@@ -95,11 +96,12 @@
     }
     [UIView animateWithDuration:fadeDuration animations:^{
         animationRootView.alpha = 1;
-    }];
-    [UIView animateWithDuration:fadeDuration delay:flyDuration + fadeDuration options:0 animations:^{
-        animationRootView.alpha = 0;
     } completion:^(BOOL finished) {
-        [animationRootView removeFromSuperview];
+        [UIView animateWithDuration:fadeDuration delay:flyDuration options:0 animations:^{
+            animationRootView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [animationRootView removeFromSuperview];
+        }];
     }];
     
     self.hidden = NO;
@@ -112,11 +114,13 @@
 }
 
 - (void)hide {
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.alpha = 0;
+        self.tableView.transform = CGAffineTransformMakeTranslation(0, 60);
     } completion:^(BOOL finished) {
         self.alpha = 1;
         self.hidden = YES;
+        self.tableView.transform = CGAffineTransformIdentity;
     }];
 }
 
