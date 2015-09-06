@@ -13,8 +13,11 @@
 #define CellHeight 50
 #define SnapshotHeight (CellHeight - 10)
 #define SnapshotWidth (SnapshotHeight * 2)
+#define TableFadeHeight 30
 
-@interface ShapeStackList () <UITableViewDataSource, UITableViewDelegate>
+@interface ShapeStackList () <UITableViewDataSource, UITableViewDelegate> {
+    CAGradientLayer *_tableMask;
+}
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) CGFloat tableHeight;
@@ -46,9 +49,18 @@
         self.tableView.editing = YES;
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.tableView.contentInset = UIEdgeInsetsMake(TableFadeHeight, 0, TableFadeHeight, 0);
+        self.tableView.contentOffset = CGPointMake(0, -TableFadeHeight);
+        
+        // TODO: get this to work
+        // (research UIScrollView masking?)
+        _tableMask = [CAGradientLayer layer];
+        _tableMask.frame = self.tableView.bounds;
+        _tableMask.colors = @[(id)[UIColor clearColor].CGColor, (id)[UIColor blackColor].CGColor, (id)[UIColor blackColor].CGColor, (id)[UIColor clearColor].CGColor];
+        [self.tableView.layer setMask:_tableMask];
     }
     [self.tableView reloadData];
-    self.tableHeight = drawables.count * CellHeight;
+    self.tableHeight = drawables.count * CellHeight + TableFadeHeight*2;
 }
 
 - (void)setTableHeight:(CGFloat)tableHeight {
@@ -63,6 +75,8 @@
     self.tableView.bounds = CGRectMake(0, 0, width, height);
     self.tableView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     self.tableView.frame = CGRectIntegral(self.tableView.frame);
+    _tableMask.frame = self.tableView.bounds;
+    _tableMask.locations = @[@0, @(TableFadeHeight / self.tableView.bounds.size.height), @(1 - TableFadeHeight / self.tableView.bounds.size.height), @1];
 }
 
 - (void)show {
