@@ -199,6 +199,7 @@
         CGPoint originOffsetFromPinch = CGPointMake(-zoomCenter.x, -zoomCenter.y);
         CGPoint newOriginOffsetFromPinch = CGPointMake(-zoomCenter.x * zoom, -zoomCenter.y * zoom);
         CGPoint translationCorrection = CGPointMake(newOriginOffsetFromPinch.x - originOffsetFromPinch.x, newOriginOffsetFromPinch.y - originOffsetFromPinch.y);
+        translationCorrection = CGPointScale(translationCorrection, 1.0 / scrollView.zoomScale);
         
         for (Drawable *d in self.canvas.subviews) {
             CGPoint offsetFromPinch = CGPointMake(d.center.x - zoomCenter.x, d.center.y - zoomCenter.y);
