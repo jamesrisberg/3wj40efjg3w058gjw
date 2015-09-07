@@ -66,14 +66,6 @@
     }
     [self presentSoftModalInViewController:root];
 }
-+ (UIView *)topmostViewInView:(UIView *)view withTag:(NSInteger)tag {
-    for (UIView *subview in view.subviews.reverseObjectEnumerator) {
-        if (subview.tag == tag) {
-            return subview;
-        }
-    }
-    return nil;
-}
 -(void)dismissSoftModal {
     [self viewWillDisappear:YES];
     NSInteger thisViewIndex = [self.view.superview.subviews indexOfObject:self.view];
