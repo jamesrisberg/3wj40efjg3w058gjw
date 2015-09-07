@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="_alphaPicker" destination="4" id="10"/>
                 <outlet property="_brightnessPicker" destination="5" id="9"/>
-                <outlet property="_colorView" destination="7" id="11"/>
+                <outlet property="_colorPreview" destination="DBY-uB-rsx" id="4up-on-juR"/>
                 <outlet property="_hueSatBrightnessOverlay" destination="18" id="19"/>
                 <outlet property="_hueSatPicker" destination="6" id="8"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -16,11 +16,11 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="1">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="427"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" id="4" customClass="SKColorPickerSlider">
-                    <rect key="frame" x="0.0" y="425" width="320" height="35"/>
+                    <rect key="frame" x="0.0" y="384" width="320" height="35"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -28,17 +28,8 @@
                         <outlet property="_picker" destination="-1" id="14"/>
                     </connections>
                 </view>
-                <view contentMode="scaleToFill" id="5" customClass="SKColorPickerSlider">
-                    <rect key="frame" x="0.0" y="384" width="320" height="35"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="_picker" destination="-1" id="13"/>
-                    </connections>
-                </view>
                 <view contentMode="scaleToFill" id="6" customClass="SKHueSatPicker">
-                    <rect key="frame" x="0.0" y="70" width="320" height="308"/>
+                    <rect key="frame" x="0.0" y="8" width="320" height="275"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -47,40 +38,32 @@
                     </connections>
                 </view>
                 <view userInteractionEnabled="NO" contentMode="scaleToFill" id="18">
-                    <rect key="frame" x="0.0" y="71" width="320" height="307"/>
+                    <rect key="frame" x="0.0" y="9" width="320" height="320"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <view contentMode="scaleToFill" id="7" customClass="SKColorView">
-                    <rect key="frame" x="20" y="14" width="43" height="43"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <animations/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                </view>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" image="shadow.png" id="15">
-                    <rect key="frame" x="0.0" y="70" width="320" height="5"/>
+                <view contentMode="scaleToFill" id="DBY-uB-rsx">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="9"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <animations/>
-                </imageView>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" image="shadow.png" id="16">
-                    <rect key="frame" x="0.0" y="384" width="320" height="5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="5" customClass="SKColorPickerSlider">
+                    <rect key="frame" x="0.0" y="339" width="320" height="35"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <animations/>
-                </imageView>
-                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" image="shadow.png" id="17">
-                    <rect key="frame" x="0.0" y="425" width="320" height="5"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <animations/>
-                </imageView>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="_picker" destination="-1" id="13"/>
+                    </connections>
+                </view>
             </subviews>
             <animations/>
             <color key="backgroundColor" red="0.89019614459999996" green="0.89019614459999996" blue="0.89019614459999996" alpha="1" colorSpace="deviceRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="280" y="335.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="shadow.png" width="100" height="9"/>
-    </resources>
 </document>

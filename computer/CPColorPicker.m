@@ -41,6 +41,7 @@
 
 -(void)didUpdateColor {
     _colorView.color = self.color;
+    _colorPreview.backgroundColor = self.color;
     self.alphaSlider.color = [self.color colorWithAlphaComponent:1];
 }
 -(void)sendCallback {
@@ -56,7 +57,7 @@
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.hueWheel.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width);
-    self.hueWheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    self.hueWheel.center = CGPointMake(self.view.bounds.size.width/2, (_colorPreview.frame.origin.y + _colorPreview.frame.size.height + _alphaSlider.frame.origin.y) / 2);
     self.brightnessSaturationView.frame = CGRectMake(0, 0, self.hueWheel.frame.size.width-(CPColorPickerHueWheelWidth+CPHueWheelInset)*2, self.hueWheel.frame.size.height-(CPColorPickerHueWheelWidth+CPHueWheelInset)*2);
     self.brightnessSaturationView.center = self.hueWheel.center;
     [self layoutSavedColors];

@@ -18,6 +18,7 @@ typedef void (^SKColorPickerCallback)(UIColor*);
     IBOutlet SKColorPickerSlider *_brightnessPicker, *_alphaPicker;
     IBOutlet UIView* _hueSatBrightnessOverlay;
     CGFloat _hue, _sat, _brightness, _alpha;
+    IBOutlet UIView *_colorPreview;
 }
 
 @property(strong,nonatomic)UIColor* color;

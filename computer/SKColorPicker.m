@@ -50,6 +50,7 @@
     _hueSatBrightnessOverlay.alpha = 1-_brightness;
     
     _colorView.color = [self color];
+    _colorPreview.backgroundColor = [self color];
     if (self.callback) {
         self.callback([self color]);
     }

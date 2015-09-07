@@ -20,6 +20,19 @@
 
 @implementation ShapeDrawable
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    self.path = [aDecoder decodeObjectForKey:@"path"];
+    self.fill = [aDecoder decodeObjectForKey:@"fill"];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:self.path forKey:@"path"];
+    [aCoder encodeObject:self.fill forKey:@"fill"];
+}
+
 - (void)drawRect:(CGRect)rect {
     [self.fill drawInRect:rect];
 }

@@ -22,6 +22,8 @@ typedef void (^CPColorPickerCallback)(UIColor*);
     IBOutlet UIScrollView* _savedColorScrollView;
     NSMutableArray* _savedColors;
     NSMutableArray* _savedColorViews;
+    
+    IBOutlet UIView *_colorPreview;
 }
 
 @property(assign)IBOutlet CPHueWheel* hueWheel;
