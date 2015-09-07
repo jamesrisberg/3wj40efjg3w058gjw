@@ -11,6 +11,8 @@
 #import "PhotoDrawable.h"
 #import "Canvas.h"
 #import "TextDrawable.h"
+#import "ShapeDrawable.h"
+#import "SKColorFill.h"
 
 #define RAND_FLOAT ((rand() % 10000) / 10000.0)
 
@@ -83,8 +85,19 @@
     pen.icon = [UIImage imageNamed:@"Pen"];
     InsertableItem *circle = [InsertableItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
+    circle.action = ^{
+        ShapeDrawable *d = [ShapeDrawable new];
+        d.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 200, 200)];
+        d.fill = [[SKColorFill alloc] initWithColor:[UIColor greenColor]];
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
+    
     InsertableItem *square = [InsertableItem new];
     square.icon = [UIImage imageNamed:@"Square"];
+    square.action = ^{
+        ShapeDrawable *d = [ShapeDrawable new];
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
     
     self.models = @[camera, photos, video, text, pen, circle, square];
     CGFloat hue = 0;

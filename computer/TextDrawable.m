@@ -47,4 +47,16 @@
     [[self vcForPresentingModals] presentViewController:nav animated:YES completion:nil];
 }
 
+#pragma mark Coding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:self.label.attributedText forKey:@"attributedText"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    self.label.attributedText = [aDecoder decodeObjectForKey:@"attributedText"];
+    return self;
+}
+
 @end

@@ -57,4 +57,22 @@
     return @[];
 }
 
+#pragma mark Coding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    // deliberately DON'T call super
+    [aCoder encodeObject:[NSValue valueWithCGRect:self.bounds] forKey:@"bounds"];
+    [aCoder encodeObject:[NSValue valueWithCGPoint:self.center] forKey:@"center"];
+    [aCoder encodeDouble:self.scale forKey:@"scale"];
+    [aCoder encodeDouble:self.rotation forKey:@"rotation"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithFrame:CGRectZero]; // deliberately DON'T call super
+    self.bounds = [[aDecoder decodeObjectForKey:@"bounds"] CGRectValue];
+    self.center = [[aDecoder decodeObjectForKey:@"center"] CGPointValue];
+    self.scale = [aDecoder decodeDoubleForKey:@"scale"];
+    self.rotation = [aDecoder decodeDoubleForKey:@"rotation"];
+    return self;
+}
+
 @end

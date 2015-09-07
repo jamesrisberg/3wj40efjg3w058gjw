@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E155084334416A599C388E6"
+               BlueprintIdentifier = "FB8BE93C520CB3A86C302D1C"
                BuildableName = "libAZEncodeURIComponent.a"
                BlueprintName = "AZEncodeURIComponent"
                ReferencedContainer = "container:Pods.xcodeproj">

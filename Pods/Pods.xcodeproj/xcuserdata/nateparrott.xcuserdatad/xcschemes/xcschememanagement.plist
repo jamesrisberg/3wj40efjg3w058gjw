@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GPUImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>NSDictionaryAsURLQuery.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>375967178F39E990C5901907A5B27AD2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>619FC2D08827B204D7FDD1E5C81395AC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6951DA9871DA259A9AAA6EFC68AEF8EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6A6780FAC0A2974A8418B2A3ABD9308A</key>
+		<key>6DCE68F2A442EF742F5240C915CB7A2D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B79D6BE07D01764008EA55B8D8FB729</key>
+		<key>89ADE8B33222CE0E4EA369923F8BA584</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AA746AA7736B5E8E6FCD00F22F0C4B3A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E9C53622D298FEC85FBAD416B37E0B18</key>
+		<key>B2C14D19572F44011F9B4D0C2D2D567C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

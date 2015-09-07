@@ -182,4 +182,18 @@
     self.selection = drawable;
 }
 
+#pragma mark Coding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    // deliberately DON'T call super
+    [aCoder encodeObject:self.subviews forKey:@"drawables"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithFrame:CGRectZero]; // deliberately DON'T call super
+    for (Drawable *d in [aDecoder decodeObjectForKey:@"drawables"]) {
+        [self addSubview:d];
+    }
+    return self;
+}
+
 @end

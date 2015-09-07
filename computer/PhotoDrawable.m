@@ -103,4 +103,18 @@
     [[self vcForPresentingModals] presentViewController:extractVC animated:YES completion:nil];
 }
 
+#pragma mark Coding
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    NSData *imageData = UIImagePNGRepresentation(self.imageView.image);
+    [aCoder encodeObject:imageData forKey:@"imageData"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    NSData *imageData = [aDecoder decodeObjectForKey:@"imageData"];
+    self.imageView.image = [UIImage imageWithData:imageData];
+    return self;
+}
+
 @end

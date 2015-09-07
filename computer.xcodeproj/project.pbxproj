@@ -37,6 +37,48 @@
 		5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */; };
 		5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */; };
 		5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */; };
+		5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8821B9C66AE0071BC08 /* ConvenienceCategories.m */; };
+		5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8861B9C68A10071BC08 /* CMDocument.m */; };
+		5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8FB1B9E2A760071BC08 /* shadow.png */; };
+		5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8FC1B9E2A760071BC08 /* invertedShadow.png */; };
+		5FEAF90B1B9E2A760071BC08 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8FD1B9E2A760071BC08 /* circle.png */; };
+		5FEAF90C1B9E2A760071BC08 /* colorMap.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8FE1B9E2A760071BC08 /* colorMap.png */; };
+		5FEAF90D1B9E2A760071BC08 /* checker.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8FF1B9E2A760071BC08 /* checker.png */; };
+		5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9011B9E2A760071BC08 /* SKColorPicker.m */; };
+		5FEAF90F1B9E2A760071BC08 /* SKColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9021B9E2A760071BC08 /* SKColorPicker.xib */; };
+		5FEAF9101B9E2A760071BC08 /* SKHueSatPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9041B9E2A760071BC08 /* SKHueSatPicker.m */; };
+		5FEAF9111B9E2A760071BC08 /* SKColorPickerSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9061B9E2A760071BC08 /* SKColorPickerSlider.m */; };
+		5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9081B9E2A760071BC08 /* SKColorView.m */; };
+		5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9141B9E2AE80071BC08 /* image.png */; };
+		5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9151B9E2AE80071BC08 /* color.png */; };
+		5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9161B9E2AE80071BC08 /* linearGradient.png */; };
+		5FEAF9211B9E2AE80071BC08 /* SKFillPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9181B9E2AE80071BC08 /* SKFillPicker.m */; };
+		5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF91A1B9E2AE80071BC08 /* SKNullViewController.m */; };
+		5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF91C1B9E2AE80071BC08 /* SKImagePicker.m */; };
+		5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF91D1B9E2AE80071BC08 /* SKImagePicker.xib */; };
+		5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9271B9E2B010071BC08 /* SKGradientEditor.m */; };
+		5FEAF9331B9E2B010071BC08 /* SKGradientEditor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9281B9E2B010071BC08 /* SKGradientEditor.xib */; };
+		5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF92A1B9E2B010071BC08 /* SKGradientPointEditor.m */; };
+		5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF92C1B9E2B010071BC08 /* SKGradientColorStopEditor.m */; };
+		5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF92E1B9E2B010071BC08 /* SKGradientColorStop.m */; };
+		5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9301B9E2B010071BC08 /* SKColorStopDetail.m */; };
+		5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9311B9E2B010071BC08 /* SKColorStopDetail.xib */; };
+		5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF93B1B9E2B2B0071BC08 /* SKFill.m */; };
+		5FEAF9431B9E2B2B0071BC08 /* SKColorFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF93D1B9E2B2B0071BC08 /* SKColorFill.m */; };
+		5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF93F1B9E2B2B0071BC08 /* SKGradient.m */; };
+		5FEAF9451B9E2B2B0071BC08 /* SKImageFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9411B9E2B2B0071BC08 /* SKImageFill.m */; };
+		5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9481B9E2B8A0071BC08 /* CPColorPicker.m */; };
+		5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9491B9E2B8A0071BC08 /* CPColorPicker.xib */; };
+		5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF94B1B9E2B8A0071BC08 /* RGB-HSV.c */; };
+		5FEAF9571B9E2B8A0071BC08 /* CPHueWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF94D1B9E2B8A0071BC08 /* CPHueWheel.m */; };
+		5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF94E1B9E2B8A0071BC08 /* huePointer@2x.png */; };
+		5FEAF9591B9E2B8A0071BC08 /* CPBrightnessSaturationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9501B9E2B8A0071BC08 /* CPBrightnessSaturationView.m */; };
+		5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9521B9E2B8A0071BC08 /* CPAlphaSlider.m */; };
+		5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9531B9E2B8A0071BC08 /* crosshairs@2x.png */; };
+		5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */; };
+		5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */; };
+		5FEAF96F1B9E3AA40071BC08 /* UIViewController+SoftModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */; };
+		5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
@@ -95,6 +137,75 @@
 		5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchForwardingView.h; sourceTree = "<group>"; };
 		5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchForwardingView.m; sourceTree = "<group>"; };
+		5FEAF8811B9C66AE0071BC08 /* ConvenienceCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvenienceCategories.h; sourceTree = "<group>"; };
+		5FEAF8821B9C66AE0071BC08 /* ConvenienceCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConvenienceCategories.m; sourceTree = "<group>"; };
+		5FEAF8851B9C68A10071BC08 /* CMDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMDocument.h; sourceTree = "<group>"; };
+		5FEAF8861B9C68A10071BC08 /* CMDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMDocument.m; sourceTree = "<group>"; };
+		5FEAF8FB1B9E2A760071BC08 /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
+		5FEAF8FC1B9E2A760071BC08 /* invertedShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = invertedShadow.png; sourceTree = "<group>"; };
+		5FEAF8FD1B9E2A760071BC08 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		5FEAF8FE1B9E2A760071BC08 /* colorMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorMap.png; sourceTree = "<group>"; };
+		5FEAF8FF1B9E2A760071BC08 /* checker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checker.png; sourceTree = "<group>"; };
+		5FEAF9001B9E2A760071BC08 /* SKColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorPicker.h; sourceTree = "<group>"; };
+		5FEAF9011B9E2A760071BC08 /* SKColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorPicker.m; sourceTree = "<group>"; };
+		5FEAF9021B9E2A760071BC08 /* SKColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKColorPicker.xib; sourceTree = "<group>"; };
+		5FEAF9031B9E2A760071BC08 /* SKHueSatPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKHueSatPicker.h; sourceTree = "<group>"; };
+		5FEAF9041B9E2A760071BC08 /* SKHueSatPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKHueSatPicker.m; sourceTree = "<group>"; };
+		5FEAF9051B9E2A760071BC08 /* SKColorPickerSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorPickerSlider.h; sourceTree = "<group>"; };
+		5FEAF9061B9E2A760071BC08 /* SKColorPickerSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorPickerSlider.m; sourceTree = "<group>"; };
+		5FEAF9071B9E2A760071BC08 /* SKColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorView.h; sourceTree = "<group>"; };
+		5FEAF9081B9E2A760071BC08 /* SKColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorView.m; sourceTree = "<group>"; };
+		5FEAF9141B9E2AE80071BC08 /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		5FEAF9151B9E2AE80071BC08 /* color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = color.png; sourceTree = "<group>"; };
+		5FEAF9161B9E2AE80071BC08 /* linearGradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = linearGradient.png; sourceTree = "<group>"; };
+		5FEAF9171B9E2AE80071BC08 /* SKFillPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKFillPicker.h; sourceTree = "<group>"; };
+		5FEAF9181B9E2AE80071BC08 /* SKFillPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFillPicker.m; sourceTree = "<group>"; };
+		5FEAF9191B9E2AE80071BC08 /* SKNullViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKNullViewController.h; sourceTree = "<group>"; };
+		5FEAF91A1B9E2AE80071BC08 /* SKNullViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKNullViewController.m; sourceTree = "<group>"; };
+		5FEAF91B1B9E2AE80071BC08 /* SKImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKImagePicker.h; sourceTree = "<group>"; };
+		5FEAF91C1B9E2AE80071BC08 /* SKImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKImagePicker.m; sourceTree = "<group>"; };
+		5FEAF91D1B9E2AE80071BC08 /* SKImagePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKImagePicker.xib; sourceTree = "<group>"; };
+		5FEAF9261B9E2B010071BC08 /* SKGradientEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGradientEditor.h; sourceTree = "<group>"; };
+		5FEAF9271B9E2B010071BC08 /* SKGradientEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKGradientEditor.m; sourceTree = "<group>"; };
+		5FEAF9281B9E2B010071BC08 /* SKGradientEditor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKGradientEditor.xib; sourceTree = "<group>"; };
+		5FEAF9291B9E2B010071BC08 /* SKGradientPointEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGradientPointEditor.h; sourceTree = "<group>"; };
+		5FEAF92A1B9E2B010071BC08 /* SKGradientPointEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKGradientPointEditor.m; sourceTree = "<group>"; };
+		5FEAF92B1B9E2B010071BC08 /* SKGradientColorStopEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGradientColorStopEditor.h; sourceTree = "<group>"; };
+		5FEAF92C1B9E2B010071BC08 /* SKGradientColorStopEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKGradientColorStopEditor.m; sourceTree = "<group>"; };
+		5FEAF92D1B9E2B010071BC08 /* SKGradientColorStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGradientColorStop.h; sourceTree = "<group>"; };
+		5FEAF92E1B9E2B010071BC08 /* SKGradientColorStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKGradientColorStop.m; sourceTree = "<group>"; };
+		5FEAF92F1B9E2B010071BC08 /* SKColorStopDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorStopDetail.h; sourceTree = "<group>"; };
+		5FEAF9301B9E2B010071BC08 /* SKColorStopDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorStopDetail.m; sourceTree = "<group>"; };
+		5FEAF9311B9E2B010071BC08 /* SKColorStopDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SKColorStopDetail.xib; sourceTree = "<group>"; };
+		5FEAF93A1B9E2B2B0071BC08 /* SKFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKFill.h; sourceTree = "<group>"; };
+		5FEAF93B1B9E2B2B0071BC08 /* SKFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFill.m; sourceTree = "<group>"; };
+		5FEAF93C1B9E2B2B0071BC08 /* SKColorFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKColorFill.h; sourceTree = "<group>"; };
+		5FEAF93D1B9E2B2B0071BC08 /* SKColorFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKColorFill.m; sourceTree = "<group>"; };
+		5FEAF93E1B9E2B2B0071BC08 /* SKGradient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKGradient.h; sourceTree = "<group>"; };
+		5FEAF93F1B9E2B2B0071BC08 /* SKGradient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKGradient.m; sourceTree = "<group>"; };
+		5FEAF9401B9E2B2B0071BC08 /* SKImageFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKImageFill.h; sourceTree = "<group>"; };
+		5FEAF9411B9E2B2B0071BC08 /* SKImageFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKImageFill.m; sourceTree = "<group>"; };
+		5FEAF9471B9E2B8A0071BC08 /* CPColorPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPColorPicker.h; sourceTree = "<group>"; };
+		5FEAF9481B9E2B8A0071BC08 /* CPColorPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPColorPicker.m; sourceTree = "<group>"; };
+		5FEAF9491B9E2B8A0071BC08 /* CPColorPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CPColorPicker.xib; sourceTree = "<group>"; };
+		5FEAF94A1B9E2B8A0071BC08 /* RGB-HSV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RGB-HSV.h"; sourceTree = "<group>"; };
+		5FEAF94B1B9E2B8A0071BC08 /* RGB-HSV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "RGB-HSV.c"; sourceTree = "<group>"; };
+		5FEAF94C1B9E2B8A0071BC08 /* CPHueWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPHueWheel.h; sourceTree = "<group>"; };
+		5FEAF94D1B9E2B8A0071BC08 /* CPHueWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPHueWheel.m; sourceTree = "<group>"; };
+		5FEAF94E1B9E2B8A0071BC08 /* huePointer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huePointer@2x.png"; sourceTree = "<group>"; };
+		5FEAF94F1B9E2B8A0071BC08 /* CPBrightnessSaturationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPBrightnessSaturationView.h; sourceTree = "<group>"; };
+		5FEAF9501B9E2B8A0071BC08 /* CPBrightnessSaturationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPBrightnessSaturationView.m; sourceTree = "<group>"; };
+		5FEAF9511B9E2B8A0071BC08 /* CPAlphaSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPAlphaSlider.h; sourceTree = "<group>"; };
+		5FEAF9521B9E2B8A0071BC08 /* CPAlphaSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPAlphaSlider.m; sourceTree = "<group>"; };
+		5FEAF9531B9E2B8A0071BC08 /* crosshairs@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshairs@2x.png"; sourceTree = "<group>"; };
+		5FEAF95D1B9E2C7B0071BC08 /* UIView+computer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+computer.h"; sourceTree = "<group>"; };
+		5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+computer.m"; sourceTree = "<group>"; };
+		5FEAF9651B9E2E3A0071BC08 /* ShapeDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeDrawable.h; sourceTree = "<group>"; };
+		5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeDrawable.m; sourceTree = "<group>"; };
+		5FEAF96D1B9E3AA40071BC08 /* UIViewController+SoftModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SoftModal.h"; sourceTree = "<group>"; };
+		5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SoftModal.m"; sourceTree = "<group>"; };
+		5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,50 +242,24 @@
 		5FEAF7FE1B9788910071BC08 /* computer */ = {
 			isa = PBXGroup;
 			children = (
-				5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */,
-				5FEAF8491B9AD96E0071BC08 /* AddSubtractToggle.swift */,
-				5FEAF84A1B9AD96E0071BC08 /* DrawingView.swift */,
-				5FEAF84B1B9AD96E0071BC08 /* UIImage+SubImage.swift */,
-				5FEAF8551B9ADA3A0071BC08 /* UIImage+Trim.h */,
-				5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */,
-				5FEAF84C1B9AD96E0071BC08 /* Grabcut.h */,
-				5FEAF84D1B9AD96E0071BC08 /* Grabcut.mm */,
-				5FEAF84E1B9AD96E0071BC08 /* UIImageView+ImageRect.swift */,
+				5FEAF9631B9E2DD70071BC08 /* Image extraction */,
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
-				5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */,
-				5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */,
-				5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */,
-				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
-				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
-				5FEAF8201B978BF50071BC08 /* IconBar.m */,
-				5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */,
-				5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */,
-				5FEAF8381B98EAE10071BC08 /* OptionsView.h */,
-				5FEAF8391B98EAE10071BC08 /* OptionsView.m */,
-				5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */,
-				5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */,
-				5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */,
-				5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */,
-				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
-				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
-				5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */,
-				5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */,
-				5FEAF8161B9788B20071BC08 /* Canvas.h */,
-				5FEAF8171B9788B20071BC08 /* Canvas.m */,
-				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
-				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
-				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
-				5FEAF8231B979A010071BC08 /* PhotoDrawable.m */,
-				5FEAF8251B97A2720071BC08 /* TextDrawable.h */,
-				5FEAF8261B97A2720071BC08 /* TextDrawable.m */,
-				5FEAF82A1B97A9CC0071BC08 /* UIFont+Sizing.h */,
-				5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */,
+				5FEAF9601B9E2DAF0071BC08 /* Options menu */,
+				5FEAF9611B9E2DB60071BC08 /* Helpers */,
+				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
+				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
+				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
+				5FEAF9641B9E2DEF0071BC08 /* Drawables */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
 				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
-				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
+				5FEAF95C1B9E2B8E0071BC08 /* CPColorPicker */,
+				5FEAF9461B9E2B300071BC08 /* SKFill */,
+				5FEAF9391B9E2B050071BC08 /* GradientEditor */,
+				5FEAF9251B9E2AF10071BC08 /* FillPicker */,
+				5FEAF9131B9E2A7B0071BC08 /* SKColorPicker */,
 				5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */,
 				5FEAF8081B9788910071BC08 /* Main.storyboard */,
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
@@ -192,6 +277,181 @@
 				5FEAF8001B9788910071BC08 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5FEAF9131B9E2A7B0071BC08 /* SKColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8FB1B9E2A760071BC08 /* shadow.png */,
+				5FEAF8FC1B9E2A760071BC08 /* invertedShadow.png */,
+				5FEAF8FD1B9E2A760071BC08 /* circle.png */,
+				5FEAF8FE1B9E2A760071BC08 /* colorMap.png */,
+				5FEAF8FF1B9E2A760071BC08 /* checker.png */,
+				5FEAF9001B9E2A760071BC08 /* SKColorPicker.h */,
+				5FEAF9011B9E2A760071BC08 /* SKColorPicker.m */,
+				5FEAF9021B9E2A760071BC08 /* SKColorPicker.xib */,
+				5FEAF9031B9E2A760071BC08 /* SKHueSatPicker.h */,
+				5FEAF9041B9E2A760071BC08 /* SKHueSatPicker.m */,
+				5FEAF9051B9E2A760071BC08 /* SKColorPickerSlider.h */,
+				5FEAF9061B9E2A760071BC08 /* SKColorPickerSlider.m */,
+				5FEAF9071B9E2A760071BC08 /* SKColorView.h */,
+				5FEAF9081B9E2A760071BC08 /* SKColorView.m */,
+			);
+			name = SKColorPicker;
+			sourceTree = "<group>";
+		};
+		5FEAF9251B9E2AF10071BC08 /* FillPicker */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF9141B9E2AE80071BC08 /* image.png */,
+				5FEAF9151B9E2AE80071BC08 /* color.png */,
+				5FEAF9161B9E2AE80071BC08 /* linearGradient.png */,
+				5FEAF9171B9E2AE80071BC08 /* SKFillPicker.h */,
+				5FEAF9181B9E2AE80071BC08 /* SKFillPicker.m */,
+				5FEAF9191B9E2AE80071BC08 /* SKNullViewController.h */,
+				5FEAF91A1B9E2AE80071BC08 /* SKNullViewController.m */,
+				5FEAF91B1B9E2AE80071BC08 /* SKImagePicker.h */,
+				5FEAF91C1B9E2AE80071BC08 /* SKImagePicker.m */,
+				5FEAF91D1B9E2AE80071BC08 /* SKImagePicker.xib */,
+			);
+			name = FillPicker;
+			sourceTree = "<group>";
+		};
+		5FEAF9391B9E2B050071BC08 /* GradientEditor */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF9261B9E2B010071BC08 /* SKGradientEditor.h */,
+				5FEAF9271B9E2B010071BC08 /* SKGradientEditor.m */,
+				5FEAF9281B9E2B010071BC08 /* SKGradientEditor.xib */,
+				5FEAF9291B9E2B010071BC08 /* SKGradientPointEditor.h */,
+				5FEAF92A1B9E2B010071BC08 /* SKGradientPointEditor.m */,
+				5FEAF92B1B9E2B010071BC08 /* SKGradientColorStopEditor.h */,
+				5FEAF92C1B9E2B010071BC08 /* SKGradientColorStopEditor.m */,
+				5FEAF92D1B9E2B010071BC08 /* SKGradientColorStop.h */,
+				5FEAF92E1B9E2B010071BC08 /* SKGradientColorStop.m */,
+				5FEAF92F1B9E2B010071BC08 /* SKColorStopDetail.h */,
+				5FEAF9301B9E2B010071BC08 /* SKColorStopDetail.m */,
+				5FEAF9311B9E2B010071BC08 /* SKColorStopDetail.xib */,
+			);
+			name = GradientEditor;
+			sourceTree = "<group>";
+		};
+		5FEAF9461B9E2B300071BC08 /* SKFill */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF93A1B9E2B2B0071BC08 /* SKFill.h */,
+				5FEAF93B1B9E2B2B0071BC08 /* SKFill.m */,
+				5FEAF93C1B9E2B2B0071BC08 /* SKColorFill.h */,
+				5FEAF93D1B9E2B2B0071BC08 /* SKColorFill.m */,
+				5FEAF93E1B9E2B2B0071BC08 /* SKGradient.h */,
+				5FEAF93F1B9E2B2B0071BC08 /* SKGradient.m */,
+				5FEAF9401B9E2B2B0071BC08 /* SKImageFill.h */,
+				5FEAF9411B9E2B2B0071BC08 /* SKImageFill.m */,
+			);
+			name = SKFill;
+			sourceTree = "<group>";
+		};
+		5FEAF95C1B9E2B8E0071BC08 /* CPColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF9471B9E2B8A0071BC08 /* CPColorPicker.h */,
+				5FEAF9481B9E2B8A0071BC08 /* CPColorPicker.m */,
+				5FEAF9491B9E2B8A0071BC08 /* CPColorPicker.xib */,
+				5FEAF94A1B9E2B8A0071BC08 /* RGB-HSV.h */,
+				5FEAF94B1B9E2B8A0071BC08 /* RGB-HSV.c */,
+				5FEAF94C1B9E2B8A0071BC08 /* CPHueWheel.h */,
+				5FEAF94D1B9E2B8A0071BC08 /* CPHueWheel.m */,
+				5FEAF94E1B9E2B8A0071BC08 /* huePointer@2x.png */,
+				5FEAF94F1B9E2B8A0071BC08 /* CPBrightnessSaturationView.h */,
+				5FEAF9501B9E2B8A0071BC08 /* CPBrightnessSaturationView.m */,
+				5FEAF9511B9E2B8A0071BC08 /* CPAlphaSlider.h */,
+				5FEAF9521B9E2B8A0071BC08 /* CPAlphaSlider.m */,
+				5FEAF9531B9E2B8A0071BC08 /* crosshairs@2x.png */,
+			);
+			name = CPColorPicker;
+			sourceTree = "<group>";
+		};
+		5FEAF9601B9E2DAF0071BC08 /* Options menu */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8381B98EAE10071BC08 /* OptionsView.h */,
+				5FEAF8391B98EAE10071BC08 /* OptionsView.m */,
+				5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */,
+				5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */,
+				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
+				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
+			);
+			name = "Options menu";
+			sourceTree = "<group>";
+		};
+		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF82A1B97A9CC0071BC08 /* UIFont+Sizing.h */,
+				5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */,
+				5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */,
+				5FEAF85E1B9B8EC20071BC08 /* TouchForwardingView.m */,
+				5FEAF84B1B9AD96E0071BC08 /* UIImage+SubImage.swift */,
+				5FEAF8551B9ADA3A0071BC08 /* UIImage+Trim.h */,
+				5FEAF8561B9ADA3A0071BC08 /* UIImage+Trim.m */,
+				5FEAF84C1B9AD96E0071BC08 /* Grabcut.h */,
+				5FEAF84D1B9AD96E0071BC08 /* Grabcut.mm */,
+				5FEAF84E1B9AD96E0071BC08 /* UIImageView+ImageRect.swift */,
+				5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */,
+				5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */,
+				5FEAF8811B9C66AE0071BC08 /* ConvenienceCategories.h */,
+				5FEAF8821B9C66AE0071BC08 /* ConvenienceCategories.m */,
+				5FEAF95D1B9E2C7B0071BC08 /* UIView+computer.h */,
+				5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */,
+				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
+				5FEAF96D1B9E3AA40071BC08 /* UIViewController+SoftModal.h */,
+				5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5FEAF9621B9E2DC20071BC08 /* Edit UI */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */,
+				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
+				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
+				5FEAF8201B978BF50071BC08 /* IconBar.m */,
+				5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */,
+				5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */,
+				5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */,
+				5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */,
+			);
+			name = "Edit UI";
+			sourceTree = "<group>";
+		};
+		5FEAF9631B9E2DD70071BC08 /* Image extraction */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */,
+				5FEAF8491B9AD96E0071BC08 /* AddSubtractToggle.swift */,
+				5FEAF84A1B9AD96E0071BC08 /* DrawingView.swift */,
+			);
+			name = "Image extraction";
+			sourceTree = "<group>";
+		};
+		5FEAF9641B9E2DEF0071BC08 /* Drawables */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8161B9788B20071BC08 /* Canvas.h */,
+				5FEAF8171B9788B20071BC08 /* Canvas.m */,
+				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
+				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
+				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
+				5FEAF8231B979A010071BC08 /* PhotoDrawable.m */,
+				5FEAF8251B97A2720071BC08 /* TextDrawable.h */,
+				5FEAF8261B97A2720071BC08 /* TextDrawable.m */,
+				5FEAF9651B9E2E3A0071BC08 /* ShapeDrawable.h */,
+				5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */,
+				5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */,
+				5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */,
+			);
+			name = Drawables;
 			sourceTree = "<group>";
 		};
 		68F6F971700B15AF4B74FDF2 /* Pods */ = {
@@ -271,10 +531,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEAF90D1B9E2A760071BC08 /* checker.png in Resources */,
+				5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */,
+				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
+				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
+				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
+				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
 				5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */,
+				5FEAF9331B9E2B010071BC08 /* SKGradientEditor.xib in Resources */,
 				5FEAF80C1B9788910071BC08 /* Assets.xcassets in Resources */,
+				5FEAF90F1B9E2A760071BC08 /* SKColorPicker.xib in Resources */,
+				5FEAF90C1B9E2A760071BC08 /* colorMap.png in Resources */,
+				5FEAF90B1B9E2A760071BC08 /* circle.png in Resources */,
+				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
+				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
+				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
+				5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,31 +593,58 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
 				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
+				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */,
+				5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */,
+				5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
+				5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */,
+				5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */,
+				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,
 				5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
+				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
+				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
+				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
 				5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */,
 				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
+				5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */,
+				5FEAF9451B9E2B2B0071BC08 /* SKImageFill.m in Sources */,
 				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
+				5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
 				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,
+				5FEAF9591B9E2B8A0071BC08 /* CPBrightnessSaturationView.m in Sources */,
 				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
+				5FEAF9111B9E2A760071BC08 /* SKColorPickerSlider.m in Sources */,
+				5FEAF9431B9E2B2B0071BC08 /* SKColorFill.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
+				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,
+				5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */,
+				5FEAF96F1B9E3AA40071BC08 /* UIViewController+SoftModal.m in Sources */,
+				5FEAF9101B9E2A760071BC08 /* SKHueSatPicker.m in Sources */,
+				5FEAF9211B9E2AE80071BC08 /* SKFillPicker.m in Sources */,
+				5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */,
 				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
+				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
 				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
+				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
+				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
+				5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */,
 				5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */,
 				5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */,
+				5FEAF9571B9E2B8A0071BC08 /* CPHueWheel.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
