@@ -194,6 +194,12 @@
         case GPUIMAGE_FACES: cell.textLabel.text = @"Face Detection"; break;
 	}
     
+    BOOL enabled = YES;
+    if (index == GPUIMAGE_MASK) enabled = NO;
+    
+    cell.textLabel.alpha = enabled ? 1 : 0.5;
+    cell.userInteractionEnabled = enabled;
+    
     return cell;
 }
 

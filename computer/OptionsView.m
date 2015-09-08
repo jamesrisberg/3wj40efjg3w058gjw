@@ -120,7 +120,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     OptionsViewCellModel *model = self.models[indexPath.row];
-    if (model.onSelect) model.onSelect((id)[tableView cellForRowAtIndexPath:indexPath]);
+    // for some reason, dispatch_after is needed when presenting modals or something...
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (model.onSelect) model.onSelect((id)[tableView cellForRowAtIndexPath:indexPath]);
+    });
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
