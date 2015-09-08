@@ -79,6 +79,16 @@
 		5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */; };
 		5FEAF96F1B9E3AA40071BC08 /* UIViewController+SoftModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */; };
 		5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */; };
+		5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */; };
+		5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */; };
+		5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9781B9F160A0071BC08 /* ShowcaseFilterViewController.m */; };
+		5FEAF9821B9F160A0071BC08 /* CustomFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9791B9F160A0071BC08 /* CustomFilter.fsh */; };
+		5FEAF9831B9F160A0071BC08 /* lookup_amatorka.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97A1B9F160A0071BC08 /* lookup_amatorka.png */; };
+		5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97B1B9F160A0071BC08 /* lookup_miss_etikate.png */; };
+		5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97C1B9F160A0071BC08 /* lookup_soft_elegance_1.png */; };
+		5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */; };
+		5FEAF9871B9F160A0071BC08 /* voroni_points2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */; };
+		5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
@@ -206,6 +216,19 @@
 		5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SoftModal.m"; sourceTree = "<group>"; };
 		5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowcaseFilterListController.h; sourceTree = "<group>"; };
+		5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowcaseFilterListController.m; sourceTree = "<group>"; };
+		5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowcaseFilterViewController.xib; sourceTree = "<group>"; };
+		5FEAF9771B9F160A0071BC08 /* ShowcaseFilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowcaseFilterViewController.h; sourceTree = "<group>"; };
+		5FEAF9781B9F160A0071BC08 /* ShowcaseFilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowcaseFilterViewController.m; sourceTree = "<group>"; };
+		5FEAF9791B9F160A0071BC08 /* CustomFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CustomFilter.fsh; sourceTree = "<group>"; };
+		5FEAF97A1B9F160A0071BC08 /* lookup_amatorka.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_amatorka.png; sourceTree = "<group>"; };
+		5FEAF97B1B9F160A0071BC08 /* lookup_miss_etikate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_miss_etikate.png; sourceTree = "<group>"; };
+		5FEAF97C1B9F160A0071BC08 /* lookup_soft_elegance_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_1.png; sourceTree = "<group>"; };
+		5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lookup_soft_elegance_2.png; sourceTree = "<group>"; };
+		5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voroni_points2.png; sourceTree = "<group>"; };
+		5FEAF9891B9F168E0071BC08 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,6 +278,7 @@
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
 				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
+				5FEAF9881B9F160E0071BC08 /* Filtering */,
 				5FEAF95C1B9E2B8E0071BC08 /* CPColorPicker */,
 				5FEAF9461B9E2B300071BC08 /* SKFill */,
 				5FEAF9391B9E2B050071BC08 /* GradientEditor */,
@@ -454,6 +478,26 @@
 			name = Drawables;
 			sourceTree = "<group>";
 		};
+		5FEAF9881B9F160E0071BC08 /* Filtering */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF9891B9F168E0071BC08 /* FilterViewController.h */,
+				5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */,
+				5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */,
+				5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */,
+				5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */,
+				5FEAF9771B9F160A0071BC08 /* ShowcaseFilterViewController.h */,
+				5FEAF9781B9F160A0071BC08 /* ShowcaseFilterViewController.m */,
+				5FEAF9791B9F160A0071BC08 /* CustomFilter.fsh */,
+				5FEAF97A1B9F160A0071BC08 /* lookup_amatorka.png */,
+				5FEAF97B1B9F160A0071BC08 /* lookup_miss_etikate.png */,
+				5FEAF97C1B9F160A0071BC08 /* lookup_soft_elegance_1.png */,
+				5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */,
+				5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */,
+			);
+			name = Filtering;
+			sourceTree = "<group>";
+		};
 		68F6F971700B15AF4B74FDF2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,10 +575,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FEAF9821B9F160A0071BC08 /* CustomFilter.fsh in Resources */,
 				5FEAF90D1B9E2A760071BC08 /* checker.png in Resources */,
 				5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */,
+				5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */,
 				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
 				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
+				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
+				5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */,
 				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
@@ -543,13 +591,16 @@
 				5FEAF80C1B9788910071BC08 /* Assets.xcassets in Resources */,
 				5FEAF90F1B9E2A760071BC08 /* SKColorPicker.xib in Resources */,
 				5FEAF90C1B9E2A760071BC08 /* colorMap.png in Resources */,
+				5FEAF9871B9F160A0071BC08 /* voroni_points2.png in Resources */,
 				5FEAF90B1B9E2A760071BC08 /* circle.png in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
 				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
+				5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */,
 				5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */,
+				5FEAF9831B9F160A0071BC08 /* lookup_amatorka.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +645,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
+				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
@@ -603,6 +655,7 @@
 				5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */,
 				5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
+				5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */,
 				5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */,
 				5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */,
 				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,
@@ -637,6 +690,7 @@
 				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
 				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
+				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,

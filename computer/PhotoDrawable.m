@@ -8,6 +8,7 @@
 
 #import "PhotoDrawable.h"
 #import "computer-Swift.h"
+#import "FilterViewController.h"
 
 @interface PhotoDrawable () <UIImagePickerControllerDelegate>
 
@@ -80,6 +81,7 @@
     NSMutableArray *options = [super optionsCellModels].mutableCopy;
     
     __weak PhotoDrawable *weakSelf = self;
+    
     OptionsViewCellModel *cutOut = [OptionsViewCellModel new];
     cutOut.onCreate = ^(OptionsTableViewCell *cell) {
         cell.textLabel.text = @"Cut out…";
@@ -89,7 +91,24 @@
     };
     [options addObject:cutOut];
     
+    OptionsViewCellModel *filter = [OptionsViewCellModel new];
+    filter.onCreate = ^(OptionsTableViewCell *cell) {
+        cell.textLabel.text = @"Filter…";
+    };
+    filter.onSelect = ^(OptionsTableViewCell *cell) {
+        [weakSelf addFilter];
+    };
+    [options addObject:filter];
+    
     return options;
+}
+
+- (void)addFilter {
+    UIImage *image = [self.imageView.image resizedWithMaxDimension:1400];
+    FilterViewController *filterVC = [[FilterViewController alloc] initWithImage:image callback:^(UIImage *filtered) {
+        [self setImage:filtered];
+    }];
+    [self.vcForPresentingModals presentViewController:filterVC animated:YES completion:nil];
 }
 
 - (void)cutOut {
