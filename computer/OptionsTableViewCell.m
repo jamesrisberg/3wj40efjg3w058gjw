@@ -28,15 +28,17 @@
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
     [super setHighlighted:highlighted animated:animated];
-    UIColor *bgColor = highlighted ? [self highlightedBackgroundColor] : [UIColor clearColor];
-    if (animated) {
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+    if (self.selectionStyle != UITableViewCellSelectionStyleNone) {
+        UIColor *bgColor = highlighted ? [self highlightedBackgroundColor] : [UIColor clearColor];
+        if (animated) {
+            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+                self.backgroundColor = bgColor;
+            } completion:^(BOOL finished) {
+                
+            }];
+        } else {
             self.backgroundColor = bgColor;
-        } completion:^(BOOL finished) {
-            
-        }];
-    } else {
-        self.backgroundColor = bgColor;
+        }
     }
 }
 

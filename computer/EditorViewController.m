@@ -132,6 +132,7 @@
         self.toolbarHeight = newToolbarHeight;
         toolbarView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, newToolbarHeight);
         toolbarView.alpha = 0;
+        [toolbarView layoutIfNeeded];
         [UIView animateWithDuration:0.3 delay:0 options:0 animations:^{
             oldToolbarView.alpha = 0;
             toolbarView.alpha = 1;

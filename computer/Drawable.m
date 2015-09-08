@@ -7,6 +7,8 @@
 //
 
 #import "Drawable.h"
+#import "MultiButtonOptionsTableViewCell.h"
+#import "Canvas.h"
 
 @implementation Drawable
 
@@ -54,8 +56,43 @@
 #pragma mark Options
 
 - (NSArray *)optionsCellModels {
-    return @[];
+    __weak Drawable *weakSelf = self;
+    OptionsViewCellModel *actions = [OptionsViewCellModel new];
+    actions.cellClass = [MultiButtonOptionsTableViewCell class];
+    actions.onCreate = ^(OptionsTableViewCell *cell){
+        MultiButtonOptionsTableViewCell *multiButtonCell = (id)cell;
+        multiButtonCell.buttonTitles = @[NSLocalizedString(@"Delete", @""), NSLocalizedString(@"Duplicate", @"")];
+        multiButtonCell.buttonActions = @[
+                                          ^{ // delete
+                                              [weakSelf delete:nil];
+                                          },
+                                           ^{ // duplicate
+                                               [weakSelf duplicate:nil];
+                                           }
+                                          ];
+    };
+    
+    return @[actions];
 }
+
+#pragma mark Actions
+- (void)delete:(id)sender {
+    if (self.canvas.selection == self) self.canvas.selection = nil;
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.scale /= 100;
+        self.alpha = 0;
+    } completion:^(BOOL finished) {
+        if (self.canvas.selection == self) self.canvas.selection = nil;
+        [self removeFromSuperview];
+    }];
+}
+
+- (void)duplicate:(id)sender {
+    Drawable *dupe = [self copy];
+    [self.canvas insertSubview:dupe aboveSubview:self];
+    dupe.center = CGPointMake(dupe.center.x + 20, dupe.center.y + 20);
+}
+
 
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -67,12 +104,23 @@
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithFrame:CGRectZero]; // deliberately DON'T call super
+    self = [self init]; // deliberately DON'T call super
     self.bounds = [[aDecoder decodeObjectForKey:@"bounds"] CGRectValue];
     self.center = [[aDecoder decodeObjectForKey:@"center"] CGPointValue];
     self.scale = [aDecoder decodeDoubleForKey:@"scale"];
     self.rotation = [aDecoder decodeDoubleForKey:@"rotation"];
     return self;
+}
+
+#pragma mark Copying
+
+- (id)copy {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
 }
 
 @end

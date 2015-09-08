@@ -10,7 +10,7 @@
 #import "OptionsView.h"
 
 @class Canvas;
-@interface Drawable : UIView
+@interface Drawable : UIView <NSCopying>
 
 - (void)primaryEditAction;
 - (void)setup; // override this

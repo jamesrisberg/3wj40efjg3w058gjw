@@ -89,7 +89,8 @@
     NSString *reuseId = NSStringFromClass(model.cellClass);
     OptionsTableViewCell *cell = nil; // [tableView dequeueReusableCellWithIdentifier:reuseId];
     if (!cell) {
-        cell = [[OptionsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
+        Class cls = model.cellClass;
+        cell = [[cls alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
         cell.underlyingBlurEffect = self.underlyingBlurEffect;
     }
     if (model.onCreate) model.onCreate(cell);

@@ -10,4 +10,7 @@
 
 @interface MultiButtonOptionsTableViewCell : OptionsTableViewCell
 
+@property (nonatomic) NSArray *buttonTitles;
+@property (nonatomic) NSArray *buttonActions;
+
 @end
