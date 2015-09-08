@@ -17,6 +17,7 @@
     NSTimer *_singleTouchPressTimer;
     CGPoint _positionAtStartOfSingleTouchTimer;
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
+    __weak Drawable *_selectionAfterFirstTap;
 }
 
 @end
@@ -102,7 +103,10 @@
         if ([_singleTouchPressTimer isValid]) {
             // we're still in a valid single press;
             self.selection = [self doHitTest:[touches.anyObject locationInView:self]];
-            if ([[touches anyObject] tapCount] == 2) {
+            if ([[touches anyObject] tapCount] == 1) {
+                _selectionAfterFirstTap = self.selection;
+            }
+            if ([[touches anyObject] tapCount] == 2 && self.selection == _selectionAfterFirstTap) {
                 [self.selection primaryEditAction];
             }
         }
