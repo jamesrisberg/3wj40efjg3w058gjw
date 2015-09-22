@@ -110,16 +110,21 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
         self.cropDrawingView!.onTouchUp = { [weak self] in
             var rect = self!.cropDrawingView!.boundingRect!
             if rect.size.width>0 && rect.size.height>0 && CGRectIntersectsRect(rect, self!.cropDrawingImageView!.bounds) {
-                let padding: CGFloat = (self!.view.bounds.size.width + self!.view.bounds.size.height)/2 * 0.02
+                /*let padding: CGFloat = (self!.view.bounds.size.width + self!.view.bounds.size.height)/2 * 0.02
                 rect.origin.x -= padding
                 rect.origin.y -= padding
                 rect.size.width += padding*2
-                rect.size.height += padding*2
+                rect.size.height += padding*2*/
                 
                 let viewSize = self!.cropDrawingImageView!.bounds.size
                 let imageSize = self!.cropDrawingImageView!.image!.size
+                let scaleX = imageSize.width/viewSize.width
+                let scaleY = imageSize.height/viewSize.height
                 let scale = CGAffineTransformMakeScale(imageSize.width/viewSize.width, imageSize.height/viewSize.height)
-                var cropRect = CGRectApplyAffineTransform(CGRectIntersection(rect, self!.cropDrawingImageView!.bounds), scale)
+                // var cropRect = CGRectApplyAffineTransform(CGRectIntersection(rect, self!.cropDrawingImageView!.bounds), scale)
+                var cropRect = CGRectMake(rect.origin.x * scaleX, rect.origin.y * scaleY, rect.size.width * scaleX, rect.size.height * scaleY)
+                let imageBounds = CGRectMake(0, 0, imageSize.width, imageSize.height)
+                cropRect = CGRectIntersection(cropRect, imageBounds)
                 cropRect = CGRectIntegral(cropRect)
                 
                 self!.cropRect = cropRect
@@ -150,11 +155,11 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
         }
         
         croppingNavItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "cancel")
-        croppingNavItem.title = "New Sticker"
-        croppingNavItem.prompt = "Draw a box around the sticker"
+        croppingNavItem.title = "Cut Out"
+        croppingNavItem.prompt = "Draw a box around an object"
         maskingNavItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Done, target: self, action: "done")
         maskingNavItem.prompt = "Scribble to add or remove parts of the image"
-        maskingNavItem.title = "New Sticker"
+        maskingNavItem.title = "Cut Out"
         navBar!.items = [croppingNavItem]
         
         state = State.Cropping
