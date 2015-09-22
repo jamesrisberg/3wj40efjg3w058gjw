@@ -14,5 +14,8 @@
 @property (nonatomic) UIBezierPath *path;
 - (void)fitContent;
 @property (nonatomic) SKFill *fill;
+@property (nonatomic) UIColor *strokeColor; // TODO: implement stroke
+@property (nonatomic) CGFloat strokeWidth;
+- (void)_setPathWithoutFittingContent:(UIBezierPath *)path;
 
 @end

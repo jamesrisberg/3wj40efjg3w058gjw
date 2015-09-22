@@ -83,6 +83,15 @@
     };
     InsertableItem *pen = [InsertableItem new];
     pen.icon = [UIImage imageNamed:@"Pen"];
+    pen.action = ^{
+        ShapeDrawable *d = [ShapeDrawable new];
+        d.fill = nil;
+        d.path = nil;
+        d.strokeColor = [UIColor redColor];
+        d.strokeWidth = 2;
+        [weakSelf.editorVC.canvas insertDrawable:d];
+        [weakSelf.editorVC startFreehandDrawingToShape:d];
+    };
     InsertableItem *circle = [InsertableItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
     circle.action = ^{
@@ -96,6 +105,7 @@
     square.icon = [UIImage imageNamed:@"Square"];
     square.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
+        d.fill = [[SKColorFill alloc] initWithColor:[UIColor redColor]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     

@@ -14,6 +14,8 @@
 #import "OptionsView.h"
 #import "ShapeStackList.h"
 #import "CGPointExtras.h"
+#import "ShapeDrawable.h"
+#import "FreehandInputView.h"
 
 @interface EditorViewController () <UIScrollViewDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -30,6 +32,8 @@
 @property (nonatomic) Canvas *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
 @property (nonatomic) UIScrollView *dummyScrollView;
+
+@property (nonatomic) UIView *transientOverlayView;
 
 @end
 
@@ -85,7 +89,7 @@
     self.toolbar.frame = CGRectMake(0, self.view.bounds.size.height-self.toolbarHeight, self.view.bounds.size.width, self.toolbarHeight);
     self.toolbarView.frame = self.toolbar.bounds;
     self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin; // set the autoresizing mask so that this view is positioned currently during the transition to a NEW toolbarView; when the toolbar's height changes, the old toolbar view should stay in the middle
-    self.dummyScrollView.frame = self.view.bounds;
+    self.transientOverlayView.frame = self.view.bounds;
 }
 
 - (void)updateSelectionRect {
@@ -110,6 +114,14 @@
     if (self.toolbarView == self.optionsView) {
         self.toolbarView = self.iconBar;
     }
+}
+
+#pragma mark Overlays
+
+- (void)setTransientOverlayView:(UIView *)transientOverlayView {
+    [_transientOverlayView removeFromSuperview];
+    _transientOverlayView = transientOverlayView;
+    [self.view insertSubview:_transientOverlayView belowSubview:self.toolbar];
 }
 
 #pragma mark Toolbar
@@ -157,7 +169,7 @@
             self.toolbarView = done;
             
             self.dummyScrollView = [UIScrollView new];
-            [self.view insertSubview:self.dummyScrollView aboveSubview:self.canvas];
+            self.transientOverlayView = self.dummyScrollView;
             self.dummyScrollView.delegate = self;
             self.dummyScrollView.showsHorizontalScrollIndicator = self.dummyScrollView.showsVerticalScrollIndicator = NO;
             self.dummyScrollView.directionalLockEnabled = NO;
@@ -172,8 +184,9 @@
             self.canvas.selection = nil;
         } else {
             self.toolbarView = self.iconBar;
-            [self.dummyScrollView removeFromSuperview];
-            self.dummyScrollView = nil;
+            if (self.transientOverlayView == self.dummyScrollView) {
+                self.transientOverlayView = nil;
+            }
         }
     }
 }
@@ -240,6 +253,27 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return _dummyScrollViewZoomingView;
+}
+
+#pragma mark Freehand Drawing
+
+- (void)startFreehandDrawingToShape:(ShapeDrawable *)shape {
+    UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+    done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
+    [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+    [done addTarget:self action:@selector(endFreehandDrawing) forControlEvents:UIControlEventTouchUpInside];
+    self.toolbarView = done;
+    
+    FreehandInputView *inputView = [FreehandInputView new];
+    inputView.shape = shape;
+    self.transientOverlayView = inputView;
+}
+
+- (void)endFreehandDrawing {
+    self.toolbarView = self.iconBar;
+    if ([self.transientOverlayView isKindOfClass:[FreehandInputView class]]) {
+        self.transientOverlayView = nil;
+    }
 }
 
 @end

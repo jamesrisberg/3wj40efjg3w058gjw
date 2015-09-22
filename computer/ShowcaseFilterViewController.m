@@ -57,6 +57,7 @@
     
     // Note: I needed to start camera capture after the view went on the screen, when a partially transition of navigation view controller stopped capturing via viewWilDisappear.
     // [videoCamera startCameraCapture];
+    [picture processImage];
 }
 
 - (void)viewDidUnload

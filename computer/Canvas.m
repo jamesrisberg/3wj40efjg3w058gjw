@@ -18,6 +18,7 @@
     CGPoint _positionAtStartOfSingleTouchTimer;
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
     __weak Drawable *_selectionAfterFirstTap;
+    CGRect _previousTouchBoundsInSelection;
 }
 
 @end
@@ -50,6 +51,9 @@
         NSArray *down = _touches.allObjects;
         CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
         _currentGestureTransformsDrawableAboutTouchPoint = [self.selection pointInside:[self.selection convertPoint:touchMidpoint fromView:self] withEvent:nil];
+    }
+    if (self.selection) {
+        _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.selection];
     }
 }
 
@@ -92,8 +96,14 @@
         }
         
         self.selection.center = CGPointMake(self.selection.center.x + pos.x - prevPos.x, self.selection.center.y + pos.y - prevPos.y);
+    } else if (_touches.count == 3) {
+        if (self.selection) {
+            CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.selection];
+            CGSize internalSize = CGSizeMake(self.selection.bounds.size.width + touchBounds.size.width - _previousTouchBoundsInSelection.size.width, self.selection.bounds.size.height + touchBounds.size.height - _previousTouchBoundsInSelection.size.height);
+            [self.selection setInternalSize:internalSize];
+            _previousTouchBoundsInSelection = touchBounds;
+        }
     }
-    // TODO: three-finger aspect-ratio-insensitive scaling
     self.selectionRectNeedUpdate();
 }
 
@@ -124,6 +134,17 @@
 - (void)longPress {
     self.editorShapeStackList.drawables = [self allHitsAtPoint:[_touches.anyObject locationInView:self]];
     [self.editorShapeStackList show];
+}
+
+- (CGRect)boundingRectForTouchesUsingCoordinateSpaceOfView:(UIView *)view {
+    CGPoint p1 = [[_touches anyObject] locationInView:view];
+    CGRect rect = CGRectMake(p1.x, p1.y, 0, 0);
+    for (UITouch *touch in _touches) {
+        CGPoint p = [touch locationInView:view];
+        CGRect r = CGRectMake(p.x, p.y, 0, 0);
+        rect = CGRectUnion(rect, r);
+    }
+    return rect;
 }
 
 #pragma mark Selection

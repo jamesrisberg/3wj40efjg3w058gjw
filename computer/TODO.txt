@@ -1,0 +1,7 @@
+- fix gpuimage -processImage issue
+- fix extraction
+- rename 'sticker' to 'extract'
+- make options menu into collection view
+- convert freehand to path
+- edit stroke
+- change freehand input color and size

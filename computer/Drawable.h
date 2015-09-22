@@ -20,4 +20,6 @@
 - (Canvas *)canvas;
 @property (nonatomic,copy) void (^onShapeUpdate)();
 
+- (void)setInternalSize:(CGSize)size;
+
 @end

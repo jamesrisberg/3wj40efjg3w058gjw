@@ -93,6 +93,11 @@
     dupe.center = CGPointMake(dupe.center.x + 20, dupe.center.y + 20);
 }
 
+#pragma mark Resize
+
+- (void)setInternalSize:(CGSize)size {
+    self.bounds = CGRectMake(0, 0, size.width, size.height);
+}
 
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {

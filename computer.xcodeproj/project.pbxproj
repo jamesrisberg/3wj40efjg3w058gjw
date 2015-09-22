@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -95,6 +96,9 @@
 /* Begin PBXFileReference section */
 		044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-computer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.release.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.release.xcconfig"; sourceTree = "<group>"; };
+		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
+		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
+		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
 				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
+				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
+				5F6110061BB1144E00DB4C82 /* FreehandInputView.m */,
 				5FEAF9881B9F160E0071BC08 /* Filtering */,
 				5FEAF95C1B9E2B8E0071BC08 /* CPColorPicker */,
 				5FEAF9461B9E2B300071BC08 /* SKFill */,
@@ -289,6 +295,7 @@
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
 				5FEAF80D1B9788910071BC08 /* LaunchScreen.storyboard */,
 				5FEAF8101B9788910071BC08 /* Info.plist */,
+				5F6110021BB1128900DB4C82 /* TODO.txt */,
 				5FEAF7FF1B9788910071BC08 /* Supporting Files */,
 				5FEAF8471B9AD96D0071BC08 /* computer-Bridging-Header.h */,
 			);
@@ -651,6 +658,7 @@
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
 				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
+				5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */,
 				5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */,
 				5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */,
 				5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */,

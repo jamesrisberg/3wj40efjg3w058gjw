@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 @class Canvas;
 @class ShapeStackList;
+@class ShapeDrawable;
 
 @interface EditorViewController : UIViewController
 
 @property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;
 @property (nonatomic) BOOL scrollModeActive;
+- (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
 
 @end
