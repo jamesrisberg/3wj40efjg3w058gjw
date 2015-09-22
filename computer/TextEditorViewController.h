@@ -10,7 +10,7 @@
 
 @interface TextEditorViewController : UIViewController
 
-@property (nonatomic) NSString *text;
-@property (nonatomic,copy) void (^textChanged)(NSString *text);
+@property (nonatomic) NSAttributedString *text;
+@property (nonatomic,copy) void (^textChanged)(NSAttributedString *text);
 
 @end

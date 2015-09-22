@@ -9,10 +9,12 @@
 #import "TextDrawable.h"
 #import "UIFont+Sizing.h"
 #import "TextEditorViewController.h"
+#import "NSAttributedString+ResizeToFit.h"
 
 @interface TextDrawable ()
 
 @property (nonatomic) UILabel *label;
+@property (nonatomic) NSAttributedString *attributedString;
 
 @end
 
@@ -21,26 +23,32 @@
 - (void)setup {
     [super setup];
     self.label = [UILabel new];
-    self.label.textAlignment = NSTextAlignmentCenter;
-    self.label.text = @"Double-tap to change text";
-    self.label.textColor = [UIColor blackColor];
     self.label.numberOfLines = 0;
+    
+    NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    NSDictionary *defaultAttrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: para};
+    self.attributedString = [[NSAttributedString alloc] initWithString:@"Double-tap to change text" attributes:defaultAttrs];
     [self addSubview:self.label];
+}
+
+- (void)setAttributedString:(NSAttributedString *)attributedString {
+    _attributedString = attributedString;
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.label.frame = self.bounds;
-    if (self.label.text.length > 0) {
-        self.label.font = [self.label.font fontWithSize:[self.label.font maximumPointSizeThatFitsText:self.label.text inSize:self.bounds.size]];
+    if (self.attributedString.length > 0) {
+        self.label.attributedText = [self.attributedString resizeToFitInside:self.bounds.size];
     }
 }
 
 - (void)primaryEditAction {
     TextEditorViewController *editor = [TextEditorViewController new];
-    editor.text = self.label.text;
-    [editor setTextChanged:^(NSString *text) {
-        self.label.text = text;
+    editor.text = self.attributedString;
+    [editor setTextChanged:^(NSAttributedString *text) {
+        self.attributedString = text;
         [self setNeedsLayout];
     }];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
@@ -50,12 +58,12 @@
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
-    [aCoder encodeObject:self.label.attributedText forKey:@"attributedText"];
+    [aCoder encodeObject:self.attributedString forKey:@"attributedText"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    self.label.attributedText = [aDecoder decodeObjectForKey:@"attributedText"];
+    self.attributedString = [aDecoder decodeObjectForKey:@"attributedText"];
     return self;
 }
 

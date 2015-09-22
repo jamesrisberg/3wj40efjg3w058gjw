@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
+		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
+		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -99,6 +101,10 @@
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
 		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
+		5F6110081BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+ResizeToFit.h"; sourceTree = "<group>"; };
+		5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ResizeToFit.m"; sourceTree = "<group>"; };
+		5F61100D1BB1E05C00DB4C82 /* SKFontPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKFontPicker.h; sourceTree = "<group>"; };
+		5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFontPicker.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -248,6 +254,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F6110111BB1E06000DB4C82 /* Text editing */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
+				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
+				5F61100D1BB1E05C00DB4C82 /* SKFontPicker.h */,
+				5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */,
+			);
+			name = "Text editing";
+			sourceTree = "<group>";
+		};
 		5FEAF7F31B9788910071BC08 = {
 			isa = PBXGroup;
 			children = (
@@ -280,8 +297,7 @@
 				5FEAF9641B9E2DEF0071BC08 /* Drawables */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
-				5FEAF8301B97AB660071BC08 /* TextEditorViewController.h */,
-				5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */,
+				5F6110111BB1E06000DB4C82 /* Text editing */,
 				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
 				5F6110061BB1144E00DB4C82 /* FreehandInputView.m */,
 				5FEAF9881B9F160E0071BC08 /* Filtering */,
@@ -437,6 +453,8 @@
 				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
 				5FEAF96D1B9E3AA40071BC08 /* UIViewController+SoftModal.h */,
 				5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */,
+				5F6110081BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.h */,
+				5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -651,6 +669,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
@@ -673,6 +692,7 @@
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
 				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
+				5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */,
 				5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */,
 				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
 				5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */,
