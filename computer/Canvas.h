@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Drawable, ShapeStackList;
 
-@interface Canvas : UIView
+@interface Canvas : UIView <NSCopying>
 
 - (void)insertDrawable:(Drawable *)drawable;
 @property (nonatomic) Drawable *selection;

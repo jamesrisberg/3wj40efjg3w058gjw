@@ -221,4 +221,13 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
+}
+
+- (id)copy {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
+    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
+}
+
 @end

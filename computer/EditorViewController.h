@@ -18,4 +18,6 @@
 @property (nonatomic) BOOL scrollModeActive;
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
 
++ (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback;
+
 @end

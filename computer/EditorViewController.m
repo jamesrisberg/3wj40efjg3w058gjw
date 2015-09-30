@@ -33,6 +33,8 @@
 @property (nonatomic) ShapeStackList *shapeStackList;
 @property (nonatomic) UIScrollView *dummyScrollView;
 
+@property (nonatomic,copy) void (^modalEditingCallback)(Canvas *canvas);
+
 @property (nonatomic) UIView *transientOverlayView;
 
 @end
@@ -42,17 +44,15 @@
 #pragma mark Setup
 
 - (void)viewDidLoad {
+    __weak EditorViewController *weakSelf = self;
+    
     [super viewDidLoad];
-    self.canvas = [Canvas new];
-    [self.view addSubview:self.canvas];
     self.toolbar = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
     [self.view addSubview:self.toolbar];
     self.iconBar = [IconBar new];
     self.iconBar.editor = self;
-    
-    __weak EditorViewController *weakSelf = self;
-    self.canvas.selectionRectNeedUpdate = ^{
-        [weakSelf updateSelectionRect];
+    self.iconBar.onDoneButtonPressed = ^{
+        [weakSelf doneButtonPressed];
     };
     
     self.optionsView = [OptionsView new];
@@ -74,14 +74,35 @@
     self.shapeStackList.onDrawableSelected = ^(Drawable *drawable){
         weakSelf.canvas.selection = drawable;
     };
-    self.canvas.editorShapeStackList = self.shapeStackList;
+    
+    [self reinitializeWithCanvas:[Canvas new]];
 }
+
+- (void)setModalEditingCallback:(void (^)(Canvas *))modalEditingCallback {
+    _modalEditingCallback = modalEditingCallback;
+    self.iconBar.isModalEditing = modalEditingCallback != nil;
+}
+
+- (void)reinitializeWithCanvas:(Canvas *)canvas {
+    __weak EditorViewController *weakSelf = self;
+    // clean up old canvas:
+    [self.canvas removeFromSuperview];
+    self.canvas.editorShapeStackList = nil;
+    self.canvas.selectionRectNeedUpdate = nil;
+    // set up new canvas:
+    self.canvas = canvas;
+    self.canvas.editorShapeStackList = self.shapeStackList;
+    self.canvas.selectionRectNeedUpdate = ^{
+        [weakSelf updateSelectionRect];
+    };
+    [self.view insertSubview:self.canvas atIndex:0];
+}
+
+#pragma mark Layout
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
-
-#pragma mark Layout
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -274,6 +295,19 @@
     if ([self.transientOverlayView isKindOfClass:[FreehandInputView class]]) {
         self.transientOverlayView = nil;
     }
+}
+
+#pragma mark Modal editing
+
++ (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback {
+    EditorViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"Editor"];
+    [vc reinitializeWithCanvas:[canvas copy]];
+    vc.modalEditingCallback = callback;
+    return vc;
+}
+
+- (void)doneButtonPressed {
+    
 }
 
 @end

@@ -13,5 +13,7 @@
 @interface IconBar : UIView
 
 @property (nonatomic,weak) EditorViewController *editor;
+@property (nonatomic,copy) void (^onDoneButtonPressed)();
+@property (nonatomic) BOOL isModalEditing;
 
 @end
