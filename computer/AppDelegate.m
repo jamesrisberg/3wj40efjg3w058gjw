@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "EditorViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    EditorViewController *editorVC = (id)self.window.rootViewController;
+    NSURL *singleDoc  = [[CMDocument documentsURL] URLByAppendingPathComponent:@"doc.computerdoc"];
+    NSLog(@"Doc: %@", singleDoc);
+    editorVC.document = [[CMDocument alloc] initWithFileURL:singleDoc];
     return YES;
 }
 

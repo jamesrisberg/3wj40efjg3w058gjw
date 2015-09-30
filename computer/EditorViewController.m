@@ -79,6 +79,13 @@
     };
     
     [self reinitializeWithCanvas:[Canvas new]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationWillTerminateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)setModalEditingCallback:(void (^)(Canvas *))modalEditingCallback {
@@ -99,6 +106,52 @@
         [weakSelf updateSelectionRect];
     };
     [self.view insertSubview:self.canvas atIndex:0];
+}
+
+#pragma mark Document
+
+- (void)setDocument:(CMDocument *)document {
+    void (^update)() = ^(CMDocument *doc) {
+        _document.delegate = nil;
+        
+        _document = document;
+        document.delegate = self;
+        [document openWithCompletionHandler:^(BOOL success) {
+            
+        }];
+    };
+    if (_document) {
+        [self saveWithCallback:update];
+    } else {
+        update();
+    }
+}
+
+- (void)save {
+    [self saveWithCallback:^{}];
+}
+
+- (void)saveWithCallback:(void(^)())callback {
+    [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+        callback();
+    }];
+}
+
+#pragma mark Document delegate
+- (Canvas *)canvasForDocument:(CMDocument *)document {
+    return self.canvas;
+}
+
+- (void)document:(CMDocument *)document loadedCanvas:(Canvas *)canvas {
+    [self reinitializeWithCanvas:canvas];
+}
+
+- (UIImage *)canvasSnapshotForDocument:(CMDocument *)document {
+    UIGraphicsBeginImageContext(self.canvas.bounds.size);
+    [self.canvas drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:NO];
+    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return snapshot;
 }
 
 #pragma mark Layout

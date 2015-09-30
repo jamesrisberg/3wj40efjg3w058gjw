@@ -10,8 +10,9 @@
 @class Canvas;
 @class ShapeStackList;
 @class ShapeDrawable;
+#import "CMDocument.h"
 
-@interface EditorViewController : UIViewController
+@interface EditorViewController : UIViewController <CMDocumentDelegate>
 
 @property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;
@@ -19,5 +20,7 @@
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
 
 + (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback;
+
+@property (nonatomic) CMDocument *document;
 
 @end
