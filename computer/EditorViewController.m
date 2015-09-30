@@ -58,11 +58,14 @@
     self.optionsView = [OptionsView new];
     self.optionsView.tableView.separatorInset = UIEdgeInsetsZero;
     self.optionsView.underlyingBlurEffect = (UIBlurEffect *)self.toolbar.effect;
-    [self rac_liftSelector:@selector(selectionChanged:) withSignals:RACObserve(self.canvas, selection), nil];
+    RACSignal *selection = [[RACObserve(self, canvas) map:^id(Canvas *canvas) {
+        return RACObserve(canvas, selection);
+    }] switchToLatest];
+    [self rac_liftSelector:@selector(selectionChanged:) withSignals:selection, nil];
     self.optionsView.onDismiss = ^{
         weakSelf.toolbarView = weakSelf.iconBar;
     };
-    RAC(self.optionsView, drawable) = RACObserve(self.canvas, selection);
+    RAC(self.optionsView, drawable) = selection;
     
     [UIView performWithoutAnimation:^{
         self.toolbarView = self.iconBar;
