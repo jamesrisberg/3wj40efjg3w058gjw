@@ -3,3 +3,4 @@
 - convert freehand to path
 - edit stroke
 - change freehand input color and size
+- cap photo resolution when inserting

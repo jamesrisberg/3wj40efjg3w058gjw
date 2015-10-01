@@ -25,4 +25,7 @@
 + (NSURL *)documentsURL;
 + (NSURL *)URLForNewDocument;
 
++ (void)loadSnapshotForDocumentAtURL:(NSURL *)documentURL callback:(void(^)(UIImage *snapshot))callback;
+// callback comes on main thread
+
 @end

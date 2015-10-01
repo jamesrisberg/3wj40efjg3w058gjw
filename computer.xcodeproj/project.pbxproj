@@ -10,6 +10,8 @@
 		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
+		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
+		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -105,6 +107,10 @@
 		5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ResizeToFit.m"; sourceTree = "<group>"; };
 		5F61100D1BB1E05C00DB4C82 /* SKFontPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKFontPicker.h; sourceTree = "<group>"; };
 		5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFontPicker.m; sourceTree = "<group>"; };
+		5F900E171BBB9275000D4C7C /* FilePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePickerViewController.h; sourceTree = "<group>"; };
+		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
+		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
+		5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandingButton.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -286,9 +292,12 @@
 		5FEAF7FE1B9788910071BC08 /* computer */ = {
 			isa = PBXGroup;
 			children = (
-				5FEAF9631B9E2DD70071BC08 /* Image extraction */,
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
+				5F900E171BBB9275000D4C7C /* FilePickerViewController.h */,
+				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
+				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
+				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
 				5FEAF9601B9E2DAF0071BC08 /* Options menu */,
 				5FEAF9611B9E2DB60071BC08 /* Helpers */,
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
@@ -306,6 +315,7 @@
 				5FEAF9391B9E2B050071BC08 /* GradientEditor */,
 				5FEAF9251B9E2AF10071BC08 /* FillPicker */,
 				5FEAF9131B9E2A7B0071BC08 /* SKColorPicker */,
+				5FEAF9631B9E2DD70071BC08 /* Image extraction */,
 				5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */,
 				5FEAF8081B9788910071BC08 /* Main.storyboard */,
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
@@ -670,6 +680,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */,
+				5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
@@ -707,6 +718,7 @@
 				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF9111B9E2A760071BC08 /* SKColorPickerSlider.m in Sources */,
+				5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */,
 				5FEAF9431B9E2B2B0071BC08 /* SKColorFill.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,

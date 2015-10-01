@@ -55,7 +55,7 @@
     
     UIImage *snapshot = [self.delegate canvasSnapshotForDocument:self];
     if (snapshot) {
-        [self.fileWrapper setData:UIImagePNGRepresentation(snapshot) forChildWithName:@"Snapshot"];
+        [self.fileWrapper setData:UIImagePNGRepresentation(snapshot) forChildWithName:@"Snapshot.png"];
     }
     
     return self.fileWrapper;
@@ -71,6 +71,18 @@
 + (NSURL *)URLForNewDocument {
     NSString *filename = [[[NSUUID UUID] UUIDString] stringByAppendingPathExtension:@"computerdoc"];
     return [[self documentsURL] URLByAppendingPathComponent:filename];
+}
+
+#pragma mark Snapshot loading
+
++ (void)loadSnapshotForDocumentAtURL:(NSURL *)documentURL callback:(void(^)(UIImage *snapshot))callback {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURL *snapshotURL = [documentURL URLByAppendingPathComponent:@"Snapshot.png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:snapshotURL.path];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(image);
+        });
+    });
 }
 
 @end
