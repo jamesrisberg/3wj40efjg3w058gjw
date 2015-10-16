@@ -19,8 +19,11 @@
 @property (nonatomic) BOOL scrollModeActive;
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
 
++ (EditorViewController *)editor;
 + (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback;
 
 @property (nonatomic) CMDocument *document;
+
+- (void)presentFromSnapshot:(UIImageView *)snapshot inViewController:(UIViewController *)vc;
 
 @end

@@ -11,6 +11,8 @@
 typedef id (^NSArrayMapFunction)(id obj);
 typedef NSArray* (^NSArrayFlatMapFunction)(id obj);
 typedef id (^NSArrayFoldFunction)(id obj1, id obj2);
+typedef id (^NSArrayToDictionaryMapFunction)(id *key);
+
 @interface NSArray (ConvenienceCategories)
 -(NSArray*)map:(NSArrayMapFunction)fn;
 -(NSArray*)reversed;
@@ -18,6 +20,7 @@ typedef id (^NSArrayFoldFunction)(id obj1, id obj2);
 +(NSArray*)rangeFrom:(int)start until:(int)end;
 -(double)sum;
 -(NSArray*)flatten; // only works on arrays of enumerables
+-(NSDictionary*)mapToDict:(NSArrayToDictionaryMapFunction)fn;
 @end
 
 typedef NSArray* (^NSDictionaryMapFunction)(id key, id val);

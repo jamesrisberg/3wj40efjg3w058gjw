@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */; };
 		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
@@ -82,7 +83,6 @@
 		5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9531B9E2B8A0071BC08 /* crosshairs@2x.png */; };
 		5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */; };
 		5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */; };
-		5FEAF96F1B9E3AA40071BC08 /* UIViewController+SoftModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */; };
 		5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */; };
 		5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */; };
 		5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */; };
@@ -100,6 +100,7 @@
 /* Begin PBXFileReference section */
 		044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-computer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.release.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.release.xcconfig"; sourceTree = "<group>"; };
+		5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPSoftModalPresentationController.swift; sourceTree = "<group>"; };
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
 		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
@@ -228,8 +229,6 @@
 		5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+computer.m"; sourceTree = "<group>"; };
 		5FEAF9651B9E2E3A0071BC08 /* ShapeDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeDrawable.h; sourceTree = "<group>"; };
 		5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShapeDrawable.m; sourceTree = "<group>"; };
-		5FEAF96D1B9E3AA40071BC08 /* UIViewController+SoftModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SoftModal.h"; sourceTree = "<group>"; };
-		5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SoftModal.m"; sourceTree = "<group>"; };
 		5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowcaseFilterListController.h; sourceTree = "<group>"; };
@@ -444,6 +443,7 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */,
 				5FEAF82A1B97A9CC0071BC08 /* UIFont+Sizing.h */,
 				5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */,
 				5FEAF85D1B9B8EC20071BC08 /* TouchForwardingView.h */,
@@ -461,8 +461,6 @@
 				5FEAF95D1B9E2C7B0071BC08 /* UIView+computer.h */,
 				5FEAF95E1B9E2C7B0071BC08 /* UIView+computer.m */,
 				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
-				5FEAF96D1B9E3AA40071BC08 /* UIViewController+SoftModal.h */,
-				5FEAF96E1B9E3AA40071BC08 /* UIViewController+SoftModal.m */,
 				5F6110081BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.h */,
 				5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */,
 			);
@@ -704,6 +702,7 @@
 				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
 				5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */,
+				5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */,
 				5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */,
 				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
 				5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */,
@@ -723,7 +722,6 @@
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,
 				5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */,
-				5FEAF96F1B9E3AA40071BC08 /* UIViewController+SoftModal.m in Sources */,
 				5FEAF9101B9E2A760071BC08 /* SKHueSatPicker.m in Sources */,
 				5FEAF9211B9E2AE80071BC08 /* SKFillPicker.m in Sources */,
 				5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */,

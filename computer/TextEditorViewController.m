@@ -8,7 +8,7 @@
 
 #import "TextEditorViewController.h"
 #import "ConvenienceCategories.h"
-#import "UIViewController+SoftModal.h"
+#import "computer-Swift.h"
 #import "CPColorPicker.h"
 #import "SKFontPicker.h"
 
@@ -127,14 +127,14 @@
 - (void)changeTextFont {
     SKFontPicker *picker = [[SKFontPicker alloc] init];
     picker.fontName = [self.textView.typingAttributes[NSFontAttributeName] fontName];
-    [picker presentSoftModalInViewController:self.navigationController];
+    [NPSoftModalPresentationController presentViewController:picker];
     __weak SKFontPicker *weakPicker = picker;
     picker.callback = ^(NSString *fontName) {
         [self updateTextEntryAttribute:NSFontAttributeName function:^id(id existing) {
             CGFloat pointSize = [existing pointSize] ? : 20;
             return [UIFont fontWithName:fontName size:pointSize];
         }];
-        [weakPicker dismissSoftModal];
+        [weakPicker dismissViewControllerAnimated:YES completion:nil];
     };
 }
 
@@ -146,7 +146,7 @@
             return color;
         }];
     };
-    [picker presentSoftModalInViewController:self.navigationController];
+    [NPSoftModalPresentationController presentViewController:picker];
 }
 
 - (void)updateTextEntryAttribute:(NSString *)attribute function:(id(^)(id existing))fn {

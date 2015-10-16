@@ -17,7 +17,7 @@
 #import "ShapeDrawable.h"
 #import "FreehandInputView.h"
 
-@interface EditorViewController () <UIScrollViewDelegate> {
+@interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
@@ -37,9 +37,15 @@
 
 @property (nonatomic) UIView *transientOverlayView;
 
+@property (nonatomic) UIImageView *presentedFromImageView;
+
 @end
 
 @implementation EditorViewController
+
++ (EditorViewController *)editor {
+    return (EditorViewController *)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"Editor"];
+}
 
 #pragma mark Setup
 
@@ -94,6 +100,8 @@
 }
 
 - (void)reinitializeWithCanvas:(Canvas *)canvas {
+    BOOL canvasWasHidden = self.canvas && self.canvas.hidden;
+    
     __weak EditorViewController *weakSelf = self;
     // clean up old canvas:
     [self.canvas removeFromSuperview];
@@ -105,6 +113,7 @@
     self.canvas.selectionRectNeedUpdate = ^{
         [weakSelf updateSelectionRect];
     };
+    self.canvas.hidden = canvasWasHidden;
     [self.view insertSubview:self.canvas atIndex:0];
 }
 
@@ -356,14 +365,82 @@
 #pragma mark Modal editing
 
 + (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback {
-    EditorViewController *vc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"Editor"];
+    EditorViewController *vc = [self editor];
     [vc reinitializeWithCanvas:[canvas copy]];
     vc.modalEditingCallback = callback;
     return vc;
 }
 
 - (void)doneButtonPressed {
-    
+    [self saveWithCallback:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+}
+
+#pragma mark Transitions
+
+- (void)presentFromSnapshot:(UIImageView *)snapshot inViewController:(UIViewController *)vc {
+    self.transitioningDelegate = self;
+    self.presentedFromImageView = snapshot;
+    [vc presentViewController:self animated:YES completion:nil];
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    return self;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    return self;
+}
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 0.3;
+}
+
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *root = [transitionContext containerView];
+    NSTimeInterval duration = [self transitionDuration:transitionContext];
+    if (toVC == self) {
+        // presenting:
+        [root addSubview:toVC.view];
+        toVC.view.frame = [transitionContext finalFrameForViewController:toVC];
+        
+        UIImageView *snapshotView = [UIImageView new];
+        [root insertSubview:snapshotView belowSubview:self.view];
+        snapshotView.frame = [root convertRect:self.presentedFromImageView.bounds fromView:self.presentedFromImageView];
+        snapshotView.image = self.presentedFromImageView.image;
+        snapshotView.contentMode = self.presentedFromImageView.contentMode;
+        snapshotView.backgroundColor = [UIColor whiteColor];
+        snapshotView.clipsToBounds = YES;
+        self.presentedFromImageView.hidden = YES;
+        self.canvas.hidden = YES;
+        
+        self.view.backgroundColor = [UIColor clearColor];
+        self.toolbar.transform = CGAffineTransformMakeTranslation(0, self.iconBar.bounds.size.height);
+        
+        [UIView animateWithDuration:duration animations:^{
+            snapshotView.frame = [root convertRect:self.view.bounds fromView:self.view];
+            self.toolbar.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            toVC.view.backgroundColor = [UIColor whiteColor];
+            self.presentedFromImageView.hidden = NO;
+            self.canvas.hidden = NO;
+            [snapshotView removeFromSuperview];
+            [transitionContext completeTransition:YES];
+        }];
+    } else {
+        // dismissing:
+        [root insertSubview:toVC.view atIndex:0];
+        self.view.clipsToBounds = YES;
+        toVC.view.frame = [transitionContext finalFrameForViewController:toVC];
+        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+            fromVC.view.transform = CGAffineTransformMakeTranslation(0, fromVC.view.bounds.size.height);
+        } completion:^(BOOL finished) {
+            [transitionContext completeTransition:YES];
+        }];
+    }
 }
 
 @end

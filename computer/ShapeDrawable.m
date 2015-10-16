@@ -10,8 +10,7 @@
 #import "SKFill.h"
 #import "SKColorFill.h"
 #import "SKFillPicker.h"
-#import "UIViewController+SoftModal.h"
-
+#import "computer-Swift.h"
 
 @interface _FillView : UIView
 
@@ -136,7 +135,7 @@
     picker.callback = ^(id fill) {
         weakSelf.fill = fill;
     };
-    [picker presentSoftModalInViewController:self.vcForPresentingModals];
+    [NPSoftModalPresentationController presentViewController:picker];
 }
 
 - (void)setInternalSize:(CGSize)size {

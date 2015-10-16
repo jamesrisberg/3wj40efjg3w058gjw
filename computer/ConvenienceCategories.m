@@ -64,6 +64,17 @@
         return @([obj1 doubleValue] + [obj2 doubleValue]);
     }] doubleValue];
 }
+-(NSDictionary*)mapToDict:(NSArrayToDictionaryMapFunction)fn {
+    NSMutableDictionary *d = [NSMutableDictionary new];
+    for (id obj in self) {
+        id key = obj;
+        id val = fn(&key);
+        if (val && key) {
+            d[key] = val;
+        }
+    }
+    return d;
+}
 
 @end
 

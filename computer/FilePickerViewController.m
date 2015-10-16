@@ -10,6 +10,7 @@
 #import "CMDocument.h"
 #import "ConvenienceCategories.h"
 #import "ExpandingButton.h"
+#import "EditorViewController.h"
 
 const CGFloat _FilePickerPreviewViewAspectRatio = 1.61803398875; // golden ratio b/c why tf not
 const CGFloat _FilePickerPreviewLineSpacing = 7;
@@ -18,6 +19,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) NSURL *fileURL;
+@property (nonatomic,copy) void (^onTapped)();
 
 @end
 
@@ -32,7 +34,16 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self addSubview:self.imageView];
     
+    UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
+    [self addGestureRecognizer:tapRec];
+    
+    self.clipsToBounds = YES;
+    
     return self;
+}
+
+- (void)tapped:(UITapGestureRecognizer *)tapRec {
+    self.onTapped();
 }
 
 - (void)layoutSubviews {
@@ -84,11 +95,21 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     for (UIView *view in self.viewsForURLs.allValues) {
         [view removeFromSuperview];
     }
-    
+    [_viewsForURLs removeAllObjects];
     NSURL *dirURL = [CMDocument documentsURL];
-    self.fileURLs = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirURL path] error:nil] map:^id(id obj) {
+    
+    NSArray *fileURLs = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirURL path] error:nil] map:^id(id obj) {
         return [dirURL URLByAppendingPathComponent:obj];
     }];
+    NSDictionary *lastModDates = [fileURLs mapToDict:^id(__autoreleasing id *key) {
+        return [[NSFileManager defaultManager] attributesOfItemAtPath:[(NSURL *)*key path] error:nil][NSFileModificationDate] ? : [NSDate date];
+    }];
+    fileURLs = [fileURLs sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSDate *date1 = lastModDates[obj1];
+        NSDate *date2 = lastModDates[obj2];
+        return [date2 compare:date1];
+    }];
+    self.fileURLs = fileURLs;
 }
 
 - (void)setFileURLs:(NSArray<__kindof NSURL *> *)fileURLs {
@@ -202,8 +223,18 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 
 - (_FilePickerPreviewView *)viewForIndex:(NSInteger)index {
     _FilePickerPreviewView *view = [_FilePickerPreviewView new];
-    view.fileURL = self.fileURLs[index];
+    NSURL *url = self.fileURLs[index];
+    view.fileURL = url;
+    __weak FilePickerViewController *weakSelf = self;
+    view.onTapped = ^{
+        [weakSelf openDocumentAtURL:url];
+    };
     return view;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self reload];
 }
 
 #pragma mark Actions
@@ -219,7 +250,10 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 }
 
 - (void)openDocumentAtURL:(NSURL *)url {
-    
+    EditorViewController *editorVC = [EditorViewController editor];
+    editorVC.document = [[CMDocument alloc] initWithFileURL:url];
+    _FilePickerPreviewView *previewView = self.viewsForURLs[url];
+    [editorVC presentFromSnapshot:previewView.imageView inViewController:self];
 }
 
 @end

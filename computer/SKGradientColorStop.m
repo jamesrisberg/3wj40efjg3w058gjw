@@ -12,7 +12,7 @@
 #import "SKGradientEditor.h"
 #import "CGPointExtras.h"
 #import "SKColorStopDetail.h"
-#import "UIViewController+SoftModal.h"
+#import "computer-Swift.h"
 
 @implementation SKGradientColorStop
 @synthesize color=_color, position=_position, editor=_editor;
@@ -69,7 +69,7 @@
     SKColorStopDetail* colorStopDetail = [SKColorStopDetail new];
     colorStopDetail.colorStop = self;
     colorStopDetail.colorStopEditor = self.editor;
-    [colorStopDetail presentSoftModalInViewController:self.window.rootViewController];
+    [NPSoftModalPresentationController presentViewController:colorStopDetail];
 }
 -(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
     _editorPopover = nil;

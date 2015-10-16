@@ -46,7 +46,11 @@
 #pragma mark Util
 
 - (UIViewController *)vcForPresentingModals {
-    return self.window.rootViewController;
+    UIViewController *vc = self.window.rootViewController;
+    while (vc.presentedViewController) {
+        vc = vc.presentedViewController;
+    }
+    return vc;
 }
 
 - (Canvas *)canvas {

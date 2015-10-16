@@ -72,6 +72,9 @@
         };
         IconBarModel *done = [IconBarModel new];
         done.image = [UIImage imageNamed:@"Grid"];
+        done.action = ^{
+            weakSelf.onDoneButtonPressed();
+        };
         IconBarModel *add = [IconBarModel new];
         add.image = [UIImage imageNamed:@"Add"];
         add.action = ^{
