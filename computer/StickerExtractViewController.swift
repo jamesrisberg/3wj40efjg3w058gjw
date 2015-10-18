@@ -12,12 +12,30 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
     
     var onExtractedSticker: (UIImage -> ())?
     
-    var originalImage: UIImage?
+    var imageToExtractFrom: UIImage? {
+        didSet {
+            let maxSize: CGFloat = 1000
+            if let img = imageToExtractFrom {
+                if img.size.width > maxSize || img.size.height > maxSize {
+                    imageToExtractFrom = img.resizedWithMaxDimension(maxSize)
+                }
+            }
+        }
+    }
+    private var _imageToProcess: UIImage? {
+        get {
+            if let img = imageToExtractFrom {
+                return img.resizedWithMaxDimension(400)
+            } else {
+                return nil
+            }
+        }
+    }
     var cropRect: CGRect?
     var croppedImage: UIImage? {
         get {
-            if originalImage != nil && cropRect != nil {
-                return self.originalImage!.subImage(self.cropRect!)
+            if _imageToProcess != nil && cropRect != nil {
+                return self._imageToProcess!.subImage(self.cropRect!)
             } else {
                 return nil
             }
@@ -45,11 +63,11 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
             
             switch state {
             case .Cropping:
-                cropDrawingImageView!.image = originalImage
+                cropDrawingImageView!.image = _imageToProcess
                 cropDrawingView!.image = nil
             case .Masking:
                 maskingImageView!.image = croppedImage
-                grabcut = Grabcut(image: originalImage!)
+                grabcut = Grabcut(image: _imageToProcess!)
                 grabcut!.maskToRect(cropRect!)
                 maskedImageView!.image = grabcut!.extractImage().subImage(cropRect!)
             }
@@ -64,7 +82,8 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
     
     func done() {
         if let callback = onExtractedSticker {
-            callback(maskedImageView!.image!.imageByTrimmingTransparentPixels())
+            // callback(maskedImageView!.image!.imageByTrimmingTransparentPixels())
+            callback(_getExtractedImage())
         }
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -141,7 +160,7 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
         
         self.maskingDrawingView!.onTouchUp = { [weak self] in
             if let s = self {
-                let size = s.originalImage!.size
+                let size = s._imageToProcess!.size
                 UIGraphicsBeginImageContextWithOptions(size, false, 1)
                 UIColor.blackColor().set()
                 CGContextFillRect(UIGraphicsGetCurrentContext(), CGRectMake(0, 0, size.width, size.height))
@@ -212,5 +231,46 @@ class StickerExtractViewController: UIViewController, UINavigationBarDelegate {
         bgPulse.repeatCount = MAXFLOAT
         maskingPulseBackground!.layer.addAnimation(bgPulse, forKey: "pulse")
         maskingImageView!.alpha = 0.2
+    }
+    
+    private func _getExtractedImage() -> UIImage {
+        /*
+        // create uncropped mask:
+        UIGraphicsBeginImageContext(_imageToProcess!.size)
+        maskedImageView!.image!.drawInRect(cropRect!)
+        let mask = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()*/
+        let maskUnflipped = maskedImageView!.image!
+        UIGraphicsBeginImageContext(maskUnflipped.size)
+        CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1, -1)
+        maskUnflipped.drawInRect(CGRectMake(0, -maskUnflipped.size.height, maskUnflipped.size.width, maskUnflipped.size.height))
+        let mask = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        // mask the full image image:
+        UIGraphicsBeginImageContext(imageToExtractFrom!.size)
+        let ctx = UIGraphicsGetCurrentContext()!
+        
+        //CGContextTranslateCTM(ctx, 0, cropRect!.size.height);
+        //CGContextScaleCTM(ctx, 1.0, -1.0);
+        var crop = cropRect!
+        let scale = imageToExtractFrom!.size.width / _imageToProcess!.size.width
+        crop.origin.x *= scale
+        crop.origin.y *= scale
+        crop.size.width *= scale
+        crop.size.height *= scale
+        
+        //CGContextScaleCTM(ctx, 1.0, -1.0);
+        //CGContextTranslateCTM(ctx, 0, -crop.size.height);
+        CGContextClipToMask(ctx, crop, mask.CGImage)
+        
+        //CGContextScaleCTM(ctx, 1.0, -1.0);
+        //CGContextTranslateCTM(ctx, 0, -imageToExtractFrom!.size.height)
+        
+        imageToExtractFrom!.drawInRect(CGRectMake(0, 0, imageToExtractFrom!.size.width, imageToExtractFrom!.size.height))
+        let extracted = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return extracted.imageByTrimmingTransparentPixels()
+        // return maskedImageView!.image!.imageByTrimmingTransparentPixels()
     }
 }

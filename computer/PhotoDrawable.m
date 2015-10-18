@@ -118,7 +118,7 @@
             [self setImage:sticker];
         }
     };
-    extractVC.originalImage = [self.imageView.image resizedWithMaxDimension:400];
+    extractVC.imageToExtractFrom = self.imageView.image;
     [[self vcForPresentingModals] presentViewController:extractVC animated:YES completion:nil];
 }
 
