@@ -130,20 +130,30 @@
         }];
     };
     if (_document) {
-        [self saveWithCallback:update];
+        [self saveAndClose:YES callback:update];
     } else {
         update();
     }
 }
 
 - (void)save {
-    [self saveWithCallback:^{}];
+    [self saveAndClose:NO callback:^{
+        
+    }];
 }
 
-- (void)saveWithCallback:(void(^)())callback {
-    [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-        callback();
-    }];
+- (void)saveAndClose:(BOOL)close callback:(void(^)())callback {
+    if (close) {
+        [self saveAndClose:NO callback:^{
+            [self.document closeWithCompletionHandler:^(BOOL success) {
+                callback();
+            }];
+        }];
+    } else {
+        [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+            callback();
+        }];
+    }
 }
 
 #pragma mark Document delegate
@@ -372,7 +382,7 @@
 }
 
 - (void)doneButtonPressed {
-    [self saveWithCallback:^{
+    [self saveAndClose:YES callback:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }
