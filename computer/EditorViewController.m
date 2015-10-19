@@ -214,7 +214,7 @@
 - (void)showOptions {
     if (self.canvas.selection) {
         QuickCollectionModal *modal = [QuickCollectionModal new];
-        modal.itemSize = CGSizeMake(150, 44);
+        modal.itemSize = CGSizeMake(90, 44);
         modal.items = self.canvas.selection.optionsItems;
         [self presentViewController:modal animated:YES completion:nil];
     }
