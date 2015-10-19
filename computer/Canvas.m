@@ -132,7 +132,8 @@
 }
 
 - (void)longPress {
-    self.editorShapeStackList.drawables = [self allHitsAtPoint:[_touches.anyObject locationInView:self]];
+    UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
+    self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
     [self.editorShapeStackList show];
 }
 
@@ -175,6 +176,17 @@
     for (Drawable *d in self.subviews.reverseObjectEnumerator) {
         // TODO: take into account transforms; don't use UIView's own math
         if ([d pointInside:[d convertPoint:pos fromView:self] withEvent:nil]) {
+            [hits addObject:d];
+        }
+    }
+    return hits;
+}
+
+- (NSArray *)allItemsOverlappingView:(UIView *)view {
+    NSMutableArray *hits = [NSMutableArray new];
+    for (Drawable *d in self.subviews.reverseObjectEnumerator) {
+        if (![d isKindOfClass:[Drawable class]]) continue;
+        if (CGRectIntersectsRect(view.frame, d.frame)) { // TODO: fuck transform math
             [hits addObject:d];
         }
     }

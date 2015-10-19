@@ -472,6 +472,8 @@
 			children = (
 				5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */,
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
+				5FEAF8161B9788B20071BC08 /* Canvas.h */,
+				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
 				5FEAF8201B978BF50071BC08 /* IconBar.m */,
 				5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */,
@@ -495,8 +497,6 @@
 		5FEAF9641B9E2DEF0071BC08 /* Drawables */ = {
 			isa = PBXGroup;
 			children = (
-				5FEAF8161B9788B20071BC08 /* Canvas.h */,
-				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
 				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
 				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
