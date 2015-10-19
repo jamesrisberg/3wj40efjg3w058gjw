@@ -1,4 +1,5 @@
 PODS:
+  - ALGReversedFlowLayout (0.1.0)
   - AsyncImageView (1.5.1)
   - AZEncodeURIComponent (1.1.0)
   - GPUImage (0.1.7)
@@ -14,6 +15,7 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
+  - ALGReversedFlowLayout
   - AsyncImageView
   - GPUImage
   - NSDictionaryAsURLQuery
@@ -21,6 +23,7 @@ DEPENDENCIES:
   - ReactiveCocoa
 
 SPEC CHECKSUMS:
+  ALGReversedFlowLayout: edb883d4f573beeb64e9c8e79f1acd1de8f9f477
   AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
   AZEncodeURIComponent: 6cacefb75b101041004189b15575200ba0f10985
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d

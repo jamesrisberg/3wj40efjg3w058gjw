@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuickCollectionModal.h"
 @class EditorViewController;
 
-@interface InsertItemViewController : UIViewController
+@interface InsertItemViewController : QuickCollectionModal
 
-- (void)present;
 @property (nonatomic) EditorViewController *editorVC;
 
 @end

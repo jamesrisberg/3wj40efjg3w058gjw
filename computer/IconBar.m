@@ -80,7 +80,7 @@
         add.action = ^{
             InsertItemViewController *inserter = [InsertItemViewController new];
             inserter.editorVC = weakSelf.editor;
-            [inserter present];
+            [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
         };
         IconBarModel *options = [IconBarModel new];
         options.image = [UIImage imageNamed:@"Controls"];

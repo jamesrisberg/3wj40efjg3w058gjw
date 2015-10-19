@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "562579E8DA821082249534F4"
-               BuildableName = "libReactiveCocoa.a"
-               BlueprintName = "ReactiveCocoa"
+               BlueprintIdentifier = "07A3A01639FD734C1FF579FB"
+               BuildableName = "libALGReversedFlowLayout.a"
+               BlueprintName = "ALGReversedFlowLayout"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

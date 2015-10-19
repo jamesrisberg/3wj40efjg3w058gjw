@@ -8,6 +8,7 @@ pod 'OpenCV', '2.4.9'
 pod 'NSDictionaryAsURLQuery'
 pod 'AsyncImageView'
 pod 'GPUImage'
+pod 'ALGReversedFlowLayout'
 
 end
 
