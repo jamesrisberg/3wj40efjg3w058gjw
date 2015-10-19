@@ -11,6 +11,7 @@
 @interface QuickCollectionItem : NSObject
 
 @property (nonatomic) UIImage *icon;
+@property (nonatomic) NSString *label;
 @property (nonatomic,copy) void (^action)();
 @property (nonatomic) UIColor *color;
 
@@ -19,5 +20,7 @@
 @interface QuickCollectionModal : UIViewController
 
 @property (nonatomic) NSArray<__kindof QuickCollectionItem*> *items;
+
+@property (nonatomic) CGSize itemSize;
 
 @end

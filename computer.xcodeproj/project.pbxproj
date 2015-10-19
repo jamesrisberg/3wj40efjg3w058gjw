@@ -30,9 +30,6 @@
 		5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8311B97AB660071BC08 /* TextEditorViewController.m */; };
 		5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */; };
 		5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */; };
-		5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8391B98EAE10071BC08 /* OptionsView.m */; };
-		5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */; };
-		5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */; };
 		5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */; };
 		5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8451B9A28C50071BC08 /* ShapeStackList.m */; };
 		5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8481B9AD96E0071BC08 /* StickerExtractViewController.swift */; };
@@ -144,12 +141,6 @@
 		5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		5FEAF8351B98D2330071BC08 /* InsertItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertItemViewController.h; sourceTree = "<group>"; };
 		5FEAF8361B98D2330071BC08 /* InsertItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertItemViewController.m; sourceTree = "<group>"; };
-		5FEAF8381B98EAE10071BC08 /* OptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsView.h; sourceTree = "<group>"; };
-		5FEAF8391B98EAE10071BC08 /* OptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsView.m; sourceTree = "<group>"; };
-		5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
-		5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
-		5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiButtonOptionsTableViewCell.h; sourceTree = "<group>"; };
-		5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiButtonOptionsTableViewCell.m; sourceTree = "<group>"; };
 		5FEAF8411B9A264F0071BC08 /* CGPointExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointExtras.h; sourceTree = "<group>"; };
 		5FEAF8421B9A264F0071BC08 /* CGPointExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPointExtras.m; sourceTree = "<group>"; };
 		5FEAF8441B9A28C50071BC08 /* ShapeStackList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShapeStackList.h; sourceTree = "<group>"; };
@@ -300,7 +291,6 @@
 				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
-				5FEAF9601B9E2DAF0071BC08 /* Options menu */,
 				5FEAF9611B9E2DB60071BC08 /* Helpers */,
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
@@ -428,19 +418,6 @@
 				5FEAF9531B9E2B8A0071BC08 /* crosshairs@2x.png */,
 			);
 			name = CPColorPicker;
-			sourceTree = "<group>";
-		};
-		5FEAF9601B9E2DAF0071BC08 /* Options menu */ = {
-			isa = PBXGroup;
-			children = (
-				5FEAF8381B98EAE10071BC08 /* OptionsView.h */,
-				5FEAF8391B98EAE10071BC08 /* OptionsView.m */,
-				5FEAF83E1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.h */,
-				5FEAF83F1B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m */,
-				5FEAF83B1B98EAF50071BC08 /* OptionsTableViewCell.h */,
-				5FEAF83C1B98EAF50071BC08 /* OptionsTableViewCell.m */,
-			);
-			name = "Options menu";
 			sourceTree = "<group>";
 		};
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
@@ -720,7 +697,6 @@
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
 				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,
 				5FEAF9591B9E2B8A0071BC08 /* CPBrightnessSaturationView.m in Sources */,
-				5FEAF8401B9A244F0071BC08 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5FEAF8371B98D2330071BC08 /* InsertItemViewController.m in Sources */,
 				5FEAF9111B9E2A760071BC08 /* SKColorPickerSlider.m in Sources */,
 				5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */,
@@ -733,7 +709,6 @@
 				5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */,
 				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
-				5FEAF83A1B98EAE10071BC08 /* OptionsView.m in Sources */,
 				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
@@ -741,7 +716,6 @@
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
 				5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */,
 				5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */,
-				5FEAF83D1B98EAF50071BC08 /* OptionsTableViewCell.m in Sources */,
 				5FEAF9571B9E2B8A0071BC08 /* CPHueWheel.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,
 			);

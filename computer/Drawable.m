@@ -7,8 +7,9 @@
 //
 
 #import "Drawable.h"
-#import "MultiButtonOptionsTableViewCell.h"
+#import "QuickCollectionModal.h"
 #import "Canvas.h"
+#import "computer-Swift.h"
 
 @implementation Drawable
 
@@ -46,11 +47,7 @@
 #pragma mark Util
 
 - (UIViewController *)vcForPresentingModals {
-    UIViewController *vc = self.window.rootViewController;
-    while (vc.presentedViewController) {
-        vc = vc.presentedViewController;
-    }
-    return vc;
+    return [NPSoftModalPresentationController getViewControllerForPresentationInWindow:self.window];
 }
 
 - (Canvas *)canvas {
@@ -59,24 +56,19 @@
 
 #pragma mark Options
 
-- (NSArray *)optionsCellModels {
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
     __weak Drawable *weakSelf = self;
-    OptionsViewCellModel *actions = [OptionsViewCellModel new];
-    actions.cellClass = [MultiButtonOptionsTableViewCell class];
-    actions.onCreate = ^(OptionsTableViewCell *cell){
-        MultiButtonOptionsTableViewCell *multiButtonCell = (id)cell;
-        multiButtonCell.buttonTitles = @[NSLocalizedString(@"Delete", @""), NSLocalizedString(@"Duplicate", @"")];
-        multiButtonCell.buttonActions = @[
-                                          ^{ // delete
-                                              [weakSelf delete:nil];
-                                          },
-                                           ^{ // duplicate
-                                               [weakSelf duplicate:nil];
-                                           }
-                                          ];
+    QuickCollectionItem *delete = [QuickCollectionItem new];
+    delete.label = NSLocalizedString(@"Delete", @"");
+    delete.action = ^{
+        [weakSelf delete:nil];
     };
-    
-    return @[actions];
+    QuickCollectionItem *duplicate = [QuickCollectionItem new];
+    duplicate.label = NSLocalizedString(@"Duplicate", @"");
+    duplicate.action = ^{
+        [weakSelf duplicate:nil];
+    };
+    return @[delete, duplicate];
 }
 
 #pragma mark Actions

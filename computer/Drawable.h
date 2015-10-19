@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OptionsView.h"
+#import "QuickCollectionModal.h"
 
 @class Canvas;
 @interface Drawable : UIView <NSCopying>
@@ -16,7 +16,7 @@
 - (void)setup; // override this
 @property (nonatomic) CGFloat rotation, scale;
 - (UIViewController *)vcForPresentingModals;
-- (NSArray *)optionsCellModels;
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems;
 - (Canvas *)canvas;
 @property (nonatomic,copy) void (^onShapeUpdate)();
 

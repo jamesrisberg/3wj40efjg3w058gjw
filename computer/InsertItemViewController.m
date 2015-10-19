@@ -83,11 +83,6 @@
     };
     
     self.items = @[camera, photos, video, text, pen, circle, square];
-    CGFloat hue = 0;
-    for (QuickCollectionItem *model in self.items) {
-        model.color = [UIColor colorWithHue:fmod(hue, 1) saturation:0.8 brightness:0.8 alpha:1];
-        hue += 0.3;
-    }
 }
 
 @end

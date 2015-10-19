@@ -11,11 +11,11 @@
 #import "IconBar.h"
 #import "Drawable.h"
 #import <ReactiveCocoa.h>
-#import "OptionsView.h"
 #import "ShapeStackList.h"
 #import "CGPointExtras.h"
 #import "ShapeDrawable.h"
 #import "FreehandInputView.h"
+#import "QuickCollectionModal.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -27,7 +27,6 @@
 @property (nonatomic) UIView *toolbarView;
 @property (nonatomic) IconBar *iconBar;
 @property (nonatomic) UIView *selectionRect;
-@property (nonatomic) OptionsView *optionsView;
 @property (nonatomic) CGFloat toolbarHeight;
 @property (nonatomic) Canvas *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
@@ -61,17 +60,10 @@
         [weakSelf doneButtonPressed];
     };
     
-    self.optionsView = [OptionsView new];
-    self.optionsView.tableView.separatorInset = UIEdgeInsetsZero;
-    self.optionsView.underlyingBlurEffect = (UIBlurEffect *)self.toolbar.effect;
     RACSignal *selection = [[RACObserve(self, canvas) map:^id(Canvas *canvas) {
         return RACObserve(canvas, selection);
     }] switchToLatest];
     [self rac_liftSelector:@selector(selectionChanged:) withSignals:selection, nil];
-    self.optionsView.onDismiss = ^{
-        weakSelf.toolbarView = weakSelf.iconBar;
-    };
-    RAC(self.optionsView, drawable) = selection;
     
     [UIView performWithoutAnimation:^{
         self.toolbarView = self.iconBar;
@@ -207,9 +199,7 @@
 
 #pragma mark Selection
 - (void)selectionChanged:(Drawable *)selection {
-    if (self.toolbarView == self.optionsView) {
-        self.toolbarView = self.iconBar;
-    }
+    
 }
 
 #pragma mark Overlays
@@ -223,7 +213,10 @@
 #pragma mark Toolbar
 - (void)showOptions {
     if (self.canvas.selection) {
-        self.toolbarView = self.optionsView;
+        QuickCollectionModal *modal = [QuickCollectionModal new];
+        modal.itemSize = CGSizeMake(150, 44);
+        modal.items = self.canvas.selection.optionsItems;
+        [self presentViewController:modal animated:YES completion:nil];
     }
 }
 
@@ -234,9 +227,6 @@
         
         [self.toolbar addSubview:toolbarView];
         CGFloat newToolbarHeight = 44;
-        if (toolbarView == self.optionsView) {
-            newToolbarHeight = 120;
-        }
         self.toolbarHeight = newToolbarHeight;
         toolbarView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, newToolbarHeight);
         toolbarView.alpha = 0;

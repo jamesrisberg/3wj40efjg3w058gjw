@@ -10,12 +10,20 @@ import UIKit
 
 class NPSoftModalPresentationController: UIPresentationController, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
     
-    class func presentViewController(viewController: UIViewController) {
-        var parent = UIApplication.sharedApplication().windows.first!.rootViewController!
+    class func getViewControllerForPresentationInWindow(window: UIWindow) -> UIViewController {
+        var parent = window.rootViewController!
         while let modal = parent.presentedViewController {
-            parent = modal
+            if modal.isBeingDismissed() {
+               break
+            } else {
+                parent = modal
+            }
         }
-        presentViewController(viewController, fromViewController: parent)
+        return parent
+    }
+    
+    class func presentViewController(viewController: UIViewController) {
+        presentViewController(viewController, fromViewController: getViewControllerForPresentationInWindow(UIApplication.sharedApplication().windows.first!))
     }
     
     class func presentViewController(viewController: UIViewController, fromViewController: UIViewController) {

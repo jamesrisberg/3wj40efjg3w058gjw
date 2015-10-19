@@ -77,30 +77,19 @@
     [[self vcForPresentingModals] presentViewController:pickerVC animated:YES completion:nil];
 }
 
-- (NSArray *)optionsCellModels {
-    NSMutableArray *options = [super optionsCellModels].mutableCopy;
-    
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
     __weak PhotoDrawable *weakSelf = self;
-    
-    OptionsViewCellModel *cutOut = [OptionsViewCellModel new];
-    cutOut.onCreate = ^(OptionsTableViewCell *cell) {
-        cell.textLabel.text = @"Cut out…";
-    };
-    cutOut.onSelect = ^(OptionsTableViewCell *cell) {
+    QuickCollectionItem *cutOut = [QuickCollectionItem new];
+    cutOut.label = @"Cut out…";
+    cutOut.action = ^{
         [weakSelf cutOut];
     };
-    [options addObject:cutOut];
-    
-    OptionsViewCellModel *filter = [OptionsViewCellModel new];
-    filter.onCreate = ^(OptionsTableViewCell *cell) {
-        cell.textLabel.text = @"Filter…";
-    };
-    filter.onSelect = ^(OptionsTableViewCell *cell) {
+    QuickCollectionItem *filter = [QuickCollectionItem new];
+    filter.label = @"Filter…";
+    filter.action = ^{
         [weakSelf addFilter];
     };
-    [options addObject:filter];
-    
-    return options;
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[cutOut, filter]];
 }
 
 - (void)addFilter {

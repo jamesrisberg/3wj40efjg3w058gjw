@@ -55,6 +55,11 @@
 
 - (void)setItems:(NSArray<__kindof QuickCollectionItem *> *)items {
     _items = items;
+    CGFloat hue = 0;
+    for (QuickCollectionItem *model in self.items) {
+        model.color = [UIColor colorWithHue:fmod(hue, 1) saturation:0.8 brightness:0.8 alpha:1];
+        hue += 0.3;
+    }
     [self.collectionView reloadData];
 }
 
@@ -65,12 +70,21 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QuickCollectionItem *model = self.items[indexPath.item];
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:model.icon];
-    imageView.clipsToBounds = YES;
-    imageView.backgroundColor = model.color;
-    imageView.contentMode = UIViewContentModeCenter;
-    imageView.layer.cornerRadius = 5;
-    cell.backgroundView = imageView;
+    if (model.icon) {
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:model.icon];
+        imageView.contentMode = UIViewContentModeCenter;
+        cell.backgroundView = imageView;
+    } else if (model.label) {
+        UILabel *label = [UILabel new];
+        label.font = [UIFont boldSystemFontOfSize:12];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor whiteColor];
+        label.text = model.label;
+        cell.backgroundView = label;
+    }
+    cell.backgroundView.backgroundColor = model.color;
+    cell.backgroundView.layer.cornerRadius = 5;
+    cell.backgroundView.clipsToBounds = YES;
     return cell;
 }
 
@@ -169,6 +183,16 @@
             
         }];
     }
+}
+
+- (CGSize)itemSize {
+    [self view];
+    return [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout itemSize];
+}
+
+- (void)setItemSize:(CGSize)itemSize {
+    [self view];
+    [(UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout setItemSize:itemSize];
 }
 
 @end
