@@ -35,6 +35,17 @@
 }
 
 - (void)done {
+    /*GPUImageColorInvertFilter *f = [GPUImageColorInvertFilter new];
+    [picture addTarget:f];
+    [picture processImageUpToFilter:f withCompletionHandler:^(UIImage *processedImage) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            self.callback(processedImage);
+        });
+    }];
+    return;*/
+    
+    
     [picture processImageUpToFilter:filter withCompletionHandler:^(UIImage *processedImage) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];

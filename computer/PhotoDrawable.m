@@ -9,6 +9,7 @@
 #import "PhotoDrawable.h"
 #import "computer-Swift.h"
 #import "FilterViewController.h"
+#import <GPUImage.h>
 
 @interface PhotoDrawable () <UIImagePickerControllerDelegate>
 

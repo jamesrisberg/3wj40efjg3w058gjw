@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     func resizeTo(size: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(size, false, self.scale)
+        UIGraphicsBeginImageContextWithOptions(size, false, 1)
         self.drawInRect(CGRectMake(0, 0, size.width, size.height))
         let resized = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
