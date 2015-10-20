@@ -99,7 +99,11 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     NSURL *dirURL = [CMDocument documentsURL];
     
     NSArray *fileURLs = [[[NSFileManager defaultManager] contentsOfDirectoryAtPath:[dirURL path] error:nil] map:^id(id obj) {
-        return [dirURL URLByAppendingPathComponent:obj];
+        if ([[obj pathExtension] isEqualToString:@"computerdoc"]) {
+            return [dirURL URLByAppendingPathComponent:obj];
+        } else {
+            return nil;
+        }
     }];
     NSDictionary *lastModDates = [fileURLs mapToDict:^id(__autoreleasing id *key) {
         return [[NSFileManager defaultManager] attributesOfItemAtPath:[(NSURL *)*key path] error:nil][NSFileModificationDate] ? : [NSDate date];

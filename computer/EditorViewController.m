@@ -135,14 +135,17 @@
 }
 
 - (void)saveAndClose:(BOOL)close callback:(void(^)())callback {
+    self.view.window.userInteractionEnabled = NO;
     if (close) {
         [self saveAndClose:NO callback:^{
             [self.document closeWithCompletionHandler:^(BOOL success) {
+                self.view.window.userInteractionEnabled = YES;
                 callback();
             }];
         }];
     } else {
         [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
+            self.view.window.userInteractionEnabled = YES;
             callback();
         }];
     }
@@ -158,8 +161,11 @@
 }
 
 - (UIImage *)canvasSnapshotForDocument:(CMDocument *)document {
+    if (self.view.window && [UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+        return nil;
+    }
     UIGraphicsBeginImageContext(self.canvas.bounds.size);
-    [self.canvas drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:NO];
+    [self.canvas drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:YES];
     UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return snapshot;
@@ -432,12 +438,24 @@
         }];
     } else {
         // dismissing:
+        //UIColor *oldRootBackgroundColor = root.backgroundColor;
+        //root.backgroundColor = [UIColor blackColor];
         [root insertSubview:toVC.view atIndex:0];
         self.view.clipsToBounds = YES;
         toVC.view.frame = [transitionContext finalFrameForViewController:toVC];
+        UIView *editorView = toVC.view;
+        editorView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        editorView.alpha = 0.7;
+        [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            editorView.transform = CGAffineTransformIdentity;
+            editorView.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
             fromVC.view.transform = CGAffineTransformMakeTranslation(0, fromVC.view.bounds.size.height);
         } completion:^(BOOL finished) {
+            //root.backgroundColor = oldRootBackgroundColor;
             [transitionContext completeTransition:YES];
         }];
     }
