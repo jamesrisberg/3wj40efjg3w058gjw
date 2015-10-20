@@ -250,41 +250,9 @@
 }
 
 #pragma mark Scrolling
-- (void)setScrollModeActive:(BOOL)scrollModeActive {
-    if (scrollModeActive != _scrollModeActive) {
-        _scrollModeActive = scrollModeActive;
-        if (scrollModeActive) {
-            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-            done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
-            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
-            [done addTarget:self action:@selector(exitScrollMode) forControlEvents:UIControlEventTouchUpInside];
-            self.toolbarView = done;
-            
-            self.dummyScrollView = [UIScrollView new];
-            self.transientOverlayView = self.dummyScrollView;
-            self.dummyScrollView.delegate = self;
-            self.dummyScrollView.showsHorizontalScrollIndicator = self.dummyScrollView.showsVerticalScrollIndicator = NO;
-            self.dummyScrollView.directionalLockEnabled = NO;
-            CGFloat aBigNumber = 20 * 1000 * 1000;
-            self.dummyScrollView.contentSize = CGSizeMake(aBigNumber, aBigNumber);
-            _dummyScrollViewZoomingView = [UIView new];
-            _dummyScrollViewZoomingView.frame = CGRectMake(0, 0, aBigNumber, aBigNumber);
-            [self.dummyScrollView addSubview:_dummyScrollViewZoomingView];
-            [self _resetDummyScrollViewPositioning];
-            self.dummyScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
-            
-            self.canvas.selection = nil;
-        } else {
-            self.toolbarView = self.iconBar;
-            if (self.transientOverlayView == self.dummyScrollView) {
-                self.transientOverlayView = nil;
-            }
-        }
-    }
-}
 
 - (void)exitScrollMode {
-    self.scrollModeActive = NO;
+    self.mode = EditorModeNormal;
 }
 
 - (BOOL)isScrollViewMoving:(UIScrollView *)scrollView {
@@ -347,14 +315,52 @@
     return _dummyScrollViewZoomingView;
 }
 
+#pragma mark Modes
+- (void)setMode:(EditorMode)mode {
+    if (mode != _mode) {
+        // EditorMode oldMode = mode;
+        _mode = mode;
+        
+        self.transientOverlayView = nil;
+        self.toolbarView = self.iconBar;
+        
+        if (mode == EditorModeScroll) {
+            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+            done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
+            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+            [done addTarget:self action:@selector(exitScrollMode) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = done;
+            
+            self.dummyScrollView = [UIScrollView new];
+            self.transientOverlayView = self.dummyScrollView;
+            self.dummyScrollView.delegate = self;
+            self.dummyScrollView.showsHorizontalScrollIndicator = self.dummyScrollView.showsVerticalScrollIndicator = NO;
+            self.dummyScrollView.directionalLockEnabled = NO;
+            CGFloat aBigNumber = 20 * 1000 * 1000;
+            self.dummyScrollView.contentSize = CGSizeMake(aBigNumber, aBigNumber);
+            _dummyScrollViewZoomingView = [UIView new];
+            _dummyScrollViewZoomingView.frame = CGRectMake(0, 0, aBigNumber, aBigNumber);
+            [self.dummyScrollView addSubview:_dummyScrollViewZoomingView];
+            [self _resetDummyScrollViewPositioning];
+            self.dummyScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+            
+            self.canvas.selection = nil;
+        } else if (mode == EditorModeDrawing) {
+            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+            done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
+            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+            [done addTarget:self action:@selector(endFreehandDrawing) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = done;
+        } else if (mode == EditorModeTimeline) {
+            // TODO
+        }
+    }
+}
+
 #pragma mark Freehand Drawing
 
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape {
-    UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-    done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
-    [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
-    [done addTarget:self action:@selector(endFreehandDrawing) forControlEvents:UIControlEventTouchUpInside];
-    self.toolbarView = done;
+    self.mode = EditorModeDrawing;
     
     FreehandInputView *inputView = [FreehandInputView new];
     inputView.shape = shape;
@@ -362,10 +368,7 @@
 }
 
 - (void)endFreehandDrawing {
-    self.toolbarView = self.iconBar;
-    if ([self.transientOverlayView isKindOfClass:[FreehandInputView class]]) {
-        self.transientOverlayView = nil;
-    }
+    self.mode = EditorModeNormal;
 }
 
 #pragma mark Modal editing

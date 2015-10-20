@@ -58,17 +58,15 @@
             d.bounds = CGRectMake(0, 0, 250, 250);
             [weakSelf.editor.canvas insertDrawable:d];
         };
-        IconBarModel *addImage = [IconBarModel new];
-        addImage.image = [UIImage imageNamed:@"Pictures"];
-        addImage.action = ^{
-            PhotoDrawable *d = [PhotoDrawable new];
-            d.bounds = CGRectMake(0, 0, 250, 250);
-            [weakSelf.editor.canvas insertDrawable:d];
+        IconBarModel *time = [IconBarModel new];
+        time.image = [UIImage imageNamed:@"Time"];
+        time.action = ^{
+            weakSelf.editor.mode = EditorModeTimeline;
         };
         IconBarModel *scroll = [IconBarModel new];
         scroll.image = [UIImage imageNamed:@"Scroll"];
         scroll.action = ^{
-            weakSelf.editor.scrollModeActive = YES;
+            weakSelf.editor.mode = EditorModeScroll;
         };
         IconBarModel *done = [IconBarModel new];
         done.image = [UIImage imageNamed:@"Grid"];
@@ -90,7 +88,7 @@
         IconBarModel *share = [IconBarModel new];
         share.image = [UIImage imageNamed:@"Share"];
         // IconBarModel *divider = [IconBarModel new];
-        self.models = @[done, share, scroll, options, add];
+        self.models = @[done, share, scroll, time, options, add];
     }
 }
 

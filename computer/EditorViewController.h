@@ -12,12 +12,19 @@
 @class ShapeDrawable;
 #import "CMDocument.h"
 
+typedef NS_ENUM(NSInteger, EditorMode) {
+    EditorModeNormal = 0,
+    EditorModeScroll,
+    EditorModeTimeline,
+    EditorModeDrawing
+};
+
 @interface EditorViewController : UIViewController <CMDocumentDelegate>
 
 @property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;
-@property (nonatomic) BOOL scrollModeActive;
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
+@property (nonatomic) EditorMode mode;
 
 + (EditorViewController *)editor;
 + (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback;
