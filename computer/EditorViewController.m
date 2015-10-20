@@ -16,6 +16,7 @@
 #import "ShapeDrawable.h"
 #import "FreehandInputView.h"
 #import "QuickCollectionModal.h"
+#import "TimelineView.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -31,12 +32,15 @@
 @property (nonatomic) Canvas *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
 @property (nonatomic) UIScrollView *dummyScrollView;
+@property (nonatomic) TimelineView *timeline;
 
 @property (nonatomic,copy) void (^modalEditingCallback)(Canvas *canvas);
 
 @property (nonatomic) UIView *transientOverlayView;
 
 @property (nonatomic) UIImageView *presentedFromImageView;
+
+@property (nonatomic) UIView *auxiliaryFloatingButton;
 
 @end
 
@@ -184,6 +188,8 @@
     self.toolbarView.frame = self.toolbar.bounds;
     self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin; // set the autoresizing mask so that this view is positioned currently during the transition to a NEW toolbarView; when the toolbar's height changes, the old toolbar view should stay in the middle
     self.transientOverlayView.frame = self.view.bounds;
+    
+    self.auxiliaryFloatingButton.frame = CGRectMake(self.view.bounds.size.width - self.auxiliaryFloatingButton.frame.size.width - 15, self.toolbar.frame.origin.y - self.auxiliaryFloatingButton.frame.size.height - 15, self.auxiliaryFloatingButton.frame.size.width, self.auxiliaryFloatingButton.frame.size.height);
 }
 
 - (void)updateSelectionRect {
@@ -200,6 +206,32 @@
         self.selectionRect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
         self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
         self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
+    }
+}
+
+- (void)setAuxiliaryFloatingButton:(UIView *)auxiliaryFloatingButton {
+    UIView *oldButton = _auxiliaryFloatingButton;
+    [UIView animateWithDuration:0.3 animations:^{
+        oldButton.alpha = 0;
+        oldButton.transform = CGAffineTransformMakeScale(0.5, 0.5);
+    } completion:^(BOOL finished) {
+        oldButton.alpha = 1;
+        oldButton.transform = CGAffineTransformIdentity;
+        [oldButton removeFromSuperview];
+    }];
+    
+    _auxiliaryFloatingButton = auxiliaryFloatingButton;
+    if (auxiliaryFloatingButton) {
+        [self.view insertSubview:_auxiliaryFloatingButton aboveSubview:self.toolbar];
+        [self viewDidLayoutSubviews];
+        _auxiliaryFloatingButton.alpha = 0;
+        _auxiliaryFloatingButton.transform = CGAffineTransformMakeTranslation(0, 40);
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            _auxiliaryFloatingButton.transform = CGAffineTransformIdentity;
+            _auxiliaryFloatingButton.alpha = 1;
+        } completion:^(BOOL finished) {
+            
+        }];
     }
 }
 
@@ -232,7 +264,12 @@
         _toolbarView = toolbarView;
         
         [self.toolbar addSubview:toolbarView];
-        CGFloat newToolbarHeight = 44;
+        
+        CGFloat newToolbarHeight = toolbarView.intrinsicContentSize.height;
+        if (newToolbarHeight == UIViewNoIntrinsicMetric || newToolbarHeight < 44) {
+            newToolbarHeight = 44;
+        }
+        
         self.toolbarHeight = newToolbarHeight;
         toolbarView.frame = CGRectMake(0, 0, self.toolbar.bounds.size.width, newToolbarHeight);
         toolbarView.alpha = 0;
@@ -318,11 +355,12 @@
 #pragma mark Modes
 - (void)setMode:(EditorMode)mode {
     if (mode != _mode) {
-        // EditorMode oldMode = mode;
+        EditorMode oldMode = mode;
         _mode = mode;
         
         self.transientOverlayView = nil;
         self.toolbarView = self.iconBar;
+        self.auxiliaryFloatingButton = nil;
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -352,9 +390,29 @@
             [done addTarget:self action:@selector(endFreehandDrawing) forControlEvents:UIControlEventTouchUpInside];
             self.toolbarView = done;
         } else if (mode == EditorModeTimeline) {
-            // TODO
+            self.timeline = [TimelineView new];
+            self.toolbarView = self.timeline;
+            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+            done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+            [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+            done.clipsToBounds = YES;
+            done.layer.cornerRadius = 5;
+            done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+            [done sizeToFit];
+            done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
+            [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
+            self.auxiliaryFloatingButton = done;
+        }
+        
+        if (oldMode == EditorModeTimeline) {
+            self.timeline = nil;
         }
     }
+}
+
+- (void)resetMode {
+    self.mode = EditorModeNormal;
 }
 
 #pragma mark Freehand Drawing

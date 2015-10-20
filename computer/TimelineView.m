@@ -23,7 +23,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.label.textColor = [UIColor whiteColor];
     self.label.font = [UIFont boldSystemFontOfSize:12];
-    self.label.backgroundColor = [UIColor colorWithWhite:0.3 alpha:1];
+    self.label.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.5];
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.layer.cornerRadius = 8;
     self.label.clipsToBounds = YES;
@@ -85,6 +85,10 @@
 
 + (CGFloat)height {
     return 60;
+}
+
+- (CGSize)intrinsicContentSize {
+    return CGSizeMake(UIViewNoIntrinsicMetric, [[self class] height]);
 }
 
 - (void)layoutSubviews {
