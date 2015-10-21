@@ -11,6 +11,14 @@
 #import "Canvas.h"
 #import "computer-Swift.h"
 
+@interface Drawable ()
+
+@property (nonatomic) KeyframeStore *keyframeStore;
+
+@end
+
+
+
 @implementation Drawable
 
 - (instancetype)init {
@@ -98,18 +106,14 @@
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     // deliberately DON'T call super
-    [aCoder encodeObject:[NSValue valueWithCGRect:self.bounds] forKey:@"bounds"];
-    [aCoder encodeObject:[NSValue valueWithCGPoint:self.center] forKey:@"center"];
-    [aCoder encodeDouble:self.scale forKey:@"scale"];
-    [aCoder encodeDouble:self.rotation forKey:@"rotation"];
+    [aCoder encodeObject:[self currentKeyframeProperties] forKey:@"currentKeyframeProperties"];
+    [aCoder encodeObject:self.keyframeStore forKey:@"keyframeStore"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [self init]; // deliberately DON'T call super
-    self.bounds = [[aDecoder decodeObjectForKey:@"bounds"] CGRectValue];
-    self.center = [[aDecoder decodeObjectForKey:@"center"] CGPointValue];
-    self.scale = [aDecoder decodeDoubleForKey:@"scale"];
-    self.rotation = [aDecoder decodeDoubleForKey:@"rotation"];
+    [self setCurrentKeyframeProperties:[aDecoder decodeObjectForKey:@"currentKeyframeProperties"]];
+    self.keyframeStore = [aDecoder decodeObjectForKey:@"keyframeStore"];
     return self;
 }
 
@@ -122,6 +126,50 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     return [self copy];
+}
+
+#pragma mark Keyframes
+
+- (KeyframeStore *)keyframeStore {
+    if (!_keyframeStore) {
+        _keyframeStore = [KeyframeStore new];
+    }
+    return _keyframeStore;
+}
+
+- (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties {
+    return @{
+             @"bounds": [NSValue valueWithCGRect:self.bounds],
+             @"center": [NSValue valueWithCGPoint:self.center],
+             @"scale": @(self.scale),
+             @"rotation": @(self.rotation)
+             };
+}
+
+- (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props {
+    if (props[@"bounds"]) {
+        self.bounds = [props[@"bounds"] CGRectValue];
+    }
+    if (props[@"center"]) {
+        self.center = [props[@"center"] CGPointValue];
+    }
+    if (props[@"scale"]) {
+        self.scale = [props[@"scale"] doubleValue];
+    }
+    if (props[@"rotation"]) {
+        self.rotation = [props[@"rotation"] doubleValue];
+    }
+}
+
+- (void)keyframePropertiesChangedAtTime:(FrameTime *)time {
+    Keyframe *keyframe = [Keyframe new];
+    keyframe.frameTime = time;
+    [keyframe.properties addEntriesFromDictionary:[self currentKeyframeProperties]];
+    [self.keyframeStore storeKeyframe:keyframe];
+}
+
+- (void)updatedKeyframeProperties {
+    if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
 }
 
 @end

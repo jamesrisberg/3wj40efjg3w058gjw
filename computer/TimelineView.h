@@ -7,11 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Keyframe.h"
+
+@class TimelineView;
+
+@protocol TimelineViewDelegate <NSObject>
+
+- (void)timelineViewDidScroll:(TimelineView *)timelineView;
+
+@end
 
 @interface TimelineView : UIView
 
 + (CGFloat)height;
 @property (nonatomic,readonly) NSTimeInterval time;
 - (void)scrollToTime:(NSTimeInterval)time animated:(BOOL)animated;
+- (FrameTime *)currentFrameTime; // alternate representation for self.time
+@property (nonatomic,weak) id<TimelineViewDelegate> delegate;
 
 @end

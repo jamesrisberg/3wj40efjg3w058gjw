@@ -16,6 +16,9 @@
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
+		5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C051BD6DC82000FA3F4 /* Keyframe.m */; };
+		5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */; };
+		5FBF7C0C1BD74313000FA3F4 /* EVCATransform3DInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
@@ -118,6 +121,12 @@
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
 		5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScratchViewController.m; sourceTree = "<group>"; };
 		5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Scratch.storyboard; sourceTree = "<group>"; };
+		5FBF7C041BD6DC82000FA3F4 /* Keyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Keyframe.h; sourceTree = "<group>"; };
+		5FBF7C051BD6DC82000FA3F4 /* Keyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Keyframe.m; sourceTree = "<group>"; };
+		5FBF7C071BD74313000FA3F4 /* EVInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVInterpolation.h; sourceTree = "<group>"; };
+		5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVInterpolation.m; sourceTree = "<group>"; };
+		5FBF7C091BD74313000FA3F4 /* EVCATransform3DInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCATransform3DInterpolation.h; sourceTree = "<group>"; };
+		5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCATransform3DInterpolation.m; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,6 +291,21 @@
 			name = Scratch;
 			sourceTree = "<group>";
 		};
+		5FBF7C031BD6DBF8000FA3F4 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */,
+				5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */,
+				5FBF7C041BD6DC82000FA3F4 /* Keyframe.h */,
+				5FBF7C051BD6DC82000FA3F4 /* Keyframe.m */,
+				5FBF7C071BD74313000FA3F4 /* EVInterpolation.h */,
+				5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */,
+				5FBF7C091BD74313000FA3F4 /* EVCATransform3DInterpolation.h */,
+				5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 		5FEAF7F31B9788910071BC08 = {
 			isa = PBXGroup;
 			children = (
@@ -314,8 +338,7 @@
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
 				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
-				5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */,
-				5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */,
+				5FBF7C031BD6DBF8000FA3F4 /* Animation */,
 				5FEAF9641B9E2DEF0071BC08 /* Drawables */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
@@ -726,14 +749,17 @@
 				5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */,
 				5FEAF9431B9E2B2B0071BC08 /* SKColorFill.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
+				5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,
 				5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */,
 				5FEAF9101B9E2A760071BC08 /* SKHueSatPicker.m in Sources */,
 				5FEAF9211B9E2AE80071BC08 /* SKFillPicker.m in Sources */,
 				5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */,
+				5FBF7C0C1BD74313000FA3F4 /* EVCATransform3DInterpolation.m in Sources */,
 				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
 				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
+				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,

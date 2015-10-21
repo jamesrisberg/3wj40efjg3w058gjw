@@ -18,7 +18,7 @@
 #import "QuickCollectionModal.h"
 #import "TimelineView.h"
 
-@interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate> {
+@interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
@@ -392,6 +392,8 @@
         } else if (mode == EditorModeTimeline) {
             self.timeline = [TimelineView new];
             self.toolbarView = self.timeline;
+            [self.timeline scrollToTime:self.canvas.time.time animated:NO];
+            self.timeline.delegate = self;
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
             done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
             [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -520,6 +522,12 @@
             [transitionContext completeTransition:YES];
         }];
     }
+}
+
+#pragma mark Timeline
+
+- (void)timelineViewDidScroll:(TimelineView *)timelineView {
+    self.canvas.time = [timelineView currentFrameTime];
 }
 
 @end

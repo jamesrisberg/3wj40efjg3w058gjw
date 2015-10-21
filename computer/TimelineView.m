@@ -81,6 +81,16 @@
     self.centerLine.backgroundColor = [UIColor grayColor];
 }
 
+- (FrameTime *)currentFrameTime {
+    NSTimeInterval time = self.time;
+    NSTimeInterval roundedOff = round(time * self.snapshotsPerSecond)  / self.snapshotsPerSecond;
+    if (time == roundedOff) {
+        return [[FrameTime alloc] initWithFrame:roundedOff * self.snapshotsPerSecond atFPS:self.snapshotsPerSecond];
+    } else {
+        return [[FrameTime alloc] initWithFrame:time * 10000 atFPS:10000];
+    }
+}
+
 #pragma mark Layout
 
 + (CGFloat)height {
@@ -144,6 +154,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.time = [self convertScrollOffsetToTime:scrollView.contentOffset.x];
+    [self.delegate timelineViewDidScroll:self];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {

@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Keyframe.h"
 @class Drawable, ShapeStackList;
+
+@class Canvas;
+@protocol CanvasDelegate <NSObject>
+
+- (void)canvasDidChangeSelection:(Canvas *)canvas;
+- (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas;
+
+@end
+
 
 @interface Canvas : UIView <NSCopying>
 
@@ -16,5 +26,7 @@
 @property (nonatomic,copy) void (^selectionRectNeedUpdate)();
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
+
+@property (nonatomic) FrameTime *time;
 
 @end

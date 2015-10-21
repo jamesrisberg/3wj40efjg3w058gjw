@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QuickCollectionModal.h"
+#import "Keyframe.h"
 
 @class Canvas;
 @interface Drawable : UIView <NSCopying>
@@ -21,5 +22,13 @@
 @property (nonatomic,copy) void (^onShapeUpdate)();
 
 - (void)setInternalSize:(CGSize)size;
+
+- (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties;
+- (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props;
+@property (nonatomic,readonly) KeyframeStore *keyframeStore;
+- (void)keyframePropertiesChangedAtTime:(FrameTime *)time;
+
+- (void)updatedKeyframeProperties;
+@property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
 @end

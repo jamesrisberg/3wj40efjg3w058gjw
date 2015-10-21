@@ -102,6 +102,7 @@
 - (void)setPath:(UIBezierPath *)path {
     [self _setPathWithoutFittingContent:path];
     [self fitContent];
+    [self updatedKeyframeProperties];
 }
 
 - (void)_setPathWithoutFittingContent:(UIBezierPath *)path {
