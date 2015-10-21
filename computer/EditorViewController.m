@@ -64,10 +64,9 @@
         [weakSelf doneButtonPressed];
     };
     
-    RACSignal *selection = [[RACObserve(self, canvas) map:^id(Canvas *canvas) {
+    /*RACSignal *selection = [[RACObserve(self, canvas) map:^id(Canvas *canvas) {
         return RACObserve(canvas, selection);
-    }] switchToLatest];
-    [self rac_liftSelector:@selector(selectionChanged:) withSignals:selection, nil];
+    }] switchToLatest];*/
     
     [UIView performWithoutAnimation:^{
         self.toolbarView = self.iconBar;
@@ -102,13 +101,11 @@
     // clean up old canvas:
     [self.canvas removeFromSuperview];
     self.canvas.editorShapeStackList = nil;
-    self.canvas.selectionRectNeedUpdate = nil;
+    self.canvas.delegate = nil;
     // set up new canvas:
     self.canvas = canvas;
     self.canvas.editorShapeStackList = self.shapeStackList;
-    self.canvas.selectionRectNeedUpdate = ^{
-        [weakSelf updateSelectionRect];
-    };
+    self.canvas.delegate = self;
     self.canvas.hidden = canvasWasHidden;
     [self.view insertSubview:self.canvas atIndex:0];
 }
@@ -192,23 +189,6 @@
     self.auxiliaryFloatingButton.frame = CGRectMake(self.view.bounds.size.width - self.auxiliaryFloatingButton.frame.size.width - 15, self.toolbar.frame.origin.y - self.auxiliaryFloatingButton.frame.size.height - 15, self.auxiliaryFloatingButton.frame.size.width, self.auxiliaryFloatingButton.frame.size.height);
 }
 
-- (void)updateSelectionRect {
-    if (!self.selectionRect) {
-        self.selectionRect = [UIView new];
-        self.selectionRect.userInteractionEnabled = NO;
-        self.selectionRect.layer.borderColor = [UIColor colorWithRed:1 green:0.1 blue:0.1 alpha:0.5].CGColor;
-        self.selectionRect.layer.borderWidth = 1;
-        [self.view insertSubview:self.selectionRect aboveSubview:self.canvas];
-    }
-    self.selectionRect.hidden = (self.canvas.selection == nil);
-    if (self.canvas.selection) {
-        Drawable *selection = self.canvas.selection;
-        self.selectionRect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
-        self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
-        self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
-    }
-}
-
 - (void)setAuxiliaryFloatingButton:(UIView *)auxiliaryFloatingButton {
     UIView *oldButton = _auxiliaryFloatingButton;
     [UIView animateWithDuration:0.3 animations:^{
@@ -235,9 +215,26 @@
     }
 }
 
-#pragma mark Selection
-- (void)selectionChanged:(Drawable *)selection {
-    
+#pragma mark Canvas delegate
+- (void)canvasDidChangeSelection:(Canvas *)canvas {
+    // TODO: flash selection rect
+}
+
+- (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas {
+    if (!self.selectionRect) {
+        self.selectionRect = [UIView new];
+        self.selectionRect.userInteractionEnabled = NO;
+        self.selectionRect.layer.borderColor = [UIColor colorWithRed:1 green:0.1 blue:0.1 alpha:0.5].CGColor;
+        self.selectionRect.layer.borderWidth = 1;
+        [self.view insertSubview:self.selectionRect aboveSubview:self.canvas];
+    }
+    self.selectionRect.hidden = (self.canvas.selection == nil);
+    if (self.canvas.selection) {
+        Drawable *selection = self.canvas.selection;
+        self.selectionRect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
+        self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
+        self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
+    }
 }
 
 #pragma mark Overlays

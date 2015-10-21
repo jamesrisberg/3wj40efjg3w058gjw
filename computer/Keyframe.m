@@ -124,7 +124,6 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     if (!self.keyframes) self.keyframes = [NSMutableArray new];
     Keyframe *existing = [self keyframeAtTime:keyframe.frameTime];
     if (existing) [self.keyframes removeObject:existing]; // TODO: make this more efficient
-    NSLog(@"storing scale %@ at time %@", keyframe.properties[@"scale"], keyframe.frameTime);
     [self.keyframes addObject:keyframe];
     [self.keyframes sortUsingSelector:@selector(compare:)];
 }

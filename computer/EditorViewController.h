@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Canvas;
+#import "Canvas.h"
 @class ShapeStackList;
 @class ShapeDrawable;
 #import "CMDocument.h"
@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModeDrawing
 };
 
-@interface EditorViewController : UIViewController <CMDocumentDelegate>
+@interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>
 
 @property (nonatomic, readonly) Canvas *canvas;
 - (void)showOptions;

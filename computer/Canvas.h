@@ -23,10 +23,11 @@
 
 - (void)insertDrawable:(Drawable *)drawable;
 @property (nonatomic) Drawable *selection;
-@property (nonatomic,copy) void (^selectionRectNeedUpdate)();
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 
 @property (nonatomic) FrameTime *time;
+
+@property (nonatomic,weak) id<CanvasDelegate> delegate;
 
 @end

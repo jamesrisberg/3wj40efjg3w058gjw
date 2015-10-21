@@ -112,7 +112,7 @@
             [self.selection updatedKeyframeProperties];
         }
     }
-    self.selectionRectNeedUpdate();
+    [self.delegate canvasSelectionRectNeedsUpdate:self];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -173,19 +173,22 @@
     _selection = selection;
     __weak Canvas *weakSelf = self;
     _selection.onShapeUpdate = ^{
-        weakSelf.selectionRectNeedUpdate();
+        [weakSelf.delegate canvasSelectionRectNeedsUpdate:weakSelf];
     };
-    self.selectionRectNeedUpdate();
+    [self.delegate canvasDidChangeSelection:self];
+    [self.delegate canvasSelectionRectNeedsUpdate:self];
 }
 
 #pragma mark Geometry
 
 - (NSArray *)allHitsAtPoint:(CGPoint)pos {
-    // TODO: include small hits NEAR this point
+    CGFloat centerLeeway = 20; // for small objects
     NSMutableArray *hits = [NSMutableArray new];
     for (Drawable *d in self.subviews.reverseObjectEnumerator) {
         // TODO: take into account transforms; don't use UIView's own math
         if ([d pointInside:[d convertPoint:pos fromView:self] withEvent:nil]) {
+            [hits addObject:d];
+        } else if (CGPointDistance(pos, d.center) < centerLeeway) {
             [hits addObject:d];
         }
     }
@@ -270,6 +273,7 @@
     for (Drawable *d in [self drawables]) {
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
     }
+    [self.delegate canvasSelectionRectNeedsUpdate:self];
 }
 
 @end
