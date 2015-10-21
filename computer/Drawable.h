@@ -31,4 +31,6 @@
 - (void)updatedKeyframeProperties;
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
+@property (nonatomic) BOOL dimmed;
+
 @end

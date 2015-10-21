@@ -33,6 +33,7 @@
 @property (nonatomic) ShapeStackList *shapeStackList;
 @property (nonatomic) UIScrollView *dummyScrollView;
 @property (nonatomic) TimelineView *timeline;
+@property (nonatomic) UIView *panelView;
 
 @property (nonatomic,copy) void (^modalEditingCallback)(Canvas *canvas);
 
@@ -232,6 +233,10 @@
 #pragma mark Canvas delegate
 - (void)canvasDidChangeSelection:(Canvas *)canvas {
     // TODO: flash selection rect
+    
+    if (self.mode == EditorModePanelView) {
+        [self resetMode];
+    }
 }
 
 - (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas {
@@ -253,6 +258,11 @@
 
 - (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas {
     [self.timeline keyframeAvailabilityUpdatedForTime:canvas.time];
+}
+
+- (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel {
+    self.panelView = panel;
+    self.mode = EditorModePanelView;
 }
 
 #pragma mark Overlays
@@ -410,6 +420,9 @@
             [self.timeline scrollToTime:self.canvas.time.time animated:NO];
             self.timeline.delegate = self;
             [self addAuxiliaryModeResetButton];
+        } else if (mode == EditorModePanelView) {
+            self.toolbarView = self.panelView;
+            [self addAuxiliaryModeResetButton];
         }
         
         if (oldMode == EditorModeTimeline) {
@@ -420,6 +433,13 @@
 
 - (void)resetMode {
     self.mode = EditorModeNormal;
+}
+
+- (void)setPanelView:(UIView *)panelView {
+    if (_panelView && self.toolbarView == _panelView) {
+        self.toolbarView = panelView;
+    }
+    _panelView = panelView;
 }
 
 #pragma mark Freehand Drawing

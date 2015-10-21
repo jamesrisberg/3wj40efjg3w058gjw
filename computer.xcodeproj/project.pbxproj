@@ -19,6 +19,9 @@
 		5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C051BD6DC82000FA3F4 /* Keyframe.m */; };
 		5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */; };
 		5FBF7C0C1BD74313000FA3F4 /* EVCATransform3DInterpolation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */; };
+		5FBF7C131BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m */; };
+		5FBF7C141BD82030000FA3F4 /* OptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0E1BD82030000FA3F4 /* OptionsView.m */; };
+		5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
@@ -127,6 +130,12 @@
 		5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVInterpolation.m; sourceTree = "<group>"; };
 		5FBF7C091BD74313000FA3F4 /* EVCATransform3DInterpolation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EVCATransform3DInterpolation.h; sourceTree = "<group>"; };
 		5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EVCATransform3DInterpolation.m; sourceTree = "<group>"; };
+		5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiButtonOptionsTableViewCell.m; sourceTree = "<group>"; };
+		5FBF7C0E1BD82030000FA3F4 /* OptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsView.m; sourceTree = "<group>"; };
+		5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionsTableViewCell.m; sourceTree = "<group>"; };
+		5FBF7C101BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiButtonOptionsTableViewCell.h; sourceTree = "<group>"; };
+		5FBF7C111BD82030000FA3F4 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
+		5FBF7C121BD82030000FA3F4 /* OptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsView.h; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -306,6 +315,19 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
+		5FBF7C161BD82033000FA3F4 /* Options menus */ = {
+			isa = PBXGroup;
+			children = (
+				5FBF7C121BD82030000FA3F4 /* OptionsView.h */,
+				5FBF7C0E1BD82030000FA3F4 /* OptionsView.m */,
+				5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */,
+				5FBF7C111BD82030000FA3F4 /* OptionsTableViewCell.h */,
+				5FBF7C101BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.h */,
+				5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m */,
+			);
+			name = "Options menus";
+			sourceTree = "<group>";
+		};
 		5FEAF7F31B9788910071BC08 = {
 			isa = PBXGroup;
 			children = (
@@ -334,6 +356,7 @@
 				5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
+				5FBF7C161BD82033000FA3F4 /* Options menus */,
 				5FEAF9611B9E2DB60071BC08 /* Helpers */,
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
@@ -732,12 +755,14 @@
 				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
 				5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */,
+				5FBF7C131BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m in Sources */,
 				5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */,
 				5FEAF8511B9AD96E0071BC08 /* DrawingView.swift in Sources */,
 				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
 				5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */,
 				5FEAF9451B9E2B2B0071BC08 /* SKImageFill.m in Sources */,
 				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
+				5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
@@ -764,6 +789,7 @@
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
+				5FBF7C141BD82030000FA3F4 /* OptionsView.m in Sources */,
 				5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */,
 				5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */,
 				5FEAF9571B9E2B8A0071BC08 /* CPHueWheel.m in Sources */,

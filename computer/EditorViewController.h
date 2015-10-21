@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModeNormal = 0,
     EditorModeScroll,
     EditorModeTimeline,
-    EditorModeDrawing
+    EditorModeDrawing,
+    EditorModePanelView
 };
 
 @interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>

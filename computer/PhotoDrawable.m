@@ -91,7 +91,12 @@
     filter.action = ^{
         [weakSelf addFilter];
     };
-    return [[super optionsItems] arrayByAddingObjectsFromArray:@[cutOut, filter]];
+    QuickCollectionItem *pickPhoto = [QuickCollectionItem new];
+    pickPhoto.label = NSLocalizedString(@"Photo…", @"");
+    pickPhoto.action = ^{
+        [weakSelf primaryEditAction];
+    };
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[cutOut, filter, pickPhoto]];
 }
 
 - (void)addFilter {

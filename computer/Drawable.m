@@ -10,6 +10,7 @@
 #import "QuickCollectionModal.h"
 #import "Canvas.h"
 #import "computer-Swift.h"
+#import "OptionsView.h"
 
 @interface Drawable ()
 
@@ -55,8 +56,8 @@
 }
 
 - (void)updateAppearance {
-    self.transform = CGAffineTransformRotate(CGAffineTransformMakeScale(self.scale, self.scale), self.rotation);
-    self.alpha = self.itemOpacity;
+    self.transform = CGAffineTransformRotate(CGAffineTransformMakeScale(_scale, _scale), _rotation);
+    self.alpha = _itemOpacity * (_dimmed ? 0.4 : 1);
 }
 
 #pragma mark Util
@@ -83,7 +84,12 @@
     duplicate.action = ^{
         [weakSelf duplicate:nil];
     };
-    return @[delete, duplicate];
+    QuickCollectionItem *options = [QuickCollectionItem new];
+    options.label = NSLocalizedString(@"Options…", @"");
+    options.action = ^{
+        [weakSelf showOptions];
+    };
+    return @[delete, duplicate, options];
 }
 
 #pragma mark Actions
@@ -102,6 +108,11 @@
     Drawable *dupe = [self copy];
     [self.canvas insertSubview:dupe aboveSubview:self];
     dupe.center = CGPointMake(dupe.center.x + 20, dupe.center.y + 20);
+}
+
+- (void)showOptions {
+    OptionsView *v = [OptionsView new];
+    [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
 }
 
 #pragma mark Resize
@@ -181,6 +192,11 @@
 
 - (void)updatedKeyframeProperties {
     if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
+}
+
+- (void)setDimmed:(BOOL)dimmed {
+    _dimmed = dimmed;
+    [self updateAppearance];
 }
 
 @end

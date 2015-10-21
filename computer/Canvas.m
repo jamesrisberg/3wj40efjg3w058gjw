@@ -221,6 +221,7 @@
     drawable.onKeyframePropertiesUpdated = ^{
         [weakDrawable keyframePropertiesChangedAtTime:weakSelf.time];
         [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
+        weakDrawable.dimmed = NO;
     };
 }
 
@@ -272,6 +273,8 @@
 - (void)setTime:(FrameTime *)time {
     _time = time;
     for (Drawable *d in [self drawables]) {
+        Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
+        d.dimmed = !exactKeyframe;
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];

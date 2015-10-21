@@ -148,4 +148,14 @@
     self.center = oldCenter;
 }
 
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
+    QuickCollectionItem *editFill = [QuickCollectionItem new];
+    __weak ShapeDrawable *weakSelf = self;
+    editFill.label = NSLocalizedString(@"Fill…", @"");
+    editFill.action = ^{
+        [weakSelf primaryEditAction];
+    };
+    return [[super optionsItems] arrayByAddingObject:editFill];
+}
+
 @end

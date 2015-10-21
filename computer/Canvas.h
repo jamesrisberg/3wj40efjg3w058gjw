@@ -16,6 +16,7 @@
 - (void)canvasDidChangeSelection:(Canvas *)canvas;
 - (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas;
 - (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas;
+- (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel;
 
 @end
 
