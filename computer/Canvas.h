@@ -15,6 +15,7 @@
 
 - (void)canvasDidChangeSelection:(Canvas *)canvas;
 - (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas;
+- (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas;
 
 @end
 
@@ -22,6 +23,8 @@
 @interface Canvas : UIView <NSCopying>
 
 - (void)insertDrawable:(Drawable *)drawable;
+- (NSArray<__kindof Drawable*>*)drawables;
+
 @property (nonatomic) Drawable *selection;
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;

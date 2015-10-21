@@ -14,6 +14,7 @@
 @protocol TimelineViewDelegate <NSObject>
 
 - (void)timelineViewDidScroll:(TimelineView *)timelineView;
+- (BOOL)timelineView:(TimelineView *)timelineView shouldIndicateKeyframesExistAtTime:(FrameTime *)time;
 
 @end
 
@@ -24,5 +25,6 @@
 - (void)scrollToTime:(NSTimeInterval)time animated:(BOOL)animated;
 - (FrameTime *)currentFrameTime; // alternate representation for self.time
 @property (nonatomic,weak) id<TimelineViewDelegate> delegate;
+- (void)keyframeAvailabilityUpdatedForTime:(FrameTime *)time; // time can be nil
 
 @end

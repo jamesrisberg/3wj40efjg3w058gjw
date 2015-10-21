@@ -220,6 +220,7 @@
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
         [weakDrawable keyframePropertiesChangedAtTime:weakSelf.time];
+        [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
     };
 }
 

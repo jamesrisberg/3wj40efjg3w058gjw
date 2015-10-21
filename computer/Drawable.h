@@ -15,7 +15,7 @@
 
 - (void)primaryEditAction;
 - (void)setup; // override this
-@property (nonatomic) CGFloat rotation, scale;
+@property (nonatomic) CGFloat rotation, scale, itemOpacity;
 - (UIViewController *)vcForPresentingModals;
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems;
 - (Canvas *)canvas;

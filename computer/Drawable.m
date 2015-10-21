@@ -34,22 +34,29 @@
 - (void)setup {
     _rotation = 0;
     _scale = 1;
+    _itemOpacity = 1;
 }
 
-#pragma mark Transforms
+#pragma mark Appearances
 
 - (void)setRotation:(CGFloat)rotation {
     _rotation = rotation;
-    [self updateTransform];
+    [self updateAppearance];
 }
 
 - (void)setScale:(CGFloat)scale {
     _scale = scale;
-    [self updateTransform];
+    [self updateAppearance];
 }
 
-- (void)updateTransform {
+- (void)setItemOpacity:(CGFloat)itemOpacity {
+    _itemOpacity = itemOpacity;
+    [self updateAppearance];
+}
+
+- (void)updateAppearance {
     self.transform = CGAffineTransformRotate(CGAffineTransformMakeScale(self.scale, self.scale), self.rotation);
+    self.alpha = self.itemOpacity;
 }
 
 #pragma mark Util
@@ -142,7 +149,8 @@
              @"bounds": [NSValue valueWithCGRect:self.bounds],
              @"center": [NSValue valueWithCGPoint:self.center],
              @"scale": @(self.scale),
-             @"rotation": @(self.rotation)
+             @"rotation": @(self.rotation),
+             @"itemOpacity": @(self.itemOpacity)
              };
 }
 
@@ -158,6 +166,9 @@
     }
     if (props[@"rotation"]) {
         self.rotation = [props[@"rotation"] doubleValue];
+    }
+    if (props[@"itemOpacity"]) {
+        self.itemOpacity = [props[@"itemOpacity"] doubleValue];
     }
 }
 

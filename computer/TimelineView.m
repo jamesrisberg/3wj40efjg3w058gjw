@@ -11,6 +11,7 @@
 @interface TimelineViewSnapshotCell : UICollectionViewCell
 
 @property (nonatomic) UILabel *label;
+@property (nonatomic) UIView *hasKeyframesIndicator;
 
 @end
 
@@ -27,12 +28,18 @@
     self.label.textAlignment = NSTextAlignmentCenter;
     self.label.layer.cornerRadius = 8;
     self.label.clipsToBounds = YES;
+    self.hasKeyframesIndicator = [UIView new];
+    self.hasKeyframesIndicator.backgroundColor = [UIColor whiteColor];
+    self.hasKeyframesIndicator.bounds = CGRectMake(0, 0, 6, 6);
+    self.hasKeyframesIndicator.layer.cornerRadius = 3;
+    [self addSubview:self.hasKeyframesIndicator];
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.label.frame = CGRectInset(self.bounds, 5, 5);
+    self.hasKeyframesIndicator.center = CGPointMake(self.bounds.size.width/2, 5 + 3 + 10);
 }
 
 @end
@@ -91,6 +98,11 @@
     }
 }
 
+- (void)setDelegate:(id<TimelineViewDelegate>)delegate {
+    _delegate = delegate;
+    [self keyframeAvailabilityUpdatedForTime:nil];
+}
+
 #pragma mark Layout
 
 + (CGFloat)height {
@@ -144,6 +156,8 @@
     } else {
         cell.label.text = nil;
     }
+    FrameTime *frameTime = [[FrameTime alloc] initWithFrame:indexPath.item atFPS:self.snapshotsPerSecond];
+    cell.hasKeyframesIndicator.hidden = ![self.delegate timelineView:self shouldIndicateKeyframesExistAtTime:frameTime];
     return cell;
 }
 
@@ -161,6 +175,14 @@
     NSTimeInterval targetTime = [self convertScrollOffsetToTime:targetContentOffset->x];
     targetTime = round(targetTime * self.snapshotsPerSecond) / self.snapshotsPerSecond;
     targetContentOffset->x = [self convertTimeToScrollOffset:targetTime];
+}
+
+- (void)keyframeAvailabilityUpdatedForTime:(FrameTime *)time {
+    for (TimelineViewSnapshotCell *cell in (NSArray *)[self.collectionView visibleCells]) {
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+        FrameTime *frameTime = [[FrameTime alloc] initWithFrame:indexPath.item atFPS:self.snapshotsPerSecond];
+        cell.hasKeyframesIndicator.hidden = ![self.delegate timelineView:self shouldIndicateKeyframesExistAtTime:frameTime];
+    }
 }
 
 #pragma mark Selections

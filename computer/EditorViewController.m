@@ -215,6 +215,20 @@
     }
 }
 
+- (void)addAuxiliaryModeResetButton {
+    UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
+    done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+    done.clipsToBounds = YES;
+    done.layer.cornerRadius = 5;
+    done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [done sizeToFit];
+    done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
+    [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
+    self.auxiliaryFloatingButton = done;
+}
+
 #pragma mark Canvas delegate
 - (void)canvasDidChangeSelection:(Canvas *)canvas {
     // TODO: flash selection rect
@@ -235,6 +249,10 @@
         self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
         self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
     }
+}
+
+- (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas {
+    [self.timeline keyframeAvailabilityUpdatedForTime:canvas.time];
 }
 
 #pragma mark Overlays
@@ -352,7 +370,7 @@
 #pragma mark Modes
 - (void)setMode:(EditorMode)mode {
     if (mode != _mode) {
-        EditorMode oldMode = mode;
+        EditorMode oldMode = _mode;
         _mode = mode;
         
         self.transientOverlayView = nil;
@@ -391,17 +409,7 @@
             self.toolbarView = self.timeline;
             [self.timeline scrollToTime:self.canvas.time.time animated:NO];
             self.timeline.delegate = self;
-            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-            done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
-            [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
-            done.clipsToBounds = YES;
-            done.layer.cornerRadius = 5;
-            done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
-            [done sizeToFit];
-            done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
-            [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
-            self.auxiliaryFloatingButton = done;
+            [self addAuxiliaryModeResetButton];
         }
         
         if (oldMode == EditorModeTimeline) {
@@ -525,6 +533,15 @@
 
 - (void)timelineViewDidScroll:(TimelineView *)timelineView {
     self.canvas.time = [timelineView currentFrameTime];
+}
+
+- (BOOL)timelineView:(TimelineView *)timelineView shouldIndicateKeyframesExistAtTime:(FrameTime *)time {
+    for (Drawable *d in [self.canvas drawables]) {
+        if ([d.keyframeStore keyframeAtTime:time] != nil) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 @end
