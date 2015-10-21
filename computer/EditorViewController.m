@@ -17,6 +17,7 @@
 #import "FreehandInputView.h"
 #import "QuickCollectionModal.h"
 #import "TimelineView.h"
+#import "OptionsView.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -440,6 +441,9 @@
         self.toolbarView = panelView;
     }
     _panelView = panelView;
+    if ([panelView respondsToSelector:@selector(setUnderlyingBlurEffect:)]) {
+        [(id)panelView setUnderlyingBlurEffect:(UIBlurEffect *)self.toolbar.effect];
+    }
 }
 
 #pragma mark Freehand Drawing

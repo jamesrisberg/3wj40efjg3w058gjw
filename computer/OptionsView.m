@@ -49,6 +49,7 @@
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.showsVerticalScrollIndicator = NO;
         self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
+        // self.tableView.separatorColor = [UIColor colorWithWhite:0.2 alpha:0.0];
     }
     return _tableView;
 }
@@ -59,17 +60,35 @@
 }
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(UIViewNoIntrinsicMetric, round([UIScreen mainScreen].bounds.size.height * 0.3));
+    CGFloat height = MIN(self.tableView.contentSize.height, round([UIScreen mainScreen].bounds.size.height * 0.3));
+    return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
 
 #pragma mark TableView
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.models.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    OptionsViewCellModel *model = self.models[section];
+    return model.title;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    UIView *bgView = [UIView new];
+    bgView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.8];
+    header.backgroundView = bgView;
+    header.textLabel.textColor = [UIColor whiteColor];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    OptionsViewCellModel *model = self.models[indexPath.row];
+    OptionsViewCellModel *model = self.models[indexPath.section];
     NSString *reuseId = NSStringFromClass(model.cellClass);
     OptionsTableViewCell *cell = nil; // [tableView dequeueReusableCellWithIdentifier:reuseId];
     if (!cell) {
@@ -82,7 +101,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.models[indexPath.row] onSelect] != nil;
+    return [self.models[indexPath.section] onSelect] != nil;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -104,7 +123,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OptionsViewCellModel *model = self.models[indexPath.row];
+    OptionsViewCellModel *model = self.models[indexPath.section];
     // for some reason, dispatch_after is needed when presenting modals or something...
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (model.onSelect) model.onSelect((id)[tableView cellForRowAtIndexPath:indexPath]);

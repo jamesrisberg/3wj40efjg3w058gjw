@@ -11,6 +11,7 @@
 #import "Canvas.h"
 #import "computer-Swift.h"
 #import "OptionsView.h"
+#import "SliderTableViewCell.h"
 
 @interface Drawable ()
 
@@ -112,6 +113,22 @@
 
 - (void)showOptions {
     OptionsView *v = [OptionsView new];
+    __weak Drawable *weakSelf = self;
+    
+    OptionsViewCellModel *alpha = [OptionsViewCellModel new];
+    alpha.title = NSLocalizedString(@"Opacity", @"");
+    alpha.cellClass = [SliderTableViewCell class];
+    alpha.onCreate = ^(OptionsTableViewCell *cell){
+        SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+        sliderCell.value = weakSelf.itemOpacity;
+        sliderCell.onValueChange = ^(CGFloat val) {
+            weakSelf.itemOpacity = val;
+            [weakSelf updatedKeyframeProperties];
+        };
+    };
+    
+    v.models = @[alpha];
+    
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
 }
 

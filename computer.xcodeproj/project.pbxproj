@@ -22,6 +22,7 @@
 		5FBF7C131BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m */; };
 		5FBF7C141BD82030000FA3F4 /* OptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0E1BD82030000FA3F4 /* OptionsView.m */; };
 		5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */; };
+		5FBF7C191BD82566000FA3F4 /* SliderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C181BD82566000FA3F4 /* SliderTableViewCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
@@ -136,6 +137,8 @@
 		5FBF7C101BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiButtonOptionsTableViewCell.h; sourceTree = "<group>"; };
 		5FBF7C111BD82030000FA3F4 /* OptionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsTableViewCell.h; sourceTree = "<group>"; };
 		5FBF7C121BD82030000FA3F4 /* OptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionsView.h; sourceTree = "<group>"; };
+		5FBF7C171BD82566000FA3F4 /* SliderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderTableViewCell.h; sourceTree = "<group>"; };
+		5FBF7C181BD82566000FA3F4 /* SliderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderTableViewCell.m; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,8 +323,10 @@
 			children = (
 				5FBF7C121BD82030000FA3F4 /* OptionsView.h */,
 				5FBF7C0E1BD82030000FA3F4 /* OptionsView.m */,
-				5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */,
 				5FBF7C111BD82030000FA3F4 /* OptionsTableViewCell.h */,
+				5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */,
+				5FBF7C171BD82566000FA3F4 /* SliderTableViewCell.h */,
+				5FBF7C181BD82566000FA3F4 /* SliderTableViewCell.m */,
 				5FBF7C101BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.h */,
 				5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsTableViewCell.m */,
 			);
@@ -785,6 +790,7 @@
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
 				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
 				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
+				5FBF7C191BD82566000FA3F4 /* SliderTableViewCell.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,

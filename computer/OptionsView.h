@@ -14,6 +14,7 @@
 @property (nonatomic) Class cellClass;
 @property (nonatomic,copy) void (^onCreate)(OptionsTableViewCell *cell);
 @property (nonatomic,copy) void (^onSelect)(OptionsTableViewCell *cell);
+@property (nonatomic) NSString *title;
 
 @end
 
