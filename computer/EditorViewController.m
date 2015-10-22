@@ -120,8 +120,9 @@
         
         _document = document;
         document.delegate = self;
+        [[UIApplication sharedApplication].windows.firstObject.rootViewController.view setUserInteractionEnabled:NO];
         [document openWithCompletionHandler:^(BOOL success) {
-            
+            [[UIApplication sharedApplication].windows.firstObject.rootViewController.view setUserInteractionEnabled:YES];
         }];
     };
     if (_document) {
@@ -164,7 +165,7 @@
 }
 
 - (UIImage *)canvasSnapshotForDocument:(CMDocument *)document {
-    if (self.view.window && [UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+    if (!self.view.window) {
         return nil;
     }
     UIGraphicsBeginImageContext(self.canvas.bounds.size);
