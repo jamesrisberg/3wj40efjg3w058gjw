@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EVInterpolation.h"
 
-@interface StaticAnimation : NSObject <NSCoding, EVInterpolation>
+@interface StaticAnimation : NSObject <NSCoding, EVInterpolation, NSCopying>
 
 - (instancetype)init;
 

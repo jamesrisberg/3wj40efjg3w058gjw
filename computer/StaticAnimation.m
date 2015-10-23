@@ -109,4 +109,14 @@
     }
 }
 
+#pragma mark Copy
+
+- (id)copy {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
+}
+
 @end

@@ -131,11 +131,13 @@
     
     StaticAnimationPreview *cell = (StaticAnimationPreview *)[collectionView cellForItemAtIndexPath:indexPath];
     BOOL enable = !cell.displayAsSelected;
+    StaticAnimation *newAnimationDict = self.drawable.staticAnimation.copy;
     if (enable) {
-        [self.drawable.staticAnimation addAnimationDict:animationDict];
+        [newAnimationDict addAnimationDict:animationDict];
     } else {
-        [self.drawable.staticAnimation removeAnimationDict:animationDict];
+        [newAnimationDict removeAnimationDict:animationDict];
     }
+    self.drawable.staticAnimation = newAnimationDict;
     [self.drawable updatedKeyframeProperties];
     [self updateAnimationCellSelections];
 }

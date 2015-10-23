@@ -42,7 +42,7 @@
 - (void)updatedKeyframeProperties;
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
-@property (nonatomic) StaticAnimation *staticAnimation;
+@property (nonatomic) StaticAnimation *staticAnimation; // DO NOT modify this in place
 
 @property (nonatomic) BOOL dimmed;
 
