@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "QuickCollectionModal.h"
 #import "Keyframe.h"
+#import "StaticAnimation.h"
 
 @class Canvas;
 @interface Drawable : UIView <NSCopying>
@@ -29,8 +30,19 @@
 @property (nonatomic,readonly) KeyframeStore *keyframeStore;
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time;
 
+/*
+ -updatedKeyframeProperties should be called WHENEVER the user manipulates
+ a keyframe-animatable property:
+ - center
+ - scale
+ - rotation
+ - alpha
+ - staticAnimation
+ */
 - (void)updatedKeyframeProperties;
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
+
+@property (nonatomic) StaticAnimation *staticAnimation;
 
 @property (nonatomic) BOOL dimmed;
 

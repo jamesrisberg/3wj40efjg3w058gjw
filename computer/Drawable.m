@@ -12,10 +12,12 @@
 #import "computer-Swift.h"
 #import "OptionsView.h"
 #import "SliderTableViewCell.h"
+#import "StaticAnimationPicker.h"
 
 @interface Drawable ()
 
 @property (nonatomic) KeyframeStore *keyframeStore;
+@property (nonatomic) CADisplayLink *displayLink;
 
 @end
 
@@ -39,6 +41,25 @@
     _itemOpacity = 1;
 }
 
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+    [super willMoveToWindow:newWindow];
+    BOOL shouldHaveDisplayLink = !!newWindow;
+    BOOL hasDisplayLink = !!self.displayLink;
+    if (hasDisplayLink != shouldHaveDisplayLink) {
+        if (shouldHaveDisplayLink) {
+            self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(updateAppearance)];
+            [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        } else {
+            [self.displayLink invalidate];
+            self.displayLink = nil;
+        }
+    }
+}
+
+- (void)dealloc {
+    if (self.displayLink) [self.displayLink invalidate];
+}
+
 #pragma mark Appearances
 
 - (void)setRotation:(CGFloat)rotation {
@@ -57,8 +78,15 @@
 }
 
 - (void)updateAppearance {
-    self.transform = CGAffineTransformRotate(CGAffineTransformMakeScale(_scale, _scale), _rotation);
-    self.alpha = _itemOpacity * (_dimmed ? 0.4 : 1);
+    CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformMakeScale(_scale, _scale), _rotation);
+    NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate]; // TODO: don't use the real date
+    transform = [self.staticAnimation adjustTransform:transform time:time];
+    CGFloat alpha = _itemOpacity;
+    alpha = [self.staticAnimation adjustAlpha:alpha time:time];
+    if (_dimmed) alpha *= 0.4;
+    
+    self.alpha = alpha;
+    self.transform = transform;
 }
 
 #pragma mark Util
@@ -90,7 +118,12 @@
     options.action = ^{
         [weakSelf showOptions];
     };
-    return @[delete, duplicate, options];
+    QuickCollectionItem *animations = [QuickCollectionItem new];
+    animations.label = NSLocalizedString(@"Animations…", @"");
+    animations.action = ^{
+        [weakSelf showStaticAnimationPicker];
+    };
+    return @[delete, duplicate, options, animations];
 }
 
 #pragma mark Actions
@@ -131,6 +164,12 @@
     v.models = @[alpha];
     
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
+}
+
+- (void)showStaticAnimationPicker {
+    StaticAnimationPicker *picker = [StaticAnimationPicker new];
+    picker.drawable = self;
+    [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:picker];
 }
 
 #pragma mark Resize
@@ -196,7 +235,8 @@
              @"center": [NSValue valueWithCGPoint:self.center],
              @"scale": @(self.scale),
              @"rotation": @(self.rotation),
-             @"itemOpacity": @(self.itemOpacity)
+             @"itemOpacity": @(self.itemOpacity),
+             @"staticAnimation": self.staticAnimation
              };
 }
 
@@ -216,6 +256,9 @@
     if (props[@"itemOpacity"]) {
         self.itemOpacity = [props[@"itemOpacity"] doubleValue];
     }
+    if (props[@"staticAnimation"]) {
+        self.staticAnimation = props[@"staticAnimation"];
+    }
 }
 
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time {
@@ -232,6 +275,14 @@
 - (void)setDimmed:(BOOL)dimmed {
     _dimmed = dimmed;
     [self updateAppearance];
+}
+
+#pragma mark Static Animations
+- (StaticAnimation *)staticAnimation {
+    if (!_staticAnimation) {
+        _staticAnimation = [StaticAnimation new];
+    }
+    return _staticAnimation;
 }
 
 @end

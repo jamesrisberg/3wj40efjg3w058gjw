@@ -25,6 +25,8 @@
 		5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */; };
 		5FBF7C191BD82566000FA3F4 /* SliderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C181BD82566000FA3F4 /* SliderTableViewCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
+		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
+		5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -144,6 +146,10 @@
 		5FBF7C181BD82566000FA3F4 /* SliderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderTableViewCell.m; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
+		5FE8575A1BD9DA1800B4B245 /* StaticAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticAnimation.h; sourceTree = "<group>"; };
+		5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimation.m; sourceTree = "<group>"; };
+		5FE857631BD9DE3700B4B245 /* StaticAnimationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticAnimationPicker.h; sourceTree = "<group>"; };
+		5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimationPicker.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -317,6 +323,10 @@
 				5FBF7C081BD74313000FA3F4 /* EVInterpolation.m */,
 				5FBF7C091BD74313000FA3F4 /* EVCATransform3DInterpolation.h */,
 				5FBF7C0A1BD74313000FA3F4 /* EVCATransform3DInterpolation.m */,
+				5FE8575A1BD9DA1800B4B245 /* StaticAnimation.h */,
+				5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */,
+				5FE857631BD9DE3700B4B245 /* StaticAnimationPicker.h */,
+				5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -739,6 +749,7 @@
 			files = (
 				5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */,
 				5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */,
+				5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
@@ -758,6 +769,7 @@
 				5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */,
 				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,
 				5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */,
+				5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
 				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
