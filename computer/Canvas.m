@@ -215,7 +215,15 @@
 }
 
 - (void)_addDrawableToCanvas:(Drawable *)drawable {
-    [self addSubview:drawable];
+    [self _addDrawableToCanvas:drawable aboveDrawable:nil];
+}
+
+- (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other {
+    if (other) {
+        [self insertSubview:drawable aboveSubview:other];
+    } else {
+        [self addSubview:drawable];
+    }
     drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     __weak Canvas *weakSelf = self;
     __weak Drawable *weakDrawable = drawable;

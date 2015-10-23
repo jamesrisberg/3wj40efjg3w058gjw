@@ -107,8 +107,9 @@
 
 - (void)duplicate:(id)sender {
     Drawable *dupe = [self copy];
-    [self.canvas insertSubview:dupe aboveSubview:self];
+    [self.canvas _addDrawableToCanvas:dupe aboveDrawable:self];
     dupe.center = CGPointMake(dupe.center.x + 20, dupe.center.y + 20);
+    [dupe updatedKeyframeProperties];
 }
 
 - (void)showOptions {

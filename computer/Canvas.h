@@ -36,4 +36,6 @@
 
 - (void)resizeBoundsToFitContent;
 
+- (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other;
+
 @end
