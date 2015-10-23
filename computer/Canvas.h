@@ -34,4 +34,6 @@
 
 @property (nonatomic,weak) id<CanvasDelegate> delegate;
 
+- (void)resizeBoundsToFitContent;
+
 @end

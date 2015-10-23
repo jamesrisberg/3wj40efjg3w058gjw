@@ -12,9 +12,10 @@
 #import "Canvas.h"
 #import "TextDrawable.h"
 #import "ShapeDrawable.h"
+#import "SubcanvasDrawable.h"
 #import "SKColorFill.h"
 
-@interface InsertItemViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+@interface InsertItemViewController ()
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSArray *models;
@@ -82,7 +83,26 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, video, text, pen, circle, square];
+    QuickCollectionItem *group = [QuickCollectionItem new];
+    group.icon = [UIImage imageNamed:@"Group"];
+    group.action = ^{
+        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+        
+        ShapeDrawable *square = [ShapeDrawable new];
+        square.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
+        [canvas insertDrawable:square];
+        
+        ShapeDrawable *circle = [ShapeDrawable new];
+        circle.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 120, 120)];
+        circle.fill = [[SKColorFill alloc] initWithColor:[UIColor orangeColor]];
+        [canvas insertDrawable:circle];
+        
+        SubcanvasDrawable *d = [SubcanvasDrawable new];
+        d.canvas = canvas;
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
+    
+    self.items = @[camera, photos, video, text, pen, circle, square, group];
 }
 
 @end

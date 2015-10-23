@@ -22,6 +22,7 @@
 @property (nonatomic,copy) void (^onShapeUpdate)();
 
 - (void)setInternalSize:(CGSize)size;
+- (void)adjustAspectRatioWithOld:(CGFloat)oldAspectRatio new:(CGFloat)aspectRatio;
 
 - (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties;
 - (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props;

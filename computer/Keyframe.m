@@ -201,4 +201,13 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return interpolated;
 }
 
+- (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block {
+    for (Keyframe *k in self.keyframes) {
+        id val = k.properties[property];
+        if (val) {
+            k.properties[property] = block(val);
+        }
+    }
+}
+
 @end

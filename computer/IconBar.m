@@ -48,47 +48,7 @@
         self.collectionView.delegate = self;
         [self addSubview:self.collectionView];
         
-        __weak IconBar *weakSelf = self;
-        IconBarModel *undo = [IconBarModel new];
-        undo.image = [UIImage imageNamed:@"Undo"];
-        IconBarModel *addText = [IconBarModel new];
-        addText.image = [UIImage imageNamed:@"Text"];
-        addText.action = ^{
-            TextDrawable *d = [TextDrawable new];
-            d.bounds = CGRectMake(0, 0, 250, 250);
-            [weakSelf.editor.canvas insertDrawable:d];
-        };
-        IconBarModel *time = [IconBarModel new];
-        time.image = [UIImage imageNamed:@"Time"];
-        time.action = ^{
-            weakSelf.editor.mode = EditorModeTimeline;
-        };
-        IconBarModel *scroll = [IconBarModel new];
-        scroll.image = [UIImage imageNamed:@"Scroll"];
-        scroll.action = ^{
-            weakSelf.editor.mode = EditorModeScroll;
-        };
-        IconBarModel *done = [IconBarModel new];
-        done.image = [UIImage imageNamed:@"Grid"];
-        done.action = ^{
-            weakSelf.onDoneButtonPressed();
-        };
-        IconBarModel *add = [IconBarModel new];
-        add.image = [UIImage imageNamed:@"Add"];
-        add.action = ^{
-            InsertItemViewController *inserter = [InsertItemViewController new];
-            inserter.editorVC = weakSelf.editor;
-            [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
-        };
-        IconBarModel *options = [IconBarModel new];
-        options.image = [UIImage imageNamed:@"Controls"];
-        options.action = ^{
-            [weakSelf.editor showOptions];
-        };
-        IconBarModel *share = [IconBarModel new];
-        share.image = [UIImage imageNamed:@"Share"];
-        // IconBarModel *divider = [IconBarModel new];
-        self.models = @[done, share, scroll, time, options, add];
+        [self updateIconModels];
     }
 }
 
@@ -120,6 +80,76 @@
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     IconBarModel *model = self.models[indexPath.item];
     if (model.action) model.action();
+}
+
+- (void)updateIconModels {
+    __weak IconBar *weakSelf = self;
+    IconBarModel *undo = [IconBarModel new];
+    undo.image = [UIImage imageNamed:@"Undo"];
+    IconBarModel *addText = [IconBarModel new];
+    addText.image = [UIImage imageNamed:@"Text"];
+    addText.action = ^{
+        TextDrawable *d = [TextDrawable new];
+        d.bounds = CGRectMake(0, 0, 250, 250);
+        [weakSelf.editor.canvas insertDrawable:d];
+    };
+    IconBarModel *time = [IconBarModel new];
+    time.image = [UIImage imageNamed:@"Time"];
+    time.action = ^{
+        weakSelf.editor.mode = EditorModeTimeline;
+    };
+    IconBarModel *scroll = [IconBarModel new];
+    scroll.image = [UIImage imageNamed:@"Scroll"];
+    scroll.action = ^{
+        weakSelf.editor.mode = EditorModeScroll;
+    };
+    
+    NSArray *leftItems = nil;
+    if (self.isModalEditing) {
+        IconBarModel *done = [IconBarModel new];
+        done.image = [UIImage imageNamed:@"BackDown"];
+        done.action = ^{
+            weakSelf.onDoneButtonPressed();
+        };
+        
+        leftItems = @[done];
+    } else {
+        IconBarModel *done = [IconBarModel new];
+        done.image = [UIImage imageNamed:@"Grid"];
+        done.action = ^{
+            weakSelf.onDoneButtonPressed();
+        };
+        
+        IconBarModel *share = [IconBarModel new];
+        share.image = [UIImage imageNamed:@"Share"];
+        leftItems = @[done, share];
+    }
+    
+    IconBarModel *add = [IconBarModel new];
+    add.image = [UIImage imageNamed:@"Add"];
+    add.action = ^{
+        InsertItemViewController *inserter = [InsertItemViewController new];
+        inserter.editorVC = weakSelf.editor;
+        [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
+    };
+    IconBarModel *options = [IconBarModel new];
+    options.image = [UIImage imageNamed:@"Controls"];
+    options.action = ^{
+        [weakSelf.editor showOptions];
+    };
+    // IconBarModel *divider = [IconBarModel new];
+    NSArray *rightItems = @[scroll, time, options, add];
+    self.models = [leftItems arrayByAddingObjectsFromArray:rightItems];
+}
+
+- (void)setModels:(NSArray *)models {
+    _models = models;
+    [self.collectionView reloadData];
+}
+
+- (void)setIsModalEditing:(BOOL)isModalEditing {
+    _isModalEditing = isModalEditing;
+    [self updateIconModels];
 }
 
 @end

@@ -65,6 +65,7 @@
     self.iconBar.onDoneButtonPressed = ^{
         [weakSelf doneButtonPressed];
     };
+    self.iconBar.isModalEditing = !!self.modalEditingCallback;
     
     /*RACSignal *selection = [[RACObserve(self, canvas) map:^id(Canvas *canvas) {
         return RACObserve(canvas, selection);
@@ -81,7 +82,9 @@
         weakSelf.canvas.selection = drawable;
     };
     
-    [self reinitializeWithCanvas:[Canvas new]];
+    if (!self.canvas) {
+        [self reinitializeWithCanvas:[Canvas new]];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationWillTerminateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -471,9 +474,14 @@
 }
 
 - (void)doneButtonPressed {
-    [self saveAndClose:YES callback:^{
+    if (self.modalEditingCallback) {
         [self dismissViewControllerAnimated:YES completion:nil];
-    }];
+        self.modalEditingCallback([self.canvas copy]);
+    } else {
+        [self saveAndClose:YES callback:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }
 }
 
 #pragma mark Transitions

@@ -114,7 +114,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
         return [date2 compare:date1];
     }];
     self.fileURLs = fileURLs;
-    NSLog(@"%@", dirURL);
+    // NSLog(@"%@", dirURL);
 }
 
 - (void)setFileURLs:(NSArray<__kindof NSURL *> *)fileURLs {

@@ -42,18 +42,8 @@
     image = [image resizedWithMaxDimension:1500];
     CGFloat oldAspectRatio = self.imageView.image.size.width / self.imageView.image.size.height;
     CGFloat aspectRatio = image.size.width / image.size.height;
-    CGSize size = self.bounds.size;
-    if (aspectRatio > oldAspectRatio) {
-        // we're wider, so shorten the height:
-        size.height = size.width / aspectRatio;
-    } else {
-        // we're thinner, so shorten the width:
-        size.width = size.height * aspectRatio;
-    }
+    [self adjustAspectRatioWithOld:oldAspectRatio new:aspectRatio];
     self.imageView.image = image;
-    self.bounds = CGRectMake(0, 0, size.width, size.height);
-    
-    if (self.onShapeUpdate) self.onShapeUpdate();
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

@@ -216,6 +216,7 @@
 
 - (void)_addDrawableToCanvas:(Drawable *)drawable {
     [self addSubview:drawable];
+    drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
     __weak Canvas *weakSelf = self;
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
@@ -230,16 +231,21 @@
 - (void)insertDrawable:(Drawable *)drawable {
     [self _addDrawableToCanvas:drawable];
     drawable.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-    CGFloat scaleFactor = 1.6;
-    drawable.scale *= scaleFactor;
-    CGFloat oldAlpha = drawable.alpha;
-    drawable.alpha = 0;
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        drawable.scale /= scaleFactor;
-        drawable.alpha = oldAlpha;
-    } completion:^(BOOL finished) {
-        
-    }];
+    
+    BOOL animate = !!self.window;
+    if (animate) {
+        CGFloat scaleFactor = 1.6;
+        drawable.scale *= scaleFactor;
+        CGFloat oldAlpha = drawable.alpha;
+        drawable.alpha = 0;
+        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            drawable.scale /= scaleFactor;
+            drawable.alpha = oldAlpha;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+    
     self.selection = drawable;
     [drawable updatedKeyframeProperties];
 }
@@ -278,6 +284,36 @@
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
+}
+
+#pragma mark Layout
+
+- (void)resizeBoundsToFitContent {
+    if (self.drawables.count > 0) {
+        CGFloat minX = MAXFLOAT;
+        CGFloat minY = MAXFLOAT;
+        CGFloat maxX = -MAXFLOAT;
+        CGFloat maxY = -MAXFLOAT;
+        for (Drawable *d in self.drawables) {
+            CGFloat radius = MAX(d.bounds.size.width, d.bounds.size.height) / 2 * d.scale * sqrt(2);
+            minX = MIN(minX, d.center.x - radius);
+            minY = MIN(minY, d.center.y - radius);
+            maxX = MAX(maxX, d.center.x + radius);
+            maxY = MAX(maxY, d.center.y + radius);
+        }
+        CGFloat width = MAX(1, maxX - minX);
+        CGFloat height = MAX(1, maxY - minY);
+        self.bounds = CGRectMake(0, 0, width, height);
+        for (Drawable *d in self.drawables) {
+            [d.keyframeStore changePropertyAcrossTime:@"center" block:^id(id val) {
+                CGPoint c = [val CGPointValue];
+                return [NSValue valueWithCGPoint:CGPointMake(c.x - minX, c.y - minY)];
+            }];
+            d.center = [[d.keyframeStore interpolatedPropertiesAtTime:self.time][@"center"] CGPointValue];
+        }
+    } else {
+        self.bounds = CGRectMake(0, 0, 1, 1);
+    }
 }
 
 @end

@@ -34,4 +34,6 @@
 - (Keyframe *)keyframeAfterTime:(FrameTime *)time;
 - (NSDictionary<__kindof NSString*, id>*)interpolatedPropertiesAtTime:(FrameTime *)time;
 
+- (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block;
+
 @end
