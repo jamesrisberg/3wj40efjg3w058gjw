@@ -55,3 +55,28 @@ CGPoint CGPointAdd(CGPoint p1, CGPoint p2) {
 CGPoint CGPointScale(CGPoint p, CGFloat scale) {
     return CGPointMake(p.x*scale, p.y*scale);
 }
+
+CGPoint NPEvaluateSmoothCurve(CGPoint prevPoint, CGPoint fromPoint, CGPoint toPoint, CGPoint nextPoint, CGFloat progress, BOOL ignorePreviousPointDistance) {
+    
+    CGFloat distanceBetween = 0;
+    if (ignorePreviousPointDistance) distanceBetween = CGPointDistance(fromPoint, toPoint);
+    
+    CGPoint controlPoint1 = toPoint;
+    if (!CGPointEqualToPoint(fromPoint, prevPoint)) {
+        CGFloat controlPointDist = ignorePreviousPointDistance ? distanceBetween : CGPointDistance(fromPoint, prevPoint);
+        CGFloat controlPointAngle = M_PI + CGPointDistance(fromPoint, prevPoint);
+        controlPoint1 = CGPointShift(fromPoint, controlPointAngle, controlPointDist);
+    }
+    
+    CGPoint controlPoint2 = fromPoint;
+    if (!CGPointEqualToPoint(toPoint, nextPoint)) {
+        CGFloat controlPointDist = ignorePreviousPointDistance ? distanceBetween : CGPointDistance(toPoint, nextPoint);
+        CGFloat controlPointAngle = M_PI + CGPointAngleBetween(toPoint, nextPoint);
+        controlPoint2 = CGPointShift(fromPoint, controlPointAngle, controlPointDist);
+    }
+    
+    CGPoint incomingTangent = CGPointLinearlyInterpolate(fromPoint, controlPoint1, progress);
+    CGPoint outgoingTangent = CGPointLinearlyInterpolate(toPoint, controlPoint2, progress);
+    return CGPointLinearlyInterpolate(incomingTangent, outgoingTangent, progress);
+}
+

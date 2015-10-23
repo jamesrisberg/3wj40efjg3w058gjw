@@ -12,7 +12,7 @@
 CGRect EVInterpolateRect(CGRect r1, CGRect r2, CGFloat progress);
 CGPoint EVInterpolatePoint(CGPoint p1, CGPoint p2, CGFloat progress);
 CGSize EVInterpolateSize(CGSize s1, CGSize s2, CGFloat progress);
-inline CGFloat EVInterpolate(CGFloat a1, CGFloat a2, CGFloat progress);
+CGFloat EVInterpolate(CGFloat a1, CGFloat a2, CGFloat progress); // TODO: inline this
 
 @protocol EVInterpolation <NSObject>
 

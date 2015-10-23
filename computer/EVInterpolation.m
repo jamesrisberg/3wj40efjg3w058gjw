@@ -21,7 +21,7 @@ CGSize EVInterpolateSize(CGSize s1, CGSize s2, CGFloat progress) {
 }
 
 CGFloat EVInterpolate(CGFloat a1, CGFloat a2, CGFloat progress) {
-    return a1 * (1-progress) + a2 * progress;
+    return a1 * (1 - progress) + a2 * progress;
 }
 
 @implementation NSNumber (EVInterpolation)
