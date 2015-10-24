@@ -82,9 +82,7 @@
         weakSelf.canvas.selection = drawable;
     };
     
-    if (!self.canvas) {
-        [self reinitializeWithCanvas:[Canvas new]];
-    }
+    [self reinitializeWithCanvas:self.canvas ? : [Canvas new]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationWillTerminateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -102,7 +100,7 @@
 - (void)reinitializeWithCanvas:(Canvas *)canvas {
     BOOL canvasWasHidden = self.canvas && self.canvas.hidden;
     
-    __weak EditorViewController *weakSelf = self;
+    // __weak EditorViewController *weakSelf = self;
     // clean up old canvas:
     [self.canvas removeFromSuperview];
     self.canvas.editorShapeStackList = nil;
@@ -577,6 +575,25 @@
         }
     }
     return NO;
+}
+
+#pragma mark Export
+
+- (void)startExport {
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share as:", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Photo", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Video", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GIF", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [self presentViewController:ac animated:YES completion:nil];
 }
 
 @end

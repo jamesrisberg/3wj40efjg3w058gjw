@@ -122,6 +122,9 @@
         
         IconBarModel *share = [IconBarModel new];
         share.image = [UIImage imageNamed:@"Share"];
+        share.action = ^{
+            [weakSelf.editor startExport];
+        };
         leftItems = @[done, share];
     }
     

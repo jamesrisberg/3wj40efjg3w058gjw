@@ -34,4 +34,6 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 
 - (void)presentFromSnapshot:(UIImageView *)snapshot inViewController:(UIViewController *)vc;
 
+- (void)startExport;
+
 @end
