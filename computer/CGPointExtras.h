@@ -35,9 +35,7 @@ CGPoint CGPointMidpoint(CGPoint p1, CGPoint p2);
 CGFloat CGTransformByAddingPadding(CGFloat p, CGFloat padding, CGFloat range);
 CGFloat CGTransformByRemovingPadding(CGFloat p, CGFloat padding, CGFloat range);
 
-inline CGPoint CGPointLinearlyInterpolate(CGPoint p1, CGPoint p2, CGFloat progress) {
-    return CGPointMake(p1.x * (1 - progress) + p2.x * progress, p1.y * (1 - progress) + p2.y * progress);
-}
+    CGPoint CGPointLinearlyInterpolate(CGPoint p1, CGPoint p2, CGFloat progress);
     
 CGPoint NPEvaluateSmoothCurve(CGPoint prevPoint, CGPoint fromPoint, CGPoint toPoint, CGPoint nextPoint, CGFloat progress, BOOL ignorePreviousPointDistance);
     

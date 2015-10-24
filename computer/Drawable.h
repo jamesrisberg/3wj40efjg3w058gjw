@@ -43,6 +43,7 @@
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
 @property (nonatomic) StaticAnimation *staticAnimation; // DO NOT modify this in place
+@property (nonatomic) NSTimeInterval timeForStaticAnimations; // if -1, use current time
 
 @property (nonatomic) BOOL dimmed;
 

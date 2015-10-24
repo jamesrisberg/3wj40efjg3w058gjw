@@ -31,6 +31,7 @@
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 
 @property (nonatomic) FrameTime *time;
+@property (nonatomic) BOOL useTimeForStaticAnimations;
 
 @property (nonatomic,weak) id<CanvasDelegate> delegate;
 

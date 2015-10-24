@@ -433,6 +433,8 @@
         if (oldMode == EditorModeTimeline) {
             self.timeline = nil;
         }
+        
+        self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline);
     }
 }
 

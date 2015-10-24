@@ -11,6 +11,7 @@
 #import "CGPointExtras.h"
 #import "ShapeStackList.h"
 #import "ConvenienceCategories.h"
+#import "SubcanvasDrawable.h"
 
 @interface Canvas () {
     BOOL _setup;
@@ -290,8 +291,22 @@
         Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
         d.dimmed = !exactKeyframe;
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
+        d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
+        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
+            [(SubcanvasDrawable *)d canvas].time = time;
+        }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
+}
+
+- (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
+    _useTimeForStaticAnimations = useTimeForStaticAnimations;
+    for (Drawable *d in [self drawables]) {
+        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
+            [(SubcanvasDrawable *)d canvas].useTimeForStaticAnimations = useTimeForStaticAnimations;
+        }
+    }
+    [self setTime:self.time]; // trigger update of [drawables].timeForStaticAnimations
 }
 
 #pragma mark Layout

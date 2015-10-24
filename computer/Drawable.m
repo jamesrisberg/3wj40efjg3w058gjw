@@ -39,6 +39,7 @@
     _rotation = 0;
     _scale = 1;
     _itemOpacity = 1;
+    _timeForStaticAnimations = -1;
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow {
@@ -80,6 +81,7 @@
 - (void)updateAppearance {
     CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformMakeScale(_scale, _scale), _rotation);
     NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate]; // TODO: don't use the real date
+    if (_timeForStaticAnimations != -1) time = _timeForStaticAnimations;
     transform = [self.staticAnimation adjustTransform:transform time:time];
     CGFloat alpha = _itemOpacity;
     alpha = [self.staticAnimation adjustAlpha:alpha time:time];
