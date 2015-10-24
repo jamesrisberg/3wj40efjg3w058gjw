@@ -9,10 +9,12 @@
 #import "ScratchViewController.h"
 #import "TimelineView.h"
 #import <ReactiveCocoa.h>
+#import "CropView.h"
 
 @interface ScratchViewController ()
 
 @property (nonatomic) IBOutlet UILabel *label;
+@property (nonatomic) IBOutlet CropView *cropView;
 
 @end
 
@@ -27,6 +29,8 @@
     RAC(self.label, text) = [RACObserve(timeline, time) map:^id(id value) {
         return [(NSNumber *)value stringValue];
     }];
+    
+    self.cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - 200/2, self.cropView.bounds.size.height/2 - 200/2, 200, 200);
 }
 
 @end

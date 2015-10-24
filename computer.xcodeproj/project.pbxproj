@@ -27,6 +27,7 @@
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
 		5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */; };
+		5FE857701BDB54E700B4B245 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8576F1BDB54E700B4B245 /* CropView.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -150,6 +151,8 @@
 		5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimation.m; sourceTree = "<group>"; };
 		5FE857631BD9DE3700B4B245 /* StaticAnimationPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticAnimationPicker.h; sourceTree = "<group>"; };
 		5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimationPicker.m; sourceTree = "<group>"; };
+		5FE8576E1BDB54E700B4B245 /* CropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropView.h; sourceTree = "<group>"; };
+		5FE8576F1BDB54E700B4B245 /* CropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropView.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -346,6 +349,15 @@
 			name = "Options menus";
 			sourceTree = "<group>";
 		};
+		5FE857711BDB60D700B4B245 /* Export */ = {
+			isa = PBXGroup;
+			children = (
+				5FE8576E1BDB54E700B4B245 /* CropView.h */,
+				5FE8576F1BDB54E700B4B245 /* CropView.m */,
+			);
+			name = Export;
+			sourceTree = "<group>";
+		};
 		5FEAF7F31B9788910071BC08 = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +383,7 @@
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
 				5F900E171BBB9275000D4C7C /* FilePickerViewController.h */,
 				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
+				5FE857711BDB60D700B4B245 /* Export */,
 				5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
@@ -751,6 +764,7 @@
 				5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */,
 				5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
+				5FE857701BDB54E700B4B245 /* CropView.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
