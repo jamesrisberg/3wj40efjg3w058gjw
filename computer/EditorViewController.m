@@ -18,8 +18,11 @@
 #import "QuickCollectionModal.h"
 #import "TimelineView.h"
 #import "OptionsView.h"
+#import "Exporter.h"
+#import "PhotoExporter.h"
+#import "CropView.h"
 
-@interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate> {
+@interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
@@ -43,6 +46,9 @@
 @property (nonatomic) UIImageView *presentedFromImageView;
 
 @property (nonatomic) UIView *auxiliaryFloatingButton;
+
+@property (nonatomic) Exporter *currentExporter;
+@property (nonatomic,weak) CropView *cropView;
 
 @end
 
@@ -220,10 +226,14 @@
 }
 
 - (void)addAuxiliaryModeResetButton {
+    [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Done", @"")];
+}
+
+- (void)addAuxiliaryModeResetButtonWithTitle:(NSString *)title {
     UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
     done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
+    [done setTitle:title forState:UIControlStateNormal];
     done.clipsToBounds = YES;
     done.layer.cornerRadius = 5;
     done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
@@ -309,7 +319,9 @@
             [self.view layoutIfNeeded];
         } completion:^(BOOL finished) {
             oldToolbarView.alpha = 1;
-            [oldToolbarView removeFromSuperview];
+            if (oldToolbarView != _toolbarView) {
+                [oldToolbarView removeFromSuperview];
+            }
         }];
     }
 }
@@ -426,13 +438,33 @@
         } else if (mode == EditorModePanelView) {
             self.toolbarView = self.panelView;
             [self addAuxiliaryModeResetButton];
+        } else if (mode == EditorModeExportCropping) {
+            CropView *cropView = [CropView new];
+            self.cropView = cropView;
+            self.transientOverlayView = cropView;
+            [self viewDidLayoutSubviews];
+            CGFloat cropSize = round(MIN(self.cropView.bounds.size.width, self.cropView.bounds.size.height) * 0.8);
+            cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - cropSize/2, self.cropView.bounds.size.height/2 - cropSize/2, cropSize, cropSize);
+            
+            UIButton *continueButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            continueButton.titleLabel.font = [UIFont boldSystemFontOfSize:continueButton.titleLabel.font.pointSize];
+            [continueButton setTitle:NSLocalizedString(@"Continue", @"") forState:UIControlStateNormal];
+            [continueButton addTarget:self action:@selector(startRunningExport) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = continueButton;
+            [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+        } else if (mode == EditorModeExportRunning) {
+            UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
+            cancel.titleLabel.font = [UIFont boldSystemFontOfSize:cancel.titleLabel.font.pointSize];
+            [cancel setTitle:NSLocalizedString(@"Cancel", @"") forState:UIControlStateNormal];
+            [cancel addTarget:self action:@selector(cancelExport) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = cancel;
         }
         
         if (oldMode == EditorModeTimeline) {
             self.timeline = nil;
         }
         
-        self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline);
+        self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning);
     }
 }
 
@@ -579,10 +611,13 @@
 
 #pragma mark Export
 
-- (void)startExport {
+- (void)beginExportFlow {
+    __weak EditorViewController *weakSelf = self;
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share as:", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Photo", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        [UIView performWithoutAnimation:^{
+            [weakSelf startCroppingWithExporter:[PhotoExporter new]];
+        }];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Video", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -594,6 +629,39 @@
         
     }]];
     [self presentViewController:ac animated:YES completion:nil];
+}
+
+- (void)startCroppingWithExporter:(Exporter *)exporter {
+    self.currentExporter = exporter;
+    self.mode = EditorModeExportCropping;
+}
+
+- (void)startRunningExport {
+    self.currentExporter.cropRect = self.cropView.cropRect;
+    self.currentExporter.canvasSize = self.canvas.bounds.size;
+    self.currentExporter.delegate = self;
+    self.currentExporter.defaultTime = self.canvas.time;
+    self.currentExporter.parentViewController = self;
+    self.mode = EditorModeExportRunning;
+    [self.currentExporter start];
+}
+
+- (void)cancelExport {
+    [self.currentExporter cancel];
+    self.currentExporter = nil;
+    self.mode = EditorModeNormal;
+}
+
+- (void)exporter:(Exporter *)exporter drawFrameAtTime:(FrameTime *)time inRect:(CGRect)drawIntoRect {
+    [self.canvas drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
+}
+
+- (void)exporter:(Exporter *)exporter updateProgress:(double)progress {
+    
+}
+
+- (void)exporterDidFinish:(Exporter *)exporter {
+    self.mode = EditorModeNormal;
 }
 
 @end

@@ -17,7 +17,9 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModeScroll,
     EditorModeTimeline,
     EditorModeDrawing,
-    EditorModePanelView
+    EditorModePanelView,
+    EditorModeExportCropping,
+    EditorModeExportRunning
 };
 
 @interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>
@@ -34,6 +36,6 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 
 - (void)presentFromSnapshot:(UIImageView *)snapshot inViewController:(UIViewController *)vc;
 
-- (void)startExport;
+- (void)beginExportFlow;
 
 @end

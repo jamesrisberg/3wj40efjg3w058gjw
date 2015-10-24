@@ -28,6 +28,8 @@
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
 		5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */; };
 		5FE857701BDB54E700B4B245 /* CropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8576F1BDB54E700B4B245 /* CropView.m */; };
+		5FE857741BDB69A000B4B245 /* Exporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE857731BDB69A000B4B245 /* Exporter.m */; };
+		5FE857771BDB69AB00B4B245 /* PhotoExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE857761BDB69AB00B4B245 /* PhotoExporter.m */; };
 		5FEAF8011B9788910071BC08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8001B9788910071BC08 /* main.m */; };
 		5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8031B9788910071BC08 /* AppDelegate.m */; };
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
@@ -153,6 +155,10 @@
 		5FE857641BD9DE3700B4B245 /* StaticAnimationPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimationPicker.m; sourceTree = "<group>"; };
 		5FE8576E1BDB54E700B4B245 /* CropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropView.h; sourceTree = "<group>"; };
 		5FE8576F1BDB54E700B4B245 /* CropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropView.m; sourceTree = "<group>"; };
+		5FE857721BDB69A000B4B245 /* Exporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exporter.h; sourceTree = "<group>"; };
+		5FE857731BDB69A000B4B245 /* Exporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Exporter.m; sourceTree = "<group>"; };
+		5FE857751BDB69AB00B4B245 /* PhotoExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoExporter.h; sourceTree = "<group>"; };
+		5FE857761BDB69AB00B4B245 /* PhotoExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoExporter.m; sourceTree = "<group>"; };
 		5FEAF7FC1B9788910071BC08 /* computer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = computer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEAF8001B9788910071BC08 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEAF8021B9788910071BC08 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -354,8 +360,21 @@
 			children = (
 				5FE8576E1BDB54E700B4B245 /* CropView.h */,
 				5FE8576F1BDB54E700B4B245 /* CropView.m */,
+				5FE857721BDB69A000B4B245 /* Exporter.h */,
+				5FE857731BDB69A000B4B245 /* Exporter.m */,
+				5FE857751BDB69AB00B4B245 /* PhotoExporter.h */,
+				5FE857761BDB69AB00B4B245 /* PhotoExporter.m */,
 			);
 			name = Export;
+			sourceTree = "<group>";
+		};
+		5FE857781BDB6C4900B4B245 /* File picking */ = {
+			isa = PBXGroup;
+			children = (
+				5F900E171BBB9275000D4C7C /* FilePickerViewController.h */,
+				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
+			);
+			name = "File picking";
 			sourceTree = "<group>";
 		};
 		5FEAF7F31B9788910071BC08 = {
@@ -381,12 +400,9 @@
 			children = (
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
-				5F900E171BBB9275000D4C7C /* FilePickerViewController.h */,
-				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
+				5FE857781BDB6C4900B4B245 /* File picking */,
 				5FE857711BDB60D700B4B245 /* Export */,
 				5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */,
-				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
-				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
 				5FBF7C161BD82033000FA3F4 /* Options menus */,
 				5FEAF9611B9E2DB60071BC08 /* Helpers */,
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
@@ -394,11 +410,7 @@
 				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
 				5FBF7C031BD6DBF8000FA3F4 /* Animation */,
 				5FEAF9641B9E2DEF0071BC08 /* Drawables */,
-				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
-				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5F6110111BB1E06000DB4C82 /* Text editing */,
-				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
-				5F6110061BB1144E00DB4C82 /* FreehandInputView.m */,
 				5FEAF9881B9F160E0071BC08 /* Filtering */,
 				5FEAF95C1B9E2B8E0071BC08 /* CPColorPicker */,
 				5FEAF9461B9E2B300071BC08 /* SKFill */,
@@ -521,6 +533,10 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
+				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
+				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
+				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
 				5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */,
 				5FEAF82A1B97A9CC0071BC08 /* UIFont+Sizing.h */,
 				5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */,
@@ -552,6 +568,8 @@
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
+				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
+				5F6110061BB1144E00DB4C82 /* FreehandInputView.m */,
 				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
 				5FEAF8201B978BF50071BC08 /* IconBar.m */,
 				5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */,
@@ -775,6 +793,7 @@
 				5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */,
 				5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */,
 				5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */,
+				5FE857771BDB69AB00B4B245 /* PhotoExporter.m in Sources */,
 				5FEAF9711B9E3B8F0071BC08 /* UIImage+ImageEffects.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
 				5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */,
@@ -823,6 +842,7 @@
 				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
 				5FBF7C191BD82566000FA3F4 /* SliderTableViewCell.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
+				5FE857741BDB69A000B4B245 /* Exporter.m in Sources */,
 				5F198AEB1BD99BE700B62433 /* SubcanvasDrawable.m in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,
