@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EditorViewController.h"
+#import "FilePickerViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,6 +26,15 @@
     editorVC.document = [[CMDocument alloc] initWithFileURL:singleDoc];*/
     
     return YES;
+}
+
+- (FilePickerViewController *)filePicker {
+    return (FilePickerViewController *)self.window.rootViewController;
+}
+
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
+    [[self filePicker] addDocument:nil];
+    completionHandler(YES);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -245,13 +245,19 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 #pragma mark Actions
 
 - (IBAction)addDocument:(id)sender {
-    NSMutableArray *fileURLs = self.fileURLs.mutableCopy;
-    NSURL *newDocURL = [CMDocument URLForNewDocument];
-    [fileURLs insertObject:newDocURL atIndex:0];
-    __weak FilePickerViewController *weakSelf = self;
-    [self setFileURLs:fileURLs withAnimationCompletion:^{
-        [weakSelf openDocumentAtURL:newDocURL];
-    }];
+    if (self.presentedViewController) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self addDocument:sender];
+        }];
+    } else {
+        NSMutableArray *fileURLs = self.fileURLs.mutableCopy;
+        NSURL *newDocURL = [CMDocument URLForNewDocument];
+        [fileURLs insertObject:newDocURL atIndex:0];
+        __weak FilePickerViewController *weakSelf = self;
+        [self setFileURLs:fileURLs withAnimationCompletion:^{
+            [weakSelf openDocumentAtURL:newDocURL];
+        }];
+    }
 }
 
 - (void)openDocumentAtURL:(NSURL *)url {

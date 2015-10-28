@@ -10,4 +10,6 @@
 
 @interface FilePickerViewController : UIViewController
 
+- (IBAction)addDocument:(id)sender;
+
 @end
