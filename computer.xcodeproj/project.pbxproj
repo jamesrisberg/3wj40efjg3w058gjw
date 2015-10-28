@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */; };
 		5F198AEB1BD99BE700B62433 /* SubcanvasDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F198AEA1BD99BE700B62433 /* SubcanvasDrawable.m */; };
+		5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */; };
 		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
@@ -117,6 +118,8 @@
 		5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPSoftModalPresentationController.swift; sourceTree = "<group>"; };
 		5F198AE91BD99BE700B62433 /* SubcanvasDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubcanvasDrawable.h; sourceTree = "<group>"; };
 		5F198AEA1BD99BE700B62433 /* SubcanvasDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubcanvasDrawable.m; sourceTree = "<group>"; };
+		5F3CEDAC1BE1937E00D824E2 /* FilePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePreviewViewController.h; sourceTree = "<group>"; };
+		5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePreviewViewController.m; sourceTree = "<group>"; };
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
 		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
@@ -373,6 +376,8 @@
 			children = (
 				5F900E171BBB9275000D4C7C /* FilePickerViewController.h */,
 				5F900E181BBB9275000D4C7C /* FilePickerViewController.m */,
+				5F3CEDAC1BE1937E00D824E2 /* FilePreviewViewController.h */,
+				5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */,
 			);
 			name = "File picking";
 			sourceTree = "<group>";
@@ -804,6 +809,7 @@
 				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,
 				5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */,
 				5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */,
+				5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
 				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,

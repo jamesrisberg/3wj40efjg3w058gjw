@@ -11,15 +11,17 @@
 #import "ConvenienceCategories.h"
 #import "ExpandingButton.h"
 #import "EditorViewController.h"
+#import "FilePreviewViewController.h"
 
 const CGFloat _FilePickerPreviewViewAspectRatio = 1.61803398875; // golden ratio b/c why tf not
 const CGFloat _FilePickerPreviewLineSpacing = 7;
 
-@interface _FilePickerPreviewView : UIView
+@interface _FilePickerPreviewView : UIView <UIViewControllerPreviewingDelegate>
 
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) NSURL *fileURL;
 @property (nonatomic,copy) void (^onTapped)();
+@property (nonatomic,weak) id<UIViewControllerPreviewing> previewingContext;
 
 @end
 
@@ -59,6 +61,16 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
             self.imageView.image = snapshot;
         }
     }];
+}
+
+- (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location {
+    FilePreviewViewController *preview = [FilePreviewViewController new];
+    preview.documentURL = self.fileURL;
+    return preview;
+}
+
+- (void)previewingContext:(id<UIViewControllerPreviewing>)previewingContext commitViewController:(UIViewController *)viewControllerToCommit {
+    [self tapped:nil];
 }
 
 @end
@@ -173,6 +185,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
             view = [self viewForIndex:i];
             _viewsForURLs[url] = view;
             [scrollView insertSubview:view atIndex:0];
+            view.previewingContext = [self registerForPreviewingWithDelegate:view sourceView:view];
             if (animationCompletion) {
                 if (i == 0) {
                     // fly in from top:
@@ -216,6 +229,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
                 [view removeFromSuperview];
             }
             [_viewsForURLs removeObjectForKey:url];
+            [self unregisterForPreviewingWithContext:view.previewingContext];
         }
     }
     
