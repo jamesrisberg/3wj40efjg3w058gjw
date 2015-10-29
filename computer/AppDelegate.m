@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "EditorViewController.h"
 #import "FilePickerViewController.h"
+#import "ExportTest.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    // [ExportTest exportTestWithVC:self.window.rootViewController];
     
     /*EditorViewController *editorVC = (id)self.window.rootViewController;
     NSURL *singleDoc  = [[CMDocument documentsURL] URLByAppendingPathComponent:@"doc.computerdoc"];
