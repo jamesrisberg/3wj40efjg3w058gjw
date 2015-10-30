@@ -155,4 +155,25 @@
     [self updateIconModels];
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    UICollectionViewFlowLayout *flow = (id)self.collectionView.collectionViewLayout;
+    CGFloat maxDx = flow.itemSize.width / 2 + 30;
+    
+    CGFloat bestDx = MAXFLOAT;
+    UIView *bestHit = nil;
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        CGFloat dx = fabs([cell convertPoint:CGPointMake(cell.bounds.size.width/2, 0) toView:self].x - point.x);
+        if (dx < bestDx) {
+            bestDx = dx;
+            bestHit = cell;
+        }
+    }
+    
+    if (bestDx <= maxDx) {
+        return bestHit;
+    } else {
+        return self;
+    }
+}
+
 @end
