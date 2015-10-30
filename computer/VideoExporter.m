@@ -10,6 +10,8 @@
 #import "Keyframe.h"
 #import "computer-Swift.h"
 @import AVFoundation;
+#import "HJImagesToVideo.h"
+#import "VideoConstants.h"
 
 @interface VideoExporter ()
 
@@ -23,80 +25,55 @@
 - (void)start {
     self.queue = dispatch_queue_create("video queue", 0);
     dispatch_async(self.queue, ^{
-        [self sendProgress:0];
-        
-        NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"video.mov"];
+        //NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"video.mp4"];
+        NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"video.mp4"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+        }
         self.path = path;
+        NSLog(@"Path: %@", path);
         
-        CGSize size = self.canvasSize;
+        CGSize size = self.cropRect.size;
         CGFloat maxDimension = 800;
         CGFloat scale = MIN(1, MIN(maxDimension / size.width, maxDimension / size.height));
         size.width = round(size.width * scale);
         size.height = round(size.height * scale);
+        NSInteger fps = VC_FPS;
         
-        NSError *error = nil;
-        AVAssetWriter *videoWriter = [[AVAssetWriter alloc] initWithURL:
-                                      [NSURL fileURLWithPath:path] fileType:AVFileTypeQuickTimeMovie
-                                                                  error:&error];
-        NSParameterAssert(videoWriter);
-        
-        NSDictionary *videoSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       AVVideoCodecH264, AVVideoCodecKey,
-                                       [NSNumber numberWithInt:size.width], AVVideoWidthKey,
-                                       [NSNumber numberWithInt:size.height], AVVideoHeightKey,
-                                       nil];
-        AVAssetWriterInput* writerInput = [AVAssetWriterInput
-                                            assetWriterInputWithMediaType:AVMediaTypeVideo
-                                            outputSettings:videoSettings];
-        NSParameterAssert(writerInput);
-        NSParameterAssert([videoWriter canAddInput:writerInput]);
-        [videoWriter addInput:writerInput];
-        
-        [videoWriter startWriting];
-        [videoWriter startSessionAtSourceTime:kCMTimeZero];
-        
-        NSInteger fps = 24;
-        
-        CMSampleTimingInfo timingInfo;
-        timingInfo.decodeTimeStamp = kCMTimeInvalid;
-        timingInfo.duration = CMTimeMake(1, (int)fps);
-        timingInfo.presentationTimeStamp = kCMTimeZero;
-        
-        NSTimeInterval t = 0;
-        while (t < self.endTime.time) {
-            [self encodeFrameWithTimingInfo:&timingInfo time:t writer:videoWriter input:writerInput size:size];
-            t += 1.0 / fps;
+        NSMutableArray *frames = [NSMutableArray new];
+        NSInteger i = 0;
+        FrameTime *time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
+        while (time.time <= self.endTime.time) {
+            OnDemandImage *frame = [OnDemandImage new];
+            frame.userInfo = time;
+            frame.fn = ^UIImage*(id userInfo) {
+                __block UIImage *image = nil;
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    image = [self improperlySizedImageAtTime:userInfo];
+                });
+                image = [image resizeTo:size];
+                return image;
+            };
+            [frames addObject:frame];
+            time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
         }
-        // [self encodeFrameAtTime:self.endTime.time writer:videoWriter input:writerInput size:size];
-        [writerInput markAsFinished];
-        [videoWriter finishWritingWithCompletionHandler:^{
+        
+        [HJImagesToVideo videoFromImages:frames toPath:self.path withSize:size withFPS:(int)fps animateTransitions:NO withCallbackBlock:^(BOOL success) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSURL *videoURL = [NSURL fileURLWithPath:path];
+                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[videoURL] applicationActivities:nil];
+                [self.parentViewController presentViewController:activityVC animated:YES completion:nil];
+                // TODO: delete the temp file?
                 [self.delegate exporterDidFinish:self];
             });
         }];
-    });
-    
-}
-
-- (void)encodeFrameWithTimingInfo:(CMSampleTimingInfo *)timingInfo time:(NSTimeInterval)time writer:(AVAssetWriter *)writer input:(AVAssetWriterInput *)input size:(CGSize)size {
-    __block UIImage *image = nil;
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        image = [self improperlySizedImageAtTime:[[FrameTime alloc] initWithFrame:time * 1000 atFPS:1000]];
-    });
-    image = [image resizeTo:size];
-    if (![input appendSampleBuffer:[[self class] sampleBufferFromCGImage:image.CGImage timing:timingInfo]]) {
-        NSLog(@"Failed to append sample buffer; error: %@", writer.error);
-    }
-}
-
-- (void)sendProgress:(double)progress {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate exporter:self updateProgress:progress];
     });
 }
 
 - (UIImage *)improperlySizedImageAtTime:(FrameTime *)time {
     UIGraphicsBeginImageContextWithOptions(self.cropRect.size, NO, 0);
+    [[UIColor whiteColor] setFill];
+    [[UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.cropRect.size.width, self.cropRect.size.height)] fill];
     [self _askDelegateToRenderFrame:time];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

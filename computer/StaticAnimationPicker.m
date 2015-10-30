@@ -11,6 +11,7 @@
 #import "Drawable.h"
 #import "ShapeDrawable.h"
 #import "SKColorFill.h"
+#import "VideoConstants.h"
 
 @interface StaticAnimationPreview : UICollectionViewCell
 
@@ -69,9 +70,9 @@
 @implementation StaticAnimationPicker
 
 - (void)setup {
-    NSDictionary *slowBlink = @{@"blinkRate": @1, @"blinkMagnitude": @1};
-    NSDictionary *mediumBlink = @{@"blinkRate": @4, @"blinkMagnitude": @1};
-    NSDictionary *fastBlink = @{@"blinkRate": @10, @"blinkMagnitude": @1};
+    NSDictionary *slowBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK / 3.0), @"blinkMagnitude": @1};
+    NSDictionary *mediumBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK / 2.0), @"blinkMagnitude": @1};
+    NSDictionary *fastBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK), @"blinkMagnitude": @1};
     NSArray *blinkSection = @[slowBlink, mediumBlink, fastBlink];
     _sections = @[blinkSection];
     

@@ -32,6 +32,7 @@
 
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL useTimeForStaticAnimations;
+@property (nonatomic) BOOL overrideDimming;
 
 @property (nonatomic,weak) id<CanvasDelegate> delegate;
 

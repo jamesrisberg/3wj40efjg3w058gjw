@@ -118,6 +118,7 @@
     self.canvas.delegate = self;
     self.canvas.hidden = canvasWasHidden;
     [self.view insertSubview:self.canvas atIndex:0];
+    [self setMode:self.mode];
 }
 
 #pragma mark Document
@@ -466,6 +467,7 @@
         }
         
         self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning);
+        self.canvas.overrideDimming = (mode == EditorModeExportCropping || mode == EditorModeExportRunning);
     }
 }
 
@@ -665,6 +667,7 @@
 }
 
 - (void)exporterDidFinish:(Exporter *)exporter {
+    self.canvas.time = exporter.defaultTime;
     self.mode = EditorModeNormal;
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "TimelineView.h"
+#import "VideoConstants.h"
 
 @interface TimelineViewSnapshotCell : UICollectionViewCell
 
@@ -66,7 +67,7 @@
 }
 
 - (void)setup {
-    self.snapshotsPerSecond = 4;
+    self.snapshotsPerSecond = VC_TIMELINE_CELLS_PER_SECOND;
     
     UICollectionViewFlowLayout *flow = [UICollectionViewFlowLayout new];
     flow.scrollDirection = UICollectionViewScrollDirectionHorizontal;

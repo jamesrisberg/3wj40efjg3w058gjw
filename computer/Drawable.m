@@ -193,6 +193,8 @@
     }
     self.bounds = CGRectMake(0, 0, size.width, size.height);
     
+    [self updatedKeyframeProperties];
+    
     if (self.onShapeUpdate) self.onShapeUpdate();
 }
 

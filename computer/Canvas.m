@@ -289,7 +289,7 @@
     _time = time;
     for (Drawable *d in [self drawables]) {
         Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
-        d.dimmed = !exactKeyframe;
+        d.dimmed = !exactKeyframe && !self.overrideDimming;
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
         d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
@@ -307,6 +307,11 @@
         }
     }
     [self setTime:self.time]; // trigger update of [drawables].timeForStaticAnimations
+}
+
+- (void)setOverrideDimming:(BOOL)overrideDimming {
+    _overrideDimming = overrideDimming;
+    [self setTime:self.time];
 }
 
 - (FrameTime *)duration {
