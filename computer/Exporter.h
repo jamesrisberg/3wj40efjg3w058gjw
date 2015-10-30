@@ -25,6 +25,7 @@
 @property (nonatomic) CGRect cropRect; // in canvas coords
 @property (nonatomic,weak) UIViewController *parentViewController;
 @property (nonatomic) FrameTime *defaultTime; // the time when this export was initiated
+@property (nonatomic) FrameTime *endTime;
 @property (nonatomic,weak) id<ExporterDelegate> delegate;
 
 // for subclasses:

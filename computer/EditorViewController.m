@@ -20,6 +20,7 @@
 #import "OptionsView.h"
 #import "Exporter.h"
 #import "PhotoExporter.h"
+#import "VideoExporter.h"
 #import "CropView.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
@@ -620,7 +621,7 @@
         }];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Video", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        [weakSelf startCroppingWithExporter:[VideoExporter new]];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GIF", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -641,6 +642,7 @@
     self.currentExporter.canvasSize = self.canvas.bounds.size;
     self.currentExporter.delegate = self;
     self.currentExporter.defaultTime = self.canvas.time;
+    self.currentExporter.endTime = self.canvas.duration;
     self.currentExporter.parentViewController = self;
     self.mode = EditorModeExportRunning;
     [self.currentExporter start];
@@ -653,6 +655,8 @@
 }
 
 - (void)exporter:(Exporter *)exporter drawFrameAtTime:(FrameTime *)time inRect:(CGRect)drawIntoRect {
+    [self.timeline scrollToTime:time.time animated:NO];
+    self.canvas.time = time;
     [self.canvas drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
 }
 

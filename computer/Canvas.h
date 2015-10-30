@@ -39,4 +39,6 @@
 
 - (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other;
 
+- (FrameTime *)duration;
+
 @end

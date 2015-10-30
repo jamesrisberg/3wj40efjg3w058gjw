@@ -309,6 +309,18 @@
     [self setTime:self.time]; // trigger update of [drawables].timeForStaticAnimations
 }
 
+- (FrameTime *)duration {
+    FrameTime *t = [[FrameTime alloc] initWithFrame:1 atFPS:1];
+    for (Drawable *d in self.drawables) {
+        t = [[d.keyframeStore maxTime] maxWith:t];
+        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
+            Canvas *sub = [(SubcanvasDrawable *)d canvas];
+            t = [t maxWith:[sub duration]];
+        }
+    }
+    return t;
+}
+
 #pragma mark Layout
 
 - (void)resizeBoundsToFitContent {

@@ -72,6 +72,14 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     [aCoder encodeInteger:_fps forKey:@"fps"];
 }
 
+- (FrameTime *)maxWith:(FrameTime *)other {
+    if (self.time > other.time) {
+        return self;
+    } else {
+        return other;
+    }
+}
+
 @end
 
 
@@ -208,6 +216,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
             k.properties[property] = block(val);
         }
     }
+}
+
+- (FrameTime *)maxTime {
+    return [(Keyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
 }
 
 @end

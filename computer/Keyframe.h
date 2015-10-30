@@ -16,6 +16,8 @@
 @property (nonatomic,readonly) NSInteger frame, fps;
 - (NSTimeInterval)time;
 
+- (FrameTime *)maxWith:(FrameTime *)other;
+
 @end
 
 @interface Keyframe : NSObject <NSCoding>
@@ -35,5 +37,7 @@
 - (NSDictionary<__kindof NSString*, id>*)interpolatedPropertiesAtTime:(FrameTime *)time;
 
 - (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block;
+
+- (FrameTime *)maxTime;
 
 @end
