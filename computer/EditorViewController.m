@@ -618,9 +618,7 @@
     __weak EditorViewController *weakSelf = self;
     UIAlertController *ac = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share as:", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Photo", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [UIView performWithoutAnimation:^{
-            [weakSelf startCroppingWithExporter:[PhotoExporter new]];
-        }];
+        [weakSelf startCroppingWithExporter:[PhotoExporter new]];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Video", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [weakSelf startCroppingWithExporter:[VideoExporter new]];
@@ -635,8 +633,10 @@
 }
 
 - (void)startCroppingWithExporter:(Exporter *)exporter {
-    self.currentExporter = exporter;
-    self.mode = EditorModeExportCropping;
+    [UIView performWithoutAnimation:^{
+        self.currentExporter = exporter;
+        self.mode = EditorModeExportCropping;
+    }];
 }
 
 - (void)startRunningExport {
