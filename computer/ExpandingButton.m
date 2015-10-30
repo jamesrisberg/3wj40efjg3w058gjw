@@ -18,9 +18,12 @@
 
 - (instancetype)initWithBackground:(UIImage *)background glpyh:(UIImage *)glyph {
     self = [super init];
-    [self setBackgroundImage:background forState:UIControlStateNormal];
-    self.bounds = CGRectMake(0, 0, background.size.width, background.size.height);
+    [self setImage:background forState:UIControlStateNormal];
+    CGFloat padding = 15;
+    [self setContentEdgeInsets:UIEdgeInsetsMake(padding, padding, padding, padding)];
+    self.bounds = CGRectMake(0, 0, background.size.width + padding*2, background.size.height + padding*2);
     self.glyph = [[UIImageView alloc] initWithImage:glyph];
+    self.adjustsImageWhenHighlighted = NO;
     [self addSubview:self.glyph];
     [self.glyph sizeToFit];
     self.glyph.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
