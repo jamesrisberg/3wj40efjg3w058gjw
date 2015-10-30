@@ -42,6 +42,7 @@
     [self.parentPopover dismissPopoverAnimated:YES];
     [self.colorStop removeFromSuperview];
     [self.colorStopEditor updatedColorStops];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 #define FORWARD_MESSAGE(msg) -(void)msg:(BOOL)animated {\
 [_colorPicker msg:animated];\

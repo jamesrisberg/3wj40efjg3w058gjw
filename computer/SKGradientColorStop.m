@@ -14,6 +14,12 @@
 #import "SKColorStopDetail.h"
 #import "computer-Swift.h"
 
+@interface SKGradientColorStop () {
+    CGPoint _touchStartPoint;
+}
+
+@end
+
 @implementation SKGradientColorStop
 @synthesize color=_color, position=_position, editor=_editor;
 
@@ -52,13 +58,20 @@
 #pragma mark Touch handling
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     _moved = NO;
+    _touchStartPoint = [[touches anyObject] locationInView:self.superview];
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-    _moved = YES;
-    CGFloat x = [[touches anyObject] locationInView:self.superview].x;
-    x = CGSnap(x, self.superview.bounds.size.width);
-    self.position = x/self.superview.bounds.size.width;
-    [self.editor updatedColorStops];
+    CGPoint pos = [[touches anyObject] locationInView:self.superview];
+    CGFloat dist = CGPointDistance(pos, _touchStartPoint);
+    if (dist > 3) {
+        _moved = YES;
+    }
+    if (_moved) {
+        CGFloat x = [[touches anyObject] locationInView:self.superview].x;
+        x = CGSnap(x, self.superview.bounds.size.width);
+        self.position = x/self.superview.bounds.size.width;
+        [self.editor updatedColorStops];
+    }
 }
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     if (!_moved) {

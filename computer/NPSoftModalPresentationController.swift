@@ -40,7 +40,7 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         let toVC = transitionContext!.viewControllerForKey(UITransitionContextToViewControllerKey)!
         if toVC === self.presentedViewController {
             // we're presenting a modal:
-            return 0.5
+            return 0.3
         } else {
             // we're dismissing:
             return 0.3
@@ -82,11 +82,13 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         view.frame = transitionContext.finalFrameForViewController(vc)
         let container = transitionContext.containerView()!
         container.addSubview(view)
-        let translation = container.bounds.size.height - view.frame.origin.y
+        let translation = (container.bounds.size.height - view.frame.origin.y) * 0.5
+        view.alpha = 0
         view.transform = CGAffineTransformMakeTranslation(0, translation + 20)
         let duration = transitionDuration(transitionContext)
-        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.05, options: [], animations: { () -> Void in
+        UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             view.transform = CGAffineTransformIdentity
+            view.alpha = 1
             }) { (completed) -> Void in
                 transitionContext.completeTransition(true)
         }
@@ -124,12 +126,14 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         let vc = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!
         let view = vc.view
         let container = transitionContext.containerView()!
-        let translation = container.bounds.size.height - view.frame.origin.y
+        let translation = (container.bounds.size.height - view.frame.origin.y) * 0.5
         let duration = transitionDuration(transitionContext)
         UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             view.transform = CGAffineTransformMakeTranslation(0, translation)
             // view.transform = CGAffineTransformRotate(CGAffineTransformMakeTranslation(0, translation), CGFloat(M_PI) * 0.3)
+            view.alpha = 0
             }) { (completed) -> Void in
+                view.alpha = 1;
                 transitionContext.completeTransition(true)
         }
     }
