@@ -293,7 +293,7 @@
         d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
         d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            [(SubcanvasDrawable *)d canvas].time = time;
+            [(SubcanvasDrawable *)d subcanvas].time = time;
         }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
@@ -303,7 +303,7 @@
     _useTimeForStaticAnimations = useTimeForStaticAnimations;
     for (Drawable *d in [self drawables]) {
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            [(SubcanvasDrawable *)d canvas].useTimeForStaticAnimations = useTimeForStaticAnimations;
+            [(SubcanvasDrawable *)d subcanvas].useTimeForStaticAnimations = useTimeForStaticAnimations;
         }
     }
     [self setTime:self.time]; // trigger update of [drawables].timeForStaticAnimations
@@ -319,7 +319,7 @@
     for (Drawable *d in self.drawables) {
         t = [[d.keyframeStore maxTime] maxWith:t];
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            Canvas *sub = [(SubcanvasDrawable *)d canvas];
+            Canvas *sub = [(SubcanvasDrawable *)d subcanvas];
             t = [t maxWith:[sub duration]];
         }
     }

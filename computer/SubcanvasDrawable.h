@@ -10,6 +10,8 @@
 
 @interface SubcanvasDrawable : Drawable
 
-@property (nonatomic) Canvas *canvas;
+@property (nonatomic) Canvas *subcanvas;
+
+@property (nonatomic) NSInteger xRepeat, yRepeat;
 
 @end

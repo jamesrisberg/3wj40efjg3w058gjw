@@ -98,7 +98,7 @@
         [canvas insertDrawable:circle];
         
         SubcanvasDrawable *d = [SubcanvasDrawable new];
-        d.canvas = canvas;
+        d.subcanvas = canvas;
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
