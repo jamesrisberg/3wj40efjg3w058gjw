@@ -294,6 +294,7 @@
         d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
             [(SubcanvasDrawable *)d subcanvas].time = time;
+            [(SubcanvasDrawable *)d subcanvas].overrideDimming = self.overrideDimming;
         }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];

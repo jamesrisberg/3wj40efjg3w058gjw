@@ -34,6 +34,8 @@
         NSLog(@"Path: %@", path);
         
         CGSize size = self.cropRect.size;
+        size.width *= [UIScreen mainScreen].scale;
+        size.height *= [UIScreen mainScreen].scale;
         CGFloat maxDimension = 800;
         CGFloat scale = MIN(1, MIN(maxDimension / size.width, maxDimension / size.height));
         size.width = round(size.width * scale);
