@@ -11,8 +11,11 @@
 #import "EditorViewController.h"
 #import "OptionsView.h"
 #import "SliderTableViewCell.h"
+#import "ReplicatorView.h"
 
 @interface SubcanvasDrawable ()
+
+@property (nonatomic) ReplicatorView *xReplicator, *yReplicator;
 
 @end
 
@@ -35,31 +38,57 @@
 
 - (void)setup {
     [super setup];
+    
+    self.xReplicator = [ReplicatorView new];
+    [self addSubview:self.xReplicator];
+    self.yReplicator = [ReplicatorView new];
+    [self.xReplicator addSubview:self.yReplicator];
+    _xRepeat = 1;
+    _yRepeat = 1;
+    
     if (!self.subcanvas) {
         self.subcanvas = [Canvas new];
     }
 }
 
 - (void)setSubcanvas:(Canvas *)canvas {
-    CGFloat oldAspectRatio = _subcanvas ? _subcanvas.bounds.size.width / _subcanvas.bounds.size.height : 1;
+    CGFloat oldAspectRatio = [self preferredAspectRatio];
     [_subcanvas removeFromSuperview];
     _subcanvas = canvas;
     [canvas resizeBoundsToFitContent];
-    CGFloat newAspectRatio = canvas ? canvas.bounds.size.width / canvas.bounds.size.height : 1;
-    [self addSubview:_subcanvas];
+    [self.yReplicator addSubview:_subcanvas];
     if (CGRectEqualToRect(self.bounds, CGRectZero)) {
         self.bounds = CGRectMake(0, 0, 200, 200);
     }
-    [self adjustAspectRatioWithOld:oldAspectRatio new:newAspectRatio];
+    [self adjustAspectRatioWithOld:oldAspectRatio new:[self preferredAspectRatio]];
 }
+
+#pragma mark Layout
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     // subcanvas.bounds is set by -[Canvas resizeBoundsToFitContent] inside -setSubcanvas:
-    self.subcanvas.transform = CGAffineTransformMakeScale(self.bounds.size.width / self.subcanvas.bounds.size.width, self.bounds.size.height / self.subcanvas.bounds.size.height);
+    self.subcanvas.transform = CGAffineTransformMakeScale(self.bounds.size.width / self.xRepeat / self.subcanvas.bounds.size.width, self.bounds.size.height / self.yRepeat / self.subcanvas.bounds.size.height);
     self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
     self.subcanvas.center = CGPointMake(0, 0);
+    self.xReplicator.frame = self.bounds;
+    self.yReplicator.frame = self.bounds;
+    self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.bounds.size.width / self.xRepeat, 0, 0);
+    self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(0, self.bounds.size.height / self.yRepeat, 0);
+    self.xReplicator.replicatorLayer.instanceCount = self.xRepeat;
+    self.yReplicator.replicatorLayer.instanceCount = self.yRepeat;
 }
+
+- (CGSize)preferredInnerSize {
+    return CGSizeMake(self.subcanvas.bounds.size.width * self.xRepeat, self.subcanvas.bounds.size.height * self.yRepeat);
+}
+
+- (CGFloat)preferredAspectRatio {
+    CGSize s = [self preferredInnerSize];
+    return s.width * s.height ? s.width / s.height : 1;
+}
+
+#pragma mark Editing
 
 - (void)primaryEditAction {
     __weak SubcanvasDrawable *weakSelf = self;
@@ -79,12 +108,14 @@
     return [[super optionsItems] arrayByAddingObject:tiling];
 }
 
+#pragma mark Tiling
+
 - (NSInteger)mapSliderToTileCount:(CGFloat)slider {
     return 1 + round(pow(slider * 5, 2)); // max 26
 }
 
 - (CGFloat)mapTileCountToSlider:(NSInteger)count {
-    return sqrt((count - 1) / 5);
+    return sqrt((count - 1) / 5.0);
 }
 
 - (void)showTilingOptions {
@@ -117,6 +148,26 @@
     v.models = @[xTiles, yTiles];
     
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
+}
+
+- (void)setXRepeat:(NSInteger)xRepeat {
+    if (_xRepeat == xRepeat) return;
+    
+    CGFloat oldAspect = [self preferredAspectRatio];
+    
+    _xRepeat = xRepeat;
+    [self setNeedsLayout];
+    [self adjustAspectRatioWithOld:oldAspect new:[self preferredAspectRatio]];
+}
+
+- (void)setYRepeat:(NSInteger)yRepeat {
+    if (_yRepeat == yRepeat) return;
+    
+    CGFloat oldAspect = [self preferredAspectRatio];
+    
+    _yRepeat = yRepeat;
+    [self setNeedsLayout];
+    [self adjustAspectRatioWithOld:oldAspect new:[self preferredAspectRatio]];
 }
 
 @end

@@ -44,6 +44,7 @@
 		5F809A681BE1C7540030B538 /* UIImagePixelSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A671BE1C7540030B538 /* UIImagePixelSource.m */; };
 		5F809A6C1BE1CC8B0030B538 /* VideoExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A6B1BE1CC8B0030B538 /* VideoExporter.m */; };
 		5F809A961BE318240030B538 /* HJImagesToVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A951BE318240030B538 /* HJImagesToVideo.m */; };
+		5F809A9A1BE3EC030030B538 /* ReplicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A991BE3EC030030B538 /* ReplicatorView.m */; };
 		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
 		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
@@ -220,6 +221,8 @@
 		5F809A941BE318240030B538 /* HJImagesToVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJImagesToVideo.h; sourceTree = "<group>"; };
 		5F809A951BE318240030B538 /* HJImagesToVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJImagesToVideo.m; sourceTree = "<group>"; };
 		5F809A971BE3DDC60030B538 /* VideoConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoConstants.h; sourceTree = "<group>"; };
+		5F809A981BE3EC030030B538 /* ReplicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplicatorView.h; sourceTree = "<group>"; };
+		5F809A991BE3EC030030B538 /* ReplicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplicatorView.m; sourceTree = "<group>"; };
 		5F900E171BBB9275000D4C7C /* FilePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePickerViewController.h; sourceTree = "<group>"; };
 		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
 		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
@@ -877,6 +880,8 @@
 				5FEAF9661B9E2E3A0071BC08 /* ShapeDrawable.m */,
 				5F198AE91BD99BE700B62433 /* SubcanvasDrawable.h */,
 				5F198AEA1BD99BE700B62433 /* SubcanvasDrawable.m */,
+				5F809A981BE3EC030030B538 /* ReplicatorView.h */,
+				5F809A991BE3EC030030B538 /* ReplicatorView.m */,
 				5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */,
 				5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */,
 			);
@@ -1151,6 +1156,7 @@
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,
 				5FEAF81B1B9788BD0071BC08 /* Drawable.m in Sources */,
+				5F809A9A1BE3EC030030B538 /* ReplicatorView.m in Sources */,
 				5FBF7C141BD82030000FA3F4 /* OptionsView.m in Sources */,
 				5FEAF95F1B9E2C7B0071BC08 /* UIView+computer.m in Sources */,
 				5FEAF8521B9AD96E0071BC08 /* UIImage+SubImage.swift in Sources */,

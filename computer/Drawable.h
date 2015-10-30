@@ -24,6 +24,7 @@
 
 - (void)setInternalSize:(CGSize)size;
 - (void)adjustAspectRatioWithOld:(CGFloat)oldAspectRatio new:(CGFloat)aspectRatio;
+- (CGRect)unrotatedBoundingBox;
 
 - (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties;
 - (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props;

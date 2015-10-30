@@ -194,10 +194,13 @@
     self.bounds = CGRectMake(0, 0, size.width, size.height);
     
     [self updatedKeyframeProperties];
-    
-    if (self.onShapeUpdate) self.onShapeUpdate();
 }
 
+- (CGRect)unrotatedBoundingBox {
+    CGFloat w = (self.bounds.size.width * cos(self.rotation) + self.bounds.size.height * sin(self.rotation)) * self.scale;
+    CGFloat h = (self.bounds.size.height * cos(self.rotation) + self.bounds.size.width * sin(self.rotation)) * self.scale;
+    return CGRectMake(self.center.x - w/2, self.center.y - h/2, w, h);
+}
 
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -274,6 +277,7 @@
 
 - (void)updatedKeyframeProperties {
     if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
+    if (self.onShapeUpdate) self.onShapeUpdate();
 }
 
 - (void)setDimmed:(BOOL)dimmed {
