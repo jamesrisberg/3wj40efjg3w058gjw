@@ -45,6 +45,8 @@
 		5F809A6C1BE1CC8B0030B538 /* VideoExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A6B1BE1CC8B0030B538 /* VideoExporter.m */; };
 		5F809A961BE318240030B538 /* HJImagesToVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A951BE318240030B538 /* HJImagesToVideo.m */; };
 		5F809A9A1BE3EC030030B538 /* ReplicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A991BE3EC030030B538 /* ReplicatorView.m */; };
+		5F809A9C1BE40B650030B538 /* ImageSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A9B1BE40B650030B538 /* ImageSearchViewController.swift */; };
+		5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A9F1BE40C240030B538 /* AFImageSearchResultsViewController.m */; };
 		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
 		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
@@ -223,6 +225,9 @@
 		5F809A971BE3DDC60030B538 /* VideoConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoConstants.h; sourceTree = "<group>"; };
 		5F809A981BE3EC030030B538 /* ReplicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplicatorView.h; sourceTree = "<group>"; };
 		5F809A991BE3EC030030B538 /* ReplicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplicatorView.m; sourceTree = "<group>"; };
+		5F809A9B1BE40B650030B538 /* ImageSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSearchViewController.swift; sourceTree = "<group>"; };
+		5F809A9E1BE40C240030B538 /* AFImageSearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageSearchResultsViewController.h; sourceTree = "<group>"; };
+		5F809A9F1BE40C240030B538 /* AFImageSearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageSearchResultsViewController.m; sourceTree = "<group>"; };
 		5F900E171BBB9275000D4C7C /* FilePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePickerViewController.h; sourceTree = "<group>"; };
 		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
 		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
@@ -579,6 +584,16 @@
 			path = HJImagesToVideo;
 			sourceTree = "<group>";
 		};
+		5F809A9D1BE40B690030B538 /* Image search */ = {
+			isa = PBXGroup;
+			children = (
+				5F809A9E1BE40C240030B538 /* AFImageSearchResultsViewController.h */,
+				5F809A9F1BE40C240030B538 /* AFImageSearchResultsViewController.m */,
+				5F809A9B1BE40B650030B538 /* ImageSearchViewController.swift */,
+			);
+			name = "Image search";
+			sourceTree = "<group>";
+		};
 		5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,6 +690,7 @@
 			children = (
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
+				5F809A9D1BE40B690030B538 /* Image search */,
 				5FE857781BDB6C4900B4B245 /* File picking */,
 				5FE857711BDB60D700B4B245 /* Export */,
 				5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */,
@@ -1073,6 +1089,7 @@
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
 				5F809A441BE1C3740030B538 /* ANGifAppExtension.m in Sources */,
 				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
+				5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5F809A4C1BE1C3740030B538 /* ANGifImageFrame.m in Sources */,
 				5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */,
@@ -1102,6 +1119,7 @@
 				5F809A471BE1C3740030B538 /* ANColorTable.m in Sources */,
 				5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */,
 				5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */,
+				5F809A9C1BE40B650030B538 /* ImageSearchViewController.swift in Sources */,
 				5F809A651BE1C4490030B538 /* ExportTest.m in Sources */,
 				5F809A581BE1C3740030B538 /* BitmapScaleManipulator.m in Sources */,
 				5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */,

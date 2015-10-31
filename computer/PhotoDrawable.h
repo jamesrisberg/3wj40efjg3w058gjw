@@ -11,5 +11,6 @@
 @interface PhotoDrawable : Drawable
 
 - (void)promptToPickPhotoWithSource:(UIImagePickerControllerSourceType)source;
+- (void)promptToPickPhotoFromImageSearch;
 
 @end

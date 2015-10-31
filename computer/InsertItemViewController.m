@@ -14,6 +14,7 @@
 #import "ShapeDrawable.h"
 #import "SubcanvasDrawable.h"
 #import "SKColorFill.h"
+#import "computer-Swift.h"
 
 @interface InsertItemViewController ()
 
@@ -45,6 +46,12 @@
     photos.action = ^{
         PhotoDrawable *d = addPhoto();
         [d promptToPickPhotoWithSource:UIImagePickerControllerSourceTypePhotoLibrary];
+    };
+    QuickCollectionItem *imageSearch = [QuickCollectionItem new];
+    imageSearch.icon = [UIImage imageNamed:@"Search"];
+    imageSearch.action = ^{
+        PhotoDrawable *d = addPhoto();
+        [d promptToPickPhotoFromImageSearch];
     };
     QuickCollectionItem *video = [QuickCollectionItem new];
     video.icon = [UIImage imageNamed:@"Video"];
@@ -102,7 +109,7 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, video, text, pen, circle, square, group];
+    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, group];
 }
 
 @end

@@ -69,6 +69,20 @@
     [[self vcForPresentingModals] presentViewController:pickerVC animated:YES completion:nil];
 }
 
+- (void)promptToPickPhotoFromImageSearch {
+    ImageSearchViewController *vc = [ImageSearchViewController new];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    __weak UINavigationController *weakNav = nav;
+    __weak PhotoDrawable *weakSelf = self;
+    vc.onImagePicked = ^(UIImage *image) {
+        if (image) {
+            [weakSelf setImage:image];
+        }
+        [weakNav dismissViewControllerAnimated:YES completion:nil];
+    };
+    [[self vcForPresentingModals] presentViewController:nav animated:YES completion:nil];
+}
+
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
     __weak PhotoDrawable *weakSelf = self;
     QuickCollectionItem *cutOut = [QuickCollectionItem new];

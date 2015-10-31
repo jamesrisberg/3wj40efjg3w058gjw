@@ -47,6 +47,8 @@
     
     
     [picture processImageUpToFilter:filter withCompletionHandler:^(UIImage *processedImage) {
+        // WORKAROUND: for some reason, images come back with opaque backgrounds, but this is fixed w/ serialization
+        processedImage = [UIImage imageWithData:UIImagePNGRepresentation(processedImage)];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             self.callback(processedImage);
