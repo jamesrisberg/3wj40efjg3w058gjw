@@ -23,7 +23,7 @@
 @property (nonatomic,copy) void (^onShapeUpdate)();
 
 - (void)setInternalSize:(CGSize)size;
-- (void)adjustAspectRatioWithOld:(CGFloat)oldAspectRatio new:(CGFloat)aspectRatio;
+- (void)updateAspectRatio:(CGFloat)aspect;
 - (CGRect)unrotatedBoundingBox;
 
 - (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties;

@@ -40,9 +40,8 @@
 
 - (void)setImage:(UIImage *)image {
     image = [image resizedWithMaxDimension:1500];
-    CGFloat oldAspectRatio = self.imageView.image.size.width / self.imageView.image.size.height;
     CGFloat aspectRatio = image.size.width / image.size.height;
-    [self adjustAspectRatioWithOld:oldAspectRatio new:aspectRatio];
+    [self updateAspectRatio:aspectRatio];
     self.imageView.image = image;
 }
 

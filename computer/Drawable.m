@@ -178,22 +178,13 @@
 
 - (void)setInternalSize:(CGSize)size {
     self.bounds = CGRectMake(0, 0, size.width, size.height);
+    [self updatedKeyframeProperties];
 }
 
-- (void)adjustAspectRatioWithOld:(CGFloat)oldAspectRatio new:(CGFloat)aspectRatio {
-    if (oldAspectRatio == 0) oldAspectRatio = 1;
-    if (aspectRatio == 0) aspectRatio = 1;
-    CGSize size = self.bounds.size;
-    if (aspectRatio > oldAspectRatio) {
-        // we're wider, so shorten the height:
-        size.height = size.width / aspectRatio;
-    } else {
-        // we're thinner, so shorten the width:
-        size.width = size.height * aspectRatio;
-    }
-    self.bounds = CGRectMake(0, 0, size.width, size.height);
-    
-    [self updatedKeyframeProperties];
+- (void)updateAspectRatio:(CGFloat)aspect {
+    CGFloat diag = sqrt(pow(self.bounds.size.width, 2) + pow(self.bounds.size.height, 2));
+    CGFloat width = diag/sqrt(pow(aspect, -2) + 1);
+    [self setInternalSize:CGSizeMake(width, width / aspect)];
 }
 
 - (CGRect)unrotatedBoundingBox {

@@ -52,15 +52,13 @@
 }
 
 - (void)setSubcanvas:(Canvas *)canvas {
-    CGFloat oldAspectRatio = [self preferredAspectRatio];
     [_subcanvas removeFromSuperview];
     _subcanvas = canvas;
-    [canvas resizeBoundsToFitContent];
     [self.yReplicator addSubview:_subcanvas];
     if (CGRectEqualToRect(self.bounds, CGRectZero)) {
         self.bounds = CGRectMake(0, 0, 200, 200);
     }
-    [self adjustAspectRatioWithOld:oldAspectRatio new:[self preferredAspectRatio]];
+    [self updateAspectRatio:[self preferredAspectRatio]];
 }
 
 #pragma mark Layout
@@ -84,6 +82,7 @@
 }
 
 - (CGFloat)preferredAspectRatio {
+    [self.subcanvas resizeBoundsToFitContent];
     CGSize s = [self preferredInnerSize];
     return s.width * s.height ? s.width / s.height : 1;
 }
@@ -110,12 +109,16 @@
 
 #pragma mark Tiling
 
-- (NSInteger)mapSliderToTileCount:(CGFloat)slider {
-    return 1 + round(pow(slider * 5, 2)); // max 26
+- (NSInteger)tileCoefficient {
+    return 5;
 }
 
-- (CGFloat)mapTileCountToSlider:(NSInteger)count {
-    return sqrt((count - 1) / 5.0);
+- (NSInteger)mapSliderToTileCount:(CGFloat)slider {
+    return 1 + round(pow(slider * [self tileCoefficient], 2));
+}
+
+- (CGFloat)mapTileCountToSlider:(NSInteger)tile {
+    return sqrt(tile / pow([self tileCoefficient], 2) - pow([self tileCoefficient], -2));
 }
 
 - (void)showTilingOptions {
@@ -157,7 +160,7 @@
     
     _xRepeat = xRepeat;
     [self setNeedsLayout];
-    [self adjustAspectRatioWithOld:oldAspect new:[self preferredAspectRatio]];
+    [self updateAspectRatio:[self preferredAspectRatio]];
 }
 
 - (void)setYRepeat:(NSInteger)yRepeat {
@@ -167,7 +170,7 @@
     
     _yRepeat = yRepeat;
     [self setNeedsLayout];
-    [self adjustAspectRatioWithOld:oldAspect new:[self preferredAspectRatio]];
+    [self updateAspectRatio:[self preferredAspectRatio]];
 }
 
 @end
