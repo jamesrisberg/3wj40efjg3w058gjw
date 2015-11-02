@@ -23,7 +23,8 @@
     _pulseRate = 1;
     _pulseMagnitude = 0;
     _jitterRate = 20;
-    _jitterMagnitude = 0;
+    _jitterXMagnitude = 0;
+    _jitterYMagnitude = 0;
     return self;
 }
 
@@ -42,7 +43,7 @@
 }
 
 - (NSArray *)valuesToEncode {
-    return @[@"blinkRate", @"blinkMagnitude", @"pulseRate", @"pulseMagnitude", @"jitterRate", @"jitterMagnitude", @"fadeRate", @"fadeMagnitude"];
+    return @[@"blinkRate", @"blinkMagnitude", @"pulseRate", @"pulseMagnitude", @"jitterRate", @"jitterXMagnitude", @"jitterYMagnitude", @"fadeRate", @"fadeMagnitude"];
 }
 
 - (CGFloat)adjustAlpha:(CGFloat)alpha time:(NSTimeInterval)time {
@@ -65,7 +66,12 @@
 }
 
 - (CGAffineTransform)adjustTransform:(CGAffineTransform)transform time:(NSTimeInterval)time {
-    return transform; // TODO
+    CGFloat scale = 1 + _pulseMagnitude * sin(time * _pulseRate);
+    transform = CGAffineTransformScale(transform, scale, scale);
+    CGFloat jitterX = _jitterXMagnitude * sin(time * _jitterRate);
+    CGFloat jitterY = _jitterYMagnitude * sin(time * _jitterRate + 0.3);
+    transform = CGAffineTransformTranslate(transform, jitterX, jitterY);
+    return transform;
 }
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
@@ -79,7 +85,8 @@
     INTERPOLATE_FLOAT(fadeRate);
     INTERPOLATE_FLOAT(pulseMagnitude);
     INTERPOLATE_FLOAT(pulseRate);
-    INTERPOLATE_FLOAT(jitterMagnitude);
+    INTERPOLATE_FLOAT(jitterXMagnitude);
+    INTERPOLATE_FLOAT(jitterYMagnitude);
     INTERPOLATE_FLOAT(jitterRate);
     return c;
 }

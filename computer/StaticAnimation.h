@@ -19,7 +19,7 @@
 @property (nonatomic) CGFloat blinkRate, blinkMagnitude;
 @property (nonatomic) CGFloat fadeRate, fadeMagnitude;
 @property (nonatomic) CGFloat pulseRate, pulseMagnitude;
-@property (nonatomic) CGFloat jitterRate, jitterMagnitude;
+@property (nonatomic) CGFloat jitterRate, jitterXMagnitude, jitterYMagnitude;
 
 - (BOOL)matchesAnimationDict:(NSDictionary *)dict;
 - (void)addAnimationDict:(NSDictionary *)dict;

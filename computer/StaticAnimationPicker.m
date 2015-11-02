@@ -29,8 +29,10 @@
         // do some setup:
         self.backgroundColor = [UIColor whiteColor];
         self.preview = [ShapeDrawable new];
+        UIBezierPath *p = self.preview.path;
+        [p applyTransform:CGAffineTransformMakeRotation(M_PI/4)];
+        self.preview.path = p;
         [self.preview setInternalSize:CGSizeMake(30, 30)];
-        self.preview.rotation = M_PI / 4;
         self.preview.fill = [[SKColorFill alloc] initWithColor:[UIColor redColor]];
         [self addSubview:self.preview];
         
@@ -74,7 +76,14 @@
     NSDictionary *mediumBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK / 2.0), @"blinkMagnitude": @1};
     NSDictionary *fastBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK), @"blinkMagnitude": @1};
     NSArray *blinkSection = @[slowBlink, mediumBlink, fastBlink];
-    _sections = @[blinkSection];
+    
+    NSDictionary *slowJitter = @{@"jitterXMagnitude": @15, @"jitterYMagnitude": @15, @"jitterRate": @20};
+    NSDictionary *fastJitter = @{@"jitterXMagnitude": @15, @"jitterYMagnitude": @15, @"jitterRate": @50};
+    NSDictionary *slowXJitter = @{@"jitterXMagnitude": @15, @"jitterYMagnitude": @0, @"jitterRate": @20};
+    NSDictionary *fastXJitter = @{@"jitterXMagnitude": @15, @"jitterYMagnitude": @0, @"jitterRate": @50};
+    NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
+    
+    _sections = @[blinkSection, jitterSection];
     
     UICollectionViewFlowLayout *flow = [UICollectionViewFlowLayout new];
     flow.itemSize = CGSizeMake(50, 50);
