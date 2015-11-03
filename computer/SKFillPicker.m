@@ -20,8 +20,8 @@
     
     self.tabBar.translucent = NO;
     
-    //_noFill = [[SKNullViewController alloc] init];
-    //_noFill.message = @"No fill";
+    _noFill = [[SKNullViewController alloc] init];
+    _noFill.message = @"No fill";
     
     __weak SKFillPicker *weakSelf = self;
     
@@ -43,7 +43,7 @@
     };
     _imagePicker.tabBarItem.image = [UIImage imageNamed:@"image"];
     
-    self.viewControllers = [NSArray arrayWithObjects:_colorPicker, _gradientPicker, _imagePicker, nil];
+    self.viewControllers = @[_colorPicker, _gradientPicker, _imagePicker, _noFill];
     
     self.fill = fill;
     
@@ -60,9 +60,17 @@
     } else if ([fill isKindOfClass:[SKImageFill class]]) {
         _imagePicker.imageFill = (SKImageFill*)fill;
         [self setSelectedViewController:_imagePicker];
-    } /*else {
+    } else {
         [self setSelectedViewController:_noFill];
-    }*/
+    }
+}
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    // [super tabBar:tabBar didSelectItem:item];
+    NSInteger index = [self.tabBar.items indexOfObject:item];
+    UIViewController *vc = self.viewControllers[index];
+    if (vc == _noFill) {
+        if (self.callback) self.callback(nil);
+    }
 }
 /*-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     if ([[self superclass] instancesRespondToSelector:@selector(tabBar:didSelectItem:)]) {

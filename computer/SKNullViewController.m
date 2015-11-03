@@ -25,10 +25,8 @@
     _label = [[UILabel alloc] initWithFrame:self.view.bounds];
     _label.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _label.textColor = [UIColor grayColor];
-    _label.shadowColor = [UIColor blackColor];
-    _label.shadowOffset = CGSizeMake(0, -1);
-    _label.font = [UIFont boldSystemFontOfSize:36];
-    _label.minimumFontSize = 12;
+    _label.font = [UIFont systemFontOfSize:30];
+    _label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_label];
     _label.text = self.message;
     self.view.backgroundColor = [UIColor whiteColor];
