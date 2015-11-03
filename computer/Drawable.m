@@ -98,7 +98,11 @@
 }
 
 - (Canvas *)canvas {
-    return (Canvas *)self.superview;
+    if ([self.superview isKindOfClass:[Canvas class]]) {
+        return (id)self.superview;
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark Options
