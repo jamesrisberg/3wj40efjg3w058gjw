@@ -37,4 +37,6 @@ typedef void (^CPColorPickerCallback)(UIColor*);
 
 @property(strong)CPColorPickerCallback callback;
 
+@property (nonatomic) CGFloat colorPreviewHeight;
+
 @end

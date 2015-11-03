@@ -57,7 +57,7 @@
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.hueWheel.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.width);
-    self.hueWheel.center = CGPointMake(self.view.bounds.size.width/2, (_colorPreview.frame.origin.y + _colorPreview.frame.size.height + _alphaSlider.frame.origin.y) / 2);
+    self.hueWheel.center = CGPointMake(self.view.bounds.size.width/2, (10 + _alphaSlider.frame.origin.y) / 2);
     self.brightnessSaturationView.frame = CGRectMake(0, 0, self.hueWheel.frame.size.width-(CPColorPickerHueWheelWidth+CPHueWheelInset)*2, self.hueWheel.frame.size.height-(CPColorPickerHueWheelWidth+CPHueWheelInset)*2);
     self.brightnessSaturationView.center = self.hueWheel.center;
     [self layoutSavedColors];
@@ -193,6 +193,14 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+
+- (CGFloat)colorPreviewHeight {
+    return _colorPreview.frame.size.height;
+}
+
+- (void)setColorPreviewHeight:(CGFloat)colorPreviewHeight {
+    _colorPreview.frame = CGRectMake(0, 0, self.view.bounds.size.width, colorPreviewHeight);
 }
 
 @end

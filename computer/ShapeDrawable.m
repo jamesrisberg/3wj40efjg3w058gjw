@@ -11,6 +11,7 @@
 #import "SKColorFill.h"
 #import "SKFillPicker.h"
 #import "computer-Swift.h"
+#import "StrokePickerViewController.h"
 
 @interface _FillView : UIView
 
@@ -121,6 +122,18 @@
     [NPSoftModalPresentationController presentViewController:picker];
 }
 
+- (void)editStroke {
+    StrokePickerViewController *picker = [StrokePickerViewController new];
+    picker.color = self.strokeColor;
+    picker.width = self.strokeWidth;
+    __weak ShapeDrawable *weakSelf = self;
+    picker.onChange = ^(CGFloat width, UIColor *color) {
+        weakSelf.strokeColor = color;
+        weakSelf.strokeWidth = width;
+    };
+    [NPSoftModalPresentationController presentViewController:picker];
+}
+
 - (void)setInternalSize:(CGSize)size {
     CGPoint oldCenter = self.center;
     CGSize oldSize = self.bounds.size;
@@ -131,15 +144,25 @@
 }
 
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
-    QuickCollectionItem *editFill = [QuickCollectionItem new];
     __weak ShapeDrawable *weakSelf = self;
+    
+    QuickCollectionItem *editFill = [QuickCollectionItem new];
     editFill.label = NSLocalizedString(@"Fill…", @"");
     editFill.action = ^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf primaryEditAction];
         });
     };
-    return [[super optionsItems] arrayByAddingObject:editFill];
+    
+    QuickCollectionItem *editStroke = [QuickCollectionItem new];
+    editStroke.label = NSLocalizedString(@"Stroke…", @"");
+    editStroke.action = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf editStroke];
+        });
+    };
+    
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[editFill, editStroke]];
 }
 
 #pragma mark Fills
