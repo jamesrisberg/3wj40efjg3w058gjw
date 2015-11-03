@@ -7,6 +7,7 @@
 //
 
 #import "SKGradient.h"
+#import "ConvenienceCategories.h"
 
 @implementation SKGradient
 @synthesize colors, positions;
@@ -56,6 +57,17 @@
 }
 -(BOOL)isEqual:(id)object {
     return [object isKindOfClass:[SKGradient class]] && [colors isEqualToArray:[object colors]] && [positions isEqualToArray:[object positions]] && CGPointEqualToPoint(self.startPoint, [object startPoint]) && CGPointEqualToPoint(self.endPoint, [object endPoint]);
+}
+- (BOOL)canBeAppliedToGradientLayer {
+    return self.type = SKGradientTypeLinear;
+}
+- (void)applyToLayer:(CAGradientLayer *)layer {
+    layer.startPoint = self.startPoint;
+    layer.endPoint = self.endPoint;
+    layer.locations = self.positions;
+    layer.colors = [self.colors map:^id(id obj) {
+        return (id)[obj CGColor];
+    }];
 }
 
 @end

@@ -12,4 +12,8 @@
 
 -(void)drawInRect:(CGRect)rect; // will not clip to the rect automatically; the rect is only used to transform the start and end points
 
+- (BOOL)canBeAppliedToGradientLayer;
+- (void)applyToLayer:(CAGradientLayer *)layer;
+- (UIColor *)solidColorOrNil;
+
 @end

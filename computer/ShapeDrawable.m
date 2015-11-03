@@ -38,8 +38,9 @@
 
 @interface ShapeDrawable ()
 
-@property (nonatomic) CAShapeLayer *fillClipShape, *strokeShape;
 @property (nonatomic) _FillView *fillView;
+@property (nonatomic) CAGradientLayer *gradientLayer;
+@property (nonatomic) CAShapeLayer *maskShape;
 
 @end
 
@@ -62,72 +63,44 @@
     [aCoder encodeFloat:self.strokeWidth forKey:@"strokeWidth"];
 }
 
-- (void)setFill:(SKFill *)fill {
-    self.fillView.fill = fill;
-    self.fillView.hidden = fill == nil;
-}
-
-- (SKFill *)fill {
-    return self.fillView.fill;
-}
-
 - (void)setup {
     [super setup];
-    self.opaque = NO;
-    self.fillView = [_FillView new];
-    [self addSubview:self.fillView];
-    self.fillClipShape = [CAShapeLayer layer];
-    self.strokeShape = [CAShapeLayer layer];
-    self.strokeShape.fillColor = nil;
-    [self.layer addSublayer:self.strokeShape];
-    self.fillView.layer.mask = self.fillClipShape;
+    self.clipsToBounds = NO;
     self.path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 200, 200)];
-    self.fillClipShape.strokeColor = nil;
-    
     self.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
     self.strokeWidth = 0;
-}
-
-- (void)setStrokeColor:(UIColor *)strokeColor {
-    _strokeColor = strokeColor;
-    self.strokeShape.strokeColor = strokeColor.CGColor;
-}
-
-- (void)setStrokeWidth:(CGFloat)strokeWidth {
-    _strokeWidth = strokeWidth;
-    self.strokeShape.lineWidth = strokeWidth;
-    self.strokeShape.hidden = strokeWidth == 0;
 }
 
 - (void)setPath:(UIBezierPath *)path {
     [self _setPathWithoutFittingContent:path];
     [self fitContent];
-    [self updatedKeyframeProperties];
 }
 
 - (void)_setPathWithoutFittingContent:(UIBezierPath *)path {
-    CGPathRef cgPath = path.CGPath;
-    self.fillClipShape.path = cgPath;
-    self.strokeShape.path = cgPath;
+    CAShapeLayer *shape = (id)self.layer;
+    shape.path = path.CGPath;
+    self.maskShape.path = shape.path;
 }
 
 - (UIBezierPath *)path {
-    return self.fillClipShape.path ? [UIBezierPath bezierPathWithCGPath:self.fillClipShape.path] : nil;
+    CAShapeLayer *shape = (id)self.layer;
+    return shape.path ? [UIBezierPath bezierPathWithCGPath:shape.path] : nil;
 }
 
 - (void)fitContent {
-    CGRect boundingBox = CGPathGetBoundingBox(self.fillClipShape.path);
+    UIBezierPath *path = self.path;
+    CGRect boundingBox = [path bounds];
     if (!CGRectIsNull(boundingBox)) {
         CGFloat xGrow = boundingBox.size.width - self.bounds.size.width;
         CGFloat yGrow = boundingBox.size.height - self.bounds.size.height;
         self.bounds = CGRectMake(0, 0, boundingBox.size.width, boundingBox.size.height);
         CGPoint subtractFromOrigin = boundingBox.origin;
         CGAffineTransform transform = CGAffineTransformMakeTranslation(-subtractFromOrigin.x, -subtractFromOrigin.y);
-        self.fillClipShape.path = self.strokeShape.path = CGPathCreateCopyByTransformingPath(self.fillClipShape.path, &transform);
+        [path applyTransform:transform];
         self.center = CGPointMake(self.center.x + subtractFromOrigin.x + xGrow/2, self.center.y + subtractFromOrigin.y + yGrow/2);
     }
-    self.strokeShape.frame = self.fillView.frame = self.bounds;
-    self.fillClipShape.frame = self.fillView.bounds;
+    [self updatedKeyframeProperties];
+    [self _setPathWithoutFittingContent:path];
 }
 
 - (void)setPathPreservingSize:(UIBezierPath *)path {
@@ -167,6 +140,82 @@
         });
     };
     return [[super optionsItems] arrayByAddingObject:editFill];
+}
+
+#pragma mark Fills
++ (Class)layerClass {
+    return [CAShapeLayer class];
+}
+
+- (void)setFill:(SKFill *)fill {
+    _fill = fill;
+    CAShapeLayer *shape = (id)self.layer;
+    if ([self.fill solidColorOrNil]) {
+        [_fillView removeFromSuperview];
+        _fillView = nil;
+        [self.gradientLayer removeFromSuperlayer];
+        self.gradientLayer = nil;
+        [_maskShape removeFromSuperlayer];
+        _maskShape = nil;
+        
+        shape.fillColor = [self.fill solidColorOrNil].CGColor;
+    } else {
+        shape.fillColor = nil;
+        
+        if (!_maskShape) {
+            _maskShape = [CAShapeLayer layer];
+            _maskShape.path = shape.path;
+            _maskShape.strokeColor = nil;
+            _maskShape.fillColor = [UIColor blackColor].CGColor;
+        }
+        
+        if ([self.fill canBeAppliedToGradientLayer]) {
+            [_fillView removeFromSuperview];
+            _fillView = nil;
+            
+            self.layer.backgroundColor = [UIColor clearColor].CGColor;
+            if (!_gradientLayer) {
+                _gradientLayer = [CAGradientLayer layer];
+                [self.layer addSublayer:_gradientLayer];
+                _gradientLayer.mask = _maskShape;
+            }
+            [self.fill applyToLayer:self.gradientLayer];
+        } else if (fill) {
+            [_gradientLayer removeFromSuperlayer];
+            _gradientLayer = nil;
+            if (!_fillView) {
+                _fillView = [_FillView new];
+                [self addSubview:_fillView];
+                _fillView.layer.mask = self.maskShape;
+            }
+            _fillView.fill = fill;
+        }
+    }
+    [self setNeedsLayout];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.fillView.frame = self.bounds;
+    self.gradientLayer.frame = self.bounds;
+    self.maskShape.frame = self.bounds;
+}
+
+#pragma mark Strokes
+- (void)setStrokeColor:(UIColor *)strokeColor {
+    _strokeColor = strokeColor;
+    [self updateStroke];
+}
+
+- (void)setStrokeWidth:(CGFloat)strokeWidth {
+    _strokeWidth = strokeWidth;
+    [self updateStroke];
+}
+
+- (void)updateStroke {
+    CAShapeLayer *shape = (id)self.layer;
+    shape.strokeColor = self.strokeColor.CGColor;
+    shape.lineWidth = self.strokeWidth;
 }
 
 @end

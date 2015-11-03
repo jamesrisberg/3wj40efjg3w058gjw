@@ -21,5 +21,14 @@
 -(void)drawInRect:(CGRect)rect {
     // subclasses should implement this method
 }
+- (BOOL)canBeAppliedToGradientLayer {
+    return NO;
+}
+- (void)applyToLayer:(CAGradientLayer *)layer {
+    
+}
+- (UIColor *)solidColorOrNil {
+    return nil;
+}
 
 @end

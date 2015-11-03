@@ -35,4 +35,17 @@
     return [object isKindOfClass:[SKColorFill class]] && [self.color isEqual:[object color]];
 }
 
+- (BOOL)canBeAppliedToGradientLayer {
+    return YES;
+}
+
+- (void)applyToLayer:(CAGradientLayer *)layer {
+    layer.colors = @[(id)self.color.CGColor];
+    layer.locations = nil;
+}
+
+- (UIColor *)solidColorOrNil {
+    return self.color;
+}
+
 @end
