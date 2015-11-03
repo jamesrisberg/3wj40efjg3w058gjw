@@ -27,6 +27,12 @@
 
 @implementation Canvas
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    [self setup];
+    return self;
+}
+
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     if (!_setup) {
@@ -267,7 +273,7 @@
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithFrame:CGRectZero]; // deliberately DON'T call super
+    self = [self initWithFrame:CGRectZero]; // deliberately DON'T call super
     for (Drawable *d in [aDecoder decodeObjectForKey:@"drawables"]) {
         [self _addDrawableToCanvas:d];
     }

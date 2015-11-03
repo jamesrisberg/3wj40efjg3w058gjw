@@ -59,6 +59,7 @@
         self.bounds = CGRectMake(0, 0, 200, 200);
     }
     [self updateAspectRatio:[self preferredAspectRatio]];
+    [self setNeedsLayout];
 }
 
 #pragma mark Layout

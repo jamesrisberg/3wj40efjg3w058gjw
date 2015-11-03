@@ -49,8 +49,8 @@
     CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     UIBezierPath *path = [UIBezierPath bezierPath];
     for (NSInteger i=0; i<_numberOfPoints; i++) {
-        CGFloat startAngle = M_PI * 2 * i / (double)_numberOfPoints;
-        CGFloat stopAngle = M_PI * 2 * (i+1) / (double)_numberOfPoints;
+        CGFloat startAngle = M_PI * 2 * i / (double)_numberOfPoints - M_PI/2;
+        CGFloat stopAngle = M_PI * 2 * (i+1) / (double)_numberOfPoints - M_PI/2;
         CGPoint p1 = CGPointShift(center, startAngle, radius);
         CGPoint p2 = CGPointShift(center, (startAngle + stopAngle)/2, radius * _valley);
         CGPoint p3 = CGPointShift(center, stopAngle, radius);

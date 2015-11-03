@@ -289,7 +289,9 @@
 }
 
 - (void)updatedKeyframeProperties {
-    [self keyframePropertiesChangedAtTime:self.canvas.time];
+    if (self.canvas.time) {
+        [self keyframePropertiesChangedAtTime:self.canvas.time];
+    }
     if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
     if (self.onShapeUpdate) self.onShapeUpdate();
 }
