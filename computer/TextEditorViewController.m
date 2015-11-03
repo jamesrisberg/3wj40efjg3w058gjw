@@ -163,13 +163,14 @@
     NSAttributedString *attributedText = self.textView.attributedText;
     // reset using a nil existing value, in case there are no existing values to enumerate:
     id newBaselineValue = fn(nil);
+    NSRange range = self.textView.selectedRange.length ? self.textView.selectedRange : NSMakeRange(0, self.textView.text.length);
     if (newBaselineValue) {
-        [self.textView.textStorage addAttribute:attribute value:newBaselineValue range:self.textView.selectedRange];
+        [self.textView.textStorage addAttribute:attribute value:newBaselineValue range:range];
     } else {
-        [self.textView.textStorage removeAttribute:attribute range:self.textView.selectedRange];
+        [self.textView.textStorage removeAttribute:attribute range:range];
     }
     // transform existing values for this attribute:
-    [attributedText enumerateAttribute:attribute inRange:self.textView.selectedRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+    [attributedText enumerateAttribute:attribute inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
         id newVal = fn(value);
         if (newVal) {
             [self.textView.textStorage addAttribute:attribute value:newVal range:range];

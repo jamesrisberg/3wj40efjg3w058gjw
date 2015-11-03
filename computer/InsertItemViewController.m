@@ -59,7 +59,7 @@
     text.icon = [UIImage imageNamed:@"Text"];
     text.action = ^{
         TextDrawable *d = [TextDrawable new];
-        d.bounds = CGRectMake(0, 0, 250, 250);
+        d.bounds = CGRectMake(0, 0, 300, 200);
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     QuickCollectionItem *pen = [QuickCollectionItem new];
