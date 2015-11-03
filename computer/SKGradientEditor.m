@@ -41,7 +41,7 @@
 -(void)setGradient:(SKGradient *)gradient {
     if (!gradient) {
         gradient = [SKGradient new];
-        gradient.colors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0 blue:1 alpha:1], [UIColor colorWithRed:0 green:0 blue:0.6 alpha:1], nil];
+        gradient.colors = [NSArray arrayWithObjects:[UIColor colorWithRed:0 green:0.5 blue:1 alpha:1], [UIColor colorWithRed:0 green:1 blue:0.6 alpha:1], nil];
         gradient.positions = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0], [NSNumber numberWithFloat:1], nil];
         gradient.type = SKGradientTypeLinear;
         gradient.startPoint = CGPointMake(0.5, 0);
