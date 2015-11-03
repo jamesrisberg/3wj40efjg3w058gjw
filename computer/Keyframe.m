@@ -222,4 +222,15 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return [(Keyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
 }
 
+- (void)removeKeyframeAtTime:(FrameTime *)time {
+    Keyframe *keyframe = [self keyframeAtTime:time];
+    if (keyframe) {
+        [self.keyframes removeObject:keyframe]; // TODO: more efficient
+    }
+    if (self.keyframes.count == 0) {
+        keyframe.frameTime = [[FrameTime alloc] initWithFrame:0 atFPS:1];
+        [self storeKeyframe:keyframe];
+    }
+}
+
 @end

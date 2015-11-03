@@ -40,4 +40,6 @@
 
 - (FrameTime *)maxTime;
 
+- (void)removeKeyframeAtTime:(FrameTime *)time;
+
 @end

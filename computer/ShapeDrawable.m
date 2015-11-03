@@ -153,7 +153,9 @@
     __weak ShapeDrawable *weakSelf = self;
     editFill.label = NSLocalizedString(@"Fill…", @"");
     editFill.action = ^{
-        [weakSelf primaryEditAction];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf primaryEditAction];
+        });
     };
     return [[super optionsItems] arrayByAddingObject:editFill];
 }

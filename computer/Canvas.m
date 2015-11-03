@@ -226,12 +226,12 @@
         [self addSubview:drawable];
     }
     drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [drawable updatedKeyframeProperties];
     __weak Canvas *weakSelf = self;
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
-        [weakDrawable keyframePropertiesChangedAtTime:weakSelf.time];
         [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
-        weakDrawable.dimmed = NO;
+        [weakSelf updateDrawableForCurrentTime:weakDrawable];
     };
 }
 
@@ -288,16 +288,21 @@
 - (void)setTime:(FrameTime *)time {
     _time = time;
     for (Drawable *d in [self drawables]) {
-        Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
-        d.dimmed = !exactKeyframe && !self.overrideDimming;
-        d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
-        d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
-        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            [(SubcanvasDrawable *)d subcanvas].time = time;
-            [(SubcanvasDrawable *)d subcanvas].overrideDimming = self.overrideDimming;
-        }
+        [self updateDrawableForCurrentTime:d];
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
+}
+
+- (void)updateDrawableForCurrentTime:(Drawable *)d {
+    FrameTime *time = self.time;
+    Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
+    d.dimmed = !exactKeyframe && !self.overrideDimming;
+    d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
+    d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
+    if ([d isKindOfClass:[SubcanvasDrawable class]]) {
+        [(SubcanvasDrawable *)d subcanvas].time = time;
+        [(SubcanvasDrawable *)d subcanvas].overrideDimming = self.overrideDimming;
+    }
 }
 
 - (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {

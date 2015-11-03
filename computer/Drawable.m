@@ -104,28 +104,44 @@
 #pragma mark Options
 
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
+    NSMutableArray *items = [NSMutableArray new];
     __weak Drawable *weakSelf = self;
     QuickCollectionItem *delete = [QuickCollectionItem new];
     delete.label = NSLocalizedString(@"Delete", @"");
     delete.action = ^{
         [weakSelf delete:nil];
     };
+    [items addObject:delete];
     QuickCollectionItem *duplicate = [QuickCollectionItem new];
     duplicate.label = NSLocalizedString(@"Duplicate", @"");
     duplicate.action = ^{
         [weakSelf duplicate:nil];
     };
+    [items addObject:duplicate];
     QuickCollectionItem *options = [QuickCollectionItem new];
     options.label = NSLocalizedString(@"Options…", @"");
     options.action = ^{
         [weakSelf showOptions];
     };
+    [items addObject:options];
     QuickCollectionItem *animations = [QuickCollectionItem new];
     animations.label = NSLocalizedString(@"Animations…", @"");
     animations.action = ^{
         [weakSelf showStaticAnimationPicker];
     };
-    return @[delete, duplicate, options, animations];
+    [items addObject:animations];
+    
+    BOOL isAtZeroTime = self.canvas.time.time == 0;
+    BOOL hasOtherKeyframes = self.keyframeStore.maxTime.time > 0;
+    if ([self hasKeyframeAtCurrentTime] && (!isAtZeroTime || hasOtherKeyframes)) {
+        QuickCollectionItem *removeKeyframe = [QuickCollectionItem new];
+        removeKeyframe.label = NSLocalizedString(@"Delete keyframe", @"");
+        removeKeyframe.action = ^{
+            [weakSelf resetKeyframe];
+        };
+        [items addObject:removeKeyframe];
+    }
+    return items;
 }
 
 #pragma mark Actions
@@ -267,6 +283,17 @@
 }
 
 - (void)updatedKeyframeProperties {
+    [self keyframePropertiesChangedAtTime:self.canvas.time];
+    if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
+    if (self.onShapeUpdate) self.onShapeUpdate();
+}
+
+- (BOOL)hasKeyframeAtCurrentTime {
+    return !![self.keyframeStore keyframeAtTime:self.canvas.time];
+}
+
+- (void)resetKeyframe {
+    [self.keyframeStore removeKeyframeAtTime:self.canvas.time];
     if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
     if (self.onShapeUpdate) self.onShapeUpdate();
 }
