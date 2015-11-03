@@ -7,6 +7,7 @@
 //
 
 #import "StaticAnimation.h"
+#import "CGPointExtras.h"
 
 @interface StaticAnimation ()
 
@@ -68,8 +69,8 @@
 - (CGAffineTransform)adjustTransform:(CGAffineTransform)transform time:(NSTimeInterval)time {
     CGFloat scale = 1 + _pulseMagnitude * sin(time * _pulseRate);
     transform = CGAffineTransformScale(transform, scale, scale);
-    CGFloat jitterX = _jitterXMagnitude * sin(time * _jitterRate);
-    CGFloat jitterY = _jitterYMagnitude * sin(time * _jitterRate + 0.3);
+    CGFloat jitterX = _jitterXMagnitude * NPRandomContinuousFloat(time * _jitterRate);
+    CGFloat jitterY = _jitterYMagnitude * NPRandomContinuousFloat(time * _jitterRate + 0.3);
     transform = CGAffineTransformTranslate(transform, jitterX, jitterY);
     return transform;
 }

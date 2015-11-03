@@ -83,3 +83,21 @@ CGPoint NPEvaluateSmoothCurve(CGPoint prevPoint, CGPoint fromPoint, CGPoint toPo
     return CGPointLinearlyInterpolate(incomingTangent, outgoingTangent, progress);
 }
 
+CGFloat NPRandomFloat() {
+    return (rand() % 20000) / 10000.0 - 1;
+}
+
+CGFloat NPRandomContinuousFloat(CGFloat x) {
+    int oldRand = rand();
+    
+    srand(floor(x));
+    CGFloat f0 = NPRandomFloat();
+    CGFloat f1 = NPRandomFloat();
+    CGFloat f2 = NPRandomFloat();
+    CGFloat f3 = NPRandomFloat();
+    CGFloat val = NPEvaluateSmoothCurve(CGPointMake(0, f0), CGPointMake(1, f1), CGPointMake(2, f2), CGPointMake(3, f3), x - floor(x), NO).y;
+    
+    srand(oldRand);
+    return val;
+}
+

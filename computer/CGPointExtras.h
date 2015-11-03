@@ -39,6 +39,10 @@ CGFloat CGTransformByRemovingPadding(CGFloat p, CGFloat padding, CGFloat range);
     
 CGPoint NPEvaluateSmoothCurve(CGPoint prevPoint, CGPoint fromPoint, CGPoint toPoint, CGPoint nextPoint, CGFloat progress, BOOL ignorePreviousPointDistance);
     
+
+CGFloat NPRandomFloat(); // (-1..1)
+CGFloat NPRandomContinuousFloat(CGFloat x); // (-1..1)
+    
 #ifdef __cplusplus
 }
 #endif
