@@ -83,7 +83,12 @@
     NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @30};
     NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
     
-    _sections = @[blinkSection, jitterSection];
+    NSDictionary *slowPulse = @{@"pulseMagnitude": @0.1, @"pulseRate": @2};
+    NSDictionary *mediumPulse = @{@"pulseMagnitude": @0.2, @"pulseRate": @4};
+    NSDictionary *strongPulse = @{@"pulseMagnitude": @0.5, @"pulseRate": @7};
+    NSArray *pulseSection = @[slowPulse, mediumPulse, strongPulse];
+    
+    _sections = @[blinkSection, jitterSection, pulseSection];
     
     UICollectionViewFlowLayout *flow = [UICollectionViewFlowLayout new];
     flow.itemSize = CGSizeMake(50, 50);
