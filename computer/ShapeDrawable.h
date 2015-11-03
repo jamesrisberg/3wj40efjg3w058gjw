@@ -17,5 +17,6 @@
 @property (nonatomic) UIColor *strokeColor; // TODO: implement stroke
 @property (nonatomic) CGFloat strokeWidth;
 - (void)_setPathWithoutFittingContent:(UIBezierPath *)path;
+- (void)setPathPreservingSize:(UIBezierPath *)path;
 
 @end

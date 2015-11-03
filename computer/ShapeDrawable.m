@@ -130,6 +130,15 @@
     self.fillClipShape.frame = self.fillView.bounds;
 }
 
+- (void)setPathPreservingSize:(UIBezierPath *)path {
+    CGRect boundingRect = path.bounds;
+    CGFloat scale = (self.bounds.size.width / boundingRect.size.width + self.bounds.size.height / boundingRect.size.height)/2;
+    [path applyTransform:CGAffineTransformMakeScale(scale, scale)];
+    CGPoint origin = path.bounds.origin;
+    [path applyTransform:CGAffineTransformMakeTranslation(-origin.x, -origin.y)];
+    self.path = path;
+}
+
 - (void)primaryEditAction {
     SKFillPicker *picker = [[SKFillPicker alloc] initWithFill:self.fill];
     __weak ShapeDrawable *weakSelf = self;

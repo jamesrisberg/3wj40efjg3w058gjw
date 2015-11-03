@@ -165,8 +165,12 @@
 
 - (void)showOptions {
     OptionsView *v = [OptionsView new];
+    v.models = [self optionsViewCellModels];
+    [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
+}
+
+- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {
     __weak Drawable *weakSelf = self;
-    
     OptionsViewCellModel *alpha = [OptionsViewCellModel new];
     alpha.title = NSLocalizedString(@"Opacity", @"");
     alpha.cellClass = [SliderTableViewCell class];
@@ -178,10 +182,8 @@
             [weakSelf updatedKeyframeProperties];
         };
     };
-    
-    v.models = @[alpha];
-    
-    [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
+
+    return @[alpha];
 }
 
 - (void)showStaticAnimationPicker {

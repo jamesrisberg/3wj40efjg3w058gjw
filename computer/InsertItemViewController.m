@@ -15,6 +15,7 @@
 #import "SubcanvasDrawable.h"
 #import "SKColorFill.h"
 #import "computer-Swift.h"
+#import "StarDrawable.h"
 
 @interface InsertItemViewController ()
 
@@ -90,6 +91,14 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
+    QuickCollectionItem *star = [QuickCollectionItem new];
+    star.icon = [UIImage imageNamed:@"Star"];
+    star.action = ^{
+        StarDrawable *d = [StarDrawable new];
+        d.fill = [[SKColorFill alloc] initWithColor:[UIColor purpleColor]];
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
+    
     QuickCollectionItem *group = [QuickCollectionItem new];
     group.icon = [UIImage imageNamed:@"Group"];
     group.action = ^{
@@ -109,7 +118,7 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, group];
+    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, group];
 }
 
 @end

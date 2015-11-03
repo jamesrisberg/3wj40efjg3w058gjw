@@ -10,6 +10,7 @@
 #import "QuickCollectionModal.h"
 #import "Keyframe.h"
 #import "StaticAnimation.h"
+#import "OptionsView.h"
 
 @class Canvas;
 @interface Drawable : UIView <NSCopying>
@@ -30,6 +31,8 @@
 - (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props;
 @property (nonatomic,readonly) KeyframeStore *keyframeStore;
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time;
+
+- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels;
 
 /*
  -updatedKeyframeProperties should be called WHENEVER the user manipulates

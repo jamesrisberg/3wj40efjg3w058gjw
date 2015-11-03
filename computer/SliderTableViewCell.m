@@ -8,6 +8,8 @@
 
 #import "SliderTableViewCell.h"
 
+#define RAMPED_EXP 2
+
 @interface SliderTableViewCell ()
 
 @property (nonatomic) UISlider *slider;
@@ -43,6 +45,16 @@
 
 - (CGFloat)value {
     return self.slider.value;
+}
+
+#pragma mark Log math
+
+- (CGFloat)getRampedValueWithMin:(CGFloat)min max:(CGFloat)max {
+    return pow(self.value, RAMPED_EXP) * (max - min) + min;
+}
+
+- (void)setRampedValue:(NSInteger)val withMin:(CGFloat)min max:(CGFloat)max {
+    self.value = pow((val - min)/(max - min), 1.0/RAMPED_EXP);
 }
 
 @end

@@ -109,18 +109,6 @@
 
 #pragma mark Tiling
 
-- (NSInteger)tileCoefficient {
-    return 5;
-}
-
-- (NSInteger)mapSliderToTileCount:(CGFloat)slider {
-    return 1 + round(pow(slider * [self tileCoefficient], 2));
-}
-
-- (CGFloat)mapTileCountToSlider:(NSInteger)tile {
-    return sqrt(tile / pow([self tileCoefficient], 2) - pow([self tileCoefficient], -2));
-}
-
 - (void)showTilingOptions {
     OptionsView *v = [OptionsView new];
     __weak SubcanvasDrawable *weakSelf = self;
@@ -129,10 +117,10 @@
     xTiles.title = NSLocalizedString(@"Horizontal tiles", @"");
     xTiles.cellClass = [SliderTableViewCell class];
     xTiles.onCreate = ^(OptionsTableViewCell *cell){
-        SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
-        sliderCell.value = [weakSelf mapTileCountToSlider:weakSelf.xRepeat];
+        __weak SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+        [sliderCell setRampedValue:weakSelf.xRepeat withMin:1 max:6];
         sliderCell.onValueChange = ^(CGFloat val) {
-            weakSelf.xRepeat = [weakSelf mapSliderToTileCount:val];
+            weakSelf.xRepeat = round([sliderCell getRampedValueWithMin:1 max:6]);
             [weakSelf updatedKeyframeProperties];
         };
     };
@@ -140,10 +128,10 @@
     yTiles.title = NSLocalizedString(@"Vertical tiles", @"");
     yTiles.cellClass = [SliderTableViewCell class];
     yTiles.onCreate = ^(OptionsTableViewCell *cell){
-        SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
-        sliderCell.value = [weakSelf mapTileCountToSlider:weakSelf.yRepeat];
+        __weak SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+        [sliderCell setRampedValue:weakSelf.yRepeat withMin:1 max:6];
         sliderCell.onValueChange = ^(CGFloat val) {
-            weakSelf.yRepeat = [weakSelf mapSliderToTileCount:val];
+            weakSelf.yRepeat = round([sliderCell getRampedValueWithMin:1 max:6]);
             [weakSelf updatedKeyframeProperties];
         };
     };
