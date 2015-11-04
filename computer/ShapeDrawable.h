@@ -19,4 +19,6 @@
 - (void)_setPathWithoutFittingContent:(UIBezierPath *)path;
 - (void)setPathPreservingSize:(UIBezierPath *)path;
 
+@property (nonatomic) CGFloat strokeStart, strokeEnd;
+
 @end

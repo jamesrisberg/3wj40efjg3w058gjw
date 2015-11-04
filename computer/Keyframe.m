@@ -218,6 +218,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     }
 }
 
+- (NSArray<__kindof Keyframe*>*)allKeyframes {
+    return self.keyframes;
+}
+
 - (FrameTime *)maxTime {
     return [(Keyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
 }

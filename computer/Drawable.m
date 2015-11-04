@@ -174,20 +174,27 @@
 }
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {
+    OptionsViewCellModel *alpha = [self sliderForKey:@"alpha" title:NSLocalizedString(@"Opacity", @"")];
+    OptionsViewCellModel *strokeStart = [self sliderForKey:@"strokeStart" title:NSLocalizedString(@"Stroke start", @"")];
+    OptionsViewCellModel *strokeEnd = [self sliderForKey:@"strokeEnd" title:NSLocalizedString(@"Stroke end", @"")];
+    return @[alpha, strokeStart, strokeEnd];
+}
+
+- (OptionsViewCellModel *)sliderForKey:(NSString *)key title:(NSString *)title {
     __weak Drawable *weakSelf = self;
-    OptionsViewCellModel *alpha = [OptionsViewCellModel new];
-    alpha.title = NSLocalizedString(@"Opacity", @"");
-    alpha.cellClass = [SliderTableViewCell class];
-    alpha.onCreate = ^(OptionsTableViewCell *cell){
+    
+    OptionsViewCellModel *model = [OptionsViewCellModel new];
+    model.title = title;
+    model.cellClass = [SliderTableViewCell class];
+    model.onCreate = ^(OptionsTableViewCell *cell){
         SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
-        sliderCell.value = weakSelf.itemOpacity;
+        sliderCell.value = [[weakSelf valueForKey:key] floatValue];
         sliderCell.onValueChange = ^(CGFloat val) {
-            weakSelf.itemOpacity = val;
+            [weakSelf setValue:@(val) forKey:key];
             [weakSelf updatedKeyframeProperties];
         };
     };
-
-    return @[alpha];
+    return model;
 }
 
 - (void)showStaticAnimationPicker {

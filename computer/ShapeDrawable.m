@@ -66,6 +66,8 @@
 
 - (void)setup {
     [super setup];
+    self.strokeStart = 0;
+    self.strokeEnd = 1;
     self.clipsToBounds = NO;
     self.path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 200, 200)];
     self.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
@@ -239,6 +241,31 @@
     CAShapeLayer *shape = (id)self.layer;
     shape.strokeColor = self.strokeColor.CGColor;
     shape.lineWidth = self.strokeWidth;
+}
+
+#pragma mark Animations
+
+- (NSDictionary<__kindof NSString*, id>*)currentKeyframeProperties {
+    NSMutableDictionary *d = [super currentKeyframeProperties].mutableCopy;
+    d[@"strokeStart"] = @(self.strokeStart);
+    d[@"strokeEnd"] = @(self.strokeEnd);
+    return d;
+}
+
+- (void)setCurrentKeyframeProperties:(NSDictionary<__kindof NSString *, id>*)props {
+    [super setCurrentKeyframeProperties:props];
+    self.strokeStart = [props[@"strokeStart"] floatValue];
+    self.strokeEnd = [props[@"strokeEnd"] floatValue];
+}
+
+- (void)setStrokeStart:(CGFloat)strokeStart {
+    _strokeStart = strokeStart;
+    [(CAShapeLayer *)self.layer setStrokeStart:strokeStart];
+}
+
+- (void)setStrokeEnd:(CGFloat)strokeEnd {
+    _strokeEnd = strokeEnd;
+    [(CAShapeLayer *)self.layer setStrokeEnd:strokeEnd];
 }
 
 @end

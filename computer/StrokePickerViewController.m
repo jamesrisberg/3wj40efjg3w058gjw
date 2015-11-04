@@ -66,6 +66,7 @@
     _color = color;
     [self view];
     self.colorPicker.color = color;
+    if (!color) _color = self.colorPicker.color;
     [self updatePreview];
 }
 

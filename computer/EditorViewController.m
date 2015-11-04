@@ -355,11 +355,19 @@
         translationCorrection = CGPointScale(translationCorrection, 1.0 / scrollView.zoomScale);
         
         for (Drawable *d in self.canvas.subviews) {
-            CGPoint offsetFromPinch = CGPointMake(d.center.x - zoomCenter.x, d.center.y - zoomCenter.y);
-            CGPoint newOffsetFromPinch = CGPointMake(offsetFromPinch.x * zoom, offsetFromPinch.y * zoom);
-            d.center = CGPointMake(d.center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x - translationCorrection.x, d.center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y - translationCorrection.y);
-            d.scale *= zoom;
+            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
+                CGPoint center = [keyframe.properties[@"center"] CGPointValue];
+                CGFloat scale = [keyframe.properties[@"scale"] floatValue];
+                CGPoint offsetFromPinch = CGPointMake(center.x - zoomCenter.x, center.y - zoomCenter.y);
+                CGPoint newOffsetFromPinch = CGPointMake(offsetFromPinch.x * zoom, offsetFromPinch.y * zoom);
+                CGPoint newCenter = CGPointMake(center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x - translationCorrection.x, center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y - translationCorrection.y);
+                CGFloat newScale = scale * zoom;
+                keyframe.properties[@"center"] = [NSValue valueWithCGPoint:newCenter];
+                keyframe.properties[@"scale"] = @(newScale);
+            }
         }
+        
+        self.canvas.time = self.canvas.time; // trigger update based on keyframes
     }
 }
 
