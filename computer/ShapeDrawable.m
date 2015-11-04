@@ -167,6 +167,14 @@
     return [[super optionsItems] arrayByAddingObjectsFromArray:@[editFill, editStroke]];
 }
 
+- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {
+    NSArray *models = [super optionsViewCellModels];
+    OptionsViewCellModel *strokeStart = [self sliderForKey:@"strokeStart" title:NSLocalizedString(@"Stroke start", @"")];
+    OptionsViewCellModel *strokeEnd = [self sliderForKey:@"strokeEnd" title:NSLocalizedString(@"Stroke end", @"")];
+    return [models arrayByAddingObjectsFromArray:@[strokeStart, strokeEnd]];
+}
+
+
 #pragma mark Fills
 + (Class)layerClass {
     return [CAShapeLayer class];

@@ -33,6 +33,7 @@
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time;
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels;
+- (OptionsViewCellModel *)sliderForKey:(NSString *)key title:(NSString *)title;
 
 /*
  -updatedKeyframeProperties should be called WHENEVER the user manipulates

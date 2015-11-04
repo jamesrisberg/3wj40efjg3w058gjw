@@ -175,9 +175,7 @@
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {
     OptionsViewCellModel *alpha = [self sliderForKey:@"alpha" title:NSLocalizedString(@"Opacity", @"")];
-    OptionsViewCellModel *strokeStart = [self sliderForKey:@"strokeStart" title:NSLocalizedString(@"Stroke start", @"")];
-    OptionsViewCellModel *strokeEnd = [self sliderForKey:@"strokeEnd" title:NSLocalizedString(@"Stroke end", @"")];
-    return @[alpha, strokeStart, strokeEnd];
+    return @[alpha];
 }
 
 - (OptionsViewCellModel *)sliderForKey:(NSString *)key title:(NSString *)title {
