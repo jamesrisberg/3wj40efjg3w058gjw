@@ -62,13 +62,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    NSMutableAttributedString *nc = [[aDecoder decodeObjectForKey:@"attributedText"] mutableCopy];
-    [nc.copy enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, nc.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        if ([[value fontName] isEqualToString:@"AppleColorEmoji"]) {
-            [nc addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:[value pointSize]] range:range];
-        }
-    }];
-    self.attributedString = nc; //[aDecoder decodeObjectForKey:@"attributedText"];
+    self.attributedString = [[aDecoder decodeObjectForKey:@"attributedText"] hack_replaceAppleColorEmojiWithSystemFont];
     return self;
 }
 

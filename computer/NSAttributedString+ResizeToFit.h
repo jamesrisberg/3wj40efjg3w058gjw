@@ -11,5 +11,6 @@
 @interface NSAttributedString (ResizeToFit)
 
 - (NSAttributedString *)resizeToFitInside:(CGSize)size;
+- (NSAttributedString *)hack_replaceAppleColorEmojiWithSystemFont;
 
 @end

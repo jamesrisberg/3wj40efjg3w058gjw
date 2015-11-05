@@ -59,4 +59,14 @@
     return p;
 }
 
+- (NSAttributedString *)hack_replaceAppleColorEmojiWithSystemFont {
+    NSMutableAttributedString *replaced = [self mutableCopy];
+    [self enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if ([[value fontName] isEqualToString:@"AppleColorEmoji"]) {
+            [replaced addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:[value pointSize]] range:range];
+        }
+    }];
+    return replaced;
+}
+
 @end
