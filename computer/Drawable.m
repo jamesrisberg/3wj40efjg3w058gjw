@@ -18,6 +18,7 @@
 
 @property (nonatomic) KeyframeStore *keyframeStore;
 @property (nonatomic) CADisplayLink *displayLink;
+@property (nonatomic) CGFloat alphaSettingKeyframes;
 
 @end
 
@@ -174,7 +175,7 @@
 }
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {
-    OptionsViewCellModel *alpha = [self sliderForKey:@"alpha" title:NSLocalizedString(@"Opacity", @"")];
+    OptionsViewCellModel *alpha = [self sliderForKey:@"itemOpacity" title:NSLocalizedString(@"Opacity", @"")];
     return @[alpha];
 }
 
