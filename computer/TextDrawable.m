@@ -27,7 +27,7 @@
     
     NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
     NSDictionary *defaultAttrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: para};
-    self.attributedString = [[NSAttributedString alloc] initWithString:@"Double-tap to change text" attributes:defaultAttrs];
+    self.attributedString = [[NSAttributedString alloc] initWithString:@"Double-tap for options" attributes:defaultAttrs];
     [self addSubview:self.label];
 }
 
@@ -45,6 +45,10 @@
 }
 
 - (void)primaryEditAction {
+    [self editText];
+}
+
+- (void)editText {
     TextEditorViewController *editor = [TextEditorViewController new];
     editor.text = self.attributedString;
     [editor setTextChanged:^(NSAttributedString *text) {
@@ -52,6 +56,20 @@
     }];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
     [[self vcForPresentingModals] presentViewController:nav animated:YES completion:nil];
+}
+
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
+    __weak TextDrawable *weakSelf = self;
+    
+    QuickCollectionItem *editText = [QuickCollectionItem new];
+    editText.label = NSLocalizedString(@"Edit text…", @"");
+    editText.action = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf editText];
+        });
+    };
+    
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[editText]];
 }
 
 #pragma mark Coding

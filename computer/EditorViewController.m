@@ -280,6 +280,10 @@
     self.mode = EditorModePanelView;
 }
 
+- (void)canvasShowShouldOptions:(Canvas *)canvas {
+    [self showOptions];
+}
+
 #pragma mark Overlays
 
 - (void)setTransientOverlayView:(UIView *)transientOverlayView {

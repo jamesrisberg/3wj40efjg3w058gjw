@@ -131,8 +131,11 @@
             if ([[touches anyObject] tapCount] == 1) {
                 _selectionAfterFirstTap = self.selection;
             }
-            if ([[touches anyObject] tapCount] == 2 && self.selection == _selectionAfterFirstTap) {
+            /*if ([[touches anyObject] tapCount] == 2 && self.selection == _selectionAfterFirstTap) {
                 [self.selection primaryEditAction];
+            }*/
+            if ([[touches anyObject] tapCount] == 2) {
+                [self.delegate canvasShowShouldOptions:self];
             }
         }
         [_singleTouchPressTimer invalidate];
