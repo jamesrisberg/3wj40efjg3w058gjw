@@ -49,7 +49,6 @@
     editor.text = self.attributedString;
     [editor setTextChanged:^(NSAttributedString *text) {
         self.attributedString = text;
-        [self setNeedsLayout];
     }];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
     [[self vcForPresentingModals] presentViewController:nav animated:YES completion:nil];
@@ -63,7 +62,13 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    self.attributedString = [aDecoder decodeObjectForKey:@"attributedText"];
+    NSMutableAttributedString *nc = [[aDecoder decodeObjectForKey:@"attributedText"] mutableCopy];
+    [nc.copy enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, nc.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if ([[value fontName] isEqualToString:@"AppleColorEmoji"]) {
+            [nc addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:[value pointSize]] range:range];
+        }
+    }];
+    self.attributedString = nc; //[aDecoder decodeObjectForKey:@"attributedText"];
     return self;
 }
 

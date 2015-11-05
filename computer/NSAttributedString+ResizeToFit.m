@@ -20,7 +20,7 @@
     [[self class] _scaleAttributedString:self byScaleFactor:pow(base, step) output:scaled];
     while (1) {
         // grow:
-        CGFloat height = [scaled boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
+        CGFloat height = MAX([scaled maximumFontPointSize], [scaled boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
         // NSLog(@"height: %f; size.height: %f", height, size.height);
         if (height > size.height) {
             break;
@@ -31,7 +31,7 @@
     }
     while (1) {
         // shrink to fit:
-        CGFloat height = [scaled boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
+        CGFloat height = MAX([scaled maximumFontPointSize], [scaled boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height);
         if (height <= size.height) {
             break;
         } else {
@@ -49,6 +49,14 @@
         [output removeAttribute:NSFontAttributeName range:range];
         [output addAttribute:NSFontAttributeName value:scaledFont range:range];
     }];
+}
+
+- (CGFloat)maximumFontPointSize {
+    __block CGFloat p = 1;
+    [self enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, self.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        p = MAX(p, [value pointSize]);
+    }];
+    return p;
 }
 
 @end
