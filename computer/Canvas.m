@@ -21,7 +21,10 @@
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
     __weak Drawable *_selectionAfterFirstTap;
     CGRect _previousTouchBoundsInSelection;
+    NSSet *_selectedItems;
 }
+
+@property (nonatomic,readonly) Drawable *singleSelection;
 
 @end
 
@@ -59,10 +62,10 @@
         [_singleTouchPressTimer invalidate];
         NSArray *down = _touches.allObjects;
         CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
-        _currentGestureTransformsDrawableAboutTouchPoint = [self.selection pointInside:[self.selection convertPoint:touchMidpoint fromView:self] withEvent:nil];
+        _currentGestureTransformsDrawableAboutTouchPoint = [self.singleSelection pointInside:[self.singleSelection convertPoint:touchMidpoint fromView:self] withEvent:nil];
     }
-    if (self.selection) {
-        _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.selection];
+    if (self.singleSelection) {
+        _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.singleSelection];
     }
 }
 
@@ -79,8 +82,8 @@
     CGPoint t1 = [down[0] locationInView:self];
     CGPoint t1prev = [down[0] previousLocationInView:self];
     if (_touches.count == 1) {
-        self.selection.center = CGPointMake(self.selection.center.x + t1.x - t1prev.x, self.selection.center.y + t1.y - t1prev.y);
-        [self.selection updatedKeyframeProperties];
+        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + t1.x - t1prev.x, self.singleSelection.center.y + t1.y - t1prev.y);
+        [self.singleSelection updatedKeyframeProperties];
     } else if (_touches.count == 2) {
         CGPoint t2 = [down[1] locationInView:self];
         CGPoint t2prev = [down[1] previousLocationInView:self];
@@ -92,31 +95,31 @@
         CGPoint prevPos = CGPointMake((t1prev.x + t2prev.x)/2, (t1prev.y + t2prev.y)/2);
         CGFloat toRotate = rotation - prevRotation;
         CGFloat toScale = scale / prevScale;
-        self.selection.rotation += toRotate;
-        self.selection.scale *= toScale;
+        self.singleSelection.rotation += toRotate;
+        self.singleSelection.scale *= toScale;
         
         if (_currentGestureTransformsDrawableAboutTouchPoint) {
             CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
-            CGPoint drawableOffset = CGPointMake(self.selection.center.x - touchMidpoint.x, self.selection.center.y - touchMidpoint.y);
+            CGPoint drawableOffset = CGPointMake(self.singleSelection.center.x - touchMidpoint.x, self.singleSelection.center.y - touchMidpoint.y);
             drawableOffset = CGPointScale(drawableOffset, toScale);
             CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
             CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
             drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
-            self.selection.center = CGPointAdd(touchMidpoint, drawableOffset);
+            self.singleSelection.center = CGPointAdd(touchMidpoint, drawableOffset);
         }
         
-        self.selection.center = CGPointMake(self.selection.center.x + pos.x - prevPos.x, self.selection.center.y + pos.y - prevPos.y);
+        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + pos.x - prevPos.x, self.singleSelection.center.y + pos.y - prevPos.y);
         
-        [self.selection updatedKeyframeProperties];
+        [self.singleSelection updatedKeyframeProperties];
     } else if (_touches.count == 3) {
-        if (self.selection) {
-            CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.selection];
-            CGSize internalSize = CGSizeMake(self.selection.bounds.size.width + touchBounds.size.width - _previousTouchBoundsInSelection.size.width, self.selection.bounds.size.height + touchBounds.size.height - _previousTouchBoundsInSelection.size.height);
-            [self.selection setInternalSize:internalSize];
-            [self.selection updatedKeyframeProperties];
+        if (self.singleSelection) {
+            CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.singleSelection];
+            CGSize internalSize = CGSizeMake(self.singleSelection.bounds.size.width + touchBounds.size.width - _previousTouchBoundsInSelection.size.width, self.singleSelection.bounds.size.height + touchBounds.size.height - _previousTouchBoundsInSelection.size.height);
+            [self.singleSelection setInternalSize:internalSize];
+            [self.singleSelection updatedKeyframeProperties];
             _previousTouchBoundsInSelection = touchBounds;
             
-            [self.selection updatedKeyframeProperties];
+            [self.singleSelection updatedKeyframeProperties];
         }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
@@ -127,9 +130,10 @@
     if (_touches.count == 0) {
         if ([_singleTouchPressTimer isValid]) {
             // we're still in a valid single press;
-            self.selection = [self doHitTest:[touches.anyObject locationInView:self]];
+            Drawable *tapped = [self doHitTest:[touches.anyObject locationInView:self]];
+            [self userGesturedToSelectDrawable:tapped];
             if ([[touches anyObject] tapCount] == 1) {
-                _selectionAfterFirstTap = self.selection;
+                _selectionAfterFirstTap = self.singleSelection;
             }
             /*if ([[touches anyObject] tapCount] == 2 && self.selection == _selectionAfterFirstTap) {
                 [self.selection primaryEditAction];
@@ -174,19 +178,6 @@
             return nil;
         }
     }];
-}
-
-#pragma mark Selection
-
-- (void)setSelection:(Drawable *)selection {
-    _selection.onShapeUpdate = nil;
-    _selection = selection;
-    __weak Canvas *weakSelf = self;
-    _selection.onShapeUpdate = ^{
-        [weakSelf.delegate canvasSelectionRectNeedsUpdate:weakSelf];
-    };
-    [self.delegate canvasDidChangeSelection:self];
-    [self.delegate canvasSelectionRectNeedsUpdate:self];
 }
 
 #pragma mark Geometry
@@ -262,8 +253,7 @@
             
         }];
     }
-    
-    self.selection = drawable;
+    self.selectedItems = [NSSet setWithObject:drawable];
     [drawable updatedKeyframeProperties];
 }
 
@@ -367,6 +357,64 @@
         }
     } else {
         self.bounds = CGRectMake(0, 0, 1, 1);
+    }
+}
+
+#pragma mark Selection
+- (NSSet *)selectedItems {
+    return _selectedItems ? : [NSSet set];
+}
+
+- (void)setSelectedItems:(NSSet *)selectedItems {
+    __weak Canvas *weakSelf = self;
+    
+    for (Drawable *old in _selectedItems) {
+        old.onShapeUpdate = nil;
+    }
+    
+    _selectedItems = selectedItems.copy ? : [NSSet new];
+    
+    for (Drawable *d in selectedItems) {
+        d.onShapeUpdate = ^{
+            [weakSelf.delegate canvasSelectionRectNeedsUpdate:weakSelf];
+        };
+    }
+    
+    [self.delegate canvasDidChangeSelection:self];
+    [self.delegate canvasSelectionRectNeedsUpdate:self];
+}
+
+- (void)setMultipleSelectionEnabled:(BOOL)multipleSelectionEnabled {
+    _multipleSelectionEnabled = multipleSelectionEnabled;
+    if (!multipleSelectionEnabled && self.selectedItems.count > 1) {
+        self.selectedItems = [NSSet setWithObject:self.selectedItems.anyObject];
+    }
+}
+
+- (void)userGesturedToSelectDrawable:(Drawable *)d {
+    NSMutableSet *newSelection = self.selectedItems.mutableCopy;
+    if (d == nil) {
+        [newSelection removeAllObjects];
+    } else {
+        if (self.multipleSelectionEnabled) {
+            if ([newSelection containsObject:d]) {
+                [newSelection removeObject:d];
+            } else {
+                [newSelection addObject:d];
+            }
+        } else {
+            [newSelection removeAllObjects];
+            [newSelection addObject:d];
+        }
+    }
+    self.selectedItems = newSelection;
+}
+
+- (Drawable *)singleSelection {
+    if (_selectedItems.count == 1) {
+        return _selectedItems.anyObject;
+    } else {
+        return nil;
     }
 }
 

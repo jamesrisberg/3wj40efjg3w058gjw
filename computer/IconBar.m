@@ -135,13 +135,20 @@
         inserter.editorVC = weakSelf.editor;
         [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
     };
-    IconBarModel *options = [IconBarModel new];
+    /*IconBarModel *options = [IconBarModel new];
     options.image = [UIImage imageNamed:@"Controls"];
     options.action = ^{
         [weakSelf.editor showOptions];
+    };*/
+    
+    IconBarModel *enterSelectionMode = [IconBarModel new];
+    enterSelectionMode.image = [UIImage imageNamed:@"Grid"]; // TODO: find an icon
+    enterSelectionMode.action = ^{
+        [weakSelf.editor enterSelectionMode];
     };
+    
     // IconBarModel *divider = [IconBarModel new];
-    NSArray *rightItems = @[scroll, time, options, add];
+    NSArray *rightItems = @[scroll, time, enterSelectionMode, add];
     self.models = [leftItems arrayByAddingObjectsFromArray:rightItems];
 }
 

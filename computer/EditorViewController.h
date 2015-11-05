@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModeDrawing,
     EditorModePanelView,
     EditorModeExportCropping,
-    EditorModeExportRunning
+    EditorModeExportRunning,
+    EditorModeSelection
 };
 
 @interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>
@@ -28,6 +29,7 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 - (void)showOptions;
 - (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
 @property (nonatomic) EditorMode mode;
+- (void)enterSelectionMode;
 
 + (EditorViewController *)editor;
 + (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback;

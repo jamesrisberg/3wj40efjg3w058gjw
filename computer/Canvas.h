@@ -27,7 +27,9 @@
 - (void)insertDrawable:(Drawable *)drawable;
 - (NSArray<__kindof Drawable*>*)drawables;
 
-@property (nonatomic) Drawable *selection;
+@property (nonatomic) NSSet *selectedItems;
+@property (nonatomic) BOOL multipleSelectionEnabled;
+- (void)userGesturedToSelectDrawable:(Drawable *)d;
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 

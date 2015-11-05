@@ -151,12 +151,15 @@
 
 #pragma mark Actions
 - (void)delete:(id)sender {
-    if (self.canvas.selection == self) self.canvas.selection = nil;
+    NSMutableSet *selection = self.canvas.selectedItems.mutableCopy;
+    if ([selection containsObject:self]) {
+        [selection removeObject:self];
+        self.canvas.selectedItems = selection;
+    }
     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.scale /= 100;
         self.alpha = 0;
     } completion:^(BOOL finished) {
-        if (self.canvas.selection == self) self.canvas.selection = nil;
         [self removeFromSuperview];
     }];
 }

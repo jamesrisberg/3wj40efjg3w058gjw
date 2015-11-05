@@ -27,12 +27,12 @@
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
+    NSMutableArray<__kindof UIView*> *_selectionRects;
 }
 
 @property (nonatomic) UIVisualEffectView *toolbar;
 @property (nonatomic) UIView *toolbarView;
 @property (nonatomic) IconBar *iconBar;
-@property (nonatomic) UIView *selectionRect;
 @property (nonatomic) CGFloat toolbarHeight;
 @property (nonatomic) Canvas *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
@@ -86,7 +86,7 @@
     [self.view addSubview:self.shapeStackList];
     self.shapeStackList.hidden = YES;
     self.shapeStackList.onDrawableSelected = ^(Drawable *drawable){
-        weakSelf.canvas.selection = drawable;
+        [weakSelf.canvas userGesturedToSelectDrawable:drawable];
     };
     
     [self reinitializeWithCanvas:self.canvas ? : [Canvas new]];
@@ -255,19 +255,25 @@
 }
 
 - (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas {
-    if (!self.selectionRect) {
-        self.selectionRect = [UIView new];
-        self.selectionRect.userInteractionEnabled = NO;
-        self.selectionRect.layer.borderColor = [UIColor colorWithRed:1 green:0.1 blue:0.1 alpha:0.5].CGColor;
-        self.selectionRect.layer.borderWidth = 1;
-        [self.view insertSubview:self.selectionRect aboveSubview:self.canvas];
+    if (!_selectionRects) _selectionRects = [NSMutableArray new];
+    while (_selectionRects.count < canvas.selectedItems.count) {
+        UIView *rect = [UIView new];
+        rect.userInteractionEnabled = NO;
+        rect.layer.borderColor = [UIColor redColor].CGColor;
+        rect.layer.borderWidth = 1.5;
+        [self.view insertSubview:rect aboveSubview:self.canvas];
+        [_selectionRects addObject:rect];
     }
-    self.selectionRect.hidden = (self.canvas.selection == nil);
-    if (self.canvas.selection) {
-        Drawable *selection = self.canvas.selection;
-        self.selectionRect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
-        self.selectionRect.center = [self.view convertPoint:selection.center fromView:selection.superview];
-        self.selectionRect.transform = CGAffineTransformMakeRotation(selection.rotation);
+    while (_selectionRects.count > canvas.selectedItems.count) {
+        [_selectionRects.lastObject removeFromSuperview];
+        [_selectionRects removeLastObject];
+    }
+    NSInteger i = 0;
+    for (Drawable *selection in canvas.selectedItems) {
+        UIView *rect = _selectionRects[i++];
+        rect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
+        rect.center = [self.view convertPoint:selection.center fromView:selection.superview];
+        rect.transform = CGAffineTransformMakeRotation(selection.rotation);
     }
 }
 
@@ -294,10 +300,10 @@
 
 #pragma mark Toolbar
 - (void)showOptions {
-    if (self.canvas.selection) {
+    if (self.canvas.selectedItems.count) {
         QuickCollectionModal *modal = [QuickCollectionModal new];
         modal.itemSize = CGSizeMake(90, 44);
-        modal.items = self.canvas.selection.optionsItems;
+        modal.items = [self.canvas.selectedItems.anyObject optionsItems];
         [self presentViewController:modal animated:YES completion:nil];
     }
 }
@@ -415,6 +421,7 @@
         self.transientOverlayView = nil;
         self.toolbarView = self.iconBar;
         self.auxiliaryFloatingButton = nil;
+        self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -436,7 +443,7 @@
             [self _resetDummyScrollViewPositioning];
             self.dummyScrollView.decelerationRate = UIScrollViewDecelerationRateFast;
             
-            self.canvas.selection = nil;
+            self.canvas.selectedItems = [NSSet set];
         } else if (mode == EditorModeDrawing) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
             done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
@@ -472,6 +479,9 @@
             [cancel setTitle:NSLocalizedString(@"Cancel", @"") forState:UIControlStateNormal];
             [cancel addTarget:self action:@selector(cancelExport) forControlEvents:UIControlEventTouchUpInside];
             self.toolbarView = cancel;
+        } else if (mode == EditorModeSelection) {
+            self.toolbarView = [self createSelectionIconBar];
+            [self addAuxiliaryModeResetButton];
         }
         
         if (oldMode == EditorModeTimeline) {
@@ -681,6 +691,18 @@
 - (void)exporterDidFinish:(Exporter *)exporter {
     self.canvas.time = exporter.defaultTime;
     self.mode = EditorModeNormal;
+}
+
+#pragma mark Selection mode
+
+- (void)enterSelectionMode {
+    self.mode = EditorModeSelection;
+}
+
+- (IconBar *)createSelectionIconBar {
+    IconBar *b = [IconBar new];
+    // TODO
+    return b;
 }
 
 @end
