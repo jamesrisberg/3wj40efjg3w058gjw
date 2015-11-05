@@ -105,13 +105,15 @@
         Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         
         ShapeDrawable *square = [ShapeDrawable new];
-        square.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
+        square.fill = nil;// [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
+        square.strokeWidth = 4;
+        square.strokeColor = [UIColor purpleColor];
         [canvas insertDrawable:square];
         
-        ShapeDrawable *circle = [ShapeDrawable new];
+        /*ShapeDrawable *circle = [ShapeDrawable new];
         circle.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 120, 120)];
         circle.fill = [[SKColorFill alloc] initWithColor:[UIColor orangeColor]];
-        [canvas insertDrawable:circle];
+        [canvas insertDrawable:circle];*/
         
         SubcanvasDrawable *d = [SubcanvasDrawable new];
         d.subcanvas = canvas;
