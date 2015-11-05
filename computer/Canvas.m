@@ -232,7 +232,6 @@
         [self addSubview:drawable];
     }
     drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [drawable updatedKeyframeProperties];
     __weak Canvas *weakSelf = self;
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
