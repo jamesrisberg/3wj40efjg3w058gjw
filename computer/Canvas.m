@@ -232,6 +232,13 @@
         [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
         [weakSelf updateDrawableForCurrentTime:weakDrawable];
     };
+    [self updateDrawableForCurrentTime:weakDrawable];
+}
+
+- (void)_removeDrawable:(Drawable *)d {
+    d.onKeyframePropertiesUpdated = nil;
+    d.onShapeUpdate = nil;
+    [d removeFromSuperview];
 }
 
 #pragma mark Actions
@@ -255,6 +262,59 @@
     }
     self.selectedItems = [NSSet setWithObject:drawable];
     [drawable updatedKeyframeProperties];
+}
+
+- (void)createGroup:(id)sender {
+    NSArray<__kindof Drawable*> *selection = self.selectedItems.allObjects;
+    selection = [selection sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger i1 = [[[obj1 superview] subviews] indexOfObject:obj1];
+        NSInteger i2 = [[[obj2 superview] subviews] indexOfObject:obj2];
+        return i1 < i2 ? NSOrderedAscending : NSOrderedDescending;
+    }];
+    if (selection.count > 0) {
+        if (selection.count == 1 && [selection.firstObject isKindOfClass:[SubcanvasDrawable class]]) {
+            // this is already a group, so don't group it again
+        } else {
+            // DO IT
+            self.selectedItems = [NSSet set];
+            CGPoint firstItemPosition = [self convertPoint:selection.firstObject.center fromView:selection.firstObject.superview];
+            for (Drawable *d in selection) {
+                [self _removeDrawable:d];
+            }
+            SubcanvasDrawable *group = [SubcanvasDrawable new];
+            Canvas *child = [Canvas new];
+            for (Drawable *d in selection) {
+                [child _addDrawableToCanvas:d];
+            }
+            group.subcanvas = child;
+            [group setInternalSize:child.bounds.size];
+            [self _addDrawableToCanvas:group];
+            CGPoint firstItemNewPosition = [self convertPoint:selection.firstObject.center fromView:selection.firstObject.superview];
+            group.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2); //CGPointMake(group.center.x + firstItemPosition.x - firstItemNewPosition.x, group.center.y + firstItemPosition.y - firstItemNewPosition.y);
+            [group updatedKeyframeProperties];
+        }
+    }
+}
+
+- (void)copy:(id)sender {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItems.allObjects];
+    [[UIPasteboard generalPasteboard] setData:data forPasteboardType:DrawableArrayPasteboardType];
+}
+
+- (void)paste:(id)sender {
+    if ([[UIPasteboard generalPasteboard] containsPasteboardTypes:@[DrawableArrayPasteboardType]]) {
+        NSData *data = [[UIPasteboard generalPasteboard] dataForPasteboardType:DrawableArrayPasteboardType];
+        NSArray *drawables = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        for (Drawable *d in drawables) {
+            [self _addDrawableToCanvas:d]; // TODO: make sure this drawable would be visible onscreen
+        }
+    }
+}
+
+- (void)delete:(id)sender {
+    for (Drawable *d in self.selectedItems) {
+        [d delete:sender];
+    }
 }
 
 #pragma mark Coding

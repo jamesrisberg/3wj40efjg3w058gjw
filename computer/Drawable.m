@@ -14,6 +14,8 @@
 #import "SliderTableViewCell.h"
 #import "StaticAnimationPicker.h"
 
+NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.DrawableArrayPasteboardType";
+
 @interface Drawable ()
 
 @property (nonatomic) KeyframeStore *keyframeStore;

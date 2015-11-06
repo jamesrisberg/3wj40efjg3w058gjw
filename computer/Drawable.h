@@ -12,6 +12,8 @@
 #import "StaticAnimation.h"
 #import "OptionsView.h"
 
+extern NSString * const DrawableArrayPasteboardType;
+
 @class Canvas;
 @interface Drawable : UIView <NSCopying>
 

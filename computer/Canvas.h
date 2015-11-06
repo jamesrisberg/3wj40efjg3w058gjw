@@ -45,4 +45,6 @@
 
 - (FrameTime *)duration;
 
+- (void)createGroup:(id)sender;
+
 @end

@@ -91,6 +91,10 @@
 #pragma mark Editing
 
 - (void)primaryEditAction {
+    [self editSubcanvas];
+}
+
+- (void)editSubcanvas {
     __weak SubcanvasDrawable *weakSelf = self;
     EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self.subcanvas callback:^(Canvas *edited) {
         weakSelf.subcanvas = edited;
@@ -105,7 +109,14 @@
     tiling.action = ^{
         [weakSelf showTilingOptions];
     };
-    return [[super optionsItems] arrayByAddingObject:tiling];
+    QuickCollectionItem *edit = [QuickCollectionItem new];
+    edit.label = NSLocalizedString(@"Edit", @"");
+    edit.action = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf editSubcanvas];
+        });
+    };
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[tiling, edit]];
 }
 
 #pragma mark Tiling
