@@ -17,7 +17,7 @@
 
 @property (nonatomic) dispatch_queue_t queue;
 @property (nonatomic) NSString *path;
-\
+
 @end
 
 @implementation VideoExporter

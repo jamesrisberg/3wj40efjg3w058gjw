@@ -13,6 +13,7 @@
 #import "ConvenienceCategories.h"
 #import "UIImagePixelSource.h"
 #import "computer-Swift.h"
+#import "GifOptimizer.h"
 
 @implementation ExportTest
 
@@ -32,7 +33,10 @@
         [enc addImageFrame:[self frameWithImage:image size:size delay:0.5]];
     }
     [enc closeFile];
-    NSLog(@"done");
+    
+    [GifOptimizer optimizeGifAtPath:outputPath doneBlock:^{
+        NSLog(@"done");
+    }];
 }
 
 + (ANGifImageFrame *)frameWithImage:(UIImage *)image size:(CGSize)size delay:(NSTimeInterval)delay {

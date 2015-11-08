@@ -21,6 +21,7 @@
 #import "Exporter.h"
 #import "PhotoExporter.h"
 #import "VideoExporter.h"
+#import "GifExporter.h"
 #import "CropView.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
@@ -646,7 +647,7 @@
         [weakSelf startCroppingWithExporter:[VideoExporter new]];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"GIF", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        [weakSelf startCroppingWithExporter:[GifExporter new]];
     }]];
     [ac addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
