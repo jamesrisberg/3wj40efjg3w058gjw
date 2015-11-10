@@ -27,7 +27,7 @@
     NSURL *singleDoc  = [[CMDocument documentsURL] URLByAppendingPathComponent:@"doc.computerdoc"];
     NSLog(@"Doc: %@", singleDoc);
     editorVC.document = [[CMDocument alloc] initWithFileURL:singleDoc];*/
-    [ExportTest exportTestWithVC:self.window.rootViewController];
+    // [ExportTest exportTestWithVC:self.window.rootViewController];
     return YES;
 }
 

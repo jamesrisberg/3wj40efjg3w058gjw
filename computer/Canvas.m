@@ -355,7 +355,9 @@
     FrameTime *time = self.time;
     Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
     d.dimmed = !exactKeyframe && !self.overrideDimming;
-    d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
+    if ([d.keyframeStore allKeyframes].count > 0) {
+        d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
+    }
     d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
     if ([d isKindOfClass:[SubcanvasDrawable class]]) {
         [(SubcanvasDrawable *)d subcanvas].time = time;

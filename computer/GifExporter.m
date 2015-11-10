@@ -53,6 +53,7 @@
         
         [enc closeFile];
         
+        NSLog(@"starting to optimize");
         [GifOptimizer optimizeGifAtPath:path doneBlock:^{
             NSLog(@"done");
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -60,6 +61,7 @@
                 UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[gifURL] applicationActivities:nil];
                 [self.parentViewController presentViewController:activityVC animated:YES completion:nil];
                 // TODO: delete the temp file?
+                // TODO: warn the user that GIFs can't be saved to camera roll w/ animations?
                 [self.delegate exporterDidFinish:self];
             });
         }];
