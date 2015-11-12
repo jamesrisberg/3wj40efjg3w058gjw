@@ -29,6 +29,7 @@
     self.xGap = [aDecoder decodeFloatForKey:@"xGap"] ? : 1;
     self.yGap = [aDecoder decodeFloatForKey:@"yGap"] ? : 1;
     self.rotatedCopies = [aDecoder decodeIntegerForKey:@"rotatedCopies"] ? : 1;
+    self.rotationOffset = [aDecoder decodeFloatForKey:@"rotationOffset"] ? : 2;
     return self;
 }
 
@@ -40,6 +41,7 @@
     [aCoder encodeFloat:self.xGap forKey:@"xGap"];
     [aCoder encodeFloat:self.yGap forKey:@"yGap"];
     [aCoder encodeInteger:self.rotatedCopies forKey:@"rotatedCopies"];
+    [aCoder encodeFloat:self.rotationOffset forKey:@"rotationOffset"];
 }
 
 - (void)setup {
@@ -54,6 +56,7 @@
     _xGap = 1;
     _yGap = 1;
     _rotatedCopies = 1;
+    _rotationOffset = 2;
     
     if (!self.subcanvas) {
         self.subcanvas = [Canvas new];
@@ -76,18 +79,28 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     // subcanvas.bounds is set by -[Canvas resizeBoundsToFitContent] inside -setSubcanvas:
-    CGSize innerSize = [self preferredInnerSize];
-    CGFloat contentXScale = self.bounds.size.width / innerSize.width;
-    CGFloat contentYScale = self.bounds.size.height / innerSize.height;
-    self.subcanvas.transform = CGAffineTransformMakeScale(contentXScale, contentYScale);
-    self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
-    self.subcanvas.center = CGPointMake(0, 0);
-    self.xReplicator.frame = self.bounds;
-    self.yReplicator.frame = self.bounds;
-    self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.subcanvas.bounds.size.width * contentXScale * self.xGap, 0, 0);
-    self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(0, self.subcanvas.bounds.size.height * contentYScale * self.yGap, 0);
-    self.xReplicator.replicatorLayer.instanceCount = self.xRepeat;
-    self.yReplicator.replicatorLayer.instanceCount = self.yRepeat;
+    
+    if (self.rotatedCopies > 1) {
+        CGFloat scale = MIN(self.bounds.size.width / self.rotationOffset / self.subcanvas.bounds.size.width, self.bounds.size.height / self.rotationOffset / self.subcanvas.bounds.size.height);
+        self.subcanvas.transform = CGAffineTransformMakeScale(scale, scale);
+        self.xReplicator.frame = self.bounds;
+        self.xReplicator.replicatorLayer.instanceCount = 1;
+        self.yReplicator.replicatorLayer.instanceCount = self.rotatedCopies;
+        self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeRotation(2 * M_PI / self.rotatedCopies, 0, 0, 1);
+    } else {
+        CGSize innerSize = [self preferredInnerSize];
+        CGFloat contentXScale = self.bounds.size.width / innerSize.width;
+        CGFloat contentYScale = self.bounds.size.height / innerSize.height;
+        self.subcanvas.transform = CGAffineTransformMakeScale(contentXScale, contentYScale);
+        self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
+        self.subcanvas.center = CGPointMake(0, 0);
+        self.xReplicator.frame = self.bounds;
+        self.yReplicator.frame = self.bounds;
+        self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.subcanvas.bounds.size.width * contentXScale * self.xGap, 0, 0);
+        self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(0, self.subcanvas.bounds.size.height * contentYScale * self.yGap, 0);
+        self.xReplicator.replicatorLayer.instanceCount = self.xRepeat;
+        self.yReplicator.replicatorLayer.instanceCount = self.yRepeat;
+    }
 }
 
 - (CGSize)preferredInnerSize {
@@ -137,7 +150,12 @@
     tiling.action = ^{
         [weakSelf showTilingOptions];
     };
-    return [[super optionsItems] arrayByAddingObjectsFromArray:@[tiling]];
+    QuickCollectionItem *rotations = [QuickCollectionItem new];
+    rotations.label = NSLocalizedString(@"Rotated copies…", @"");
+    rotations.action = ^{
+        [weakSelf showRotationOptions];
+    };
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[tiling, rotations]];
 }
 
 #pragma mark Tiling
@@ -198,6 +216,39 @@
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
 }
 
+- (void)showRotationOptions {
+    OptionsView *v = [OptionsView new];
+    __weak SubcanvasDrawable *weakSelf = self;
+    
+    OptionsViewCellModel *rotations = [OptionsViewCellModel new];
+    rotations.title = NSLocalizedString(@"Rotated copies", @"");
+    rotations.cellClass = [SliderOptionsCell class];
+    rotations.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
+        sliderCell.value = (weakSelf.rotatedCopies - 1) / 12;
+        sliderCell.onValueChange = ^(CGFloat val) {
+            weakSelf.rotatedCopies = round(val * 12) + 1;
+            [weakSelf updatedKeyframeProperties];
+        };
+    };
+    
+    OptionsViewCellModel *offset = [OptionsViewCellModel new];
+    offset.title = NSLocalizedString(@"Rotation offset", @"");
+    offset.cellClass = [SliderOptionsCell class];
+    offset.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
+        sliderCell.value = (weakSelf.rotationOffset - 1) / 5;
+        sliderCell.onValueChange = ^(CGFloat val) {
+            weakSelf.rotationOffset = val * 5 + 1;
+            [weakSelf updatedKeyframeProperties];
+        };
+    };
+    
+    v.models = @[rotations, offset];
+    
+    [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
+}
+
 - (void)setXRepeat:(NSInteger)xRepeat {
     if (_xRepeat == xRepeat) return;
         
@@ -242,6 +293,13 @@
         self.xRepeat = 1;
         self.yRepeat = 1;
     }
+    [self setNeedsLayout];
+    [self updateAspectRatio:[self preferredAspectRatio]];
+}
+
+- (void)setRotationOffset:(CGFloat)rotationOffset {
+    if (_rotationOffset == rotationOffset) return;
+    _rotationOffset = rotationOffset;
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
 }
