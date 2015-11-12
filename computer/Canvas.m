@@ -399,7 +399,7 @@
 }
 
 - (FrameTime *)duration {
-    FrameTime *t = [[FrameTime alloc] initWithFrame:1 atFPS:1];
+    FrameTime *t = [[FrameTime alloc] initWithFrame:1 atFPS:24];
     for (Drawable *d in self.drawables) {
         t = [[d.keyframeStore maxTime] maxWith:t];
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
@@ -419,12 +419,16 @@
         CGFloat maxX = -MAXFLOAT;
         CGFloat maxY = -MAXFLOAT;
         for (Drawable *d in self.drawables) {
-            // TODO: consider all time-steps
-            CGFloat radius = MAX(d.bounds.size.width, d.bounds.size.height) / 2 * d.scale * sqrt(2);
-            minX = MIN(minX, d.center.x - radius);
-            minY = MIN(minY, d.center.y - radius);
-            maxX = MAX(maxX, d.center.x + radius);
-            maxY = MAX(maxY, d.center.y + radius);
+            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
+                CGRect bounds = [keyframe.properties[@"bounds"] CGRectValue];
+                CGPoint center = [keyframe.properties[@"center"] CGPointValue];
+                CGFloat scale = [keyframe.properties[@"scale"] floatValue];
+                CGFloat radius = MAX(bounds.size.width, bounds.size.height) / 2 * scale * sqrt(2);
+                minX = MIN(minX, center.x - radius);
+                minY = MIN(minY, center.y - radius);
+                maxX = MAX(maxX, center.x + radius);
+                maxY = MAX(maxY, center.y + radius);
+            }
         }
         CGFloat width = MAX(1, maxX - minX);
         CGFloat height = MAX(1, maxY - minY);
