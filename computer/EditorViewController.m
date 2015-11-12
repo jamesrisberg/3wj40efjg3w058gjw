@@ -700,7 +700,8 @@
     self.currentExporter.delegate = self;
     self.currentExporter.defaultTime = self.canvas.time;
     FrameTime *endTime = self.canvas.duration;
-    endTime = [[FrameTime alloc] initWithFrame:endTime.frame + 1 / endTime.fps atFPS:endTime.fps];
+    NSTimeInterval extraDuration = 2;
+    endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
     self.currentExporter.endTime = endTime;
     self.currentExporter.parentViewController = self;
     self.mode = EditorModeExportRunning;
