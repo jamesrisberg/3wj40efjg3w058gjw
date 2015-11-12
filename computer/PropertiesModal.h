@@ -12,6 +12,8 @@
 
 @interface PropertiesModal : UIViewController
 
+@property (nonatomic) CGPoint touchPointInWindowCoordinates;
+
 @property (nonatomic) NSArray<__kindof QuickCollectionItem*> *items;
 @property (nonatomic) NSArray<__kindof OptionsViewCellModel*> *optionsCellModels;
 @property (nonatomic) UIViewController *inlineViewController;

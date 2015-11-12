@@ -75,6 +75,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (!CGPointEqualToPoint(self.touchPointInWindowCoordinates, CGPointZero)) {
+        self.collectionView.contentInset = UIEdgeInsetsMake(MAX(0, self.touchPointInWindowCoordinates.y - 120), 0, 0, 0);
+        self.touchPointInWindowCoordinates = CGPointZero;
+    }
     [self reloadSections];
 }
 

@@ -290,8 +290,8 @@
     self.mode = EditorModePanelView;
 }
 
-- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter {
-    [self showOptionsInteractively:presenter];
+- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touch:(UITouch *)touch {
+    [self showOptionsInteractively:presenter touch:touch];
 }
 
 #pragma mark Overlays
@@ -305,13 +305,14 @@
 #pragma mark Toolbar
 
 - (void)showOptions {
-    [self showOptionsInteractively:nil];
+    [self showOptionsInteractively:nil touch:nil];
 }
 
-- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition {
+- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touch:(UITouch *)touch {
     if (self.canvas.selectedItems.count) {
         Drawable *d = self.canvas.selectedItems.anyObject;
         PropertiesModal *modal = [PropertiesModal new];
+        if (touch) modal.touchPointInWindowCoordinates = [touch locationInView:self.view.window];
         modal.interactivePresentation = transition;
         modal.items = [d optionsItems];
         modal.optionsCellModels = [d optionsViewCellModels];

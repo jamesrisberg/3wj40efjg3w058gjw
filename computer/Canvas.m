@@ -144,7 +144,7 @@
                 [self.selection primaryEditAction];
             }*/
             if ([[touches anyObject] tapCount] == 2) {
-                [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil];
+                [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touch:[touches anyObject]];
             }
         }
         [_singleTouchPressTimer invalidate];
@@ -511,7 +511,7 @@
     if (touchForceFraction > minForce) {
         if (!self.interactiveOptionsTransition) {
             self.interactiveOptionsTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
-            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition];
+            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition touch:nil];
         }
     }
     if (self.interactiveOptionsTransition) {
