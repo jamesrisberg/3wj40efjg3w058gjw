@@ -137,6 +137,7 @@
             cell.backgroundView.clipsToBounds = YES;
         };
         items.onSelect = ^(id theModel) {
+            [weakSelf dismiss];
             QuickCollectionItem *model = theModel;
             if (model.action) model.action();
         };
