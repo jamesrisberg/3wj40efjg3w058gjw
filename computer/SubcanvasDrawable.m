@@ -80,10 +80,14 @@
     [super layoutSubviews];
     // subcanvas.bounds is set by -[Canvas resizeBoundsToFitContent] inside -setSubcanvas:
     
+    self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
+    self.subcanvas.center = CGPointMake(0, 0);
+    
     if (self.rotatedCopies > 1) {
         CGFloat scale = MIN(self.bounds.size.width / self.rotationOffset / self.subcanvas.bounds.size.width, self.bounds.size.height / self.rotationOffset / self.subcanvas.bounds.size.height);
         self.subcanvas.transform = CGAffineTransformMakeScale(scale, scale);
         self.xReplicator.frame = self.bounds;
+        self.yReplicator.frame = self.bounds;
         self.xReplicator.replicatorLayer.instanceCount = 1;
         self.yReplicator.replicatorLayer.instanceCount = self.rotatedCopies;
         self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeRotation(2 * M_PI / self.rotatedCopies, 0, 0, 1);
@@ -92,8 +96,6 @@
         CGFloat contentXScale = self.bounds.size.width / innerSize.width;
         CGFloat contentYScale = self.bounds.size.height / innerSize.height;
         self.subcanvas.transform = CGAffineTransformMakeScale(contentXScale, contentYScale);
-        self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
-        self.subcanvas.center = CGPointMake(0, 0);
         self.xReplicator.frame = self.bounds;
         self.yReplicator.frame = self.bounds;
         self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.subcanvas.bounds.size.width * contentXScale * self.xGap, 0, 0);
@@ -108,10 +110,10 @@
 }
 
 - (CGFloat)preferredAspectRatio {
+    [self.subcanvas resizeBoundsToFitContent]; // TODO: cache this; this is expensive AF!
     if (self.rotatedCopies > 1) {
         return 1;
     } else {
-        [self.subcanvas resizeBoundsToFitContent];
         CGSize s = [self preferredInnerSize];
         return s.width * s.height ? s.width / s.height : 1;
     }
