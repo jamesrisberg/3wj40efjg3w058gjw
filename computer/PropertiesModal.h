@@ -17,4 +17,6 @@
 @property (nonatomic) UIViewController *inlineViewController;
 @property (nonatomic) QuickCollectionItem *mainAction;
 
+@property (nonatomic) UIPercentDrivenInteractiveTransition *interactivePresentation;
+
 @end

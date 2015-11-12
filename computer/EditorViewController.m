@@ -24,6 +24,8 @@
 #import "GifExporter.h"
 #import "CropView.h"
 #import "PropertiesModal.h"
+#import "StrokePickerViewController.h"
+#import "computer-Swift.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -288,8 +290,8 @@
     self.mode = EditorModePanelView;
 }
 
-- (void)canvasShowShouldOptions:(Canvas *)canvas {
-    [self showOptions];
+- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter {
+    [self showOptionsInteractively:presenter];
 }
 
 #pragma mark Overlays
@@ -301,10 +303,16 @@
 }
 
 #pragma mark Toolbar
+
 - (void)showOptions {
+    [self showOptionsInteractively:nil];
+}
+
+- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition {
     if (self.canvas.selectedItems.count) {
         Drawable *d = self.canvas.selectedItems.anyObject;
         PropertiesModal *modal = [PropertiesModal new];
+        modal.interactivePresentation = transition;
         modal.items = [d optionsItems];
         modal.optionsCellModels = [d optionsViewCellModels];
         modal.inlineViewController = [d createInlineViewControllerForEditing];
@@ -450,11 +458,16 @@
             
             self.canvas.selectedItems = [NSSet set];
         } else if (mode == EditorModeDrawing) {
-            UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-            done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
-            [done setTitle:NSLocalizedString(@"Done", @"") forState:UIControlStateNormal];
-            [done addTarget:self action:@selector(endFreehandDrawing) forControlEvents:UIControlEventTouchUpInside];
-            self.toolbarView = done;
+            UIToolbar *toolbar = [UIToolbar new];
+            toolbar.items = @[
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemUndo target:self action:@selector(undoFreehandStroke)],
+                              [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Style…", @"") style:UIBarButtonItemStylePlain target:self action:@selector(editFreehandStrokeStyle)],
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resetMode)]
+                              ];
+            [toolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+            toolbar.tintColor = [UIColor whiteColor];
+            self.toolbarView = toolbar;
         } else if (mode == EditorModeTimeline) {
             self.timeline = [TimelineView new];
             self.toolbarView = self.timeline;
@@ -519,8 +532,25 @@
     self.transientOverlayView = inputView;
 }
 
-- (void)endFreehandDrawing {
-    self.mode = EditorModeNormal;
+- (void)editFreehandStrokeStyle {
+    FreehandInputView *iv = (id)self.transientOverlayView;
+    if ([iv isKindOfClass:[FreehandInputView class]]) {
+        StrokePickerViewController *picker = [[StrokePickerViewController alloc] init];
+        picker.width = iv.shape.strokeWidth;
+        picker.color = iv.shape.strokeColor;
+        picker.onChange = ^(CGFloat width, UIColor *color) {
+            iv.shape.strokeWidth = width;
+            iv.shape.strokeColor = color;
+        };
+        [NPSoftModalPresentationController presentViewController:picker fromViewController:self];
+    }
+}
+
+- (void)undoFreehandStroke {
+    FreehandInputView *iv = (id)self.transientOverlayView;
+    if ([iv isKindOfClass:[FreehandInputView class]]) {
+        [iv undoLastStroke];
+    }
 }
 
 #pragma mark Modal editing

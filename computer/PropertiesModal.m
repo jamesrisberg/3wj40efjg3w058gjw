@@ -266,6 +266,10 @@
     return 0.4;
 }
 
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id<UIViewControllerAnimatedTransitioning>)animator {
+    return self.interactivePresentation;
+}
+
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
     BOOL isPresenting = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey] == self;
     UIView *container = [transitionContext containerView];

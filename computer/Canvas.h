@@ -17,7 +17,7 @@
 - (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas;
 - (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas;
 - (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel;
-- (void)canvasShowShouldOptions:(Canvas *)canvas;
+- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter;
 
 @end
 

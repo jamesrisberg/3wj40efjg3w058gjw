@@ -26,6 +26,9 @@
 
 @property (nonatomic,readonly) Drawable *singleSelection;
 
+@property (nonatomic) CGFloat touchForceFraction;
+@property (nonatomic) UIPercentDrivenInteractiveTransition *interactiveOptionsTransition;
+
 @end
 
 @implementation Canvas
@@ -123,6 +126,8 @@
         }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
+    
+    [self updateForceReading];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -139,11 +144,22 @@
                 [self.selection primaryEditAction];
             }*/
             if ([[touches anyObject] tapCount] == 2) {
-                [self.delegate canvasShowShouldOptions:self];
+                [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil];
             }
         }
         [_singleTouchPressTimer invalidate];
     }
+    
+    [self updateForceReading];
+}
+
+- (void)updateForceReading {
+    CGFloat maxForce = 0;
+    for (UITouch *touch in _touches) {
+        CGFloat force = touch.force / touch.maximumPossibleForce;
+        maxForce = MAX(force, maxForce);
+    }
+    self.touchForceFraction = maxForce;
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -151,12 +167,14 @@
     if (_touches.count == 0) {
         [_singleTouchPressTimer invalidate];
     }
+    [self updateForceReading];
 }
 
 - (void)longPress {
     UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
     self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
     [self.editorShapeStackList show];
+    [self updateForceReading];
 }
 
 - (CGRect)boundingRectForTouchesUsingCoordinateSpaceOfView:(UIView *)view {
@@ -401,6 +419,7 @@
         CGFloat maxX = -MAXFLOAT;
         CGFloat maxY = -MAXFLOAT;
         for (Drawable *d in self.drawables) {
+            // TODO: consider all time-steps
             CGFloat radius = MAX(d.bounds.size.width, d.bounds.size.height) / 2 * d.scale * sqrt(2);
             minX = MIN(minX, d.center.x - radius);
             minY = MIN(minY, d.center.y - radius);
@@ -477,6 +496,38 @@
         return _selectedItems.anyObject;
     } else {
         return nil;
+    }
+}
+
+#pragma mark Force Touch
+- (void)setTouchForceFraction:(CGFloat)touchForceFraction {
+    return; // DISABLED
+    _touchForceFraction = touchForceFraction;
+    if (!self.editorShapeStackList.hidden) {
+        touchForceFraction = 0;
+    }
+    CGFloat minForce = 0.3;
+    CGFloat maxForce = 1;
+    if (touchForceFraction > minForce) {
+        if (!self.interactiveOptionsTransition) {
+            self.interactiveOptionsTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
+            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition];
+        }
+    }
+    if (self.interactiveOptionsTransition) {
+        CGFloat percentComplete = MIN(1, (touchForceFraction - minForce) / (maxForce - minForce));
+        NSLog(@"Percent: %f", percentComplete);
+        CGFloat oldPercentage = self.interactiveOptionsTransition.percentComplete;
+        [self.interactiveOptionsTransition updateInteractiveTransition:percentComplete];
+        if (self.interactiveOptionsTransition.percentComplete == 1 && oldPercentage < 1) {
+            [_singleTouchPressTimer invalidate];
+            _singleTouchPressTimer = nil;
+            [self.interactiveOptionsTransition finishInteractiveTransition];
+        }
+    }
+    if (touchForceFraction < minForce) {
+        [self.interactiveOptionsTransition cancelInteractiveTransition];
+        self.interactiveOptionsTransition = nil;
     }
 }
 

@@ -13,4 +13,6 @@
 
 @property (nonatomic) ShapeDrawable *shape;
 
+- (void)undoLastStroke;
+
 @end

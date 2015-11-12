@@ -15,5 +15,6 @@
 @property (nonatomic,copy) void (^onDrawableSelected)(Drawable *drawable);
 - (void)show;
 - (void)hide;
+- (BOOL)shown;
 
 @end

@@ -12,6 +12,7 @@
 @interface FreehandInputView ()
 
 @property (nonatomic) UIBezierPath *path;
+@property (nonatomic) NSMutableArray *previewStrokeStack;
 
 @end
 
@@ -27,16 +28,38 @@
 }*/
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.path addLineToPoint:[[touches anyObject] locationInView:self.shape]];
+    UITouch *touch = [touches anyObject];
+    NSMutableArray *points = [NSMutableArray new];
+    [points addObjectsFromArray:[event coalescedTouchesForTouch:touch]];
+    [points addObject:touch];
+    for (UITouch *touch in points) {
+        [self.path addLineToPoint:[touch locationInView:self.shape]];
+    }
     [self.shape _setPathWithoutFittingContent:self.path];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     self.shape.path = self.path;
+    
+    if (!self.previewStrokeStack) {
+        self.previewStrokeStack = [NSMutableArray new];
+        [self.previewStrokeStack addObject:[UIBezierPath bezierPath]];
+    }
+    [self.previewStrokeStack addObject:self.shape.path];
+    while (self.previewStrokeStack.count > 10) {
+        [self.previewStrokeStack removeObjectAtIndex:0];
+    }
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     self.shape.path = self.path;
+}
+
+- (void)undoLastStroke {
+    if (self.previewStrokeStack.count >= 2) {
+        [self.previewStrokeStack removeLastObject];
+        self.shape.path = self.previewStrokeStack.lastObject;
+    }
 }
 
 @end
