@@ -104,9 +104,9 @@ class ImageSearchViewController: UIViewController, AFImageSearchResultsViewContr
             (data: NSData?, response: NSURLResponse?, error: NSError?) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.networkActivityCount--
-                if let d = data {
+                if let d = data, let image = UIImage(data: d) {
                     if let p = self.onImagePicked {
-                        p(UIImage(data: d)!)
+                        p(image)
                     }
                 } else if let e = error {
                     let alertController = UIAlertController(title: nil, message: NSLocalizedString("That image couldn't be downloaded.", comment: ""), preferredStyle: UIAlertControllerStyle.Alert)
