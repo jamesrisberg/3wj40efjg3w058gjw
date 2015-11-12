@@ -28,6 +28,7 @@
     self.yRepeat = [aDecoder decodeIntegerForKey:@"yRepeat"] ? : 1;
     self.xGap = [aDecoder decodeFloatForKey:@"xGap"] ? : 1;
     self.yGap = [aDecoder decodeFloatForKey:@"yGap"] ? : 1;
+    self.rotatedCopies = [aDecoder decodeIntegerForKey:@"rotatedCopies"] ? : 1;
     return self;
 }
 
@@ -38,6 +39,7 @@
     [aCoder encodeInteger:self.yRepeat forKey:@"yRepeat"];
     [aCoder encodeFloat:self.xGap forKey:@"xGap"];
     [aCoder encodeFloat:self.yGap forKey:@"yGap"];
+    [aCoder encodeInteger:self.rotatedCopies forKey:@"rotatedCopies"];
 }
 
 - (void)setup {
@@ -51,6 +53,7 @@
     _yRepeat = 1;
     _xGap = 1;
     _yGap = 1;
+    _rotatedCopies = 1;
     
     if (!self.subcanvas) {
         self.subcanvas = [Canvas new];
@@ -92,9 +95,13 @@
 }
 
 - (CGFloat)preferredAspectRatio {
-    [self.subcanvas resizeBoundsToFitContent];
-    CGSize s = [self preferredInnerSize];
-    return s.width * s.height ? s.width / s.height : 1;
+    if (self.rotatedCopies > 1) {
+        return 1;
+    } else {
+        [self.subcanvas resizeBoundsToFitContent];
+        CGSize s = [self preferredInnerSize];
+        return s.width * s.height ? s.width / s.height : 1;
+    }
 }
 
 #pragma mark Editing
@@ -195,6 +202,9 @@
     if (_xRepeat == xRepeat) return;
         
     _xRepeat = xRepeat;
+    if (xRepeat > 1) {
+        self.rotatedCopies = 1;
+    }
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
 }
@@ -203,6 +213,9 @@
     if (_yRepeat == yRepeat) return;
     
     _yRepeat = yRepeat;
+    if (yRepeat > 1) {
+        self.rotatedCopies = 1;
+    }
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
 }
@@ -218,6 +231,17 @@
 - (void)setYGap:(CGFloat)yGap {
     if (_yGap == yGap) return;
     _yGap = yGap;
+    [self setNeedsLayout];
+    [self updateAspectRatio:[self preferredAspectRatio]];
+}
+
+- (void)setRotatedCopies:(NSInteger)rotatedCopies {
+    if (_rotatedCopies == rotatedCopies) return;
+    _rotatedCopies = rotatedCopies;
+    if (rotatedCopies > 1) {
+        self.xRepeat = 1;
+        self.yRepeat = 1;
+    }
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
 }

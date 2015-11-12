@@ -73,6 +73,8 @@
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self updateForceReading];
+    
     if (_singleTouchPressTimer) {
         CGPoint pos = [[touches anyObject] locationInView:self];
         CGFloat dist = sqrt(pow(pos.x - _positionAtStartOfSingleTouchTimer.x, 2) + pow(pos.y - _positionAtStartOfSingleTouchTimer.y, 2));
@@ -84,8 +86,11 @@
     NSArray *down = _touches.allObjects;
     CGPoint t1 = [down[0] locationInView:self];
     CGPoint t1prev = [down[0] previousLocationInView:self];
+    
+    CGFloat motionMultiplier = self.touchForceFraction > 0.9 ? 0.4 : 1;
+    
     if (_touches.count == 1) {
-        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + t1.x - t1prev.x, self.singleSelection.center.y + t1.y - t1prev.y);
+        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + (t1.x - t1prev.x) * motionMultiplier, self.singleSelection.center.y + (t1.y - t1prev.y) * motionMultiplier);
         [self.singleSelection updatedKeyframeProperties];
     } else if (_touches.count == 2) {
         CGPoint t2 = [down[1] locationInView:self];
@@ -98,8 +103,8 @@
         CGPoint prevPos = CGPointMake((t1prev.x + t2prev.x)/2, (t1prev.y + t2prev.y)/2);
         CGFloat toRotate = rotation - prevRotation;
         CGFloat toScale = scale / prevScale;
-        self.singleSelection.rotation += toRotate;
-        self.singleSelection.scale *= toScale;
+        self.singleSelection.rotation += toRotate * motionMultiplier;
+        self.singleSelection.scale = self.singleSelection.scale * (1-motionMultiplier) + self.singleSelection.scale * toScale * motionMultiplier;
         
         if (_currentGestureTransformsDrawableAboutTouchPoint) {
             CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
@@ -108,10 +113,10 @@
             CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
             CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
             drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
-            self.singleSelection.center = CGPointAdd(touchMidpoint, drawableOffset);
+            self.singleSelection.center = CGPointAdd(touchMidpoint, CGPointScale(drawableOffset, motionMultiplier));
         }
         
-        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + pos.x - prevPos.x, self.singleSelection.center.y + pos.y - prevPos.y);
+        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + (pos.x - prevPos.x) * motionMultiplier, self.singleSelection.center.y + (pos.y - prevPos.y) * motionMultiplier);
         
         [self.singleSelection updatedKeyframeProperties];
     } else if (_touches.count == 3) {
@@ -126,8 +131,6 @@
         }
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
-    
-    [self updateForceReading];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -156,7 +159,7 @@
 - (void)updateForceReading {
     CGFloat maxForce = 0;
     for (UITouch *touch in _touches) {
-        CGFloat force = touch.force / touch.maximumPossibleForce;
+        CGFloat force = touch.maximumPossibleForce ? touch.force / touch.maximumPossibleForce : 0;
         maxForce = MAX(force, maxForce);
     }
     self.touchForceFraction = maxForce;
@@ -505,8 +508,8 @@
 
 #pragma mark Force Touch
 - (void)setTouchForceFraction:(CGFloat)touchForceFraction {
-    return; // DISABLED
     _touchForceFraction = touchForceFraction;
+    return; // DISABLED
     if (!self.editorShapeStackList.hidden) {
         touchForceFraction = 0;
     }

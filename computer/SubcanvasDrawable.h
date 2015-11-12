@@ -14,5 +14,6 @@
 
 @property (nonatomic) NSInteger xRepeat, yRepeat;
 @property (nonatomic) CGFloat xGap, yGap;
+@property (nonatomic) NSInteger rotatedCopies;
 
 @end

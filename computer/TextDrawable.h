@@ -10,4 +10,6 @@
 
 @interface TextDrawable : Drawable
 
+@property (nonatomic) CGFloat textStart, textEnd;
+
 @end
