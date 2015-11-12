@@ -11,6 +11,7 @@
 #import "computer-Swift.h"
 #import "CPColorPicker.h"
 #import "SKFontPicker.h"
+#import "StrokePickerViewController.h"
 
 @interface _TextColorButton : UIButton
 @end
@@ -44,6 +45,20 @@
 }
 @end
 
+@interface _TextShadowButton : UIButton
+@end
+
+@implementation _TextShadowButton
+- (void)setShadowColor:(UIColor *)color offset:(CGFloat)offset {
+    [self setTitle:@"S" forState:UIControlStateNormal];
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.titleLabel setShadowOffset:CGSizeMake(offset, offset)];
+    [self.titleLabel setShadowColor:color];
+}
+@end
+
+
 @interface TextEditorViewController () <UITextViewDelegate>
 
 @property (nonatomic) IBOutlet UITextView *textView;
@@ -51,6 +66,7 @@
 @property (nonatomic) _TextSizeButton *textSizeButton;
 @property (nonatomic) _TextColorButton *textColorButton;
 @property (nonatomic) _TextFontButton *textFontButton;
+@property (nonatomic) _TextShadowButton *textShadowButton;
 
 @end
 
@@ -80,8 +96,10 @@
     [self.textColorButton addTarget:self action:@selector(changeTextColor) forControlEvents:UIControlEventTouchUpInside];
     self.textFontButton = [_TextFontButton buttonWithType:UIButtonTypeCustom];
     [self.textFontButton addTarget:self action:@selector(changeTextFont) forControlEvents:UIControlEventTouchUpInside];
+    self.textShadowButton = [_TextShadowButton buttonWithType:UIButtonTypeCustom];
+    [self.textShadowButton addTarget:self action:@selector(changeTextShadow) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.leftBarButtonItems = [@[self.textColorButton, self.textSizeButton, self.textFontButton] map:^id(id obj) {
+    self.navigationItem.leftBarButtonItems = [@[self.textColorButton, self.textSizeButton, self.textFontButton, self.textShadowButton] map:^id(id obj) {
         UIButton *btn = obj;
         [btn setFrame:CGRectMake(0, 0, 40, 44)];
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:obj];
@@ -131,10 +149,13 @@
     [self.textSizeButton setTextSize:[attrs[NSFontAttributeName] pointSize]];
     [self.textFontButton setTextFont:attrs[NSFontAttributeName]];
     [self.textColorButton setColor:attrs[NSForegroundColorAttributeName]];
+    
+    NSShadow *shadow = attrs[NSShadowAttributeName];
+    [self.textShadowButton setShadowColor:shadow.shadowColor ? : [UIColor colorWithWhite:0.1 alpha:0.5] offset:shadow.shadowOffset.width];
 }
 
 - (void)changeTextSize {
-    
+    // TODO
 }
 
 - (void)changeTextFont {
@@ -148,7 +169,29 @@
             return [UIFont fontWithName:fontName size:pointSize];
         }];
         [weakPicker dismissViewControllerAnimated:YES completion:nil];
-        self.textChanged(self.textView.attributedText);
+    };
+}
+
+- (void)changeTextShadow {
+    StrokePickerViewController *picker = [StrokePickerViewController new];
+    NSShadow *shadow = self.textView.typingAttributes[NSShadowAttributeName];
+    picker.width = shadow.shadowOffset.width;
+    picker.color = shadow.shadowColor ? : [UIColor colorWithWhite:0.1 alpha:0.5];
+    [picker strokeWidthSlider].maximumValue = 10;
+    picker.defaultStrokeWidthValue = 2;
+    [NPSoftModalPresentationController presentViewController:picker];
+    picker.onChange = ^(CGFloat offset, UIColor *color) {
+        [self updateTextEntryAttribute:NSShadowAttributeName function:^id(id existing) {
+            if (offset == 0) {
+                return nil;
+            }
+            NSShadow *shadow = [[NSShadow alloc] init];
+            shadow.shadowColor = color;
+            shadow.shadowOffset = CGSizeMake(offset, offset);
+            shadow.shadowBlurRadius = 0;
+            return shadow;
+        }];
+        
     };
 }
 
@@ -159,7 +202,6 @@
         [self updateTextEntryAttribute:NSForegroundColorAttributeName function:^id(id existing) {
             return color;
         }];
-        self.textChanged(self.textView.attributedText);
     };
     [NPSoftModalPresentationController presentViewController:picker];
 }
@@ -193,6 +235,8 @@
             [self.textView.textStorage removeAttribute:attribute range:range];
         }
     }];
+    
+    self.textChanged(self.textView.attributedText);
 }
 
 @end

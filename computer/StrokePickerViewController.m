@@ -20,13 +20,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.defaultStrokeWidthValue = 4;
     self.colorPicker = [CPColorPicker new];
     __weak StrokePickerViewController *weakSelf = self;
     self.colorPicker.callback = ^(UIColor *color) {
         StrokePickerViewController *strongSelf = weakSelf;
         strongSelf->_color = color;
         if (weakSelf.width == 0) {
-            weakSelf.width = 4;
+            weakSelf.width = weakSelf.defaultStrokeWidthValue;
         }
         [weakSelf didUpdate];
     };
@@ -78,6 +79,11 @@
     [self view];
     self.slider.value = width;
     [self updatePreview];
+}
+
+- (UISlider *)strokeWidthSlider {
+    [self loadViewIfNeeded];
+    return self.slider;
 }
 
 @end

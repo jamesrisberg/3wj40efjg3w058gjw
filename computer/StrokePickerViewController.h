@@ -13,5 +13,7 @@
 @property (nonatomic) CGFloat width;
 @property (nonatomic) UIColor *color;
 @property (nonatomic,copy) void(^onChange)(CGFloat width, UIColor *color);
+- (UISlider *)strokeWidthSlider;
+@property (nonatomic) CGFloat defaultStrokeWidthValue;
 
 @end

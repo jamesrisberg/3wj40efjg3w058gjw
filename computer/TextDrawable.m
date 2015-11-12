@@ -68,20 +68,6 @@
     return nav;
 }
 
-- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
-    __weak TextDrawable *weakSelf = self;
-    
-    QuickCollectionItem *editText = [QuickCollectionItem new];
-    editText.label = NSLocalizedString(@"Edit text…", @"");
-    editText.action = ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf editText];
-        });
-    };
-    
-    return [[super optionsItems] arrayByAddingObjectsFromArray:@[editText]];
-}
-
 #pragma mark Coding
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
