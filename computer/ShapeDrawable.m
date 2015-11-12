@@ -124,6 +124,19 @@
     [NPSoftModalPresentationController presentViewController:picker];
 }
 
+- (QuickCollectionItem *)mainAction {
+    __weak ShapeDrawable *weakSelf = self;
+    
+    QuickCollectionItem *editFill = [QuickCollectionItem new];
+    editFill.label = NSLocalizedString(@"Fill…", @"");
+    editFill.action = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf primaryEditAction];
+        });
+    };
+    return editFill;
+}
+
 - (void)editStroke {
     StrokePickerViewController *picker = [StrokePickerViewController new];
     picker.color = self.strokeColor;
@@ -148,14 +161,6 @@
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
     __weak ShapeDrawable *weakSelf = self;
     
-    QuickCollectionItem *editFill = [QuickCollectionItem new];
-    editFill.label = NSLocalizedString(@"Fill…", @"");
-    editFill.action = ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf primaryEditAction];
-        });
-    };
-    
     QuickCollectionItem *editStroke = [QuickCollectionItem new];
     editStroke.label = NSLocalizedString(@"Stroke…", @"");
     editStroke.action = ^{
@@ -164,7 +169,7 @@
         });
     };
     
-    return [[super optionsItems] arrayByAddingObjectsFromArray:@[editFill, editStroke]];
+    return [[super optionsItems] arrayByAddingObjectsFromArray:@[editStroke]];
 }
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels {

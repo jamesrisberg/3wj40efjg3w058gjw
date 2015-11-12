@@ -22,6 +22,7 @@ extern NSString * const DrawableArrayPasteboardType;
 @property (nonatomic) CGFloat rotation, scale, itemOpacity;
 - (UIViewController *)vcForPresentingModals;
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems;
+- (QuickCollectionItem *)mainAction;
 - (UIViewController *)createInlineViewControllerForEditing;
 - (Canvas *)canvas;
 @property (nonatomic,copy) void (^onShapeUpdate)();

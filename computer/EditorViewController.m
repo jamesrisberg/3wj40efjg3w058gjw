@@ -308,6 +308,7 @@
         modal.items = [d optionsItems];
         modal.optionsCellModels = [d optionsViewCellModels];
         modal.inlineViewController = [d createInlineViewControllerForEditing];
+        modal.mainAction = [d mainAction];
         [self presentViewController:modal animated:YES completion:nil];
     }
 }

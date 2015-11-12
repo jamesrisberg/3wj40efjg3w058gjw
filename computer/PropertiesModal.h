@@ -15,5 +15,6 @@
 @property (nonatomic) NSArray<__kindof QuickCollectionItem*> *items;
 @property (nonatomic) NSArray<__kindof OptionsViewCellModel*> *optionsCellModels;
 @property (nonatomic) UIViewController *inlineViewController;
+@property (nonatomic) QuickCollectionItem *mainAction;
 
 @end

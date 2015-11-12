@@ -100,8 +100,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self.textView becomeFirstResponder];
-    self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
+    //[self.textView becomeFirstResponder];
+    //self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -109,6 +109,8 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
+    self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
+    
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:textView action:@selector(resignFirstResponder)];
     [self.navigationItem setRightBarButtonItem:done animated:YES];
 }

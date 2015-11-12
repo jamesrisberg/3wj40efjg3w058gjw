@@ -97,16 +97,26 @@
             [cell setViewController:model parentViewController:weakSelf];
         };
         inlineVC.sizeBlock = ^CGSize(id model) {
-            return CGSizeMake([weakSelf maxCellWidth], 100);
+            return CGSizeMake([weakSelf maxCellWidth], 120);
         };
         [sections addObject:inlineVC];
     }
     
-    if (self.items.count) {
+    if (self.items.count || self.mainAction) {
         _PropertiesModalSection *items = [_PropertiesModalSection new];
         items.sectionId = @"Actions";
         items.cellClass = [UICollectionViewCell class];
-        items.models = self.items;
+        items.models = self.items ? : [NSArray new];
+        if (self.mainAction) {
+            items.models = [@[self.mainAction] arrayByAddingObjectsFromArray:items.models];
+        }
+        items.sizeBlock = ^CGSize(id model) {
+            if (model == weakSelf.mainAction) {
+                return CGSizeMake([weakSelf maxCellWidth], 44);
+            } else {
+                return [weakSelf itemSize];
+            }
+        };
         items.onConfigure = ^(id theModel, id theCell) {
             QuickCollectionItem *model = theModel;
             UICollectionViewCell *cell = theCell;
@@ -263,7 +273,7 @@
         [container addSubview:self.view];
         self.view.frame = [transitionContext finalFrameForViewController:self];
         self.view.backgroundColor = [UIColor clearColor];
-        // [self makeIconsFlyIn:YES withDuration:duration];
+        [self makeIconsFlyIn:YES withDuration:duration];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
         } completion:^(BOOL finished) {
@@ -273,7 +283,7 @@
             [transitionContext completeTransition:YES];
         });
     } else {
-        // [self makeIconsFlyIn:NO withDuration:duration];
+        [self makeIconsFlyIn:NO withDuration:duration];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             self.view.backgroundColor = [UIColor clearColor];
         } completion:^(BOOL finished) {
