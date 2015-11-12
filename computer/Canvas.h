@@ -44,6 +44,7 @@
 - (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other;
 
 - (FrameTime *)duration;
+- (FrameTime *)loopingDuration; // may return nil
 
 - (void)createGroup:(id)sender;
 

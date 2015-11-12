@@ -83,19 +83,24 @@
     NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @11};
     NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
     
-    NSDictionary *slowPulse = @{@"pulseMagnitude": @0.1, @"pulseRate": @2};
-    NSDictionary *mediumPulse = @{@"pulseMagnitude": @0.2, @"pulseRate": @4};
-    NSDictionary *strongPulse = @{@"pulseMagnitude": @0.5, @"pulseRate": @7};
+    NSDictionary *slowPulse = @{@"pulseMagnitude": @0.1, @"pulseRate": @0.3};
+    NSDictionary *mediumPulse = @{@"pulseMagnitude": @0.2, @"pulseRate": @0.8};
+    NSDictionary *strongPulse = @{@"pulseMagnitude": @0.5, @"pulseRate": @1.1};
     NSArray *pulseSection = @[slowPulse, mediumPulse, strongPulse];
     
-    _sections = @[blinkSection, jitterSection, pulseSection];
+    NSDictionary *slowRotate = @{@"rotationMagnitude": @1, @"rotationRate": @0.3};
+    NSDictionary *mediumRotate = @{@"rotationMagnitude": @1, @"rotationRate": @0.7};
+    NSDictionary *fastRotate = @{@"rotationMagnitude": @1, @"rotationRate": @1.5};
+    NSArray *rotateSection = @[slowRotate, mediumRotate, fastRotate];
+    
+    _sections = @[blinkSection, jitterSection, pulseSection, rotateSection];
     
     UICollectionViewFlowLayout *flow = [UICollectionViewFlowLayout new];
     flow.itemSize = CGSizeMake(50, 50);
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:flow];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.contentInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    flow.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     [self.collectionView registerClass:[StaticAnimationPreview class] forCellWithReuseIdentifier:@"Cell"];
     [self addSubview:self.collectionView];
     self.collectionView.backgroundColor = [UIColor clearColor];

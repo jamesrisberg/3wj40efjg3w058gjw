@@ -80,6 +80,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     }
 }
 
++ (FrameTime *)leastCommonMultipleForTimes:(NSArray<__kindof FrameTime*>*)times maxTime:(NSTimeInterval)max {
+    return nil; // TODO
+}
+
 @end
 
 

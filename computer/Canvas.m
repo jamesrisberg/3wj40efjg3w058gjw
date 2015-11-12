@@ -413,6 +413,10 @@
     return t;
 }
 
+- (FrameTime *)loopingDuration {
+    return nil; // TODO
+}
+
 #pragma mark Layout
 
 - (void)resizeBoundsToFitContent {

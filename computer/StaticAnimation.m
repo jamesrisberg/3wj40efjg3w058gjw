@@ -26,6 +26,8 @@
     _jitterRate = 20;
     _jitterXMagnitude = 0;
     _jitterYMagnitude = 0;
+    _rotationRate = 1;
+    _rotationMagnitude = 0;
     return self;
 }
 
@@ -44,7 +46,7 @@
 }
 
 - (NSArray *)valuesToEncode {
-    return @[@"blinkRate", @"blinkMagnitude", @"pulseRate", @"pulseMagnitude", @"jitterRate", @"jitterXMagnitude", @"jitterYMagnitude", @"fadeRate", @"fadeMagnitude"];
+    return @[@"blinkRate", @"blinkMagnitude", @"pulseRate", @"pulseMagnitude", @"jitterRate", @"jitterXMagnitude", @"jitterYMagnitude", @"fadeRate", @"fadeMagnitude", @"rotationRate", @"rotationMagnitude"];
 }
 
 - (CGFloat)adjustAlpha:(CGFloat)alpha time:(NSTimeInterval)time {
@@ -67,11 +69,14 @@
 }
 
 - (CGAffineTransform)adjustTransform:(CGAffineTransform)transform time:(NSTimeInterval)time {
-    CGFloat scale = 1 + (_pulseMagnitude ? _pulseMagnitude * sin(time * _pulseRate) : 0);
+    CGFloat scale = 1 + (_pulseMagnitude ? _pulseMagnitude * sin(time * _pulseRate * M_PI * 2) : 0);
     transform = CGAffineTransformScale(transform, scale, scale);
     CGFloat jitterX = _jitterXMagnitude ? _jitterXMagnitude * NPRandomContinuousFloat(time * _jitterRate) : 0;
     CGFloat jitterY = _jitterYMagnitude ? _jitterYMagnitude * NPRandomContinuousFloat(time * _jitterRate + 0.3) : 0;
     transform = CGAffineTransformTranslate(transform, jitterX, jitterY);
+    double integerPart;
+    CGFloat rotate = _rotationMagnitude * modf(time * _rotationRate, &integerPart) * M_PI * 2;
+    transform = CGAffineTransformRotate(transform, rotate);
     return transform;
 }
 
@@ -89,6 +94,8 @@
     INTERPOLATE_FLOAT(jitterXMagnitude);
     INTERPOLATE_FLOAT(jitterYMagnitude);
     INTERPOLATE_FLOAT(jitterRate);
+    INTERPOLATE_FLOAT(rotationMagnitude);
+    INTERPOLATE_FLOAT(rotationRate);
     return c;
 }
 

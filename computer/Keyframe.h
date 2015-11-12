@@ -18,6 +18,8 @@
 
 - (FrameTime *)maxWith:(FrameTime *)other;
 
++ (FrameTime *)leastCommonMultipleForTimes:(NSArray<__kindof FrameTime*>*)times maxTime:(NSTimeInterval)max;
+
 @end
 
 @interface Keyframe : NSObject <NSCoding>
