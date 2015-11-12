@@ -125,12 +125,6 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
         [weakSelf duplicate:nil];
     };
     [items addObject:duplicate];
-    QuickCollectionItem *options = [QuickCollectionItem new];
-    options.label = NSLocalizedString(@"Options…", @"");
-    options.action = ^{
-        [weakSelf showOptions];
-    };
-    [items addObject:options];
     QuickCollectionItem *animations = [QuickCollectionItem new];
     animations.label = NSLocalizedString(@"Animations…", @"");
     animations.action = ^{
