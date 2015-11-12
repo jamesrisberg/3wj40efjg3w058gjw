@@ -13,5 +13,6 @@
 @property (nonatomic) Canvas *subcanvas;
 
 @property (nonatomic) NSInteger xRepeat, yRepeat;
+@property (nonatomic) CGFloat xGap, yGap;
 
 @end

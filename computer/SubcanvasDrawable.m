@@ -26,6 +26,8 @@
     self.subcanvas = [aDecoder decodeObjectForKey:@"canvas"];
     self.xRepeat = [aDecoder decodeIntegerForKey:@"xRepeat"] ? : 1;
     self.yRepeat = [aDecoder decodeIntegerForKey:@"yRepeat"] ? : 1;
+    self.xGap = [aDecoder decodeFloatForKey:@"xGap"] ? : 1;
+    self.yGap = [aDecoder decodeFloatForKey:@"yGap"] ? : 1;
     return self;
 }
 
@@ -34,6 +36,8 @@
     [aCoder encodeObject:self.subcanvas forKey:@"canvas"];
     [aCoder encodeInteger:self.xRepeat forKey:@"xRepeat"];
     [aCoder encodeInteger:self.yRepeat forKey:@"yRepeat"];
+    [aCoder encodeFloat:self.xGap forKey:@"xGap"];
+    [aCoder encodeFloat:self.yGap forKey:@"yGap"];
 }
 
 - (void)setup {
@@ -45,6 +49,8 @@
     [self.xReplicator addSubview:self.yReplicator];
     _xRepeat = 1;
     _yRepeat = 1;
+    _xGap = 1;
+    _yGap = 1;
     
     if (!self.subcanvas) {
         self.subcanvas = [Canvas new];
@@ -67,19 +73,22 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     // subcanvas.bounds is set by -[Canvas resizeBoundsToFitContent] inside -setSubcanvas:
-    self.subcanvas.transform = CGAffineTransformMakeScale(self.bounds.size.width / self.xRepeat / self.subcanvas.bounds.size.width, self.bounds.size.height / self.yRepeat / self.subcanvas.bounds.size.height);
+    CGSize innerSize = [self preferredInnerSize];
+    CGFloat contentXScale = self.bounds.size.width / innerSize.width;
+    CGFloat contentYScale = self.bounds.size.height / innerSize.height;
+    self.subcanvas.transform = CGAffineTransformMakeScale(contentXScale, contentYScale);
     self.subcanvas.layer.anchorPoint = CGPointMake(0, 0);
     self.subcanvas.center = CGPointMake(0, 0);
     self.xReplicator.frame = self.bounds;
     self.yReplicator.frame = self.bounds;
-    self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.bounds.size.width / self.xRepeat, 0, 0);
-    self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(0, self.bounds.size.height / self.yRepeat, 0);
+    self.xReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(self.subcanvas.bounds.size.width * contentXScale * self.xGap, 0, 0);
+    self.yReplicator.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(0, self.subcanvas.bounds.size.height * contentYScale * self.yGap, 0);
     self.xReplicator.replicatorLayer.instanceCount = self.xRepeat;
     self.yReplicator.replicatorLayer.instanceCount = self.yRepeat;
 }
 
 - (CGSize)preferredInnerSize {
-    return CGSizeMake(self.subcanvas.bounds.size.width * self.xRepeat, self.subcanvas.bounds.size.height * self.yRepeat);
+    return CGSizeMake(self.subcanvas.bounds.size.width * (1 + self.xGap*(self.xRepeat-1)), self.subcanvas.bounds.size.height * (1 + self.yGap*(self.yRepeat-1)));
 }
 
 - (CGFloat)preferredAspectRatio {
@@ -153,7 +162,31 @@
         };
     };
     
-    v.models = @[xTiles, yTiles];
+    OptionsViewCellModel *xGap = [OptionsViewCellModel new];
+    xGap.title = NSLocalizedString(@"Horizontal spacing", @"");
+    xGap.cellClass = [SliderOptionsCell class];
+    xGap.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
+        [sliderCell setRampedValue:weakSelf.xGap withMin:0.1 max:2];
+        sliderCell.onValueChange = ^(CGFloat val) {
+            weakSelf.xGap = [sliderCell getRampedValueWithMin:0.1 max:2];
+            [weakSelf updatedKeyframeProperties];
+        };
+    };
+    
+    OptionsViewCellModel *yGap = [OptionsViewCellModel new];
+    yGap.title = NSLocalizedString(@"Vertical spacing", @"");
+    yGap.cellClass = [SliderOptionsCell class];
+    yGap.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
+        [sliderCell setRampedValue:weakSelf.yGap withMin:0.1 max:2];
+        sliderCell.onValueChange = ^(CGFloat val) {
+            weakSelf.yGap = [sliderCell getRampedValueWithMin:0.1 max:2];
+            [weakSelf updatedKeyframeProperties];
+        };
+    };
+    
+    v.models = @[xTiles, yTiles, xGap, yGap];
     
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:v];
 }
@@ -170,6 +203,21 @@
     if (_yRepeat == yRepeat) return;
     
     _yRepeat = yRepeat;
+    [self setNeedsLayout];
+    [self updateAspectRatio:[self preferredAspectRatio]];
+}
+
+- (void)setXGap:(CGFloat)xGap {
+    if (_xGap == xGap) return;
+    _xGap = xGap;
+    [self setNeedsLayout];
+    [self updateAspectRatio:[self preferredAspectRatio]];
+}
+
+
+- (void)setYGap:(CGFloat)yGap {
+    if (_yGap == yGap) return;
+    _yGap = yGap;
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
 }

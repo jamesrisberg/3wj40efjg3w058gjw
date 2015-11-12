@@ -109,10 +109,12 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
-    
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:textView action:@selector(resignFirstResponder)];
     [self.navigationItem setRightBarButtonItem:done animated:YES];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
+    });
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
