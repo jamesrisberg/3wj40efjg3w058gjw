@@ -6,9 +6,9 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "OptionsTableViewCell.h"
+#import "OptionsCell.h"
 
-@interface MultiButtonOptionsTableViewCell : OptionsTableViewCell
+@interface MultiButtonOptionsCell : OptionsCell
 
 @property (nonatomic) NSArray *buttonTitles;
 @property (nonatomic) NSArray *buttonActions;

@@ -7,6 +7,7 @@
 //
 
 #import "OptionsTableViewCell.h"
+#import "OptionsCell.h"
 
 @interface OptionsTableViewCell ()
 
@@ -14,32 +15,16 @@
 
 @implementation OptionsTableViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    [self setup];
-    return self;
+- (void)setCell:(OptionsCell *)cell {
+    [_cell removeFromSuperview];
+    _cell = cell;
+    [self addSubview:cell];
+    self.backgroundColor = nil;
 }
 
-- (void)setup {
-    self.textLabel.textColor = [UIColor whiteColor];
-    self.backgroundColor = [UIColor clearColor];
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    if (self.selectionStyle != UITableViewCellSelectionStyleNone) {
-        UIColor *bgColor = highlighted ? [self highlightedBackgroundColor] : [UIColor clearColor];
-        if (animated) {
-            [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-                self.backgroundColor = bgColor;
-            } completion:^(BOOL finished) {
-                
-            }];
-        } else {
-            self.backgroundColor = bgColor;
-        }
-    }
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.cell.frame = self.bounds;
 }
 
 - (UIColor *)highlightedBackgroundColor {

@@ -72,7 +72,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
+    // self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
     
     self.textSizeButton = [_TextSizeButton buttonWithType:UIButtonTypeCustom];
     [self.textSizeButton addTarget:self action:@selector(changeTextSize) forControlEvents:UIControlEventTouchUpInside];
@@ -104,9 +104,18 @@
     self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
+- (void)textViewDidChange:(UITextView *)textView {
+    
+}
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:textView action:@selector(resignFirstResponder)];
+    [self.navigationItem setRightBarButtonItem:done animated:YES];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
     self.textChanged(self.textView.attributedText);
+    [self.navigationItem setRightBarButtonItem:nil animated:YES];
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {

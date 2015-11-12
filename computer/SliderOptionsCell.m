@@ -6,17 +6,17 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "SliderTableViewCell.h"
+#import "SliderOptionsCell.h"
 
 #define RAMPED_EXP 2
 
-@interface SliderTableViewCell ()
+@interface SliderOptionsCell ()
 
 @property (nonatomic) UISlider *slider;
 
 @end
 
-@implementation SliderTableViewCell
+@implementation SliderOptionsCell
 
 - (void)setup {
     [super setup];

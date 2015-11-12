@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OptionsTableViewCell.h"
+#import "OptionsCell.h"
+@class Drawable;
 
 @interface OptionsViewCellModel : NSObject
 
 @property (nonatomic) Class cellClass;
-@property (nonatomic,copy) void (^onCreate)(OptionsTableViewCell *cell);
-@property (nonatomic,copy) void (^onSelect)(OptionsTableViewCell *cell);
+@property (nonatomic,copy) void (^onCreate)(OptionsCell *cell);
+@property (nonatomic,copy) void (^onSelect)(OptionsCell *cell);
 @property (nonatomic) NSString *title;
 
 @end

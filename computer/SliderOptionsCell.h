@@ -6,9 +6,9 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "OptionsTableViewCell.h"
+#import "OptionsCell.h"
 
-@interface SliderTableViewCell : OptionsTableViewCell
+@interface SliderOptionsCell : OptionsCell
 
 @property (nonatomic) CGFloat value; // 0-1
 @property (nonatomic,copy) void (^onValueChange)(CGFloat val);

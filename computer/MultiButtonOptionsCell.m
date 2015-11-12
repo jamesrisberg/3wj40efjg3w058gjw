@@ -6,20 +6,19 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "MultiButtonOptionsTableViewCell.h"
+#import "MultiButtonOptionsCell.h"
 #import "ConvenienceCategories.h"
 
-@interface MultiButtonOptionsTableViewCell ()
+@interface MultiButtonOptionsCell ()
 
 @property (nonatomic) NSArray *buttons;
 
 @end
 
-@implementation MultiButtonOptionsTableViewCell
+@implementation MultiButtonOptionsCell
 
 - (void)setButtonTitles:(NSArray *)buttonTitles {
     _buttonTitles = buttonTitles;
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
     for (UIButton *b in self.buttons) [b removeFromSuperview];
     self.buttons = [buttonTitles map:^id(id obj) {
         UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];

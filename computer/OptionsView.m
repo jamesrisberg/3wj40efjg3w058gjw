@@ -8,6 +8,8 @@
 
 #import "OptionsView.h"
 #import "Drawable.h"
+#import "OptionsCell.h"
+#import "OptionsTableViewCell.h"
 
 @implementation OptionsViewCellModel
 
@@ -89,15 +91,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     OptionsViewCellModel *model = self.models[indexPath.section];
-    NSString *reuseId = NSStringFromClass(model.cellClass);
-    OptionsTableViewCell *cell = nil; // [tableView dequeueReusableCellWithIdentifier:reuseId];
-    if (!cell) {
-        Class cls = model.cellClass;
-        cell = [[cls alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId];
-        cell.underlyingBlurEffect = self.underlyingBlurEffect;
+    OptionsTableViewCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!tableCell) {
+        tableCell = [[OptionsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
     }
+    OptionsCell *cell = [[model.cellClass alloc] init];
     if (model.onCreate) model.onCreate(cell);
-    return cell;
+    tableCell.cell = cell;
+    return tableCell;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -126,7 +127,8 @@
     OptionsViewCellModel *model = self.models[indexPath.section];
     // for some reason, dispatch_after is needed when presenting modals or something...
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (model.onSelect) model.onSelect((id)[tableView cellForRowAtIndexPath:indexPath]);
+        OptionsTableViewCell *tableCell = (id)[tableView cellForRowAtIndexPath:indexPath];
+        if (model.onSelect) model.onSelect(tableCell.cell);
     });
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

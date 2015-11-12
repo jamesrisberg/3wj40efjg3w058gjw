@@ -23,6 +23,7 @@
 #import "VideoExporter.h"
 #import "GifExporter.h"
 #import "CropView.h"
+#import "PropertiesModal.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -302,9 +303,11 @@
 #pragma mark Toolbar
 - (void)showOptions {
     if (self.canvas.selectedItems.count) {
-        QuickCollectionModal *modal = [QuickCollectionModal new];
-        modal.itemSize = CGSizeMake(90, 44);
-        modal.items = [self.canvas.selectedItems.anyObject optionsItems];
+        Drawable *d = self.canvas.selectedItems.anyObject;
+        PropertiesModal *modal = [PropertiesModal new];
+        modal.items = [d optionsItems];
+        modal.optionsCellModels = [d optionsViewCellModels];
+        modal.inlineViewController = [d createInlineViewControllerForEditing];
         [self presentViewController:modal animated:YES completion:nil];
     }
 }
@@ -503,9 +506,6 @@
         self.toolbarView = panelView;
     }
     _panelView = panelView;
-    if ([panelView respondsToSelector:@selector(setUnderlyingBlurEffect:)]) {
-        [(id)panelView setUnderlyingBlurEffect:(UIBlurEffect *)self.toolbar.effect];
-    }
 }
 
 #pragma mark Freehand Drawing

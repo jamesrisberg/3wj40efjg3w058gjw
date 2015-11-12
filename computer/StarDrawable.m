@@ -8,7 +8,8 @@
 
 #import "StarDrawable.h"
 #import "CGPointExtras.h"
-#import "SliderTableViewCell.h"
+#import "SliderOptionsCell.h"
+#import "OptionsCell.h"
 
 @implementation StarDrawable
 
@@ -75,9 +76,9 @@
     
     OptionsViewCellModel *numberOfPoints = [OptionsViewCellModel new];
     numberOfPoints.title = NSLocalizedString(@"Number of points", @"");
-    numberOfPoints.cellClass = [SliderTableViewCell class];
-    numberOfPoints.onCreate = ^(OptionsTableViewCell *cell) {
-        __weak SliderTableViewCell *slider = (id)cell;
+    numberOfPoints.cellClass = [SliderOptionsCell class];
+    numberOfPoints.onCreate = ^(OptionsCell *cell) {
+        __weak SliderOptionsCell *slider = (id)cell;
         [slider setRampedValue:weakSelf.numberOfPoints withMin:2 max:30];
         slider.onValueChange = ^(CGFloat val) {
             weakSelf.numberOfPoints = round([slider getRampedValueWithMin:2 max:30]);
@@ -87,9 +88,9 @@
     
     OptionsViewCellModel *valley = [OptionsViewCellModel new];
     valley.title = NSLocalizedString(@"Valley", @"");
-    valley.cellClass = [SliderTableViewCell class];
-    valley.onCreate = ^(OptionsTableViewCell *cell) {
-        __weak SliderTableViewCell *slider = (id)cell;
+    valley.cellClass = [SliderOptionsCell class];
+    valley.onCreate = ^(OptionsCell *cell) {
+        __weak SliderOptionsCell *slider = (id)cell;
         slider.value = weakSelf.valley;
         slider.onValueChange = ^(CGFloat val) {
             weakSelf.valley = val;

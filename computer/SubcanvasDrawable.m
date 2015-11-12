@@ -10,7 +10,7 @@
 #import "Canvas.h"
 #import "EditorViewController.h"
 #import "OptionsView.h"
-#import "SliderTableViewCell.h"
+#import "SliderOptionsCell.h"
 #import "ReplicatorView.h"
 
 @interface SubcanvasDrawable ()
@@ -127,9 +127,9 @@
     
     OptionsViewCellModel *xTiles = [OptionsViewCellModel new];
     xTiles.title = NSLocalizedString(@"Horizontal tiles", @"");
-    xTiles.cellClass = [SliderTableViewCell class];
-    xTiles.onCreate = ^(OptionsTableViewCell *cell){
-        __weak SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+    xTiles.cellClass = [SliderOptionsCell class];
+    xTiles.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
         [sliderCell setRampedValue:weakSelf.xRepeat withMin:1 max:6];
         sliderCell.onValueChange = ^(CGFloat val) {
             weakSelf.xRepeat = round([sliderCell getRampedValueWithMin:1 max:6]);
@@ -138,9 +138,9 @@
     };
     OptionsViewCellModel *yTiles = [OptionsViewCellModel new];
     yTiles.title = NSLocalizedString(@"Vertical tiles", @"");
-    yTiles.cellClass = [SliderTableViewCell class];
-    yTiles.onCreate = ^(OptionsTableViewCell *cell){
-        __weak SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+    yTiles.cellClass = [SliderOptionsCell class];
+    yTiles.onCreate = ^(OptionsCell *cell){
+        __weak SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
         [sliderCell setRampedValue:weakSelf.yRepeat withMin:1 max:6];
         sliderCell.onValueChange = ^(CGFloat val) {
             weakSelf.yRepeat = round([sliderCell getRampedValueWithMin:1 max:6]);
@@ -155,9 +155,7 @@
 
 - (void)setXRepeat:(NSInteger)xRepeat {
     if (_xRepeat == xRepeat) return;
-    
-    CGFloat oldAspect = [self preferredAspectRatio];
-    
+        
     _xRepeat = xRepeat;
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
@@ -165,8 +163,6 @@
 
 - (void)setYRepeat:(NSInteger)yRepeat {
     if (_yRepeat == yRepeat) return;
-    
-    CGFloat oldAspect = [self preferredAspectRatio];
     
     _yRepeat = yRepeat;
     [self setNeedsLayout];

@@ -11,7 +11,7 @@
 #import "Canvas.h"
 #import "computer-Swift.h"
 #import "OptionsView.h"
-#import "SliderTableViewCell.h"
+#import "SliderOptionsCell.h"
 #import "StaticAnimationPicker.h"
 
 NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.DrawableArrayPasteboardType";
@@ -189,9 +189,9 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     
     OptionsViewCellModel *model = [OptionsViewCellModel new];
     model.title = title;
-    model.cellClass = [SliderTableViewCell class];
-    model.onCreate = ^(OptionsTableViewCell *cell){
-        SliderTableViewCell *sliderCell = (SliderTableViewCell *)cell;
+    model.cellClass = [SliderOptionsCell class];
+    model.onCreate = ^(OptionsCell *cell){
+        SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
         sliderCell.value = [[weakSelf valueForKey:key] floatValue];
         sliderCell.onValueChange = ^(CGFloat val) {
             [weakSelf setValue:@(val) forKey:key];
@@ -328,6 +328,11 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
         _staticAnimation = [StaticAnimation new];
     }
     return _staticAnimation;
+}
+
+#pragma mark Inline Editing VC
+- (UIViewController *)createInlineViewControllerForEditing {
+    return nil;
 }
 
 @end

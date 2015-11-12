@@ -58,6 +58,16 @@
     [[self vcForPresentingModals] presentViewController:nav animated:YES completion:nil];
 }
 
+- (UIViewController *)createInlineViewControllerForEditing {
+    TextEditorViewController *editor = [TextEditorViewController new];
+    editor.text = self.attributedString;
+    [editor setTextChanged:^(NSAttributedString *text) {
+        self.attributedString = text;
+    }];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:editor];
+    return nav;
+}
+
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
     __weak TextDrawable *weakSelf = self;
     
