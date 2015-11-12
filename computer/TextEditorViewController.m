@@ -146,6 +146,7 @@
             return [UIFont fontWithName:fontName size:pointSize];
         }];
         [weakPicker dismissViewControllerAnimated:YES completion:nil];
+        self.textChanged(self.textView.attributedText);
     };
 }
 
@@ -156,6 +157,7 @@
         [self updateTextEntryAttribute:NSForegroundColorAttributeName function:^id(id existing) {
             return color;
         }];
+        self.textChanged(self.textView.attributedText);
     };
     [NPSoftModalPresentationController presentViewController:picker];
 }

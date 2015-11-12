@@ -25,6 +25,9 @@
     self.colorPicker.callback = ^(UIColor *color) {
         StrokePickerViewController *strongSelf = weakSelf;
         strongSelf->_color = color;
+        if (weakSelf.width == 0) {
+            weakSelf.width = 4;
+        }
         [weakSelf didUpdate];
     };
     [self addChildViewController:self.colorPicker];

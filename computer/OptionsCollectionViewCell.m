@@ -21,6 +21,7 @@
     [_cell removeFromSuperview];
     _cell = cell;
     [self.contentView addSubview:cell];
+    self.tintColor = [UIColor whiteColor];
 }
 
 - (void)layoutSubviews {
@@ -35,8 +36,9 @@
     if (title) {
         if (!self.titleLabel) {
             self.titleLabel = [UILabel new];
-            self.titleLabel.textColor = [UIColor whiteColor];
+            self.titleLabel.textColor = [UIColor colorWithWhite:1 alpha:0.7];
             self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+            self.titleLabel.textAlignment = NSTextAlignmentCenter;
             [self.contentView addSubview:self.titleLabel];
         }
         self.titleLabel.text = title.uppercaseString;
