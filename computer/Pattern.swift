@@ -37,7 +37,7 @@ class Pattern: NSObject, NSCoding {
                 case .SolidColor: return ["type": "solid"]
                 case .LinearGradient(endPoint: let endpoint): return ["type": "linear", "endPoint": NSStringFromCGPoint(endpoint)]
                 case .RadialGradient: return ["type": "radial"]
-                case .TonePattern(imageName: let imageName): return ["type": "tonePatttern", "imageName": imageName]
+                case .TonePattern(imageName: let imageName): return ["type": "tonePattern", "imageName": imageName]
                 }
             }
         }
@@ -96,7 +96,7 @@ class Pattern: NSObject, NSCoding {
             gradient.gradientLayer.locations = [0, 1]
             gradient.gradientLayer.colors = [primaryColor.CGColor, primaryColor.CGColor]
             return gradient
-        case .LinearGradient(endPoint: let endPoint):
+        case .LinearGradient(endPoint: _):
             let gradient = prev as? GradientView ?? GradientView()
             applyToGradientLayer(gradient.gradientLayer)
             return gradient

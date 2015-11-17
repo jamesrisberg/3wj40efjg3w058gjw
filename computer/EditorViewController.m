@@ -34,7 +34,7 @@
     NSMutableArray<__kindof UIView*> *_selectionRects;
 }
 
-@property (nonatomic) UIVisualEffectView *toolbar;
+@property (nonatomic) UIView *toolbar;
 @property (nonatomic) UIView *toolbarView;
 @property (nonatomic) IconBar *iconBar;
 @property (nonatomic) CGFloat toolbarHeight;
@@ -69,7 +69,8 @@
     __weak EditorViewController *weakSelf = self;
     
     [super viewDidLoad];
-    self.toolbar = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    self.toolbar = [UIView new]; //[[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    self.toolbar.backgroundColor = [UIColor blackColor];
     [self.view addSubview:self.toolbar];
     self.iconBar = [IconBar new];
     self.iconBar.editor = self;
