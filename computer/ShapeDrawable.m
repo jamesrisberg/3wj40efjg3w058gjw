@@ -68,6 +68,7 @@
 
 - (UIView *)propertiesModalTopActionView {
     PatternPickerView *picker = [[PatternPickerView alloc] initWithFrame:CGRectMake(0, 0, 10, 44)];
+    picker.pattern = self.pattern;
     __weak ShapeDrawable *weakSelf = self;
     picker.onPatternChanged = ^(Pattern *pattern) {
         weakSelf.pattern = pattern;
@@ -204,6 +205,8 @@
     }
     
     self.patternView = nil;
+    self.backgroundColor = [UIColor clearColor];
+    shape.fillColor = nil;
 }
 
 - (void)layoutSubviews {
