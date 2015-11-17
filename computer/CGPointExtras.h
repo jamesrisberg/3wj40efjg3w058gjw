@@ -32,6 +32,8 @@ CGFloat CGPointAngleBetween(CGPoint p1, CGPoint p2);
 CGPoint CGPointShift(CGPoint p, CGFloat direction, CGFloat distance);
 CGPoint CGPointMidpoint(CGPoint p1, CGPoint p2);
 
+    CGPoint CGPointRotate(CGPoint p, CGFloat r);
+    
 CGFloat CGTransformByAddingPadding(CGFloat p, CGFloat padding, CGFloat range);
 CGFloat CGTransformByRemovingPadding(CGFloat p, CGFloat padding, CGFloat range);
 
@@ -42,6 +44,8 @@ CGPoint NPEvaluateSmoothCurve(CGPoint prevPoint, CGPoint fromPoint, CGPoint toPo
 
 CGFloat NPRandomFloat(); // (-1..1)
 CGFloat NPRandomContinuousFloat(CGFloat x); // (-1..1)
+    
+CGRect NPBoundingBoxOfRotatedRect(CGSize size, CGPoint center, CGFloat rotation, CGFloat scale);
     
 #ifdef __cplusplus
 }

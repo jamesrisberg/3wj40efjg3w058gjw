@@ -9,7 +9,7 @@
 #ifndef VideoConstants_h
 #define VideoConstants_h
 
-#define VC_FPS 24
+#define VC_FPS 36
 #define VC_GIF_FPS 12
 #define VC_FASTEST_STATIC_BLINK 6
 #define VC_TIMELINE_CELLS_PER_SECOND 2

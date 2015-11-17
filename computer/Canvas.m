@@ -430,11 +430,12 @@
                 CGRect bounds = [keyframe.properties[@"bounds"] CGRectValue];
                 CGPoint center = [keyframe.properties[@"center"] CGPointValue];
                 CGFloat scale = [keyframe.properties[@"scale"] floatValue];
-                CGFloat radius = MAX(bounds.size.width, bounds.size.height) / 2 * scale * sqrt(2);
-                minX = MIN(minX, center.x - radius);
-                minY = MIN(minY, center.y - radius);
-                maxX = MAX(maxX, center.x + radius);
-                maxY = MAX(maxY, center.y + radius);
+                CGFloat rotation = [keyframe.properties[@"rotation"] floatValue];
+                CGRect bbox = NPBoundingBoxOfRotatedRect(bounds.size, center, rotation, scale);
+                minX = MIN(minX, bbox.origin.x);
+                minY = MIN(minY, bbox.origin.y);
+                maxX = MAX(maxX, CGRectGetMaxX(bbox));
+                maxY = MAX(maxY, CGRectGetMaxY(bbox));
             }
         }
         CGFloat width = MAX(1, maxX - minX);

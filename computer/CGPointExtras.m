@@ -101,3 +101,27 @@ CGFloat NPRandomContinuousFloat(CGFloat x) {
     return val;
 }
 
+CGPoint CGPointRotate(CGPoint p, CGFloat r) {
+    // TODO: optimize
+    return CGPointShift(CGPointZero, atan2(p.y, p.x) + r, CGPointDistance(CGPointZero, p));
+}
+
+CGRect NPBoundingBoxOfRotatedRect(CGSize size, CGPoint center, CGFloat rotation, CGFloat scale) {
+    CGFloat minX = center.x;
+    CGFloat minY = center.y;
+    CGFloat maxX = center.x;
+    CGFloat maxY = center.y;
+    
+    CGPoint aCorner = CGPointRotate(CGPointMake(size.width/2*scale, size.height/2*scale), rotation);
+    
+    for (NSInteger i=0; i<4; i++) {
+        CGPoint corner = CGPointRotate(aCorner, i * M_PI/2);
+        minX = MIN(minX, center.x + corner.x);
+        minY = MIN(minY, center.y + corner.y);
+        maxX = MAX(maxX, center.x + corner.x);
+        maxY = MAX(maxY, center.y + corner.y);
+    }
+    
+    return CGRectMake(minX, minY, maxX - minX, maxY - minY);
+}
+
