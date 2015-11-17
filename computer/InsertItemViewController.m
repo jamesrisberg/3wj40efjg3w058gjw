@@ -67,7 +67,7 @@
     pen.icon = [UIImage imageNamed:@"Pen"];
     pen.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
-        d.fill = nil;
+        d.pattern = nil;
         d.path = nil;
         d.strokeColor = [UIColor redColor];
         d.strokeWidth = 2;
@@ -79,7 +79,7 @@
     circle.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
         d.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 200, 200)];
-        d.fill = [[SKColorFill alloc] initWithColor:[UIColor greenColor]];
+        d.pattern = [Pattern solidColor:[UIColor greenColor]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
@@ -87,7 +87,7 @@
     square.icon = [UIImage imageNamed:@"Square"];
     square.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
-        d.fill = [[SKColorFill alloc] initWithColor:[UIColor redColor]];
+        d.pattern = [Pattern solidColor:[UIColor orangeColor]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
@@ -95,7 +95,7 @@
     star.icon = [UIImage imageNamed:@"Star"];
     star.action = ^{
         StarDrawable *d = [StarDrawable new];
-        d.fill = [[SKColorFill alloc] initWithColor:[UIColor purpleColor]];
+        d.pattern = [Pattern solidColor:[UIColor purpleColor]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
@@ -105,7 +105,7 @@
         Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         
         ShapeDrawable *square = [ShapeDrawable new];
-        square.fill = nil;// [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
+        square.pattern = nil;// [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
         square.strokeWidth = 4;
         square.strokeColor = [UIColor purpleColor];
         [canvas insertDrawable:square];

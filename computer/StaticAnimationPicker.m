@@ -12,6 +12,7 @@
 #import "ShapeDrawable.h"
 #import "SKColorFill.h"
 #import "VideoConstants.h"
+#import "computer-Swift.h"
 
 @interface StaticAnimationPreview : UICollectionViewCell
 
@@ -33,7 +34,7 @@
         [p applyTransform:CGAffineTransformMakeRotation(M_PI/4)];
         self.preview.path = p;
         [self.preview setInternalSize:CGSizeMake(30, 30)];
-        self.preview.fill = [[SKColorFill alloc] initWithColor:[UIColor redColor]];
+        self.preview.pattern = [Pattern solidColor:[UIColor redColor]];
         [self addSubview:self.preview];
         
         self.layer.borderWidth = 3;

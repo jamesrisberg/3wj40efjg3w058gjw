@@ -7,41 +7,22 @@
 //
 
 #import "ShapeDrawable.h"
-#import "SKFill.h"
-#import "SKColorFill.h"
-#import "SKFillPicker.h"
 #import "computer-Swift.h"
 #import "StrokePickerViewController.h"
 
-@interface _FillView : UIView
-
-@property (nonatomic) SKFill *fill;
-
+@interface _GradientView : UIView
 @end
-
-@implementation _FillView
-
-- (void)setFill:(SKFill *)fill {
-    _fill = fill;
-    [self setNeedsDisplay];
+@implementation _GradientView
++ (Class)layerClass {
+    return [CAGradientLayer class];
 }
-
-- (void)drawRect:(CGRect)rect {
-    [self.fill drawInRect:rect];
-}
-
-- (BOOL)isOpaque {
-    return NO;
-}
-
 @end
 
 
 @interface ShapeDrawable ()
 
-@property (nonatomic) _FillView *fillView;
-@property (nonatomic) CAGradientLayer *gradientLayer;
-@property (nonatomic) CAShapeLayer *maskShape;
+@property (nonatomic) UIView *patternView; // only set if needed
+@property (nonatomic) CAShapeLayer *maskShape; // only set if needed for patternView
 
 @end
 
@@ -50,7 +31,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     self.path = [aDecoder decodeObjectForKey:@"path"];
-    self.fill = [aDecoder decodeObjectForKey:@"fill"];
+    self.pattern = [aDecoder decodeObjectForKey:@"pattern"];
     self.strokeColor = [aDecoder decodeObjectForKey:@"strokeColor"];
     self.strokeWidth = [aDecoder decodeFloatForKey:@"strokeWidth"];
     return self;
@@ -59,7 +40,7 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.path forKey:@"path"];
-    [aCoder encodeObject:self.fill forKey:@"fill"];
+    [aCoder encodeObject:self.pattern forKey:@"pattern"];
     [aCoder encodeObject:self.strokeColor forKey:@"strokeColor"];
     [aCoder encodeFloat:self.strokeWidth forKey:@"strokeWidth"];
 }
@@ -70,7 +51,6 @@
     self.strokeEnd = 1;
     self.clipsToBounds = NO;
     self.path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 200, 200)];
-    self.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
     self.strokeWidth = 0;
     self.pattern = [Pattern solidColor:[UIColor redColor]];
 }
@@ -129,15 +109,6 @@
     self.path = path;
 }
 
-- (void)primaryEditAction {
-    SKFillPicker *picker = [[SKFillPicker alloc] initWithFill:self.fill];
-    __weak ShapeDrawable *weakSelf = self;
-    picker.callback = ^(id fill) {
-        weakSelf.fill = fill;
-    };
-    [NPSoftModalPresentationController presentViewController:picker];
-}
-
 - (void)editStroke {
     StrokePickerViewController *picker = [StrokePickerViewController new];
     picker.color = self.strokeColor;
@@ -181,62 +152,63 @@
 }
 
 
-#pragma mark Fills
+#pragma mark Patterns
 + (Class)layerClass {
     return [CAShapeLayer class];
 }
 
-- (void)setFill:(SKFill *)fill {
-    _fill = fill;
-    CAShapeLayer *shape = (id)self.layer;
-    if ([self.fill solidColorOrNil]) {
-        [_fillView removeFromSuperview];
-        _fillView = nil;
-        [self.gradientLayer removeFromSuperlayer];
-        self.gradientLayer = nil;
-        [_maskShape removeFromSuperlayer];
-        _maskShape = nil;
-        
-        shape.fillColor = [self.fill solidColorOrNil].CGColor;
-    } else {
-        shape.fillColor = nil;
-        
+- (void)setPatternView:(UIView *)patternView {
+    if (patternView == _patternView) return;
+    [_patternView removeFromSuperview];
+    
+    _patternView = patternView;
+    if (patternView) {
+        CAShapeLayer *shape = (id)self.layer;
+        [self addSubview:patternView];
         if (!_maskShape) {
             _maskShape = [CAShapeLayer layer];
             _maskShape.path = shape.path;
             _maskShape.strokeColor = nil;
             _maskShape.fillColor = [UIColor blackColor].CGColor;
         }
-        
-        if ([self.fill canBeAppliedToGradientLayer]) {
-            [_fillView removeFromSuperview];
-            _fillView = nil;
-            
-            self.layer.backgroundColor = [UIColor clearColor].CGColor;
-            if (!_gradientLayer) {
-                _gradientLayer = [CAGradientLayer layer];
-                [self.layer addSublayer:_gradientLayer];
-                _gradientLayer.mask = _maskShape;
-            }
-            [self.fill applyToLayer:self.gradientLayer];
-        } else if (fill) {
-            [_gradientLayer removeFromSuperlayer];
-            _gradientLayer = nil;
-            if (!_fillView) {
-                _fillView = [_FillView new];
-                [self addSubview:_fillView];
-                _fillView.layer.mask = self.maskShape;
-            }
-            _fillView.fill = fill;
-        }
+        patternView.layer.mask = _maskShape;
+    } else {
+        _maskShape = nil;
     }
-    [self setNeedsLayout];
+}
+
+- (void)setPattern:(Pattern *)pattern {
+    _pattern = pattern;
+    
+    CAShapeLayer *shape = (id)self.layer;
+    
+    UIColor *solidColor = [pattern solidColorOrPattern];
+    if (solidColor) {
+        self.patternView = nil;
+        shape.fillColor = solidColor.CGColor;
+        return;
+    }
+    
+    if ([pattern canApplyToGradientLayer]) {
+        _GradientView *gradientView = [self.patternView isKindOfClass:[_GradientView class]] ? (id)self.patternView : [_GradientView new];
+        [pattern applyToGradientLayer:(CAGradientLayer *)gradientView.layer];
+        self.patternView = gradientView;
+        return;
+    }
+    
+    if ([pattern canApplyToImageView]) {
+        UIImageView *imageView = [self.pattern isKindOfClass:[UIImageView class]] ? (id)self.patternView : [UIImageView new];
+        [pattern applyToImageView:imageView];
+        self.patternView = imageView;
+        return;
+    }
+    
+    self.patternView = nil;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.fillView.frame = self.bounds;
-    self.gradientLayer.frame = self.bounds;
+    self.patternView.frame = self.bounds;
     self.maskShape.frame = self.bounds;
 }
 

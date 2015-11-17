@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Pattern: NSObject {
+class Pattern: NSObject, NSCoding {
     init(type: PatternType, primaryColor: UIColor, secondaryColor: UIColor?) {
         self.type = type
         self.primaryColor = primaryColor
@@ -28,6 +28,27 @@ class Pattern: NSObject {
                 case .SolidColor: return false
                 default: return true
                 }
+            }
+        }
+        
+        var toDict: [String: AnyObject] {
+            get {
+                switch self {
+                case .SolidColor: return ["type": "solid"]
+                case .LinearGradient(endPoint: let endpoint): return ["type": "linear", "endPoint": NSStringFromCGPoint(endpoint)]
+                case .RadialGradient: return ["type": "radial"]
+                case .TonePattern(imageName: let imageName): return ["type": "tonePatttern", "imageName": imageName]
+                }
+            }
+        }
+        
+        static func fromDict(dict: [String: AnyObject]) -> PatternType! {
+            switch dict["type"]! as! String {
+                case "solid": return .SolidColor
+                case "linear": return .LinearGradient(endPoint: CGPointFromString(dict["endPoint"]! as! String))
+                case "radial": return .RadialGradient
+                case "tonePattern": return .TonePattern(imageName: dict["imageName"]! as! String)
+                default: return nil
             }
         }
     }
@@ -77,13 +98,25 @@ class Pattern: NSObject {
             return gradient
         case .LinearGradient(endPoint: let endPoint):
             let gradient = prev as? GradientView ?? GradientView()
-            gradient.gradientLayer.locations = [0, 1]
-            gradient.gradientLayer.colors = [primaryColor.CGColor, (secondaryColor ?? UIColor.clearColor()).CGColor]
-            gradient.gradientLayer.startPoint = CGPointZero
-            gradient.gradientLayer.endPoint = endPoint
+            applyToGradientLayer(gradient.gradientLayer)
             return gradient
         case .RadialGradient:
             // TODO: gradient image caching?
+            let imageView = prev as? UIImageView ?? UIImageView()
+            imageView.image = getRadialGradientImage()
+            return imageView
+        case .TonePattern(imageName: _):
+            // TODO: image caching
+            let view = prev as? PlainView ?? PlainView()
+            view.backgroundColor = UIColor(patternImage: getTonePatternImage())
+            return view
+        }
+    }
+    
+    // MARK: Rendering
+    func getRadialGradientImage() -> UIImage! {
+        switch type {
+        case .RadialGradient:
             let size = CGSizeMake(100, 100)
             UIGraphicsBeginImageContextWithOptions(size, true, 1)
             let secondary = secondaryColorOrDefault
@@ -94,11 +127,14 @@ class Pattern: NSObject {
                 , 0, center, size.height, [])
             let image = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            let imageView = prev as? UIImageView ?? UIImageView()
-            imageView.image = image
-            return imageView
+            return image
+        default:
+            return nil
+        }
+    }
+    func getTonePatternImage() -> UIImage! {
+        switch type {
         case .TonePattern(imageName: let imageName):
-            // TODO: image caching
             let image = UIImage(named: imageName)!
             UIGraphicsBeginImageContextWithOptions(image.size, true, image.scale)
             primaryColor.setFill()
@@ -109,9 +145,67 @@ class Pattern: NSObject {
             UIBezierPath(rect: rect).fill()
             let patternImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
-            let view = prev as? PlainView ?? PlainView()
-            view.backgroundColor = UIColor(patternImage: patternImage)
-            return view
+            return patternImage
+        default:
+            return nil
+        }
+    }
+    func applyToGradientLayer(layer: CAGradientLayer) {
+        switch type {
+        case .LinearGradient(endPoint: let endPoint):
+            layer.locations = [0, 1]
+            layer.colors = [primaryColor.CGColor, (secondaryColor ?? UIColor.clearColor()).CGColor]
+            layer.startPoint = CGPointZero
+            layer.endPoint = endPoint
+        default: ()
+        }
+    }
+    func applyToImageView(imageView: UIImageView) {
+        switch type {
+        case .RadialGradient:
+            imageView.image = getRadialGradientImage()
+            imageView.contentMode = .ScaleToFill
+        default: ()
+        }
+    }
+    
+    // MARK: Coding
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(primaryColor, forKey: "primaryColor")
+        aCoder.encodeObject(secondaryColor, forKey: "secondaryColor")
+        aCoder.encodeObject(type.toDict, forKey: "type")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        type = PatternType.fromDict(aDecoder.decodeObjectForKey("type") as! [String: AnyObject])
+        primaryColor = aDecoder.decodeObjectForKey("primaryColor") as! UIColor
+        secondaryColor = aDecoder.decodeObjectForKey("secondaryColor") as! UIColor?
+    }
+    
+    // MARK: Client helpers
+    var solidColorOrPattern: UIColor? {
+        switch type {
+        case .SolidColor:
+            return primaryColor
+        case .TonePattern(imageName: _):
+            return UIColor(patternImage: getTonePatternImage())
+        default: return nil
+        }
+    }
+    var canApplyToGradientLayer: Bool {
+        get {
+            switch type {
+            case .LinearGradient(endPoint: _): return true
+            default: return false
+            }
+        }
+    }
+    var canApplyToImageView: Bool {
+        get {
+            switch type {
+            case .RadialGradient: return true
+            default: return false
+            }
         }
     }
 }

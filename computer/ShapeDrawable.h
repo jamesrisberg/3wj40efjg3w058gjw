@@ -7,14 +7,12 @@
 //
 
 #import "Drawable.h"
-#import "SKFill.h"
 @class Pattern;
 
 @interface ShapeDrawable : Drawable
 
 @property (nonatomic) UIBezierPath *path;
 - (void)fitContent;
-@property (nonatomic) SKFill *fill;
 @property (nonatomic) Pattern *pattern;
 @property (nonatomic) UIColor *strokeColor; // TODO: implement stroke
 @property (nonatomic) CGFloat strokeWidth;
