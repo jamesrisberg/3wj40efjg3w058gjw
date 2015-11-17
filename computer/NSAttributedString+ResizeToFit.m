@@ -49,6 +49,14 @@
         [output removeAttribute:NSFontAttributeName range:range];
         [output addAttribute:NSFontAttributeName value:scaledFont range:range];
     }];
+    [str enumerateAttribute:NSShadowAttributeName inRange:NSMakeRange(0, str.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        if (value) {
+            NSShadow *shadow = [value copy];
+            shadow.shadowOffset = CGSizeMake(shadow.shadowOffset.width * scale, shadow.shadowOffset.height * scale);
+            [output removeAttribute:NSShadowAttributeName range:range];
+            [output addAttribute:NSShadowAttributeName value:shadow range:range];
+        }
+    }];
 }
 
 - (CGFloat)maximumFontPointSize {
