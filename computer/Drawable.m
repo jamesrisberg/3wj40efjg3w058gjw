@@ -149,6 +149,10 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     return nil;
 }
 
+- (UIView *)propertiesModalTopActionView {
+    return nil;
+}
+
 #pragma mark Actions
 - (void)delete:(id)sender {
     NSMutableSet *selection = self.canvas.selectedItems.mutableCopy;

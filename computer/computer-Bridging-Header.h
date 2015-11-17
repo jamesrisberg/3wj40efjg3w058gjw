@@ -6,3 +6,4 @@
 #import "UIImage+Trim.h"
 #import "TouchForwardingView.h"
 #import "AFImageSearchResultsViewController.h"
+#import "RGB-HSV.h"

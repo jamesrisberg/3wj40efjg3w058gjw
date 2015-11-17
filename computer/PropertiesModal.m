@@ -92,6 +92,24 @@
     __weak PropertiesModal *weakSelf = self;
     NSMutableArray *sections = [NSMutableArray new];
     
+    if (self.topActionView) {
+        _PropertiesModalSection *topActionView = [_PropertiesModalSection new];
+        topActionView.sectionId = @"TopActionView";
+        topActionView.models = @[self.topActionView];
+        topActionView.cellClass = [UICollectionViewCell class];
+        topActionView.sizeBlock = ^CGSize(id model) {
+            return CGSizeMake([weakSelf maxCellWidth], [model frame].size.height);
+        };
+        topActionView.onConfigure = ^(id theModel, id theCell) {
+            // HACK!!!!!
+            [[theCell viewWithTag:22] removeFromSuperview];
+            [[theCell contentView] addSubview:theModel];
+            [theModel setFrame:[theModel superview].bounds];
+            [theModel setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+        };
+        [sections addObject:topActionView];
+    }
+    
     if (self.inlineViewController) {
         _PropertiesModalSection *inlineVC = [_PropertiesModalSection new];
         inlineVC.cellClass = [InlineViewControllerCollectionViewCell class];

@@ -72,6 +72,7 @@
     self.path = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 200, 200)];
     self.fill = [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
     self.strokeWidth = 0;
+    self.pattern = [Pattern solidColor:[UIColor redColor]];
 }
 
 - (void)setPath:(UIBezierPath *)path {
@@ -83,6 +84,19 @@
     CAShapeLayer *shape = (id)self.layer;
     shape.path = path.CGPath;
     self.maskShape.path = shape.path;
+}
+
+- (UIView *)propertiesModalTopActionView {
+    PatternPickerView *picker = [[PatternPickerView alloc] initWithFrame:CGRectMake(0, 0, 10, 44)];
+    __weak ShapeDrawable *weakSelf = self;
+    picker.onPatternChanged = ^(Pattern *pattern) {
+        weakSelf.pattern = pattern;
+    };
+    __weak PatternPickerView *weakPicker = picker;
+    picker.shouldEditModally = ^{
+        [weakPicker editModally:[NPSoftModalPresentationController getViewControllerForPresentationInWindow:weakSelf.window]];
+    };
+    return picker;
 }
 
 - (UIBezierPath *)path {
@@ -122,19 +136,6 @@
         weakSelf.fill = fill;
     };
     [NPSoftModalPresentationController presentViewController:picker];
-}
-
-- (QuickCollectionItem *)mainAction {
-    __weak ShapeDrawable *weakSelf = self;
-    
-    QuickCollectionItem *editFill = [QuickCollectionItem new];
-    editFill.label = NSLocalizedString(@"Fill…", @"");
-    editFill.action = ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf primaryEditAction];
-        });
-    };
-    return editFill;
 }
 
 - (void)editStroke {

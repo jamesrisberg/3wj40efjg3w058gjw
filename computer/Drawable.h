@@ -23,6 +23,7 @@ extern NSString * const DrawableArrayPasteboardType;
 - (UIViewController *)vcForPresentingModals;
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItems;
 - (QuickCollectionItem *)mainAction;
+- (UIView *)propertiesModalTopActionView;
 - (UIViewController *)createInlineViewControllerForEditing;
 - (Canvas *)canvas;
 @property (nonatomic,copy) void (^onShapeUpdate)();
@@ -37,6 +38,8 @@ extern NSString * const DrawableArrayPasteboardType;
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time;
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModels;
+
+// helper for subclasses:
 - (OptionsViewCellModel *)sliderForKey:(NSString *)key title:(NSString *)title;
 
 /*
