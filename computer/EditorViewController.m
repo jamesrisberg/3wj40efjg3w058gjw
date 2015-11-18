@@ -44,6 +44,8 @@
 @property (nonatomic) TimelineView *timeline;
 @property (nonatomic) UIView *panelView;
 
+@property (nonatomic) BOOL hideSelectionRects;
+
 @property (nonatomic,copy) void (^modalEditingCallback)(Canvas *canvas);
 
 @property (nonatomic) UIView *transientOverlayView;
@@ -266,6 +268,7 @@
         rect.userInteractionEnabled = NO;
         rect.layer.borderColor = [UIColor redColor].CGColor;
         rect.layer.borderWidth = 1.5;
+        rect.hidden = self.hideSelectionRects;
         [self.view insertSubview:rect aboveSubview:self.canvas];
         [_selectionRects addObject:rect];
     }
@@ -293,6 +296,13 @@
 
 - (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touch:(UITouch *)touch {
     [self showOptionsInteractively:presenter touch:touch];
+}
+
+- (void)setHideSelectionRects:(BOOL)hideSelectionRects {
+    _hideSelectionRects = hideSelectionRects;
+    for (UIView *rect in _selectionRects) {
+        rect.hidden = hideSelectionRects;
+    }
 }
 
 #pragma mark Overlays
@@ -438,6 +448,7 @@
         self.toolbarView = self.iconBar;
         self.auxiliaryFloatingButton = nil;
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
+        self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
