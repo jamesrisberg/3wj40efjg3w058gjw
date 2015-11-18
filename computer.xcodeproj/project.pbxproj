@@ -90,6 +90,7 @@
 		5F858DD31BFC3FC8004E658E /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */; };
 		5F858DD41BFC3FC8004E658E /* Orbitron Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */; };
 		5F858DD51BFC3FC8004E658E /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */; };
+		5F858DDB1BFC5207004E658E /* UIBezierPath-Points.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */; };
 		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
 		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
@@ -334,6 +335,8 @@
 		5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
 		5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Orbitron Medium.ttf"; sourceTree = "<group>"; };
 		5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
+		5F858DD91BFC5207004E658E /* UIBezierPath-Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath-Points.h"; sourceTree = "<group>"; };
+		5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath-Points.m"; sourceTree = "<group>"; };
 		5F900E171BBB9275000D4C7C /* FilePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePickerViewController.h; sourceTree = "<group>"; };
 		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
 		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
@@ -1022,6 +1025,8 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5F858DD91BFC5207004E658E /* UIBezierPath-Points.h */,
+				5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
@@ -1354,6 +1359,7 @@
 				5F809A581BE1C3740030B538 /* BitmapScaleManipulator.m in Sources */,
 				5F858DAF1BFBB8A3004E658E /* Pattern.swift in Sources */,
 				5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */,
+				5F858DDB1BFC5207004E658E /* UIBezierPath-Points.m in Sources */,
 				5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */,
 				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,

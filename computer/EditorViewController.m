@@ -294,8 +294,8 @@
     self.mode = EditorModePanelView;
 }
 
-- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touch:(UITouch *)touch {
-    [self showOptionsInteractively:presenter touch:touch];
+- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
+    [self showOptionsInteractively:presenter touchPos:pos];
 }
 
 - (void)setHideSelectionRects:(BOOL)hideSelectionRects {
@@ -316,14 +316,14 @@
 #pragma mark Toolbar
 
 - (void)showOptions {
-    [self showOptionsInteractively:nil touch:nil];
+    [self showOptionsInteractively:nil touchPos:CGPointZero];
 }
 
-- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touch:(UITouch *)touch {
+- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touchPos:(CGPoint)pos {
     if (self.canvas.selectedItems.count) {
         Drawable *d = self.canvas.selectedItems.anyObject;
         PropertiesModal *modal = [PropertiesModal new];
-        if (touch) modal.touchPointInWindowCoordinates = [touch locationInView:self.view.window];
+        if (!CGPointEqualToPoint(pos, CGPointZero)) modal.touchPointInWindowCoordinates = [self.view.window convertPoint:pos fromView:self.canvas];
         modal.interactivePresentation = transition;
         modal.items = [d optionsItems];
         modal.optionsCellModels = [d optionsViewCellModels];

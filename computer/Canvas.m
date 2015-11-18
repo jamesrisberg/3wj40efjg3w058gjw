@@ -29,8 +29,6 @@
     CFAbsoluteTime _tapStackGeneratedAtTime;
     CGPoint _tapStackGeneratedAtPoint;
     
-    UITouch *_lastTouch;
-    
     __weak Drawable *_lastSelection;
     __weak Drawable *_selectionBeforeFirstTap;
 }
@@ -103,7 +101,7 @@
                 [self userGesturedToSelectDrawable:_selectionBeforeFirstTap];
             }
         }
-        [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touch:_lastTouch];
+        [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touchPos:[rec locationInView:self]];
     }
 }
 
@@ -118,7 +116,6 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [_touches addObjectsFromArray:touches.allObjects];
-    _lastTouch = touches.anyObject;
     if (_touches.count > 1) {
         NSArray *down = _touches.allObjects;
         CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
@@ -551,7 +548,7 @@
     if (touchForceFraction > minForce) {
         if (!self.interactiveOptionsTransition) {
             self.interactiveOptionsTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
-            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition touch:nil];
+            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition touchPos:CGPointZero];
         }
     }
     if (self.interactiveOptionsTransition) {
