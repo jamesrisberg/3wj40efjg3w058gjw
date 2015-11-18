@@ -108,10 +108,12 @@
 }
 
 - (void)longPress:(UILongPressGestureRecognizer *)rec {
-    UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
-    self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
-    [self.editorShapeStackList show];
-    [self updateForceReading];
+    if (rec.state == UIGestureRecognizerStateBegan) {
+        UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
+        self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
+        [self.editorShapeStackList show];
+        [self updateForceReading];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
