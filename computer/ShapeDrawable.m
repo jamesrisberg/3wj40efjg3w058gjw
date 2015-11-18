@@ -68,7 +68,7 @@
 
 - (UIView *)propertiesModalTopActionView {
     PatternPickerView *picker = [[PatternPickerView alloc] initWithFrame:CGRectMake(0, 0, 10, 44)];
-    picker.pattern = self.pattern;
+    picker.pattern = self.pattern ? : [Pattern solidColor:[UIColor clearColor]];
     __weak ShapeDrawable *weakSelf = self;
     picker.onPatternChanged = ^(Pattern *pattern) {
         weakSelf.pattern = pattern;
