@@ -31,6 +31,7 @@
     self.textEnd = 1;
     
     NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    para.alignment = NSTextAlignmentCenter;
     NSDictionary *defaultAttrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: para};
     self.attributedString = [[NSAttributedString alloc] initWithString:@"Double-tap for options" attributes:defaultAttrs];
     [self addSubview:self.label];

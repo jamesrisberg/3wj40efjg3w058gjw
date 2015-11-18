@@ -77,6 +77,19 @@
 		5F858DB71BFBB8A3004E658E /* SatValGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F858DAC1BFBB8A3004E658E /* SatValGrid.swift */; };
 		5F858DB81BFBB8A3004E658E /* AlphaSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F858DAD1BFBB8A3004E658E /* AlphaSlider.swift */; };
 		5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F858DAE1BFBB8A3004E658E /* Pixel.swift */; };
+		5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DBB1BFC3F38004E658E /* Sniglet Regular.ttf */; };
+		5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DBE1BFC3F4F004E658E /* Chunk.ttf */; };
+		5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC01BFC3FC8004E658E /* Blackout Midnight.ttf */; };
+		5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC11BFC3FC8004E658E /* LeagueSpartan-Bold.otf */; };
+		5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC21BFC3FC8004E658E /* OstrichSans-Bold.otf */; };
+		5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC31BFC3FC8004E658E /* OstrichSansInline-Regular.otf */; };
+		5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC41BFC3FC8004E658E /* LeagueScriptNumberOne.otf */; };
+		5F858DD01BFC3FC8004E658E /* Blackout Two AM.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC51BFC3FC8004E658E /* Blackout Two AM.ttf */; };
+		5F858DD11BFC3FC8004E658E /* knewave.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC61BFC3FC8004E658E /* knewave.ttf */; };
+		5F858DD21BFC3FC8004E658E /* knewave-outline.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC71BFC3FC8004E658E /* knewave-outline.ttf */; };
+		5F858DD31BFC3FC8004E658E /* LeagueGothic-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */; };
+		5F858DD41BFC3FC8004E658E /* Orbitron Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */; };
+		5F858DD51BFC3FC8004E658E /* LeagueGothic-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */; };
 		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
 		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
@@ -308,6 +321,19 @@
 		5F858DAC1BFBB8A3004E658E /* SatValGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SatValGrid.swift; sourceTree = "<group>"; };
 		5F858DAD1BFBB8A3004E658E /* AlphaSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaSlider.swift; sourceTree = "<group>"; };
 		5F858DAE1BFBB8A3004E658E /* Pixel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pixel.swift; sourceTree = "<group>"; };
+		5F858DBB1BFC3F38004E658E /* Sniglet Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sniglet Regular.ttf"; sourceTree = "<group>"; };
+		5F858DBE1BFC3F4F004E658E /* Chunk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Chunk.ttf; sourceTree = "<group>"; };
+		5F858DC01BFC3FC8004E658E /* Blackout Midnight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blackout Midnight.ttf"; sourceTree = "<group>"; };
+		5F858DC11BFC3FC8004E658E /* LeagueSpartan-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueSpartan-Bold.otf"; sourceTree = "<group>"; };
+		5F858DC21BFC3FC8004E658E /* OstrichSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OstrichSans-Bold.otf"; sourceTree = "<group>"; };
+		5F858DC31BFC3FC8004E658E /* OstrichSansInline-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OstrichSansInline-Regular.otf"; sourceTree = "<group>"; };
+		5F858DC41BFC3FC8004E658E /* LeagueScriptNumberOne.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LeagueScriptNumberOne.otf; sourceTree = "<group>"; };
+		5F858DC51BFC3FC8004E658E /* Blackout Two AM.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Blackout Two AM.ttf"; sourceTree = "<group>"; };
+		5F858DC61BFC3FC8004E658E /* knewave.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = knewave.ttf; sourceTree = "<group>"; };
+		5F858DC71BFC3FC8004E658E /* knewave-outline.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "knewave-outline.ttf"; sourceTree = "<group>"; };
+		5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Regular.otf"; sourceTree = "<group>"; };
+		5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Orbitron Medium.ttf"; sourceTree = "<group>"; };
+		5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LeagueGothic-Italic.otf"; sourceTree = "<group>"; };
 		5F900E171BBB9275000D4C7C /* FilePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePickerViewController.h; sourceTree = "<group>"; };
 		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
 		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
@@ -739,6 +765,26 @@
 			name = "Pattern Picker";
 			sourceTree = "<group>";
 		};
+		5F858DBD1BFC3F3E004E658E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5F858DBE1BFC3F4F004E658E /* Chunk.ttf */,
+				5F858DBB1BFC3F38004E658E /* Sniglet Regular.ttf */,
+				5F858DC01BFC3FC8004E658E /* Blackout Midnight.ttf */,
+				5F858DC11BFC3FC8004E658E /* LeagueSpartan-Bold.otf */,
+				5F858DC21BFC3FC8004E658E /* OstrichSans-Bold.otf */,
+				5F858DC31BFC3FC8004E658E /* OstrichSansInline-Regular.otf */,
+				5F858DC41BFC3FC8004E658E /* LeagueScriptNumberOne.otf */,
+				5F858DC51BFC3FC8004E658E /* Blackout Two AM.ttf */,
+				5F858DC61BFC3FC8004E658E /* knewave.ttf */,
+				5F858DC71BFC3FC8004E658E /* knewave-outline.ttf */,
+				5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */,
+				5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */,
+				5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */ = {
 			isa = PBXGroup;
 			children = (
@@ -863,6 +909,7 @@
 				5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */,
 				5FEAF8081B9788910071BC08 /* Main.storyboard */,
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
+				5F858DBD1BFC3F3E004E658E /* Fonts */,
 				5FEAF80D1B9788910071BC08 /* LaunchScreen.storyboard */,
 				5FEAF8101B9788910071BC08 /* Info.plist */,
 				5F6110021BB1128900DB4C82 /* TODO.txt */,
@@ -1164,12 +1211,14 @@
 				5FEAF90D1B9E2A760071BC08 /* checker.png in Resources */,
 				5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */,
 				5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */,
+				5F858DD21BFC3FC8004E658E /* knewave-outline.ttf in Resources */,
 				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
 				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
 				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
 				5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */,
 				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
+				5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
 				5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */,
 				5FEAF9331B9E2B010071BC08 /* SKGradientEditor.xib in Resources */,
@@ -1180,15 +1229,26 @@
 				5FEAF9871B9F160A0071BC08 /* voroni_points2.png in Resources */,
 				5F809A5E1BE1C4340030B538 /* frame2.png in Resources */,
 				5FEAF90B1B9E2A760071BC08 /* circle.png in Resources */,
+				5F858DD41BFC3FC8004E658E /* Orbitron Medium.ttf in Resources */,
+				5F858DD31BFC3FC8004E658E /* LeagueGothic-Regular.otf in Resources */,
 				5F809A5F1BE1C4340030B538 /* frame1.png in Resources */,
+				5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */,
+				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
+				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
+				5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */,
+				5F858DD01BFC3FC8004E658E /* Blackout Two AM.ttf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
+				5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
+				5F858DD11BFC3FC8004E658E /* knewave.ttf in Resources */,
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
 				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
 				5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */,
 				5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */,
 				5F809A611BE1C4340030B538 /* frame3.png in Resources */,
+				5F858DD51BFC3FC8004E658E /* LeagueGothic-Italic.otf in Resources */,
 				5FEAF9831B9F160A0071BC08 /* lookup_amatorka.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
