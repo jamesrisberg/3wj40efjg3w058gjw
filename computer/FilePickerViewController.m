@@ -12,15 +12,17 @@
 #import "ExpandingButton.h"
 #import "EditorViewController.h"
 #import "FilePreviewViewController.h"
+#import "SwipeMenuView.h"
 
 const CGFloat _FilePickerPreviewViewAspectRatio = 1.61803398875; // golden ratio b/c why tf not
 const CGFloat _FilePickerPreviewLineSpacing = 7;
 
-@interface _FilePickerPreviewView : UIView <UIViewControllerPreviewingDelegate>
+@interface _FilePickerPreviewView : SwipeMenuView <UIViewControllerPreviewingDelegate>
 
 @property (nonatomic) UIImageView *imageView;
 @property (nonatomic) NSURL *fileURL;
 @property (nonatomic,copy) void (^onTapped)();
+@property (nonatomic,copy) void (^onDelete)();
 @property (nonatomic,weak) id<UIViewControllerPreviewing> previewingContext;
 
 @end
@@ -30,16 +32,25 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 - (instancetype)init {
     self = [super init];
     
-    self.backgroundColor = [UIColor whiteColor];
-    
     self.imageView = [UIImageView new];
+    self.imageView.backgroundColor = [UIColor whiteColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [self addSubview:self.imageView];
+    self.view = self.imageView;
     
     UITapGestureRecognizer *tapRec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
-    [self addGestureRecognizer:tapRec];
+    self.imageView.userInteractionEnabled = YES;
+    [self.imageView addGestureRecognizer:tapRec];
     
     self.clipsToBounds = YES;
+    
+    __weak _FilePickerPreviewView *weakSelf = self;
+    SwipeMenuViewAction *delete = [SwipeMenuViewAction new];
+    delete.icon = [UIImage imageNamed:@"Delete"];
+    delete.title = NSLocalizedString(@"Delete", @"");
+    delete.action = ^{
+        weakSelf.onDelete();
+    };
+    self.actions = @[delete];
     
     return self;
 }
@@ -48,14 +59,10 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     self.onTapped();
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.imageView.frame = self.bounds;
-}
-
 - (void)setFileURL:(NSURL *)fileURL {
     _fileURL = fileURL;
     self.imageView.image = nil;
+    self.contentOffset = CGPointZero;
     [CMDocument loadSnapshotForDocumentAtURL:fileURL callback:^(UIImage *snapshot) {
         if ([self.fileURL isEqual:fileURL]) {
             self.imageView.image = snapshot;
@@ -243,11 +250,27 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 - (_FilePickerPreviewView *)viewForIndex:(NSInteger)index {
     _FilePickerPreviewView *view = [_FilePickerPreviewView new];
     NSURL *url = self.fileURLs[index];
-    view.fileURL = url;
     __weak FilePickerViewController *weakSelf = self;
+    __weak _FilePickerPreviewView *weakView = view;
     view.onTapped = ^{
         [weakSelf openDocumentAtURL:url];
     };
+    view.onDelete = ^{
+        [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+        [weakSelf.viewsForURLs removeObjectForKey:url];
+        NSMutableArray *urls = weakSelf.fileURLs.mutableCopy;
+        [weakView.superview sendSubviewToBack:weakView.superview];
+        [UIView animateWithDuration:0.3 animations:^{
+            weakView.transform = CGAffineTransformMakeScale(0.8, 0.2);
+            weakView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [weakView removeFromSuperview];
+        }];
+        [urls removeObject:url];
+        [weakSelf setFileURLs:urls withAnimationCompletion:^{
+        }];
+    };
+    view.fileURL = url;
     return view;
 }
 

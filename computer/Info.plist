@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Content</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -38,6 +40,22 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>knewave.ttf</string>
+		<string>knewave-outline.ttf</string>
+		<string>LeagueGothic-Regular.otf</string>
+		<string>Orbitron Medium.ttf</string>
+		<string>LeagueScriptNumberOne.otf</string>
+		<string>LeagueGothic-Italic.otf</string>
+		<string>Chunk.ttf</string>
+		<string>Sniglet Regular.ttf</string>
+		<string>Blackout Midnight.ttf</string>
+		<string>Blackout Two AM.ttf</string>
+		<string>LeagueSpartan-Bold.otf</string>
+		<string>OstrichSans-Bold.otf</string>
+		<string>OstrichSansInline-Regular.otf</string>
+	</array>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>
@@ -57,22 +75,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>knewave.ttf</string>
-		<string>knewave-outline.ttf</string>
-		<string>LeagueGothic-Regular.otf</string>
-		<string>Orbitron Medium.ttf</string>
-		<string>LeagueScriptNumberOne.otf</string>
-		<string>LeagueGothic-Italic.otf</string>
-		<string>Chunk.ttf</string>
-		<string>Sniglet Regular.ttf</string>
-		<string>Blackout Midnight.ttf</string>
-		<string>Blackout Two AM.ttf</string>
-		<string>LeagueSpartan-Bold.otf</string>
-		<string>OstrichSans-Bold.otf</string>
-		<string>OstrichSansInline-Regular.otf</string>
-	</array>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
