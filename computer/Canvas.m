@@ -13,15 +13,26 @@
 #import "ConvenienceCategories.h"
 #import "SubcanvasDrawable.h"
 
+#define HIT_TEST_CENTER_LEEWAY 27
+#define TAP_STACK_REUSE_MAX_DISTANCE 30
+#define TAP_STACK_REUSE_MAX_TIME 2.5
+
 @interface Canvas () {
     BOOL _setup;
     NSMutableSet *_touches;
-    NSTimer *_singleTouchPressTimer;
-    CGPoint _positionAtStartOfSingleTouchTimer;
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
     __weak Drawable *_selectionAfterFirstTap;
     CGRect _previousTouchBoundsInSelection;
     NSSet *_selectedItems;
+    
+    NSArray *_tapStack;
+    CFAbsoluteTime _tapStackGeneratedAtTime;
+    CGPoint _tapStackGeneratedAtPoint;
+    
+    UITouch *_lastTouch;
+    
+    __weak Drawable *_lastSelection;
+    __weak Drawable *_selectionBeforeFirstTap;
 }
 
 @property (nonatomic,readonly) Drawable *singleSelection;
@@ -51,18 +62,62 @@
     _touches = [NSMutableSet new];
     self.multipleTouchEnabled = YES;
     if (!self.time) self.time = [[FrameTime alloc] initWithFrame:0 atFPS:1];
+    
+    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)]];
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self addGestureRecognizer:doubleTap];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [self addGestureRecognizer:longPress];
+}
+
+- (void)singleTap:(UITapGestureRecognizer *)rec {
+    if (rec.state == UIGestureRecognizerStateRecognized) {
+        _selectionBeforeFirstTap = self.singleSelection;
+        
+        CGPoint p = [rec locationInView:self];
+        if (CGPointDistance(p, _tapStackGeneratedAtPoint) <= TAP_STACK_REUSE_MAX_DISTANCE && CFAbsoluteTimeGetCurrent() - _tapStackGeneratedAtTime <= TAP_STACK_REUSE_MAX_TIME && _tapStack.count) {
+            // reuse the tap stack:
+            if (_lastSelection && [_tapStack containsObject:_lastSelection]) {
+                NSInteger i = [_tapStack indexOfObject:_lastSelection];
+                i = (i+1) % _tapStack.count;
+                [self userGesturedToSelectDrawable:_tapStack[i]];
+            } else {
+                [self userGesturedToSelectDrawable:_tapStack.firstObject];
+            }
+        } else {
+            _tapStack = [self allHitsAtPoint:p];
+            [self userGesturedToSelectDrawable:_tapStack.firstObject];
+            // TODO: add objects overlapping this view to the end of the tap stack?
+        }
+        _tapStackGeneratedAtPoint = p;
+        _tapStackGeneratedAtTime = CFAbsoluteTimeGetCurrent();
+    }
+}
+
+- (void)doubleTap:(UITapGestureRecognizer *)rec {
+    if (rec.state == UIGestureRecognizerStateRecognized) {
+        NSArray *hits = [self allHitsAtPoint:[rec locationInView:self]];
+        if (_selectionBeforeFirstTap) {
+            if ([hits containsObject:_selectionBeforeFirstTap] || hits.count == 0) {
+                [self userGesturedToSelectDrawable:_selectionBeforeFirstTap];
+            }
+        }
+        [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touch:_lastTouch];
+    }
+}
+
+- (void)longPress:(UILongPressGestureRecognizer *)rec {
+    UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
+    self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
+    [self.editorShapeStackList show];
+    [self updateForceReading];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    BOOL hadZeroTouches = _touches.count == 0;
     [_touches addObjectsFromArray:touches.allObjects];
-    if (hadZeroTouches && _touches.count == 1) {
-        // this was the first touch down
-        _singleTouchPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.7 target:self selector:@selector(longPress) userInfo:nil repeats:NO];
-        _positionAtStartOfSingleTouchTimer = [[touches anyObject] locationInView:self];
-    }
+    _lastTouch = touches.anyObject;
     if (_touches.count > 1) {
-        [_singleTouchPressTimer invalidate];
         NSArray *down = _touches.allObjects;
         CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
         _currentGestureTransformsDrawableAboutTouchPoint = [self.singleSelection pointInside:[self.singleSelection convertPoint:touchMidpoint fromView:self] withEvent:nil];
@@ -75,14 +130,6 @@
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self updateForceReading];
     
-    if (_singleTouchPressTimer) {
-        CGPoint pos = [[touches anyObject] locationInView:self];
-        CGFloat dist = sqrt(pow(pos.x - _positionAtStartOfSingleTouchTimer.x, 2) + pow(pos.y - _positionAtStartOfSingleTouchTimer.y, 2));
-        if (dist > 5) {
-            [_singleTouchPressTimer invalidate];
-            _singleTouchPressTimer = nil;
-        }
-    }
     NSArray *down = _touches.allObjects;
     CGPoint t1 = [down[0] locationInView:self];
     CGPoint t1prev = [down[0] previousLocationInView:self];
@@ -135,24 +182,6 @@
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     for (id touch in touches) [_touches removeObject:touch];
-    if (_touches.count == 0) {
-        if ([_singleTouchPressTimer isValid]) {
-            // we're still in a valid single press;
-            Drawable *tapped = [self doHitTest:[touches.anyObject locationInView:self]];
-            [self userGesturedToSelectDrawable:tapped];
-            if ([[touches anyObject] tapCount] == 1) {
-                _selectionAfterFirstTap = self.singleSelection;
-            }
-            /*if ([[touches anyObject] tapCount] == 2 && self.selection == _selectionAfterFirstTap) {
-                [self.selection primaryEditAction];
-            }*/
-            if ([[touches anyObject] tapCount] == 2) {
-                [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touch:[touches anyObject]];
-            }
-        }
-        [_singleTouchPressTimer invalidate];
-    }
-    
     [self updateForceReading];
 }
 
@@ -167,16 +196,6 @@
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     for (id touch in touches) [_touches removeObject:touch];
-    if (_touches.count == 0) {
-        [_singleTouchPressTimer invalidate];
-    }
-    [self updateForceReading];
-}
-
-- (void)longPress {
-    UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
-    self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
-    [self.editorShapeStackList show];
     [self updateForceReading];
 }
 
@@ -204,7 +223,7 @@
 #pragma mark Geometry
 
 - (NSArray *)allHitsAtPoint:(CGPoint)pos {
-    CGFloat centerLeeway = 20; // for small objects
+    CGFloat centerLeeway = 40; // for small objects
     NSMutableArray *hits = [NSMutableArray new];
     for (Drawable *d in self.subviews.reverseObjectEnumerator) {
         // TODO: take into account transforms; don't use UIView's own math
@@ -475,6 +494,8 @@
     
     [self.delegate canvasDidChangeSelection:self];
     [self.delegate canvasSelectionRectNeedsUpdate:self];
+    
+    _lastSelection = selectedItems.anyObject;
 }
 
 - (void)setMultipleSelectionEnabled:(BOOL)multipleSelectionEnabled {
@@ -487,7 +508,9 @@
 - (void)userGesturedToSelectDrawable:(Drawable *)d {
     NSMutableSet *newSelection = self.selectedItems.mutableCopy;
     if (d == nil) {
-        [newSelection removeAllObjects];
+        if (!self.multipleSelectionEnabled) {
+            [newSelection removeAllObjects];
+        }
     } else {
         if (self.multipleSelectionEnabled) {
             if ([newSelection containsObject:d]) {
@@ -501,6 +524,9 @@
         }
     }
     self.selectedItems = newSelection;
+    if ([newSelection containsObject:d]) {
+        _lastSelection = d;
+    }
 }
 
 - (Drawable *)singleSelection {
@@ -532,8 +558,8 @@
         CGFloat oldPercentage = self.interactiveOptionsTransition.percentComplete;
         [self.interactiveOptionsTransition updateInteractiveTransition:percentComplete];
         if (self.interactiveOptionsTransition.percentComplete == 1 && oldPercentage < 1) {
-            [_singleTouchPressTimer invalidate];
-            _singleTouchPressTimer = nil;
+            //[_singleTouchPressTimer invalidate];
+            //_singleTouchPressTimer = nil;
             [self.interactiveOptionsTransition finishInteractiveTransition];
         }
     }
