@@ -10,7 +10,7 @@ import UIKit
 
 class PatternPickerViewController: UIViewController, UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning {
     
-    let background = UIVisualEffectView(effect: nil)
+    let background = UIView() //UIVisualEffectView(effect: nil)
     
     var pattern = Pattern(type: .SolidColor, primaryColor: UIColor.greenColor(), secondaryColor: nil) {
         didSet {
@@ -111,6 +111,8 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
         
         view.addSubview(background)
         view.backgroundColor = UIColor.clearColor()
+        background.alpha = 0
+        background.backgroundColor = UIColor.blackColor()
         
         let tapRec = UITapGestureRecognizer(target: self, action: "dismiss:")
         background.addGestureRecognizer(tapRec)
@@ -249,7 +251,8 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
         
         if dismissing {
             UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.background.effect = nil
+                // self.background.effect = nil
+                self.background.alpha = 0
                 for v in viewsToFade {
                     v.alpha = 0
                 }
@@ -277,7 +280,8 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
             }
             
             UIView.animateWithDuration(duration, animations: { () -> Void in
-                self.background.effect = UIBlurEffect(style: .Dark)
+                // self.background.effect = UIBlurEffect(style: .Dark)
+                self.background.alpha = 1
                 for (v, alpha) in zip(viewsToFade, oldAlphas) {
                     v.alpha = alpha
                 }
