@@ -94,6 +94,10 @@
 		5F9A17F01BFD5889000E6351 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17EF1BFD5889000E6351 /* spark.png */; };
 		5F9A17F31BFD7229000E6351 /* sparkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F11BFD7229000E6351 /* sparkle.png */; };
 		5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F21BFD7229000E6351 /* sparkle2.png */; };
+		5F9A17F91BFD7B95000E6351 /* mac2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F51BFD7B95000E6351 /* mac2.png */; };
+		5F9A17FA1BFD7B95000E6351 /* mac3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F61BFD7B95000E6351 /* mac3.png */; };
+		5F9A17FB1BFD7B95000E6351 /* mac1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F71BFD7B95000E6351 /* mac1.png */; };
+		5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F81BFD7B95000E6351 /* mac4.png */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -345,6 +349,10 @@
 		5F9A17EF1BFD5889000E6351 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		5F9A17F11BFD7229000E6351 /* sparkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sparkle.png; sourceTree = "<group>"; };
 		5F9A17F21BFD7229000E6351 /* sparkle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sparkle2.png; sourceTree = "<group>"; };
+		5F9A17F51BFD7B95000E6351 /* mac2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac2.png; sourceTree = "<group>"; };
+		5F9A17F61BFD7B95000E6351 /* mac3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac3.png; sourceTree = "<group>"; };
+		5F9A17F71BFD7B95000E6351 /* mac1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac1.png; sourceTree = "<group>"; };
+		5F9A17F81BFD7B95000E6351 /* mac4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac4.png; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -780,6 +788,20 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		5F9A17FD1BFD7B99000E6351 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				5F9A17EF1BFD5889000E6351 /* spark.png */,
+				5F9A17F11BFD7229000E6351 /* sparkle.png */,
+				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
+				5F9A17F51BFD7B95000E6351 /* mac2.png */,
+				5F9A17F61BFD7B95000E6351 /* mac3.png */,
+				5F9A17F71BFD7B95000E6351 /* mac1.png */,
+				5F9A17F81BFD7B95000E6351 /* mac4.png */,
+			);
+			name = Particles;
+			sourceTree = "<group>";
+		};
 		5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1091,9 +1113,7 @@
 				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
 				5F9A17E81BFD5510000E6351 /* ParticleDrawable.h */,
 				5F9A17E91BFD5510000E6351 /* ParticleDrawable.m */,
-				5F9A17EF1BFD5889000E6351 /* spark.png */,
-				5F9A17F11BFD7229000E6351 /* sparkle.png */,
-				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
+				5F9A17FD1BFD7B99000E6351 /* Particles */,
 				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
 				5FEAF8231B979A010071BC08 /* PhotoDrawable.m */,
 				5FEAF8251B97A2720071BC08 /* TextDrawable.h */,
@@ -1215,13 +1235,16 @@
 				5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */,
 				5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */,
 				5F858DD21BFC3FC8004E658E /* knewave-outline.ttf in Resources */,
+				5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */,
 				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
 				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
 				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
 				5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */,
 				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
 				5F9A17F31BFD7229000E6351 /* sparkle.png in Resources */,
+				5F9A17FA1BFD7B95000E6351 /* mac3.png in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
+				5F9A17FB1BFD7B95000E6351 /* mac1.png in Resources */,
 				5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
 				5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */,
@@ -1236,6 +1259,7 @@
 				5F858DD31BFC3FC8004E658E /* LeagueGothic-Regular.otf in Resources */,
 				5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */,
 				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
+				5F9A17F91BFD7B95000E6351 /* mac2.png in Resources */,
 				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
 				5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */,
 				5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */,
