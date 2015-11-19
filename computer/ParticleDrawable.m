@@ -20,7 +20,7 @@
 
 - (void)setup {
     [super setup];
-    [self setAppearance:ParticleAppearancePresetSparkle motion:ParticleMotionPresetSparkle];
+    [self setAppearance:ParticleAppearancePresetSnow motion:ParticleMotionPresetSnow];
 }
 
 - (void)setEmitter:(CAEmitterLayer *)emitter {
@@ -108,11 +108,31 @@
 }
 
 - (void)snowAppearance {
-    
+    CAEmitterCell *cell = [CAEmitterCell emitterCell];
+    cell.contents = (id)[UIImage imageNamed:@"spark"].CGImage;
+    cell.color = [UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1].CGColor;
+    self.emitter.emitterCells = @[cell];
 }
 
 - (void)snowMotion {
-    
+    [self updateAspectRatio:2];
+    for (CAEmitterCell *cell in self.emitter.emitterCells) {
+        cell.alphaSpeed = -0.34;
+        cell.alphaRange = 0.3;
+        cell.scale = 0.2;
+        cell.scaleRange = 0.1;
+        cell.scaleSpeed = -0.02;
+        cell.lifetime = 3;
+        cell.emissionLongitude = M_PI/2;
+        // cell.emissionRange = 2*M_PI * 0.1;
+        cell.velocity = 90;
+        cell.velocityRange = 60;
+        cell.birthRate = 200.0 / self.emitter.emitterCells.count;
+    }
+    self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
+        layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.2);
+        layer.emitterSize = CGSizeMake(size.width * 0.9, size.height * 0.2);
+    };
 }
 
 - (void)sparkleAppearance {
