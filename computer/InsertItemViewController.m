@@ -65,10 +65,32 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     QuickCollectionItem *particle = [QuickCollectionItem new];
-    particle.label = NSLocalizedString(@"Particle", @"");
+    particle.icon = [UIImage imageNamed:@"Fire"];
     particle.action = ^{
-        ParticleDrawable *d = [ParticleDrawable new];
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        InsertItemViewController *strongSelf = weakSelf;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            ParticleDrawable *d = [ParticleDrawable new];
+            d.particlePreset = ParticlePresetFire;
+            [strongSelf.editorVC.canvas insertDrawable:d];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Sparkle", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            ParticleDrawable *d = [ParticleDrawable new];
+            d.particlePreset = ParticlePresetSparkle;
+            [strongSelf.editorVC.canvas insertDrawable:d];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Snow", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            ParticleDrawable *d = [ParticleDrawable new];
+            d.particlePreset = ParticlePresetSnow;
+            [strongSelf.editorVC.canvas insertDrawable:d];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            ParticleDrawable *d = [ParticleDrawable new];
+            d.particlePreset = ParticlePresetMacaroni;
+            [strongSelf.editorVC.canvas insertDrawable:d];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
+        [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
     };
     QuickCollectionItem *pen = [QuickCollectionItem new];
     pen.icon = [UIImage imageNamed:@"Pen"];

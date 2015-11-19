@@ -23,6 +23,17 @@
     self.particlePreset = ParticlePresetMacaroni;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeInteger:self.particlePreset forKey:@"particlePreset"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    self.particlePreset = [aDecoder decodeIntegerForKey:@"particlePreset"];
+    return self;
+}
+
 - (void)setEmitter:(CAEmitterLayer *)emitter {
     [_emitter removeFromSuperlayer];
     _emitter = emitter;
