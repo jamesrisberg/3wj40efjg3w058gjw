@@ -98,6 +98,12 @@
 		5F9A17FA1BFD7B95000E6351 /* mac3.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F61BFD7B95000E6351 /* mac3.png */; };
 		5F9A17FB1BFD7B95000E6351 /* mac1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F71BFD7B95000E6351 /* mac1.png */; };
 		5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F81BFD7B95000E6351 /* mac4.png */; };
+		5F9A180A1BFE468B000E6351 /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18091BFE4688000E6351 /* Pacifico.ttf */; };
+		5F9A180C1BFE469F000E6351 /* Amatic-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A180B1BFE469F000E6351 /* Amatic-Bold.ttf */; };
+		5F9A180E1BFE46AD000E6351 /* GrandHotel-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A180D1BFE46AD000E6351 /* GrandHotel-Regular.otf */; };
+		5F9A18101BFE46C0000E6351 /* Capture_it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */; };
+		5F9A18121BFE46DB000E6351 /* riffic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18111BFE46D8000E6351 /* riffic.otf */; };
+		5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18131BFE46E8000E6351 /* norwester.otf */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -353,6 +359,12 @@
 		5F9A17F61BFD7B95000E6351 /* mac3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac3.png; sourceTree = "<group>"; };
 		5F9A17F71BFD7B95000E6351 /* mac1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac1.png; sourceTree = "<group>"; };
 		5F9A17F81BFD7B95000E6351 /* mac4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac4.png; sourceTree = "<group>"; };
+		5F9A18091BFE4688000E6351 /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
+		5F9A180B1BFE469F000E6351 /* Amatic-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Amatic-Bold.ttf"; sourceTree = "<group>"; };
+		5F9A180D1BFE46AD000E6351 /* GrandHotel-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GrandHotel-Regular.otf"; sourceTree = "<group>"; };
+		5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Capture_it.ttf; sourceTree = "<group>"; };
+		5F9A18111BFE46D8000E6351 /* riffic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = riffic.otf; sourceTree = "<group>"; };
+		5F9A18131BFE46E8000E6351 /* norwester.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = norwester.otf; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -771,6 +783,12 @@
 		5F858DBD1BFC3F3E004E658E /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				5F9A18091BFE4688000E6351 /* Pacifico.ttf */,
+				5F9A180B1BFE469F000E6351 /* Amatic-Bold.ttf */,
+				5F9A18111BFE46D8000E6351 /* riffic.otf */,
+				5F9A18131BFE46E8000E6351 /* norwester.otf */,
+				5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */,
+				5F9A180D1BFE46AD000E6351 /* GrandHotel-Regular.otf */,
 				5F858DBE1BFC3F4F004E658E /* Chunk.ttf */,
 				5F858DBB1BFC3F38004E658E /* Sniglet Regular.ttf */,
 				5F858DC01BFC3FC8004E658E /* Blackout Midnight.ttf */,
@@ -1245,11 +1263,13 @@
 				5F9A17FA1BFD7B95000E6351 /* mac3.png in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
 				5F9A17FB1BFD7B95000E6351 /* mac1.png in Resources */,
+				5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */,
 				5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
 				5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */,
 				5FEAF9331B9E2B010071BC08 /* SKGradientEditor.xib in Resources */,
 				5FEAF80C1B9788910071BC08 /* Assets.xcassets in Resources */,
+				5F9A180C1BFE469F000E6351 /* Amatic-Bold.ttf in Resources */,
 				5FEAF90F1B9E2A760071BC08 /* SKColorPicker.xib in Resources */,
 				5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */,
 				5FEAF90C1B9E2A760071BC08 /* colorMap.png in Resources */,
@@ -1261,17 +1281,21 @@
 				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
 				5F9A17F91BFD7B95000E6351 /* mac2.png in Resources */,
 				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
+				5F9A18101BFE46C0000E6351 /* Capture_it.ttf in Resources */,
 				5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */,
 				5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */,
 				5F858DD01BFC3FC8004E658E /* Blackout Two AM.ttf in Resources */,
+				5F9A18121BFE46DB000E6351 /* riffic.otf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */,
+				5F9A180A1BFE468B000E6351 /* Pacifico.ttf in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
 				5F858DD11BFC3FC8004E658E /* knewave.ttf in Resources */,
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
+				5F9A180E1BFE46AD000E6351 /* GrandHotel-Regular.otf in Resources */,
 				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
 				5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */,
 				5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */,

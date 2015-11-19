@@ -266,7 +266,8 @@ BOOL const DefaultTransitionShouldAnimate = YES;
                         NSAssert(appendSuccess, @"Failed to append");
                     }
                 }
-                
+                CVPixelBufferRelease(buffer);
+                buffer = NULL;
                 i++;
 			} else {
 				

@@ -122,10 +122,10 @@
 #define SIZEOF_UNSIGNED_INT 4
 
 /* The size of `unsigned long', as computed by sizeof. */
-#define SIZEOF_UNSIGNED_LONG 8
+#define SIZEOF_UNSIGNED_LONG sizeof(unsigned long)
 
 /* The size of `void *', as computed by sizeof. */
-#define SIZEOF_VOID_P 8
+#define SIZEOF_VOID_P sizeof(void*)
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
