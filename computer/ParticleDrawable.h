@@ -8,21 +8,15 @@
 
 #import "Drawable.h"
 
-typedef NS_ENUM(NSInteger, ParticleAppearancePreset) {
-    ParticleAppearancePresetFire,
-    ParticleAppearancePresetSnow,
-    ParticleAppearancePresetSparkle,
-    ParticleAppearancePresetMacaroni
-};
-
-typedef NS_ENUM(NSInteger, ParticleMotionPreset) {
-    ParticleMotionPresetFire,
-    ParticleMotionPresetSnow,
-    ParticleMotionPresetSparkle
+typedef NS_ENUM(NSInteger, ParticlePreset) {
+    ParticlePresetFire,
+    ParticlePresetSnow,
+    ParticlePresetSparkle,
+    ParticlePresetMacaroni
 };
 
 @interface ParticleDrawable : Drawable
 
-- (void)setAppearance:(ParticleAppearancePreset)appearance motion:(ParticleMotionPreset)motion;
+@property (nonatomic) ParticlePreset particlePreset;
 
 @end

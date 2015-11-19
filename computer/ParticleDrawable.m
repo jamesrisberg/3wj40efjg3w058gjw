@@ -20,7 +20,7 @@
 
 - (void)setup {
     [super setup];
-    [self setAppearance:ParticleAppearancePresetSnow motion:ParticleMotionPresetSnow];
+    self.particlePreset = ParticlePresetMacaroni;
 }
 
 - (void)setEmitter:(CAEmitterLayer *)emitter {
@@ -37,27 +37,21 @@
     }
 }
 
-- (void)setAppearance:(ParticleAppearancePreset)appearance motion:(ParticleMotionPreset)motion {
+
+- (void)setParticlePreset:(ParticlePreset)particlePreset {
+    _particlePreset = particlePreset;
     CAEmitterLayer *emitter = [CAEmitterLayer layer];
     emitter.emitterShape = kCAEmitterLayerRectangle;
     self.emitter = emitter;
     
-    if (appearance == ParticleAppearancePresetFire) {
-        [self fireAppearance];
-    } else if (appearance == ParticleAppearancePresetMacaroni) {
-        [self macaroniAppearance];
-    } else if (appearance == ParticleAppearancePresetSnow) {
-        [self snowAppearance];
-    } else if (appearance == ParticleAppearancePresetSparkle) {
-        [self sparkleAppearance];
-    }
-    
-    if (motion == ParticleMotionPresetFire) {
-        [self fireMotion];
-    } else if (motion == ParticleMotionPresetSnow) {
-        [self snowMotion];
-    } else if (motion == ParticleMotionPresetSparkle) {
-        [self sparkleMotion];
+    if (particlePreset == ParticlePresetFire) {
+        [self fire];
+    } else if (particlePreset == ParticlePresetMacaroni) {
+        [self macaroni];
+    } else if (particlePreset == ParticlePresetSnow) {
+        [self snow];
+    } else if (particlePreset == ParticlePresetSparkle) {
+        [self sparkle];
     }
     
     if (self.onUpdateParticleLayout) {
@@ -67,7 +61,7 @@
 
 #pragma mark Presets
 
-- (void)fireAppearance {
+- (void)fire {
     CAEmitterCell *cell = [CAEmitterCell emitterCell];
     cell.contents = (id)[[UIImage imageNamed:@"spark"] CGImage];
     cell.color = [UIColor colorWithRed:0.505 green:0.230 blue:0.073 alpha:1].CGColor;
@@ -75,9 +69,7 @@
     cell.alphaSpeed = -0.6;
     self.emitter.emitterCells = @[cell];
     self.emitter.renderMode = kCAEmitterLayerAdditive;
-}
-
-- (void)fireMotion {
+    
     [self updateAspectRatio:2];
     self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
         layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.7);
@@ -96,25 +88,43 @@
     }
 }
 
-- (void)macaroniAppearance {
+- (void)macaroni {
     NSArray *images = @[@"mac1", @"mac2", @"mac3", @"mac4"];
     self.emitter.emitterCells = [images map:^id(id obj) {
         CAEmitterCell *cell = [CAEmitterCell emitterCell];
         cell.contents = (id)[[UIImage imageNamed:obj] CGImage];
-        cell.alphaRange = 0.2;
-        cell.alphaSpeed = -0.6;
+        cell.color = [UIColor colorWithWhite:1 alpha:0.1].CGColor;
+        cell.alphaRange = 0.1;
+        cell.alphaSpeed = 0.6;
         return cell;
     }];
+    
+    [self updateAspectRatio:3];
+    for (CAEmitterCell *cell in self.emitter.emitterCells) {
+        cell.scale = 0.3;
+        cell.scaleSpeed = -0.1;
+        cell.lifetime = 3;
+        cell.emissionLongitude = M_PI/2;
+        // cell.emissionRange = 2*M_PI * 0.1;
+        cell.velocity = 90;
+        cell.velocityRange = 60;
+        cell.birthRate = 100.0 / self.emitter.emitterCells.count;
+        cell.spin = 0;
+        cell.spinRange = 0.9;
+    }
+    self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
+        layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.2);
+        layer.emitterSize = CGSizeMake(size.width * 0.9, size.height * 0.2);
+    };
 }
 
-- (void)snowAppearance {
+- (void)snow {
     CAEmitterCell *cell = [CAEmitterCell emitterCell];
     cell.contents = (id)[UIImage imageNamed:@"spark"].CGImage;
-    cell.color = [UIColor colorWithRed:0.9 green:0.9 blue:1 alpha:1].CGColor;
+    cell.color = [UIColor colorWithRed:0.9 green:0.9 blue:0.95 alpha:1].CGColor;
+    cell.blueRange = 0.05;
     self.emitter.emitterCells = @[cell];
-}
-
-- (void)snowMotion {
+    
     [self updateAspectRatio:2];
     for (CAEmitterCell *cell in self.emitter.emitterCells) {
         cell.alphaSpeed = -0.34;
@@ -135,7 +145,7 @@
     };
 }
 
-- (void)sparkleAppearance {
+- (void)sparkle {
     CAEmitterCell *cell1 = [CAEmitterCell emitterCell];
     cell1.contents = (id)[[UIImage imageNamed:@"sparkle"] CGImage];
     
@@ -144,9 +154,7 @@
     
     NSArray *cells = @[cell1, cell2];
     self.emitter.emitterCells = cells;
-}
-
-- (void)sparkleMotion {
+    
     [self updateAspectRatio:1];
     
     self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
@@ -165,16 +173,6 @@
         cell.alphaSpeed = -0.5;
         cell.birthRate = 10;
     }
-}
-
-- (void)fire {
-}
-
-- (void)sparkle {
-    }
-
-- (void)macaroni {
-    
 }
 
 @end
