@@ -38,6 +38,7 @@
     [_emitter removeFromSuperlayer];
     _emitter = emitter;
     [self.layer addSublayer:emitter];
+    [self updateEmitterTiming];
 }
 
 - (void)setBounds:(CGRect)bounds {
@@ -47,7 +48,6 @@
         self.onUpdateParticleLayout(self.bounds.size, self.emitter);
     }
 }
-
 
 - (void)setParticlePreset:(ParticlePreset)particlePreset {
     _particlePreset = particlePreset;
@@ -184,6 +184,21 @@
         cell.alphaSpeed = -0.5;
         cell.birthRate = 10;
     }
+}
+
+- (void)setTime:(FrameTime *)time {
+    [super setTime:time];
+    [self updateEmitterTiming];
+}
+
+- (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
+    [super setUseTimeForStaticAnimations:useTimeForStaticAnimations];
+    [self updateEmitterTiming];
+}
+
+- (void)updateEmitterTiming {
+    self.emitter.timeOffset = self.time.time + 60;
+    self.emitter.speed = self.useTimeForStaticAnimations ? 0 : 1;
 }
 
 @end
