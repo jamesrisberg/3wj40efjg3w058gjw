@@ -42,7 +42,6 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     _rotation = 0;
     _scale = 1;
     _itemOpacity = 1;
-    _timeForStaticAnimations = -1;
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow {
@@ -83,8 +82,7 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 
 - (void)updateAppearance {
     CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformMakeScale(_scale, _scale), _rotation);
-    NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate]; // TODO: don't use the real date
-    if (_timeForStaticAnimations != -1) time = _timeForStaticAnimations;
+    NSTimeInterval time = self.useTimeForStaticAnimations ? self.time.time : [NSDate timeIntervalSinceReferenceDate]; // TODO: don't use the real date
     transform = [self.staticAnimation adjustTransform:transform time:time];
     CGFloat alpha = _itemOpacity;
     alpha = [self.staticAnimation adjustAlpha:alpha time:time];
@@ -336,5 +334,25 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 - (UIViewController *)createInlineViewControllerForEditing {
     return nil;
 }
+
+#pragma mark Time
+- (void)setTime:(FrameTime *)time {
+    _time = time;
+    
+    BOOL hasExactKeyframe = !![self.keyframeStore keyframeAtTime:time];
+    [self setCurrentKeyframeProperties:[self.keyframeStore interpolatedPropertiesAtTime:time]];
+    self.dimmed = !hasExactKeyframe && !self.suppressTimingVisualizations;;
+}
+
+- (void)setSuppressTimingVisualizations:(BOOL)suppressTimingVisualizations {
+    _suppressTimingVisualizations = suppressTimingVisualizations;
+    self.time = self.time;
+}
+
+- (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
+    _useTimeForStaticAnimations = useTimeForStaticAnimations;
+    
+}
+
 
 @end

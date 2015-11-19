@@ -521,7 +521,7 @@
         }
         
         self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning);
-        self.canvas.overrideDimming = (mode == EditorModeExportCropping || mode == EditorModeExportRunning);
+        self.canvas.suppressTimingVisualizations = (mode == EditorModeExportCropping || mode == EditorModeExportRunning);
     }
 }
 

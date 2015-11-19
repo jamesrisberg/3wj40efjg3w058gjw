@@ -269,6 +269,7 @@
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
         [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
+        weakDrawable.time = weakSelf.time;
         [weakSelf updateDrawableForCurrentTime:weakDrawable];
     };
     [self updateDrawableForCurrentTime:weakDrawable];
@@ -385,38 +386,21 @@
 - (void)setTime:(FrameTime *)time {
     _time = time;
     for (Drawable *d in [self drawables]) {
-        [self updateDrawableForCurrentTime:d];
+        d.time = time;
     }
     [self.delegate canvasSelectionRectNeedsUpdate:self];
-}
-
-- (void)updateDrawableForCurrentTime:(Drawable *)d {
-    FrameTime *time = self.time;
-    Keyframe *exactKeyframe = [d.keyframeStore keyframeAtTime:time];
-    d.dimmed = !exactKeyframe && !self.overrideDimming;
-    if ([d.keyframeStore allKeyframes].count > 0) {
-        d.currentKeyframeProperties = [d.keyframeStore interpolatedPropertiesAtTime:time];
-    }
-    d.timeForStaticAnimations = _useTimeForStaticAnimations ? time.time : -1;
-    if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-        [(SubcanvasDrawable *)d subcanvas].time = time;
-        [(SubcanvasDrawable *)d subcanvas].overrideDimming = self.overrideDimming;
-    }
 }
 
 - (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
     _useTimeForStaticAnimations = useTimeForStaticAnimations;
     for (Drawable *d in [self drawables]) {
-        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            [(SubcanvasDrawable *)d subcanvas].useTimeForStaticAnimations = useTimeForStaticAnimations;
-        }
+        d.useTimeForStaticAnimations = useTimeForStaticAnimations;
     }
-    [self setTime:self.time]; // trigger update of [drawables].timeForStaticAnimations
 }
 
-- (void)setOverrideDimming:(BOOL)overrideDimming {
-    _overrideDimming = overrideDimming;
-    [self setTime:self.time];
+
+- (void)setSuppressTimingVisualizations:(BOOL)suppressTimingVisualizations {
+    
 }
 
 - (FrameTime *)duration {
@@ -433,6 +417,12 @@
 
 - (FrameTime *)loopingDuration {
     return nil; // TODO
+}
+
+- (void)updateDrawableForCurrentTime:(Drawable *)d {
+    d.time = self.time;
+    d.suppressTimingVisualizations = self.suppressTimingVisualizations;
+    d.useTimeForStaticAnimations = self.useTimeForStaticAnimations;
 }
 
 #pragma mark Layout

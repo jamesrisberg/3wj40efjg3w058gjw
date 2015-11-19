@@ -22,7 +22,7 @@
 @end
 
 
-@interface Canvas : UIView <NSCopying>
+@interface Canvas : UIView <NSCopying, TimeAware>
 
 - (void)insertDrawable:(Drawable *)drawable;
 - (NSArray<__kindof Drawable*>*)drawables;
@@ -33,11 +33,11 @@
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 
-@property (nonatomic) FrameTime *time;
-@property (nonatomic) BOOL useTimeForStaticAnimations;
-@property (nonatomic) BOOL overrideDimming;
-
 @property (nonatomic,weak) id<CanvasDelegate> delegate;
+
+@property (nonatomic) BOOL useTimeForStaticAnimations;
+@property (nonatomic) FrameTime *time;
+@property (nonatomic) BOOL suppressTimingVisualizations;
 
 - (void)resizeBoundsToFitContent;
 

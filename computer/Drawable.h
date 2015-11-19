@@ -15,7 +15,7 @@
 extern NSString * const DrawableArrayPasteboardType;
 
 @class Canvas;
-@interface Drawable : UIView <NSCopying>
+@interface Drawable : UIView <NSCopying, TimeAware>
 
 - (void)primaryEditAction;
 - (void)setup; // override this
@@ -55,8 +55,11 @@ extern NSString * const DrawableArrayPasteboardType;
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
 @property (nonatomic) StaticAnimation *staticAnimation; // DO NOT modify this in place
-@property (nonatomic) NSTimeInterval timeForStaticAnimations; // if -1, use current time
 
 @property (nonatomic) BOOL dimmed;
+
+@property (nonatomic) BOOL useTimeForStaticAnimations;
+@property (nonatomic) FrameTime *time;
+@property (nonatomic) BOOL suppressTimingVisualizations;
 
 @end

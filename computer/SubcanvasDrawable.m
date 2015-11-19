@@ -66,6 +66,7 @@
 - (void)setSubcanvas:(Canvas *)canvas {
     [_subcanvas removeFromSuperview];
     _subcanvas = canvas;
+    canvas.suppressTimingVisualizations = YES;
     [self.yReplicator addSubview:_subcanvas];
     if (CGRectEqualToRect(self.bounds, CGRectZero)) {
         self.bounds = CGRectMake(0, 0, 200, 200);
@@ -304,6 +305,16 @@
     _rotationOffset = rotationOffset;
     [self setNeedsLayout];
     [self updateAspectRatio:[self preferredAspectRatio]];
+}
+#pragma mark Time
+- (void)setTime:(FrameTime *)time {
+    [super setTime:time];
+    self.subcanvas.time = time;
+}
+
+- (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
+    [super setUseTimeForStaticAnimations:useTimeForStaticAnimations];
+    self.subcanvas.useTimeForStaticAnimations = useTimeForStaticAnimations;
 }
 
 @end
