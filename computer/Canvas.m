@@ -400,7 +400,10 @@
 
 
 - (void)setSuppressTimingVisualizations:(BOOL)suppressTimingVisualizations {
-    
+    _suppressTimingVisualizations = suppressTimingVisualizations;
+    for (Drawable *d in [self drawables]) {
+        d.suppressTimingVisualizations = suppressTimingVisualizations;
+    }
 }
 
 - (FrameTime *)duration {

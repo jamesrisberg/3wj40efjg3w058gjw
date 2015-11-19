@@ -340,7 +340,9 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     _time = time;
     
     BOOL hasExactKeyframe = !![self.keyframeStore keyframeAtTime:time];
-    [self setCurrentKeyframeProperties:[self.keyframeStore interpolatedPropertiesAtTime:time]];
+    if (self.keyframeStore.allKeyframes.count > 0) {
+        [self setCurrentKeyframeProperties:[self.keyframeStore interpolatedPropertiesAtTime:time]];
+    }
     self.dimmed = !hasExactKeyframe && !self.suppressTimingVisualizations;;
 }
 
