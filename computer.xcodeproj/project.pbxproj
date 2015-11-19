@@ -90,6 +90,10 @@
 		5F858DE11BFCFE5A004E658E /* SwipeMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F858DE01BFCFE5A004E658E /* SwipeMenuView.m */; };
 		5F900E191BBB9275000D4C7C /* FilePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E181BBB9275000D4C7C /* FilePickerViewController.m */; };
 		5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */; };
+		5F9A17EA1BFD5510000E6351 /* ParticleDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A17E91BFD5510000E6351 /* ParticleDrawable.m */; };
+		5F9A17F01BFD5889000E6351 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17EF1BFD5889000E6351 /* spark.png */; };
+		5F9A17F31BFD7229000E6351 /* sparkle.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F11BFD7229000E6351 /* sparkle.png */; };
+		5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A17F21BFD7229000E6351 /* sparkle2.png */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -336,6 +340,11 @@
 		5F900E181BBB9275000D4C7C /* FilePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePickerViewController.m; sourceTree = "<group>"; };
 		5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandingButton.h; sourceTree = "<group>"; };
 		5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandingButton.m; sourceTree = "<group>"; };
+		5F9A17E81BFD5510000E6351 /* ParticleDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleDrawable.h; sourceTree = "<group>"; };
+		5F9A17E91BFD5510000E6351 /* ParticleDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParticleDrawable.m; sourceTree = "<group>"; };
+		5F9A17EF1BFD5889000E6351 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		5F9A17F11BFD7229000E6351 /* sparkle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sparkle.png; sourceTree = "<group>"; };
+		5F9A17F21BFD7229000E6351 /* sparkle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sparkle2.png; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -1080,6 +1089,11 @@
 			children = (
 				5FEAF8191B9788BD0071BC08 /* Drawable.h */,
 				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
+				5F9A17E81BFD5510000E6351 /* ParticleDrawable.h */,
+				5F9A17E91BFD5510000E6351 /* ParticleDrawable.m */,
+				5F9A17EF1BFD5889000E6351 /* spark.png */,
+				5F9A17F11BFD7229000E6351 /* sparkle.png */,
+				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
 				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
 				5FEAF8231B979A010071BC08 /* PhotoDrawable.m */,
 				5FEAF8251B97A2720071BC08 /* TextDrawable.h */,
@@ -1206,6 +1220,7 @@
 				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
 				5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */,
 				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
+				5F9A17F31BFD7229000E6351 /* sparkle.png in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
 				5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
@@ -1222,9 +1237,11 @@
 				5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */,
 				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
 				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
+				5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */,
 				5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */,
 				5F858DD01BFC3FC8004E658E /* Blackout Two AM.ttf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
@@ -1405,6 +1422,7 @@
 				5F858DB21BFBB8A3004E658E /* PatternPickerViewController.swift in Sources */,
 				5F198AEB1BD99BE700B62433 /* SubcanvasDrawable.m in Sources */,
 				5F2095FB1BEEBB2800E4C1F1 /* optimize.c in Sources */,
+				5F9A17EA1BFD5510000E6351 /* ParticleDrawable.m in Sources */,
 				5F809A6C1BE1CC8B0030B538 /* VideoExporter.m in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,
 				5FEAF9371B9E2B010071BC08 /* SKColorStopDetail.m in Sources */,

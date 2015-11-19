@@ -217,7 +217,7 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 }
 
 - (void)updateAspectRatio:(CGFloat)aspect {
-    CGFloat diag = sqrt(pow(self.bounds.size.width, 2) + pow(self.bounds.size.height, 2));
+    CGFloat diag = sqrt(pow(self.bounds.size.width, 2) + pow(self.bounds.size.height, 2)) ? : 200;
     CGFloat width = diag/sqrt(pow(aspect, -2) + 1);
     [self setInternalSize:CGSizeMake(width, width / aspect)];
 }

@@ -16,6 +16,7 @@
 #import "SKColorFill.h"
 #import "computer-Swift.h"
 #import "StarDrawable.h"
+#import "ParticleDrawable.h"
 
 @interface InsertItemViewController ()
 
@@ -61,6 +62,12 @@
     text.action = ^{
         TextDrawable *d = [TextDrawable new];
         d.bounds = CGRectMake(0, 0, 300, 200);
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
+    QuickCollectionItem *particle = [QuickCollectionItem new];
+    particle.label = NSLocalizedString(@"Particle", @"");
+    particle.action = ^{
+        ParticleDrawable *d = [ParticleDrawable new];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     QuickCollectionItem *pen = [QuickCollectionItem new];
@@ -120,7 +127,7 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, group];
+    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, group, particle];
 }
 
 @end
