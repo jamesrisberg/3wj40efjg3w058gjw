@@ -287,6 +287,7 @@
 
 - (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas {
     [self.timeline keyframeAvailabilityUpdatedForTime:canvas.time];
+    [self.document maybeEdited];
 }
 
 - (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel {
@@ -296,6 +297,7 @@
 
 - (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
     [self showOptionsInteractively:presenter touchPos:pos];
+    [self.document maybeEdited];
 }
 
 - (void)setHideSelectionRects:(BOOL)hideSelectionRects {

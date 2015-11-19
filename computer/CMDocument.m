@@ -29,7 +29,9 @@
 @end
 
 
-@interface CMDocument ()
+@interface CMDocument () {
+    BOOL _hasUnsavedChanges;
+}
 
 @property (nonatomic) NSFileWrapper *fileWrapper;
 
@@ -59,6 +61,20 @@
     }
     
     return self.fileWrapper;
+}
+
+- (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL))completionHandler {
+    _hasUnsavedChanges = NO;
+    [super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
+}
+
+#pragma mark Save tracking
+- (void)maybeEdited {
+    _hasUnsavedChanges = YES;
+}
+
+- (BOOL)hasUnsavedChanges {
+    return _hasUnsavedChanges;
 }
 
 #pragma mark Paths
