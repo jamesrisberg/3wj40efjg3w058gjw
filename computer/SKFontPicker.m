@@ -7,6 +7,7 @@
 //
 
 #import "SKFontPicker.h"
+#import "ConvenienceCategories.h"
 
 @interface SKFontPicker ()
 
@@ -47,7 +48,7 @@
 #pragma mark TableView source
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (!_families) {
-        _families = [[UIFont familyNames] sortedArrayUsingSelector:@selector(compare:)];
+        _families = [self getOrderedFontFamilies];
         _fontsForFamily = [NSMutableDictionary new];
         _expandedFamilies = [NSMutableSet new];
     }
@@ -142,6 +143,20 @@
     }
     _fontName = fontName;
     self.callback(fontName);
+}
+
+- (NSArray *)getOrderedFontFamilies {
+    NSSet *preferred = [NSSet setWithArray:@[@"Avenir Next Condensed", @"Blackout", @"ChunkFive", @"Courier", @"Hoefler Text", @"Knewave", @"League Gothic", @"Ostrich Sans", @"Sniglet"]];
+    NSArray *fams = [UIFont familyNames];
+    NSArray *preferredFams = [fams map:^id(id obj) {
+        return [preferred containsObject:obj] ? obj : nil;
+    }];
+    preferredFams = [preferredFams sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *otherFams = [fams map:^id(id obj) {
+        return [preferred containsObject:obj] ? nil : obj;
+    }];
+    otherFams = [otherFams sortedArrayUsingSelector:@selector(compare:)];
+    return [preferredFams arrayByAddingObjectsFromArray:otherFams];
 }
 
 @end
