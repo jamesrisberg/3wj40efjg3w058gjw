@@ -22,6 +22,7 @@
     _cell = cell;
     [self.contentView addSubview:cell];
     self.tintColor = [UIColor whiteColor];
+    [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
