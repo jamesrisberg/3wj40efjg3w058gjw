@@ -104,6 +104,7 @@
 		5F9A18101BFE46C0000E6351 /* Capture_it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */; };
 		5F9A18121BFE46DB000E6351 /* riffic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18111BFE46D8000E6351 /* riffic.otf */; };
 		5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18131BFE46E8000E6351 /* norwester.otf */; };
+		5F9A18161BFED698000E6351 /* AbrilFatface-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -365,6 +366,7 @@
 		5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Capture_it.ttf; sourceTree = "<group>"; };
 		5F9A18111BFE46D8000E6351 /* riffic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = riffic.otf; sourceTree = "<group>"; };
 		5F9A18131BFE46E8000E6351 /* norwester.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = norwester.otf; sourceTree = "<group>"; };
+		5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbrilFatface-Regular.otf"; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -801,6 +803,7 @@
 				5F858DC71BFC3FC8004E658E /* knewave-outline.ttf */,
 				5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */,
 				5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */,
+				5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */,
 				5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */,
 			);
 			name = Fonts;
@@ -1280,6 +1283,7 @@
 				5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */,
 				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
 				5F9A17F91BFD7B95000E6351 /* mac2.png in Resources */,
+				5F9A18161BFED698000E6351 /* AbrilFatface-Regular.otf in Resources */,
 				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
 				5F9A18101BFE46C0000E6351 /* Capture_it.ttf in Resources */,
 				5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */,

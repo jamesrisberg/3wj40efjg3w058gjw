@@ -146,7 +146,7 @@
 }
 
 - (NSArray *)getOrderedFontFamilies {
-    NSSet *preferred = [NSSet setWithArray:@[@"Avenir Next Condensed", @"Blackout", @"ChunkFive", @"Courier", @"Hoefler Text", @"Knewave", @"League Gothic", @"Ostrich Sans", @"Sniglet"]];
+    NSSet *preferred = [NSSet setWithArray:@[@"Avenir Next Condensed", @"Blackout", @"ChunkFive", @"Courier", @"Hoefler Text", @"Knewave", @"League Gothic", @"Ostrich Sans", @"Sniglet", @"Abril Fontface", @"Amatic", @"Capture It", @"Grand Hotel", @"Norwester", @"Riffic"]];
     NSArray *fams = [UIFont familyNames];
     NSArray *preferredFams = [fams map:^id(id obj) {
         return [preferred containsObject:obj] ? obj : nil;
