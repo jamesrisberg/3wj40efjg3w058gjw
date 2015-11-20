@@ -34,6 +34,12 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    [self setup];
+    return self;
+}
+
 - (void)primaryEditAction {
     
 }
@@ -231,12 +237,14 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     // deliberately DON'T call super
     [aCoder encodeObject:[self currentKeyframeProperties] forKey:@"currentKeyframeProperties"];
     [aCoder encodeObject:self.keyframeStore forKey:@"keyframeStore"];
+    [aCoder encodeBool:self.transientEDUView forKey:@"transientEDUView"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [self init]; // deliberately DON'T call super
     [self setCurrentKeyframeProperties:[aDecoder decodeObjectForKey:@"currentKeyframeProperties"]];
     self.keyframeStore = [aDecoder decodeObjectForKey:@"keyframeStore"];
+    self.transientEDUView = [aDecoder decodeBoolForKey:@"transientEDUView"];
     return self;
 }
 
@@ -300,8 +308,8 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 }
 
 - (void)updatedKeyframeProperties {
-    if (self.canvas.time) {
-        [self keyframePropertiesChangedAtTime:self.canvas.time];
+    if (self.time) {
+        [self keyframePropertiesChangedAtTime:self.time];
     }
     if (self.onKeyframePropertiesUpdated) self.onKeyframePropertiesUpdated();
     if (self.onShapeUpdate) self.onShapeUpdate();
@@ -354,6 +362,16 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 - (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
     _useTimeForStaticAnimations = useTimeForStaticAnimations;
     
+}
+
+#pragma mark Special
+
+- (void)setTransientEDUView:(BOOL)transientEDUView {
+    _transientEDUView = transientEDUView;
+    if (transientEDUView) {
+        self.userInteractionEnabled = NO;
+        self.itemOpacity = 0.5;
+    }
 }
 
 

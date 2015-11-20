@@ -67,30 +67,7 @@
     QuickCollectionItem *particle = [QuickCollectionItem new];
     particle.icon = [UIImage imageNamed:@"Fire"];
     particle.action = ^{
-        InsertItemViewController *strongSelf = weakSelf;
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            ParticleDrawable *d = [ParticleDrawable new];
-            d.particlePreset = ParticlePresetFire;
-            [strongSelf.editorVC.canvas insertDrawable:d];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Sparkle", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            ParticleDrawable *d = [ParticleDrawable new];
-            d.particlePreset = ParticlePresetSparkle;
-            [strongSelf.editorVC.canvas insertDrawable:d];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Snow", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            ParticleDrawable *d = [ParticleDrawable new];
-            d.particlePreset = ParticlePresetSnow;
-            [strongSelf.editorVC.canvas insertDrawable:d];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            ParticleDrawable *d = [ParticleDrawable new];
-            d.particlePreset = ParticlePresetMacaroni;
-            [strongSelf.editorVC.canvas insertDrawable:d];
-        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
-        [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
+        [weakSelf insertParticle];
     };
     QuickCollectionItem *pen = [QuickCollectionItem new];
     pen.icon = [UIImage imageNamed:@"Pen"];
@@ -128,28 +105,64 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    QuickCollectionItem *group = [QuickCollectionItem new];
-    group.icon = [UIImage imageNamed:@"Group"];
-    group.action = ^{
-        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-        
-        ShapeDrawable *square = [ShapeDrawable new];
-        square.pattern = nil;// [[SKColorFill alloc] initWithColor:[UIColor blueColor]];
-        square.strokeWidth = 4;
-        square.strokeColor = [UIColor purpleColor];
-        [canvas insertDrawable:square];
-        
-        /*ShapeDrawable *circle = [ShapeDrawable new];
-        circle.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 120, 120)];
-        circle.fill = [[SKColorFill alloc] initWithColor:[UIColor orangeColor]];
-        [canvas insertDrawable:circle];*/
-        
+    QuickCollectionItem *gridRepeat = [QuickCollectionItem new];
+    gridRepeat.icon = [UIImage imageNamed:@"GridRepeat"];
+    gridRepeat.action = ^{
+        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
+        text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
+        text.rotation = M_PI/4;
+        text.transientEDUView = YES;
+        [canvas insertDrawable:text];
         SubcanvasDrawable *d = [SubcanvasDrawable new];
         d.subcanvas = canvas;
+        d.xRepeat = 3;
+        d.yRepeat = 3;
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, group, particle];
+    QuickCollectionItem *ringRepeat = [QuickCollectionItem new];
+    ringRepeat.icon = [UIImage imageNamed:@"RingRepeat"];
+    ringRepeat.action = ^{
+        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
+        text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
+        text.transientEDUView = YES;
+        [canvas insertDrawable:text];
+        SubcanvasDrawable *d = [SubcanvasDrawable new];
+        d.subcanvas = canvas;
+        d.rotatedCopies = 6;
+        d.rotationOffset = 3;
+        [weakSelf.editorVC.canvas insertDrawable:d];
+    };
+    
+    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, gridRepeat, ringRepeat, particle];
+}
+
+- (void)insertParticle {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetFire;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Sparkle", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetSparkle;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Snow", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetSnow;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetMacaroni;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
 }
 
 @end

@@ -11,5 +11,8 @@
 @interface TextDrawable : Drawable
 
 @property (nonatomic) CGFloat textStart, textEnd;
+@property (nonatomic) NSAttributedString *attributedString;
+
++ (NSAttributedString *)defaultAttributedStringWithText:(NSString *)text;
 
 @end

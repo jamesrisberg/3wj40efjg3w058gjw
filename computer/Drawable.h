@@ -62,4 +62,6 @@ extern NSString * const DrawableArrayPasteboardType;
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL suppressTimingVisualizations;
 
+@property (nonatomic) BOOL transientEDUView;
+
 @end

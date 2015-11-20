@@ -285,6 +285,16 @@
 
 - (void)insertDrawable:(Drawable *)drawable {
     [self _addDrawableToCanvas:drawable];
+    
+    if (!drawable.transientEDUView) {
+        // remove all transient EDU views:
+        for (Drawable *d in [self drawables]) {
+            if (d.transientEDUView) {
+                [d delete:nil];
+            }
+        }
+    }
+    
     drawable.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     
     BOOL animate = !!self.window;
@@ -498,6 +508,8 @@
 }
 
 - (void)userGesturedToSelectDrawable:(Drawable *)d {
+    if (d.transientEDUView) return;
+    
     NSMutableSet *newSelection = self.selectedItems.mutableCopy;
     if (d == nil) {
         if (!self.multipleSelectionEnabled) {

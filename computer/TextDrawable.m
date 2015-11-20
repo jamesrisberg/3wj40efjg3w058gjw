@@ -16,7 +16,6 @@
 @interface TextDrawable ()
 
 @property (nonatomic) UILabel *label;
-@property (nonatomic) NSAttributedString *attributedString;
 
 @property (nonatomic) NSAttributedString *fittedAttributedString;
 
@@ -30,10 +29,7 @@
     self.label.numberOfLines = 0;
     self.textEnd = 1;
     
-    NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
-    para.alignment = NSTextAlignmentCenter;
-    NSDictionary *defaultAttrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: para};
-    self.attributedString = [[NSAttributedString alloc] initWithString:@"Double-tap for options" attributes:defaultAttrs];
+    self.attributedString = [[self class] defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit", @"")];
     [self addSubview:self.label];
     
     RAC(self.label, attributedText) = [RACSignal combineLatest:@[RACObserve(self, fittedAttributedString), RACObserve(self, textStart), RACObserve(self, textEnd)] reduce:^id(NSAttributedString *string, NSNumber *startNum, NSNumber *endNum){
@@ -44,6 +40,13 @@
         [blanked addAttribute:NSForegroundColorAttributeName value:[UIColor clearColor] range:NSMakeRange(endIndex, blanked.length - endIndex)];
         return blanked;
     }];
+}
+
++ (NSAttributedString *)defaultAttributedStringWithText:(NSString *)text {
+    NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+    para.alignment = NSTextAlignmentCenter;
+    NSDictionary *defaultAttrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: para};
+    return [[NSAttributedString alloc] initWithString:text attributes:defaultAttrs];
 }
 
 - (void)setAttributedString:(NSAttributedString *)attributedString {
