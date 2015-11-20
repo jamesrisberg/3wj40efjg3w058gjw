@@ -105,6 +105,7 @@
 		5F9A18121BFE46DB000E6351 /* riffic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18111BFE46D8000E6351 /* riffic.otf */; };
 		5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18131BFE46E8000E6351 /* norwester.otf */; };
 		5F9A18161BFED698000E6351 /* AbrilFatface-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */; };
+		5F9A183F1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -367,6 +368,8 @@
 		5F9A18111BFE46D8000E6351 /* riffic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = riffic.otf; sourceTree = "<group>"; };
 		5F9A18131BFE46E8000E6351 /* norwester.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = norwester.otf; sourceTree = "<group>"; };
 		5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbrilFatface-Regular.otf"; sourceTree = "<group>"; };
+		5F9A183D1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BorderedButton.h"; sourceTree = "<group>"; };
+		5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BorderedButton.m"; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -1062,6 +1065,8 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5F9A183D1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.h */,
+				5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */,
 				5F858DD91BFC5207004E658E /* UIBezierPath-Points.h */,
 				5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
@@ -1434,6 +1439,7 @@
 				5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
 				5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */,
+				5F9A183F1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
 				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,

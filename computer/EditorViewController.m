@@ -26,6 +26,7 @@
 #import "PropertiesModal.h"
 #import "StrokePickerViewController.h"
 #import "computer-Swift.h"
+#import "UIBarButtonItem+BorderedButton.h"
 
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
@@ -755,10 +756,10 @@
     [t setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     t.tintColor = [UIColor whiteColor];
     
-    UIBarButtonItem *group = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Group", @"") style:UIBarButtonItemStylePlain target:self.canvas action:@selector(createGroup:)];
-    UIBarButtonItem *delete = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self.canvas action:@selector(delete:)];
-    UIBarButtonItem *copy = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Copy", @"") style:UIBarButtonItemStylePlain target:self.canvas action:@selector(copy:)];
-    UIBarButtonItem *paste = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Paste", @"") style:UIBarButtonItemStylePlain target:self.canvas action:@selector(paste:)];
+    UIBarButtonItem *group = [[UIBarButtonItem alloc] initBorderedWithTitle:NSLocalizedString(@"Group", @"") target:self.canvas action:@selector(createGroup:)];
+    UIBarButtonItem *delete = [[UIBarButtonItem alloc] initBorderedWithTitle:NSLocalizedString(@"Delete", @"") target:self.canvas action:@selector(delete:)];
+    UIBarButtonItem *copy = [[UIBarButtonItem alloc] initBorderedWithTitle:NSLocalizedString(@"Copy", @"") target:self.canvas action:@selector(copy:)];
+    UIBarButtonItem *paste = [[UIBarButtonItem alloc] initBorderedWithTitle:NSLocalizedString(@"Paste", @"") target:self.canvas action:@selector(paste:)];
     UIBarButtonItem *divider = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     t.items = @[delete, divider, copy, paste, group];
     
