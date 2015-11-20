@@ -45,4 +45,30 @@
     return self;
 }
 
+- (instancetype)initUnborderedWithTitle:(NSString *)title target:(id)target action:(SEL)action {
+    CGFloat padding = 0;
+    CGFloat fontSize = 14;
+    UIFont *font = [UIFont boldSystemFontOfSize:14];
+    
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:title.uppercaseString attributes:@{NSFontAttributeName: font}];
+    CGFloat textWidth = [str size].width;
+    
+    CGSize size = CGSizeMake(textWidth + padding*2, fontSize + padding*2);
+    
+    // create image:
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [[UIColor blackColor] setFill];
+    [str drawAtPoint:CGPointMake(padding, padding)];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    
+    self = [self initWithImage:image style:UIBarButtonItemStylePlain target:target action:action];
+    self.accessibilityLabel = title;
+    self.width = size.width;
+    
+    return self;
+}
+
 @end

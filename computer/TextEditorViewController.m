@@ -12,61 +12,11 @@
 #import "CPColorPicker.h"
 #import "SKFontPicker.h"
 #import "StrokePickerViewController.h"
-
-@interface _TextColorButton : UIButton
-@end
-
-@implementation _TextColorButton
-- (void)setColor:(UIColor *)color {
-    [self setImage:[[UIImage imageNamed:@"Pen"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    self.imageView.tintColor = color;
-}
-@end
-
-@interface _TextFontButton : UIButton
-@end
-
-@implementation _TextFontButton
-- (void)setTextFont:(UIFont *)font {
-    [self setTitle:@"A" forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont fontWithName:font.fontName size:16];
-    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-}
-@end
-
-@interface _TextSizeButton : UIButton
-@end
-
-@implementation _TextSizeButton
-- (void)setTextSize:(CGFloat)size {
-    [self setTitle:[@(size) stringValue] forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-}
-@end
-
-@interface _TextShadowButton : UIButton
-@end
-
-@implementation _TextShadowButton
-- (void)setShadowColor:(UIColor *)color offset:(CGFloat)offset {
-    [self setTitle:@"S" forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.titleLabel setShadowOffset:CGSizeMake(offset, offset)];
-    [self.titleLabel setShadowColor:color];
-}
-@end
-
+#import "UIBarButtonItem+BorderedButton.h"
 
 @interface TextEditorViewController () <UITextViewDelegate>
 
 @property (nonatomic) IBOutlet UITextView *textView;
-
-@property (nonatomic) _TextSizeButton *textSizeButton;
-@property (nonatomic) _TextColorButton *textColorButton;
-@property (nonatomic) _TextFontButton *textFontButton;
-@property (nonatomic) _TextShadowButton *textShadowButton;
 
 @end
 
@@ -88,38 +38,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
     
-    self.textSizeButton = [_TextSizeButton buttonWithType:UIButtonTypeCustom];
-    [self.textSizeButton addTarget:self action:@selector(changeTextSize) forControlEvents:UIControlEventTouchUpInside];
-    self.textColorButton = [_TextColorButton buttonWithType:UIButtonTypeCustom];
-    [self.textColorButton addTarget:self action:@selector(changeTextColor) forControlEvents:UIControlEventTouchUpInside];
-    self.textFontButton = [_TextFontButton buttonWithType:UIButtonTypeCustom];
-    [self.textFontButton addTarget:self action:@selector(changeTextFont) forControlEvents:UIControlEventTouchUpInside];
-    self.textShadowButton = [_TextShadowButton buttonWithType:UIButtonTypeCustom];
-    [self.textShadowButton addTarget:self action:@selector(changeTextShadow) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.leftBarButtonItems = [@[self.textColorButton, self.textSizeButton, self.textFontButton, self.textShadowButton] map:^id(id obj) {
-        UIButton *btn = obj;
-        [btn setFrame:CGRectMake(0, 0, 40, 44)];
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:obj];
-        /*item.target = self;
-        item.action = NSSelectorFromString([btn actionsForTarget:self forControlEvent:UIControlEventTouchUpInside].firstObject);
-        btn.userInteractionEnabled = NO;*/
-        item.width = 40;
-        return item;
+    UIButton *font = [UIButton buttonWithType:UIButtonTypeCustom];
+    [font setTitle:NSLocalizedString(@"Font", @"").uppercaseString forState:UIControlStateNormal];
+    [font addTarget:self action:@selector(changeTextFont) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *color = [UIButton buttonWithType:UIButtonTypeCustom];
+    [color setTitle:NSLocalizedString(@"Color", @"").uppercaseString forState:UIControlStateNormal];
+    [color addTarget:self action:@selector(changeTextColor) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *shadow = [UIButton buttonWithType:UIButtonTypeCustom];
+    [shadow setTitle:NSLocalizedString(@"Shadow", @"").uppercaseString forState:UIControlStateNormal];
+    [shadow addTarget:self action:@selector(changeTextShadow) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.navigationItem.leftBarButtonItems = [@[font, color, shadow] map:^id(id obj) {
+        UIButton *b = obj;
+        [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        NSAttributedString *title = [[NSAttributedString alloc] initWithString:[b titleForState:UIControlStateNormal] attributes:@{NSFontAttributeName: [UIFont boldSystemFontOfSize:14], NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)}];
+        [b setAttributedTitle:title forState:UIControlStateNormal];
+        [b sizeToFit];
+        return [[UIBarButtonItem alloc] initWithCustomView:b];
     }];
+    
+    /*self.navigationItem.leftBarButtonItems = @[
+                                               [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Font", @"") target:self action:@selector(changeTextFont)],
+                                               [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Color", @"") target:self action:@selector(changeTextColor)],
+                                               [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Shadow", @"") target:self action:@selector(changeTextShadow)],
+                                               ];*/
+    self.navigationItem.leftItemsSupplementBackButton = YES;
     [self typingAttributesChanged];
 }
 
 - (void)dismiss {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    //[self.textView becomeFirstResponder];
-    //self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -145,13 +96,7 @@
 }
 
 - (void)typingAttributesChanged {
-    NSDictionary *attrs = self.textView.typingAttributes;
-    [self.textSizeButton setTextSize:[attrs[NSFontAttributeName] pointSize]];
-    [self.textFontButton setTextFont:attrs[NSFontAttributeName]];
-    [self.textColorButton setColor:attrs[NSForegroundColorAttributeName]];
     
-    NSShadow *shadow = attrs[NSShadowAttributeName];
-    [self.textShadowButton setShadowColor:shadow.shadowColor ? : [UIColor colorWithWhite:0.1 alpha:0.5] offset:shadow.shadowOffset.width];
 }
 
 - (void)changeTextSize {

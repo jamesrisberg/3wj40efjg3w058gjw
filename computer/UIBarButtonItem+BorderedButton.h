@@ -11,5 +11,6 @@
 @interface UIBarButtonItem (BorderedButton)
 
 - (instancetype)initBorderedWithTitle:(NSString *)title target:(id)target action:(SEL)action;
+- (instancetype)initUnborderedWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 
 @end
