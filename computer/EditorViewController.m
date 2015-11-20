@@ -28,11 +28,19 @@
 #import "computer-Swift.h"
 #import "UIBarButtonItem+BorderedButton.h"
 
+typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
+    FloatingButtonPositionBottomRight,
+    FloatingButtonPositionTopLeft,
+    FloatingButtonPositionTopRight,
+    _FloatingButtonPositionMax
+};
+
 @interface EditorViewController () <UIScrollViewDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, TimelineViewDelegate, ExporterDelegate> {
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
     NSMutableArray<__kindof UIView*> *_selectionRects;
+    NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
 }
 
 @property (nonatomic) UIView *toolbar;
@@ -53,7 +61,7 @@
 
 @property (nonatomic) UIImageView *presentedFromImageView;
 
-@property (nonatomic) UIView *auxiliaryFloatingButton;
+- (void)setFloatingButton:(UIView *)buttonOrNil forPosition:(FloatingButtonPosition)pos;
 
 @property (nonatomic) Exporter *currentExporter;
 @property (nonatomic,weak) CropView *cropView;
@@ -206,32 +214,54 @@
     self.toolbarView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin; // set the autoresizing mask so that this view is positioned currently during the transition to a NEW toolbarView; when the toolbar's height changes, the old toolbar view should stay in the middle
     self.transientOverlayView.frame = self.view.bounds;
     
-    self.auxiliaryFloatingButton.frame = CGRectMake(self.view.bounds.size.width - self.auxiliaryFloatingButton.frame.size.width - 15, self.toolbar.frame.origin.y - self.auxiliaryFloatingButton.frame.size.height - 15, self.auxiliaryFloatingButton.frame.size.width, self.auxiliaryFloatingButton.frame.size.height);
+    UIView *bottomRight = _floatingButtons[@(FloatingButtonPositionBottomRight)];
+    bottomRight.frame = CGRectMake(self.view.bounds.size.width - bottomRight.frame.size.width - 15, self.toolbar.frame.origin.y - bottomRight.frame.size.height - 15, bottomRight.frame.size.width, bottomRight.frame.size.height);
+    
+    UIView *topLeft = _floatingButtons[@(FloatingButtonPositionTopLeft)];
+    topLeft.frame = CGRectMake(15, [[self topLayoutGuide] length] + 15, topLeft.frame.size.width, topLeft.frame.size.height);
+    
+    UIView *topRight = _floatingButtons[@(FloatingButtonPositionTopRight)];
+    topRight.frame = CGRectMake(self.view.bounds.size.width - topRight.frame.size.width - 15, [[self topLayoutGuide] length] + 15, topRight.frame.size.width, topRight.frame.size.height);
 }
 
-- (void)setAuxiliaryFloatingButton:(UIView *)auxiliaryFloatingButton {
-    UIView *oldButton = _auxiliaryFloatingButton;
-    [UIView animateWithDuration:0.3 animations:^{
-        oldButton.alpha = 0;
-        oldButton.transform = CGAffineTransformMakeScale(0.5, 0.5);
-    } completion:^(BOOL finished) {
-        oldButton.alpha = 1;
-        oldButton.transform = CGAffineTransformIdentity;
-        [oldButton removeFromSuperview];
-    }];
+- (void)setFloatingButton:(UIView *)buttonOrNil forPosition:(FloatingButtonPosition)pos {
+    if (!_floatingButtons) _floatingButtons = [NSMutableDictionary new];
+    UIView *old = _floatingButtons[@(pos)];
+    [_floatingButtons removeObjectForKey:@(pos)];
     
-    _auxiliaryFloatingButton = auxiliaryFloatingButton;
-    if (auxiliaryFloatingButton) {
-        [self.view insertSubview:_auxiliaryFloatingButton aboveSubview:self.toolbar];
+    if (old) {
+        [UIView animateWithDuration:0.3 animations:^{
+            old.alpha = 0;
+            old.transform = CGAffineTransformMakeScale(0.5, 0.5);
+        } completion:^(BOOL finished) {
+            if (![[_floatingButtons allValues] containsObject:old]) {
+                [old removeFromSuperview];
+            }
+        }];
+    }
+    
+    if (buttonOrNil) {
+        _floatingButtons[@(pos)] = buttonOrNil;
+        [self.view insertSubview:buttonOrNil aboveSubview:self.toolbar];
         [self viewDidLayoutSubviews];
-        _auxiliaryFloatingButton.alpha = 0;
-        _auxiliaryFloatingButton.transform = CGAffineTransformMakeTranslation(0, 40);
+        buttonOrNil.alpha = 0;
+        if (pos == FloatingButtonPositionBottomRight) {
+            buttonOrNil.transform = CGAffineTransformMakeTranslation(0, 40);
+        } else if (pos == FloatingButtonPositionTopLeft || pos == FloatingButtonPositionTopRight) {
+            buttonOrNil.transform = CGAffineTransformMakeTranslation(0, -40);
+        }
         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            _auxiliaryFloatingButton.transform = CGAffineTransformIdentity;
-            _auxiliaryFloatingButton.alpha = 1;
+            buttonOrNil.transform = CGAffineTransformIdentity;
+            buttonOrNil.alpha = 1;
         } completion:^(BOOL finished) {
             
         }];
+    }
+}
+
+- (void)clearFloatingButtons {
+    for (FloatingButtonPosition i=0; i<_FloatingButtonPositionMax; i++) {
+        [self setFloatingButton:nil forPosition:i];
     }
 }
 
@@ -250,7 +280,7 @@
     [done sizeToFit];
     done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
     [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
-    self.auxiliaryFloatingButton = done;
+    [self setFloatingButton:done forPosition:FloatingButtonPositionBottomRight];
 }
 
 #pragma mark Canvas delegate
@@ -449,7 +479,8 @@
         
         self.transientOverlayView = nil;
         self.toolbarView = self.iconBar;
-        self.auxiliaryFloatingButton = nil;
+        
+        [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         
