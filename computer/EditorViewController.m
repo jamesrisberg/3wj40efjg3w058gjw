@@ -66,6 +66,12 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) Exporter *currentExporter;
 @property (nonatomic,weak) CropView *cropView;
 
+// mode=cropping preview playback:
+@property (nonatomic) BOOL playingPreviewNow;
+@property (nonatomic) UIButton *playButton;
+@property (nonatomic) CADisplayLink *previewPlaybackDisplayLink;
+@property (nonatomic) NSTimeInterval durationCache; // set when entering playback mode
+
 @end
 
 @implementation EditorViewController
@@ -271,16 +277,20 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)addAuxiliaryModeResetButtonWithTitle:(NSString *)title {
     UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
-    done.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [done setTitle:title forState:UIControlStateNormal];
-    done.clipsToBounds = YES;
-    done.layer.cornerRadius = 5;
+    [self configureViewWithFloatingButtonAppearance:done];
     done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
     [done sizeToFit];
     done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
     [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
     [self setFloatingButton:done forPosition:FloatingButtonPositionBottomRight];
+}
+
+- (void)configureViewWithFloatingButtonAppearance:(UIView *)view {
+    view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    view.layer.cornerRadius = 5;
+    view.clipsToBounds = YES;
 }
 
 #pragma mark Canvas delegate
@@ -483,6 +493,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
+        self.playingPreviewNow = NO;
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -526,19 +537,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             self.toolbarView = self.panelView;
             [self addAuxiliaryModeResetButton];
         } else if (mode == EditorModeExportCropping) {
-            CropView *cropView = [CropView new];
-            self.cropView = cropView;
-            self.transientOverlayView = cropView;
-            [self viewDidLayoutSubviews];
-            CGFloat cropSize = round(MIN(self.cropView.bounds.size.width, self.cropView.bounds.size.height) * 0.8);
-            cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - cropSize/2, self.cropView.bounds.size.height/2 - cropSize/2, cropSize, cropSize);
-            
-            UIButton *continueButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            continueButton.titleLabel.font = [UIFont boldSystemFontOfSize:continueButton.titleLabel.font.pointSize];
-            [continueButton setTitle:NSLocalizedString(@"Continue", @"") forState:UIControlStateNormal];
-            [continueButton addTarget:self action:@selector(startRunningExport) forControlEvents:UIControlEventTouchUpInside];
-            self.toolbarView = continueButton;
-            [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+            [self enterCropMode];
         } else if (mode == EditorModeExportRunning) {
             UIButton *cancel = [UIButton buttonWithType:UIButtonTypeCustom];
             cancel.titleLabel.font = [UIFont boldSystemFontOfSize:cancel.titleLabel.font.pointSize];
@@ -746,13 +745,17 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.currentExporter.canvasSize = self.canvas.bounds.size;
     self.currentExporter.delegate = self;
     self.currentExporter.defaultTime = self.canvas.time;
-    FrameTime *endTime = self.canvas.duration;
-    NSTimeInterval extraDuration = 2;
-    endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
-    self.currentExporter.endTime = endTime;
+    self.currentExporter.endTime = [self durationForExport];
     self.currentExporter.parentViewController = self;
     self.mode = EditorModeExportRunning;
     [self.currentExporter start];
+}
+
+- (FrameTime *)durationForExport {
+    FrameTime *endTime = self.canvas.duration;
+    NSTimeInterval extraDuration = 2;
+    endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
+    return endTime;
 }
 
 - (void)cancelExport {
@@ -795,6 +798,63 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     t.items = @[delete, divider, copy, paste, group];
     
     return t;
+}
+
+#pragma mark Crop/Preview mode
+
+- (void)enterCropMode {
+    CropView *cropView = [CropView new];
+    self.cropView = cropView;
+    self.transientOverlayView = cropView;
+    [self viewDidLayoutSubviews];
+    CGFloat cropSize = round(MIN(self.cropView.bounds.size.width, self.cropView.bounds.size.height) * 0.8);
+    cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - cropSize/2, self.cropView.bounds.size.height/2 - cropSize/2, cropSize, cropSize);
+    
+    UIButton *continueButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    continueButton.titleLabel.font = [UIFont boldSystemFontOfSize:continueButton.titleLabel.font.pointSize];
+    [continueButton setTitle:NSLocalizedString(@"Continue", @"") forState:UIControlStateNormal];
+    [continueButton addTarget:self action:@selector(startRunningExport) forControlEvents:UIControlEventTouchUpInside];
+    self.toolbarView = continueButton;
+    [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+    
+    self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.playButton.frame = CGRectMake(0, 0, 40, 40);
+    [self configureViewWithFloatingButtonAppearance:self.playButton];
+    self.playButton.layer.cornerRadius = self.playButton.bounds.size.width/2;
+    [self.playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.playButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];
+    self.playingPreviewNow = NO;
+    self.durationCache = self.canvas.duration.time; // [self durationForExport].time; // DON'T use durationForExport; it includes a bunch of padding on the end
+    
+    [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
+}
+
+- (void)togglePlayback {
+    self.playingPreviewNow = !self.playingPreviewNow;
+}
+
+- (void)setPlayingPreviewNow:(BOOL)playingPreviewNow {
+    _playingPreviewNow = playingPreviewNow;
+    if (playingPreviewNow && !self.previewPlaybackDisplayLink) {
+        self.previewPlaybackDisplayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(_updatePreviewPlayback)];
+        [self.previewPlaybackDisplayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+    } else if (!playingPreviewNow) {
+        [self.previewPlaybackDisplayLink invalidate];
+        self.previewPlaybackDisplayLink = nil;
+    }
+    [self.playButton setImage:[UIImage imageNamed:(playingPreviewNow ? @"Pause" : @"PlayCentered")] forState:UIControlStateNormal];
+}
+
+- (void)_updatePreviewPlayback {
+    NSTimeInterval t = self.canvas.time.time + self.previewPlaybackDisplayLink.duration;
+    FrameTime *frameTime;
+    if (t > _durationCache) {
+        frameTime = [[FrameTime alloc] initWithFrame:0 atFPS:1];
+    } else {
+        frameTime = [[FrameTime alloc] initWithFrame:t * 100000 atFPS:100000];
+    }
+    self.canvas.time = frameTime;
+    [self.timeline scrollToTime:t animated:NO];
 }
 
 @end
