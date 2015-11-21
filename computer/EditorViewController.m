@@ -27,6 +27,7 @@
 #import "StrokePickerViewController.h"
 #import "computer-Swift.h"
 #import "UIBarButtonItem+BorderedButton.h"
+#import "RepetitionPicker.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -69,6 +70,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 // mode=cropping preview playback:
 @property (nonatomic) BOOL playingPreviewNow;
 @property (nonatomic) UIButton *playButton;
+@property (nonatomic) RepetitionPicker *repetitionPicker;
 @property (nonatomic) CADisplayLink *previewPlaybackDisplayLink;
 @property (nonatomic) NSTimeInterval durationCache; // set when entering playback mode
 
@@ -827,6 +829,14 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.durationCache = self.canvas.duration.time; // [self durationForExport].time; // DON'T use durationForExport; it includes a bunch of padding on the end
     
     [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
+    
+    self.repetitionPicker = [RepetitionPicker picker];
+    self.repetitionPicker.repeatCount = 1;
+    self.repetitionPicker.rebound = NO;
+    [self configureViewWithFloatingButtonAppearance:self.repetitionPicker];
+    [self.repetitionPicker sizeToFit];
+    self.repetitionPicker.layer.cornerRadius = self.repetitionPicker.bounds.size.height/2;
+    [self setFloatingButton:self.repetitionPicker forPosition:FloatingButtonPositionTopRight];
 }
 
 - (void)togglePlayback {

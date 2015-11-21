@@ -106,6 +106,9 @@
 		5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18131BFE46E8000E6351 /* norwester.otf */; };
 		5F9A18161BFED698000E6351 /* AbrilFatface-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */; };
 		5F9A183F1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */; };
+		5F9A18421BFFF0B7000E6351 /* SimplePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18411BFFF0B7000E6351 /* SimplePickerViewController.m */; };
+		5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */; };
+		5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -370,6 +373,11 @@
 		5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbrilFatface-Regular.otf"; sourceTree = "<group>"; };
 		5F9A183D1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BorderedButton.h"; sourceTree = "<group>"; };
 		5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BorderedButton.m"; sourceTree = "<group>"; };
+		5F9A18401BFFF0B7000E6351 /* SimplePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePickerViewController.h; sourceTree = "<group>"; };
+		5F9A18411BFFF0B7000E6351 /* SimplePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePickerViewController.m; sourceTree = "<group>"; };
+		5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimplePickerViewController.xib; sourceTree = "<group>"; };
+		5F9A18451BFFF4D8000E6351 /* RepetitionPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepetitionPicker.h; sourceTree = "<group>"; };
+		5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepetitionPicker.m; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -879,6 +887,8 @@
 			children = (
 				5FE8576E1BDB54E700B4B245 /* CropView.h */,
 				5FE8576F1BDB54E700B4B245 /* CropView.m */,
+				5F9A18451BFFF4D8000E6351 /* RepetitionPicker.h */,
+				5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */,
 				5FE857721BDB69A000B4B245 /* Exporter.h */,
 				5FE857731BDB69A000B4B245 /* Exporter.m */,
 				5FE857751BDB69AB00B4B245 /* PhotoExporter.h */,
@@ -1069,6 +1079,9 @@
 				5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */,
 				5F858DD91BFC5207004E658E /* UIBezierPath-Points.h */,
 				5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */,
+				5F9A18401BFFF0B7000E6351 /* SimplePickerViewController.h */,
+				5F9A18411BFFF0B7000E6351 /* SimplePickerViewController.m */,
+				5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */,
 				5F900E201BBDE3A3000D4C7C /* ExpandingButton.h */,
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
@@ -1262,6 +1275,7 @@
 				5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */,
 				5F858DD21BFC3FC8004E658E /* knewave-outline.ttf in Resources */,
 				5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */,
+				5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */,
 				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
 				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
 				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
@@ -1373,6 +1387,7 @@
 				5F83475D1BF43C5600721A2C /* OptionsCell.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5F809A4C1BE1C3740030B538 /* ANGifImageFrame.m in Sources */,
+				5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */,
 				5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */,
 				5F858DB51BFBB8A3004E658E /* PatternTypePicker.swift in Sources */,
 				5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */,
@@ -1493,6 +1508,7 @@
 				5F2095F81BEEBB2800E4C1F1 /* gifwrite.c in Sources */,
 				5F809A4E1BE1C3740030B538 /* ANImageBitmapRep.m in Sources */,
 				5FEAF8241B979A010071BC08 /* PhotoDrawable.m in Sources */,
+				5F9A18421BFFF0B7000E6351 /* SimplePickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
