@@ -19,12 +19,6 @@
 
 @implementation PhotoDrawable
 
-- (instancetype)init {
-    self = [super init];
-    
-    return self;
-}
-
 - (void)primaryEditAction {
     // TODO: show an action sheet
     [self promptToPickPhotoWithSource:UIImagePickerControllerSourceTypePhotoLibrary];

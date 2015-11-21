@@ -28,12 +28,6 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 
 @implementation Drawable
 
-- (instancetype)init {
-    self = [super init];
-    [self setup];
-    return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     [self setup];
