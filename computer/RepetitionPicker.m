@@ -62,6 +62,7 @@
         if (modelOrNil) {
             self.repeatCount = [modelOrNil.userInfo[@"repeat"] integerValue];
             self.rebound = [modelOrNil.userInfo[@"rebound"] boolValue];
+            if (self.onChange) self.onChange();
         }
     }];
 }

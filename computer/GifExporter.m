@@ -35,6 +35,7 @@
         size.width = round(size.width * scale);
         size.height = round(size.height * scale);
         NSInteger fps = VC_GIF_FPS;
+        self.fps = fps;
         
         ANGifEncoder *enc = [[ANGifEncoder alloc] initWithOutputFile:path size:size globalColorTable:nil];
         
@@ -42,14 +43,11 @@
         ANGifNetscapeAppExtension *extension = [[ANGifNetscapeAppExtension alloc] init];
         [enc addApplicationExtension:extension];
         
-        NSInteger i = 0;
-        FrameTime *time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
-        while (time.time <= self.endTime.time) {
+        [self enumerateFrameTimes:^(FrameTime *time) {
             UIImage *frameImage = [self renderFrameAtTime:time size:size];
             ANGifImageFrame *frame = [self frameWithImage:frameImage size:size delay:1.0 / fps];
             [enc addImageFrame:frame];
-            time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
-        }
+        }];
         
         [enc closeFile];
         
@@ -91,6 +89,10 @@
         UIGraphicsEndImageContext();
     });
     return [image resizeTo:size]; // TODO: do this more efficiently by drawing directly into the correct-sized image
+}
+
+- (NSInteger)repeatCount {
+    return 1;
 }
 
 @end

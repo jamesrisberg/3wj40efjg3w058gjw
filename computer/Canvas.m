@@ -67,6 +67,9 @@
     [self addGestureRecognizer:doubleTap];
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
     [self addGestureRecognizer:longPress];
+    
+    self.repeatCount = 1;
+    self.reboundAnimation = NO;
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -372,6 +375,8 @@
     // deliberately DON'T call super
     [aCoder encodeObject:[self drawables] forKey:@"drawables"];
     [aCoder encodeObject:self.time forKey:@"time"];
+    [aCoder encodeInteger:self.repeatCount forKey:@"repeatCount"];
+    [aCoder encodeBool:self.reboundAnimation forKey:@"reboundAnimation"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -380,6 +385,8 @@
         [self _addDrawableToCanvas:d];
     }
     self.time = [aDecoder decodeObjectForKey:@"time"];
+    self.repeatCount = [aDecoder decodeIntegerForKey:@"repeatCount"] ? : 1;
+    self.reboundAnimation = [aDecoder decodeBoolForKey:@"reboundAnimation"];
     return self;
 }
 
@@ -417,7 +424,7 @@
 }
 
 - (FrameTime *)duration {
-    FrameTime *t = [[FrameTime alloc] initWithFrame:1 atFPS:24];
+    FrameTime *t = [[FrameTime alloc] initWithFrame:0 atFPS:1];
     for (Drawable *d in self.drawables) {
         t = [[d.keyframeStore maxTime] maxWith:t];
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {

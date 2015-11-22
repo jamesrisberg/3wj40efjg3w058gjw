@@ -15,4 +15,6 @@
 
 + (RepetitionPicker *)picker;
 
+@property (nonatomic,copy) void(^onChange)();
+
 @end

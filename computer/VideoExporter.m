@@ -26,6 +26,7 @@
     self.queue = dispatch_queue_create("video queue", 0);
     dispatch_async(self.queue, ^{
         //NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"video.mp4"];
+        
         NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"video.mp4"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
             [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
@@ -41,11 +42,10 @@
         size.width = round(size.width * scale);
         size.height = round(size.height * scale);
         NSInteger fps = VC_FPS;
+        self.fps = fps;
         
         NSMutableArray *frames = [NSMutableArray new];
-        NSInteger i = 0;
-        FrameTime *time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
-        while (time.time <= self.endTime.time) {
+        [self enumerateFrameTimes:^(FrameTime *time) {
             OnDemandImage *frame = [OnDemandImage new];
             frame.userInfo = time;
             frame.fn = ^UIImage*(id userInfo) {
@@ -57,8 +57,7 @@
                 return image;
             };
             [frames addObject:frame];
-            time = [[FrameTime alloc] initWithFrame:i++ atFPS:fps];
-        }
+        }];
         
         [HJImagesToVideo videoFromImages:frames toPath:self.path withSize:size withFPS:(int)fps animateTransitions:NO withCallbackBlock:^(BOOL success) {
             dispatch_async(dispatch_get_main_queue(), ^{

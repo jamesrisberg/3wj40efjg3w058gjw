@@ -6,8 +6,8 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "Exporter.h"
+#import "AnimatedExporter.h"
 
-@interface VideoExporter : Exporter
+@interface VideoExporter : AnimatedExporter
 
 @end

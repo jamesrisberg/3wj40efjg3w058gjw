@@ -48,4 +48,7 @@
 
 - (void)createGroup:(id)sender;
 
+@property (nonatomic) NSInteger repeatCount;
+@property (nonatomic) BOOL reboundAnimation;
+
 @end

@@ -109,6 +109,7 @@
 		5F9A18421BFFF0B7000E6351 /* SimplePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18411BFFF0B7000E6351 /* SimplePickerViewController.m */; };
 		5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */; };
 		5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */; };
+		5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18491C000774000E6351 /* AnimatedExporter.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -378,6 +379,8 @@
 		5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimplePickerViewController.xib; sourceTree = "<group>"; };
 		5F9A18451BFFF4D8000E6351 /* RepetitionPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepetitionPicker.h; sourceTree = "<group>"; };
 		5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepetitionPicker.m; sourceTree = "<group>"; };
+		5F9A18481C000774000E6351 /* AnimatedExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedExporter.h; sourceTree = "<group>"; };
+		5F9A18491C000774000E6351 /* AnimatedExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedExporter.m; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -891,6 +894,8 @@
 				5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */,
 				5FE857721BDB69A000B4B245 /* Exporter.h */,
 				5FE857731BDB69A000B4B245 /* Exporter.m */,
+				5F9A18481C000774000E6351 /* AnimatedExporter.h */,
+				5F9A18491C000774000E6351 /* AnimatedExporter.m */,
 				5FE857751BDB69AB00B4B245 /* PhotoExporter.h */,
 				5FE857761BDB69AB00B4B245 /* PhotoExporter.m */,
 				5F809A6A1BE1CC8B0030B538 /* VideoExporter.h */,
@@ -1405,6 +1410,7 @@
 				5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */,
 				5F858DB81BFBB8A3004E658E /* AlphaSlider.swift in Sources */,
 				5F858DB01BFBB8A3004E658E /* PatternView.swift in Sources */,
+				5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */,
 				5FEAF9671B9E2E3A0071BC08 /* ShapeDrawable.m in Sources */,
 				5F858DE11BFCFE5A004E658E /* SwipeMenuView.m in Sources */,
 				5F858DB41BFBB8A3004E658E /* HueSlider.swift in Sources */,

@@ -555,7 +555,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             self.timeline = nil;
         }
         
-        self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning);
+        self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning || mode == EditorModeExportCropping);
         self.canvas.suppressTimingVisualizations = (mode == EditorModeExportCropping || mode == EditorModeExportRunning);
     }
 }
@@ -743,6 +743,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)startRunningExport {
+    if ([self.currentExporter isKindOfClass:[AnimatedExporter class]]) {
+        AnimatedExporter *exp = (id)self.currentExporter;
+        exp.repeatCount = self.canvas.repeatCount;
+        exp.rebound = self.canvas.reboundAnimation;
+    }
     self.currentExporter.cropRect = self.cropView.cropRect;
     self.currentExporter.canvasSize = self.canvas.bounds.size;
     self.currentExporter.delegate = self;
@@ -755,7 +760,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (FrameTime *)durationForExport {
     FrameTime *endTime = self.canvas.duration;
-    NSTimeInterval extraDuration = 2;
+    if (endTime.frame == 0) {
+        endTime = [[FrameTime alloc] initWithFrame:2 atFPS:1];
+    }
+    NSTimeInterval extraDuration = (self.canvas.reboundAnimation || self.canvas.repeatCount > 1) ? 0 : 2;
     endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
     return endTime;
 }
@@ -831,12 +839,17 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
     
     self.repetitionPicker = [RepetitionPicker picker];
-    self.repetitionPicker.repeatCount = 1;
-    self.repetitionPicker.rebound = NO;
+    self.repetitionPicker.repeatCount = self.canvas.repeatCount;
+    self.repetitionPicker.rebound = self.canvas.reboundAnimation;
     [self configureViewWithFloatingButtonAppearance:self.repetitionPicker];
     [self.repetitionPicker sizeToFit];
     self.repetitionPicker.layer.cornerRadius = self.repetitionPicker.bounds.size.height/2;
     [self setFloatingButton:self.repetitionPicker forPosition:FloatingButtonPositionTopRight];
+    __weak EditorViewController *weakSelf = self;
+    self.repetitionPicker.onChange = ^{
+        weakSelf.canvas.repeatCount = weakSelf.repetitionPicker.repeatCount;
+        weakSelf.canvas.reboundAnimation = weakSelf.repetitionPicker.rebound;
+    };
 }
 
 - (void)togglePlayback {
