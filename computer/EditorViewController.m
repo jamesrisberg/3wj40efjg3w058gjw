@@ -73,6 +73,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) UIButton *playButton;
 @property (nonatomic) RepetitionPicker *repetitionPicker;
 @property (nonatomic) CADisplayLink *previewPlaybackDisplayLink;
+@property (nonatomic) BOOL playbackCurrentlyRebounding;
 @property (nonatomic) NSTimeInterval durationCache; // set when entering playback mode
 
 @end
@@ -498,11 +499,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
-        if (oldMode == EditorModeExportCropping && self.currentExporter.defaultTime) {
-            [self.timeline scrollToTime:self.currentExporter.defaultTime.time animated:NO];
-            self.canvas.time = self.currentExporter.defaultTime;
-        }
-        // [self snapTimeToNearestKeyframe]; // not needed?
+        [self snapTimeToNearestKeyframe];
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -753,23 +750,28 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [UIView performWithoutAnimation:^{
         self.currentExporter = exporter;
         self.mode = EditorModeExportCropping;
+        [self updateCurrentExporterTiming];
     }];
 }
 
 - (void)startRunningExport {
+    self.currentExporter.cropRect = self.cropView.cropRect;
+    self.currentExporter.canvasSize = self.canvas.bounds.size;
+    self.currentExporter.delegate = self;
+    self.currentExporter.defaultTime = self.canvas.time;
+    [self updateCurrentExporterTiming];
+    self.currentExporter.parentViewController = self;
+    self.mode = EditorModeExportRunning;
+    [self.currentExporter start];
+}
+
+- (void)updateCurrentExporterTiming {
+    self.currentExporter.endTime = [self durationForExport];
     if ([self.currentExporter isKindOfClass:[AnimatedExporter class]]) {
         AnimatedExporter *exp = (id)self.currentExporter;
         exp.repeatCount = self.canvas.repeatCount;
         exp.rebound = self.canvas.reboundAnimation;
     }
-    self.currentExporter.cropRect = self.cropView.cropRect;
-    self.currentExporter.canvasSize = self.canvas.bounds.size;
-    self.currentExporter.delegate = self;
-    self.currentExporter.defaultTime = self.canvas.time;
-    self.currentExporter.endTime = [self durationForExport];
-    self.currentExporter.parentViewController = self;
-    self.mode = EditorModeExportRunning;
-    [self.currentExporter start];
 }
 
 - (FrameTime *)durationForExport {
@@ -784,6 +786,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)cancelExport {
     [self.currentExporter cancel];
+    self.canvas.time = self.currentExporter.defaultTime;
     self.currentExporter = nil;
     self.mode = EditorModeNormal;
 }
@@ -852,6 +855,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self.playButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];
         self.playingPreviewNow = NO;
         self.durationCache = [self durationForExport].time;
+        self.playbackCurrentlyRebounding = NO;
         
         [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
         
@@ -867,6 +871,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.repetitionPicker.onChange = ^{
             weakSelf.canvas.repeatCount = weakSelf.repetitionPicker.repeatCount;
             weakSelf.canvas.reboundAnimation = weakSelf.repetitionPicker.rebound;
+            [weakSelf updateCurrentExporterTiming];
             weakSelf.durationCache = [weakSelf durationForExport].time;
         };
     }
@@ -889,13 +894,22 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)_updatePreviewPlayback {
-    NSTimeInterval t = self.canvas.time.time + self.previewPlaybackDisplayLink.duration;
+    if (self.playbackCurrentlyRebounding && !self.canvas.reboundAnimation) {
+        self.playbackCurrentlyRebounding = NO;
+    }
+    NSTimeInterval t = self.canvas.time.time + self.previewPlaybackDisplayLink.duration * (self.playbackCurrentlyRebounding ? -1 : 1);
     FrameTime *frameTime;
     if (t > _durationCache) {
-        frameTime = [[FrameTime alloc] initWithFrame:0 atFPS:1];
-    } else {
-        frameTime = [[FrameTime alloc] initWithFrame:t * 100000 atFPS:100000];
+        if (self.canvas.reboundAnimation) {
+            self.playbackCurrentlyRebounding = YES;
+        } else {
+            t = 0;
+        }
     }
+    if (t < 0) {
+        self.playbackCurrentlyRebounding = NO;
+    }
+    frameTime = [[FrameTime alloc] initWithFrame:t * 100000 atFPS:100000];
     self.canvas.time = frameTime;
     [self.timeline scrollToTime:t animated:NO];
 }
