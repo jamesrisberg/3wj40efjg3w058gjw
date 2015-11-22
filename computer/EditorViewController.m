@@ -28,6 +28,7 @@
 #import "computer-Swift.h"
 #import "UIBarButtonItem+BorderedButton.h"
 #import "RepetitionPicker.h"
+#import "VideoConstants.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -497,6 +498,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
+        [self snapTimeToNearestKeyframe];
+        
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
             done.titleLabel.font = [UIFont boldSystemFontOfSize:done.titleLabel.font.pointSize];
@@ -713,6 +716,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         }
     }
     return NO;
+}
+
+- (void)snapTimeToNearestKeyframe {
+    NSInteger frame = round(self.canvas.time.time * VC_TIMELINE_CELLS_PER_SECOND);
+    FrameTime *frameTime = [[FrameTime alloc] initWithFrame:frame atFPS:VC_TIMELINE_CELLS_PER_SECOND];
+    self.canvas.time = frameTime;
+    [self.timeline scrollToTime:frameTime.time animated:YES];
 }
 
 #pragma mark Export
