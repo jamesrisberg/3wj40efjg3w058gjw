@@ -11,7 +11,9 @@
 #import "FilePickerViewController.h"
 #import "ExportTest.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () {
+    NSInteger _activityIndicatorCount;
+}
 
 @end
 
@@ -60,6 +62,11 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)incrementNetworkActivityIndicator:(NSInteger)i {
+    _activityIndicatorCount += i;
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:_activityIndicatorCount > 0];
 }
 
 @end

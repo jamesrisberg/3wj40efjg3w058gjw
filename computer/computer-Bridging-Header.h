@@ -7,3 +7,4 @@
 #import "TouchForwardingView.h"
 #import "AFImageSearchResultsViewController.h"
 #import "RGB-HSV.h"
+#import "AppDelegate.h"

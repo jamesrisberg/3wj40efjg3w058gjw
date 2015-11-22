@@ -142,10 +142,13 @@ class ImageSearchViewController: UIViewController, AFImageSearchResultsViewContr
     }
     
     var networkActivityCount: Int = 0 {
-        didSet {
-            #if !AppExtensionTarget
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = (networkActivityCount > 0)
-            #endif
+        willSet(newVal) {
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            if networkActivityCount == 0 && newVal > 0 {
+                appDelegate.incrementNetworkActivityIndicator(1)
+            } else if newVal == 0 && networkActivityCount > 0 {
+                appDelegate.incrementNetworkActivityIndicator(-1)
+            }
         }
     }
 }

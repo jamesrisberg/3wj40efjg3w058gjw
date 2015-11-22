@@ -11,5 +11,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+- (void)incrementNetworkActivityIndicator:(NSInteger)i;
 
 @end
