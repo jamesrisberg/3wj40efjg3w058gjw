@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Canvas, FrameTime;
+@class Canvas, FrameTime, EditorViewController;
 
 @class Exporter;
 @protocol ExporterDelegate <NSObject>
@@ -23,7 +23,7 @@
 // these should be set by clients prior to -start
 @property (nonatomic) CGSize canvasSize;
 @property (nonatomic) CGRect cropRect; // in canvas coords
-@property (nonatomic,weak) UIViewController *parentViewController;
+@property (nonatomic,weak) EditorViewController *parentViewController;
 @property (nonatomic) FrameTime *defaultTime; // the time when this export was initiated
 @property (nonatomic) FrameTime *endTime;
 @property (nonatomic,weak) id<ExporterDelegate> delegate;

@@ -56,6 +56,7 @@
         }
     }
     SimplePickerViewController *picker = [SimplePickerViewController picker];
+    picker.prompt = NSLocalizedString(@"Repeat Count", @"");
     picker.models = models;
     picker.selectedModel = selected;
     [picker presentWithCallback:^(SimplePickerModel *modelOrNil) {

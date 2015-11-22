@@ -120,6 +120,7 @@
 		5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */; };
 		5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C181BD82566000FA3F4 /* SliderOptionsCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
+		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -400,6 +401,8 @@
 		5FBF7C181BD82566000FA3F4 /* SliderOptionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderOptionsCell.m; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
+		5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+Send.h"; sourceTree = "<group>"; };
+		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -1120,6 +1123,8 @@
 			children = (
 				5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */,
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
+				5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */,
+				5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
@@ -1501,6 +1506,7 @@
 				5F858DB21BFBB8A3004E658E /* PatternPickerViewController.swift in Sources */,
 				5F198AEB1BD99BE700B62433 /* SubcanvasDrawable.m in Sources */,
 				5F2095FB1BEEBB2800E4C1F1 /* optimize.c in Sources */,
+				5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */,
 				5F9A17EA1BFD5510000E6351 /* ParticleDrawable.m in Sources */,
 				5F809A6C1BE1CC8B0030B538 /* VideoExporter.m in Sources */,
 				5FEAF8831B9C66AE0071BC08 /* ConvenienceCategories.m in Sources */,

@@ -16,6 +16,7 @@
 #import "GifOptimizer.h"
 #import "VideoConstants.h"
 #import "Keyframe.h"
+#import "EditorViewController+Send.h"
 
 @implementation GifExporter
 
@@ -56,14 +57,37 @@
             NSLog(@"done");
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSURL *gifURL = [NSURL fileURLWithPath:path];
-                UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[gifURL] applicationActivities:nil];
-                [self.parentViewController presentViewController:activityVC animated:YES completion:nil];
-                // TODO: delete the temp file?
-                // TODO: warn the user that GIFs can't be saved to camera roll w/ animations?
-                [self.delegate exporterDidFinish:self];
+                
+                UIAlertController *actions = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Share GIF", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                if ([MFMessageComposeViewController canSendAttachments]) {
+                    [actions addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Send as Message", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        MFMessageComposeViewController *compose = [MFMessageComposeViewController new];
+                        [compose addAttachmentURL:gifURL withAlternateFilename:@"Content.gif"];
+                        [self.parentViewController presentMessageComposer:compose];
+                    }]];
+                }
+                if ([MFMailComposeViewController canSendMail]) {
+                    [actions addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Send in Email", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        MFMailComposeViewController *compose = [MFMailComposeViewController new];
+                        [compose addAttachmentData:[NSData dataWithContentsOfURL:gifURL] mimeType:@"image/gif" fileName:@"Content.gif"];
+                        [self.parentViewController presentMailComposer:compose];
+                    }]];
+                }
+                [actions addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Share Link to GIF", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                }]];
+                [actions addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                }]];
+                [self.parentViewController presentViewController:actions animated:YES completion:nil];
+                
+                [self done];
             });
         }];
     });
+}
+
+- (void)done {
+    // TODO: delete the temp file?
+    [self.delegate exporterDidFinish:self];
 }
 
 - (ANGifImageFrame *)frameWithImage:(UIImage *)image size:(CGSize)size delay:(NSTimeInterval)delay {

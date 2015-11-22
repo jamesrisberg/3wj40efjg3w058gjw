@@ -12,6 +12,7 @@
 @import AVFoundation;
 #import "HJImagesToVideo.h"
 #import "VideoConstants.h"
+#import "EditorViewController.h"
 
 @interface VideoExporter ()
 
