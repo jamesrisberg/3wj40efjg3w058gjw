@@ -9,6 +9,7 @@ pod 'NSDictionaryAsURLQuery'
 pod 'AsyncImageView'
 pod 'GPUImage'
 pod 'ALGReversedFlowLayout'
+pod 'Parse'
 
 end
 

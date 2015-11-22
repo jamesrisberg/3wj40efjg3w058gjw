@@ -20,8 +20,8 @@ int gifsicle_main(int argc, char *argv[]);
     });
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [lock lock];
-        int argc = 4;
-        const char *argv[] = {"", path.UTF8String, "-o", path.UTF8String};
+        int argc = 9;
+        const char *argv[] = {"", path.UTF8String, "--colors", "256", "--threads=2", "--lossy=120", "-O3", "-o", path.UTF8String};
         gifsicle_main(argc, (char**)argv);
         [lock unlock];
         dispatch_async(dispatch_get_main_queue(), ^{

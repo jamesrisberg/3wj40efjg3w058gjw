@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9FBE4606833B202E377FA158"
+               BlueprintIdentifier = "0C5256B0EA7DDFCC069663F1"
                BuildableName = "libNSDictionaryAsURLQuery.a"
                BlueprintName = "NSDictionaryAsURLQuery"
                ReferencedContainer = "container:Pods.xcodeproj">

@@ -7,9 +7,6 @@
 //
 
 #import "GifExporter.h"
-#import "ANGifEncoder.h"
-#import "ANGifNetscapeAppExtension.h"
-#import "ANCutColorTable.h"
 #import "ConvenienceCategories.h"
 #import "UIImagePixelSource.h"
 #import "computer-Swift.h"
@@ -17,6 +14,8 @@
 #import "VideoConstants.h"
 #import "Keyframe.h"
 #import "EditorViewController+Send.h"
+@import ImageIO;
+@import MobileCoreServices;
 
 @implementation GifExporter
 
@@ -31,26 +30,37 @@
         CGSize size = self.cropRect.size;
         size.width *= [UIScreen mainScreen].scale;
         size.height *= [UIScreen mainScreen].scale;
-        CGFloat maxDimension = 500;
+        CGFloat maxDimension = 250;
         CGFloat scale = MIN(1, MIN(maxDimension / size.width, maxDimension / size.height));
         size.width = round(size.width * scale);
         size.height = round(size.height * scale);
         NSInteger fps = VC_GIF_FPS;
         self.fps = fps;
         
-        ANGifEncoder *enc = [[ANGifEncoder alloc] initWithOutputFile:path size:size globalColorTable:nil];
+        __block NSInteger frameCount = 0;
+        [self enumerateFrameTimes:^(FrameTime *time) {
+            frameCount++;
+        }];
         
-        // enable looping:
-        ANGifNetscapeAppExtension *extension = [[ANGifNetscapeAppExtension alloc] init];
-        [enc addApplicationExtension:extension];
+        NSDictionary *fileProperties = @{
+                                (id)kCGImagePropertyGIFDictionary: @{(id)kCGImagePropertyGIFLoopCount: @0}
+                                };
+        NSDictionary *frameProps = @{
+                                     (id)kCGImagePropertyGIFDictionary: @{(id)kCGImagePropertyGIFDelayTime: @(1.0/fps)}
+                                     };
+        
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path], kUTTypeGIF, frameCount, NULL);
+        CGImageDestinationSetProperties(destination, (__bridge CFDictionaryRef)fileProperties);
         
         [self enumerateFrameTimes:^(FrameTime *time) {
             UIImage *frameImage = [self renderFrameAtTime:time size:size];
-            ANGifImageFrame *frame = [self frameWithImage:frameImage size:size delay:1.0 / fps];
-            [enc addImageFrame:frame];
+            CGImageDestinationAddImage(destination, frameImage.CGImage, (__bridge CFDictionaryRef)frameProps);
         }];
         
-        [enc closeFile];
+        if (!CGImageDestinationFinalize(destination)) {
+            NSLog(@"failed to finalize image destination");
+        }
+        CFRelease(destination);
         
         NSLog(@"starting to optimize");
         [GifOptimizer optimizeGifAtPath:path doneBlock:^{
@@ -88,18 +98,6 @@
 - (void)done {
     // TODO: delete the temp file?
     [self.delegate exporterDidFinish:self];
-}
-
-- (ANGifImageFrame *)frameWithImage:(UIImage *)image size:(CGSize)size delay:(NSTimeInterval)delay {
-    UIImage *scaledImage = image;
-    if (!CGSizeEqualToSize(scaledImage.size, size)) {
-        scaledImage = [image resizeTo:size];
-    }
-    
-    UIImagePixelSource * pixelSource = [[UIImagePixelSource alloc] initWithImage:scaledImage];
-    ANCutColorTable * colorTable = [[ANCutColorTable alloc] initWithTransparentFirst:YES pixelSource:pixelSource];
-    ANGifImageFrame *frame = [[ANGifImageFrame alloc] initWithPixelSource:pixelSource colorTable:colorTable delayTime:delay];
-    return frame;
 }
 
 - (UIImage *)renderFrameAtTime:(FrameTime *)time size:(CGSize)size {

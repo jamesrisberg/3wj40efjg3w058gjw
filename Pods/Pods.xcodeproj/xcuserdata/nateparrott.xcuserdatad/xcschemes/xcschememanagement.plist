@@ -19,12 +19,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GPUImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>NSDictionaryAsURLQuery.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,22 +52,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1229F09F69CCCEA92D1CF46010603D10</key>
+		<key>1226BFD261F446784D95521FE43B7308</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>21F34B3A332002235EF73E174DB7AFDF</key>
+		<key>19F9FA2B6E25E413BEAE25725F29731D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>23E95A697116DCDD23DFEAD4F5EB3C48</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>42EB3579DCD38255A51D25C7A6ED9268</key>
+		<key>2919B9F7D407F18E6CFAE8A519F9A003</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,12 +72,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A53F228B2FCDEE410BEE676C7A92C659</key>
+		<key>71E3F31FAD4E57EA672EB07384CED35E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC01E6512FEDDBC637919A2EE088937A</key>
+		<key>93AF32D5DA134901B08362046A8DBAE6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C8FE2BCC0B773D9B323BDE5BB4EC7502</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CADB94A4B81940D34C728CF45396010B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E9FE3FF5FC92A4B62EA40859E44971BD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
