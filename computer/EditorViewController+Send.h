@@ -13,5 +13,6 @@
 
 - (void)presentMailComposer:(MFMailComposeViewController *)composer;
 - (void)presentMessageComposer:(MFMessageComposeViewController *)composer;
+- (void)shareGIFWithFileURL:(NSURL *)url callback:(void(^)(NSString *shareableURL))callback;
 
 @end

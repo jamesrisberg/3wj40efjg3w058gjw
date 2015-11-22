@@ -16,5 +16,6 @@
 @property (nonatomic) NSInteger repeatCount;
 @property (nonatomic) BOOL rebound;
 - (void)enumerateFrameTimes:(void(^)(FrameTime *time))block;
+- (BOOL)respectsRepeatCount;
 
 @end

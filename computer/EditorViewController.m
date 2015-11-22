@@ -498,7 +498,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
-        [self snapTimeToNearestKeyframe];
+        if (oldMode == EditorModeExportCropping && self.currentExporter.defaultTime) {
+            [self.timeline scrollToTime:self.currentExporter.defaultTime.time animated:NO];
+            self.canvas.time = self.currentExporter.defaultTime;
+        }
+        // [self snapTimeToNearestKeyframe]; // not needed?
         
         if (mode == EditorModeScroll) {
             UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -837,29 +841,35 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.toolbarView = continueButton;
     [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
     
-    self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.playButton.frame = CGRectMake(0, 0, 40, 40);
-    [self configureViewWithFloatingButtonAppearance:self.playButton];
-    self.playButton.layer.cornerRadius = self.playButton.bounds.size.width/2;
-    [self.playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.playButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];
-    self.playingPreviewNow = NO;
-    self.durationCache = self.canvas.duration.time; // [self durationForExport].time; // DON'T use durationForExport; it includes a bunch of padding on the end
+    AnimatedExporter *animated = [self.currentExporter isKindOfClass:[AnimatedExporter class]] ? (id)self.currentExporter : nil;
     
-    [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
-    
-    self.repetitionPicker = [RepetitionPicker picker];
-    self.repetitionPicker.repeatCount = self.canvas.repeatCount;
-    self.repetitionPicker.rebound = self.canvas.reboundAnimation;
-    [self configureViewWithFloatingButtonAppearance:self.repetitionPicker];
-    [self.repetitionPicker sizeToFit];
-    self.repetitionPicker.layer.cornerRadius = self.repetitionPicker.bounds.size.height/2;
-    [self setFloatingButton:self.repetitionPicker forPosition:FloatingButtonPositionTopRight];
-    __weak EditorViewController *weakSelf = self;
-    self.repetitionPicker.onChange = ^{
-        weakSelf.canvas.repeatCount = weakSelf.repetitionPicker.repeatCount;
-        weakSelf.canvas.reboundAnimation = weakSelf.repetitionPicker.rebound;
-    };
+    if (animated) {
+        self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.playButton.frame = CGRectMake(0, 0, 40, 40);
+        [self configureViewWithFloatingButtonAppearance:self.playButton];
+        self.playButton.layer.cornerRadius = self.playButton.bounds.size.width/2;
+        [self.playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.playButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];
+        self.playingPreviewNow = NO;
+        self.durationCache = [self durationForExport].time;
+        
+        [self setFloatingButton:self.playButton forPosition:FloatingButtonPositionTopLeft];
+        
+        self.repetitionPicker = [RepetitionPicker picker];
+        self.repetitionPicker.repeatCount = self.canvas.repeatCount;
+        self.repetitionPicker.rebound = self.canvas.reboundAnimation;
+        self.repetitionPicker.onlyAllowTogglingRebound = ![animated respectsRepeatCount];
+        [self configureViewWithFloatingButtonAppearance:self.repetitionPicker];
+        [self.repetitionPicker sizeToFit];
+        self.repetitionPicker.layer.cornerRadius = self.repetitionPicker.bounds.size.height/2;
+        [self setFloatingButton:self.repetitionPicker forPosition:FloatingButtonPositionTopRight];
+        __weak EditorViewController *weakSelf = self;
+        self.repetitionPicker.onChange = ^{
+            weakSelf.canvas.repeatCount = weakSelf.repetitionPicker.repeatCount;
+            weakSelf.canvas.reboundAnimation = weakSelf.repetitionPicker.rebound;
+            weakSelf.durationCache = [weakSelf durationForExport].time;
+        };
+    }
 }
 
 - (void)togglePlayback {

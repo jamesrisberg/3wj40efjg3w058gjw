@@ -7,6 +7,7 @@
 //
 
 #import "EditorViewController+Send.h"
+#import <Parse.h>
 
 @implementation EditorViewController (Send)
 
@@ -27,6 +28,16 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [controller dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)shareGIFWithFileURL:(NSURL *)url callback:(void(^)(NSString *shareableURL))callback {
+    PFFile *file = [PFFile fileWithName:@"Content.gif" contentsAtPath:url.path];
+    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        NSLog(@"Save succeeded? %@ (error: %@)", @(succeeded), error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback(file.url);
+        });
+    }];
 }
 
 @end

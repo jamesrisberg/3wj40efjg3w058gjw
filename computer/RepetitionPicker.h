@@ -12,6 +12,7 @@
 
 @property (nonatomic) BOOL rebound;
 @property (nonatomic) NSInteger repeatCount;
+@property (nonatomic) BOOL onlyAllowTogglingRebound;
 
 + (RepetitionPicker *)picker;
 

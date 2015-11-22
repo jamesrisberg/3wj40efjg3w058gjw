@@ -29,8 +29,8 @@
     return [[SimplePickerViewController alloc] initWithNibName:@"SimplePickerViewController" bundle:nil];
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)loadView {
+    [super loadView];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 

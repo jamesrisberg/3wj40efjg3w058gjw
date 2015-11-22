@@ -29,6 +29,11 @@
     [self update];
 }
 
+- (void)setOnlyAllowTogglingRebound:(BOOL)onlyAllowTogglingRebound {
+    _onlyAllowTogglingRebound = onlyAllowTogglingRebound;
+    [self update];
+}
+
 - (CGSize)sizeThatFits:(CGSize)size {
     return CGSizeMake(70, 44);
 }
@@ -38,13 +43,18 @@
 }
 
 - (NSString *)stringForRepeatCount:(NSInteger)count rebound:(BOOL)rebound {
-    return [NSString stringWithFormat:@"%@x %@", @(count), (rebound ? @"↻↺" : @"↻")];
+    if (self.onlyAllowTogglingRebound) {
+        return (rebound ? @"Play+reverse ↻↺" : @"Play ↻");
+    } else {
+        return [NSString stringWithFormat:@"%@x %@", @(count), (rebound ? @"↻↺" : @"↻")];
+    }
 }
 
 - (void)change:(id)sender {
     NSMutableArray *models = [NSMutableArray new];
     SimplePickerModel *selected = nil;
-    for (NSInteger repeat=1; repeat < 10; repeat++) {
+    NSInteger maxReps = self.onlyAllowTogglingRebound ? 1 : 10;
+    for (NSInteger repeat=1; repeat <= maxReps; repeat++) {
         for (NSInteger rebound=0; rebound<=1; rebound++) {
             SimplePickerModel *model = [SimplePickerModel new];
             model.title = [self stringForRepeatCount:repeat rebound:!!rebound];

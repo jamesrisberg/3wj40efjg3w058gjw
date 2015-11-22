@@ -10,6 +10,7 @@
 #import "EditorViewController.h"
 #import "FilePickerViewController.h"
 #import "ExportTest.h"
+#import <Parse.h>
 
 @interface AppDelegate () {
     NSInteger _activityIndicatorCount;
@@ -22,6 +23,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Parse setApplicationId:@"HOKpgx4PlskFPZkAvtBxk1OnpIAWQlJpdNuGUo1w"
+                  clientKey:@"AKgMJl0JTZ32BGgVmgGL5h19ia0NBBeMEYc2q1oi"];
     
     // [ExportTest exportTestWithVC:self.window.rootViewController];
     

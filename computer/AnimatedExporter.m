@@ -25,4 +25,8 @@
     }
 }
 
+- (BOOL)respectsRepeatCount {
+    return YES;
+}
+
 @end
