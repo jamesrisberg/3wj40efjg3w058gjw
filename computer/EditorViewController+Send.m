@@ -8,6 +8,8 @@
 
 #import "EditorViewController+Send.h"
 #import <Parse.h>
+#import "API.h"
+#import "computer-Swift.h"
 
 @implementation EditorViewController (Send)
 
@@ -31,12 +33,16 @@
 }
 
 - (void)shareGIFWithFileURL:(NSURL *)url callback:(void(^)(NSString *shareableURL))callback {
+    NSString *shareableURL = [[API shared] getShareableURL];
+    callback(shareableURL);
+    
     PFFile *file = [PFFile fileWithName:@"Content.gif" contentsAtPath:url.path];
-    [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        NSLog(@"Save succeeded? %@ (error: %@)", @(succeeded), error);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            callback(file.url);
-        });
+    [[API shared] uploadParseFile:file atShareableURL:shareableURL callback:^(BOOL success, NSError *error) {
+        if (!success) {
+            UIAlertController *err = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Couldn't Upload GIF", @"") message:NSLocalizedString(@"The URL we gave you won't work.", @"") preferredStyle:UIAlertControllerStyleActionSheet];
+            [err addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Okay", @"") style:UIAlertActionStyleCancel handler:nil]];
+            [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[[UIApplication sharedApplication] windows].firstObject] presentViewController:err animated:YES completion:nil];
+        }
     }];
 }
 

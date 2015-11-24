@@ -121,6 +121,7 @@
 		5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C181BD82566000FA3F4 /* SliderOptionsCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
+		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -403,6 +404,8 @@
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
 		5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+Send.h"; sourceTree = "<group>"; };
 		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
+		5FDA80D01C03BF18006CDC21 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
+		5FDA80D11C03BF18006CDC21 /* API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -946,6 +949,8 @@
 			children = (
 				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
+				5FDA80D01C03BF18006CDC21 /* API.h */,
+				5FDA80D11C03BF18006CDC21 /* API.m */,
 				5F858DBA1BFBB8A7004E658E /* Pattern Picker */,
 				5F809A9D1BE40B690030B538 /* Image search */,
 				5FE857781BDB6C4900B4B245 /* File picking */,
@@ -1396,6 +1401,7 @@
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
 				5F83475D1BF43C5600721A2C /* OptionsCell.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
+				5FDA80D21C03BF18006CDC21 /* API.m in Sources */,
 				5F809A4C1BE1C3740030B538 /* ANGifImageFrame.m in Sources */,
 				5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */,
 				5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */,
