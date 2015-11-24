@@ -120,6 +120,19 @@
 		5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C0F1BD82030000FA3F4 /* OptionsTableViewCell.m */; };
 		5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7C181BD82566000FA3F4 /* SliderOptionsCell.m */; };
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
+		5FD8604E1C03EAB600E5A754 /* slkscre.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD8604D1C03EAB600E5A754 /* slkscre.ttf */; };
+		5FD860501C03EADF00E5A754 /* quick_end_jerk.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD8604F1C03EADF00E5A754 /* quick_end_jerk.ttf */; };
+		5FD860521C03EAFB00E5A754 /* porter-sans-inline-block.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860511C03EAFB00E5A754 /* porter-sans-inline-block.otf */; };
+		5FD860541C03EB1700E5A754 /* Plain_Black_Wide.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860531C03EB1700E5A754 /* Plain_Black_Wide.ttf */; };
+		5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860551C03EB3100E5A754 /* PermanentMarker.ttf */; };
+		5FD860581C03EB5800E5A754 /* NEORD___.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860571C03EB5800E5A754 /* NEORD___.ttf */; };
+		5FD8605A1C03EB7400E5A754 /* Impact_Label.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860591C03EB7400E5A754 /* Impact_Label.ttf */; };
+		5FD8605C1C03EB8F00E5A754 /* Dubtronic-Solid.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD8605B1C03EB8F00E5A754 /* Dubtronic-Solid.otf */; };
+		5FD8605E1C03EBA200E5A754 /* comic_zine_ot.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD8605D1C03EBA200E5A754 /* comic_zine_ot.otf */; };
+		5FD860601C03EBCF00E5A754 /* BPdotsDiamondBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD8605F1C03EBCF00E5A754 /* BPdotsDiamondBold.otf */; };
+		5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860611C03EBEC00E5A754 /* Bahiana-Regular.otf */; };
+		5FD860641C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860631C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf */; };
+		5FD860661C03EC1F00E5A754 /* 3Dumb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860651C03EC1F00E5A754 /* 3Dumb.ttf */; };
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
@@ -403,6 +416,19 @@
 		5FBF7C181BD82566000FA3F4 /* SliderOptionsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderOptionsCell.m; sourceTree = "<group>"; };
 		5FC53BED1BD57BAB00910F91 /* QuickCollectionModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickCollectionModal.h; sourceTree = "<group>"; };
 		5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuickCollectionModal.m; sourceTree = "<group>"; };
+		5FD8604D1C03EAB600E5A754 /* slkscre.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = slkscre.ttf; sourceTree = "<group>"; };
+		5FD8604F1C03EADF00E5A754 /* quick_end_jerk.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = quick_end_jerk.ttf; sourceTree = "<group>"; };
+		5FD860511C03EAFB00E5A754 /* porter-sans-inline-block.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "porter-sans-inline-block.otf"; sourceTree = "<group>"; };
+		5FD860531C03EB1700E5A754 /* Plain_Black_Wide.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Plain_Black_Wide.ttf; sourceTree = "<group>"; };
+		5FD860551C03EB3100E5A754 /* PermanentMarker.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PermanentMarker.ttf; sourceTree = "<group>"; };
+		5FD860571C03EB5800E5A754 /* NEORD___.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NEORD___.ttf"; sourceTree = "<group>"; };
+		5FD860591C03EB7400E5A754 /* Impact_Label.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Impact_Label.ttf; sourceTree = "<group>"; };
+		5FD8605B1C03EB8F00E5A754 /* Dubtronic-Solid.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dubtronic-Solid.otf"; sourceTree = "<group>"; };
+		5FD8605D1C03EBA200E5A754 /* comic_zine_ot.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = comic_zine_ot.otf; sourceTree = "<group>"; };
+		5FD8605F1C03EBCF00E5A754 /* BPdotsDiamondBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BPdotsDiamondBold.otf; sourceTree = "<group>"; };
+		5FD860611C03EBEC00E5A754 /* Bahiana-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahiana-Regular.otf"; sourceTree = "<group>"; };
+		5FD860631C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Shaded_Italic.ttf; sourceTree = "<group>"; };
+		5FD860651C03EC1F00E5A754 /* 3Dumb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3Dumb.ttf; sourceTree = "<group>"; };
 		5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+Send.h"; sourceTree = "<group>"; };
 		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
 		5FDA80D01C03BF18006CDC21 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
@@ -813,6 +839,7 @@
 				5F9A18111BFE46D8000E6351 /* riffic.otf */,
 				5F9A18131BFE46E8000E6351 /* norwester.otf */,
 				5F9A180F1BFE46C0000E6351 /* Capture_it.ttf */,
+				5FD8604D1C03EAB600E5A754 /* slkscre.ttf */,
 				5F9A180D1BFE46AD000E6351 /* GrandHotel-Regular.otf */,
 				5F858DBE1BFC3F4F004E658E /* Chunk.ttf */,
 				5F858DBB1BFC3F38004E658E /* Sniglet Regular.ttf */,
@@ -823,9 +850,21 @@
 				5F858DC41BFC3FC8004E658E /* LeagueScriptNumberOne.otf */,
 				5F858DC51BFC3FC8004E658E /* Blackout Two AM.ttf */,
 				5F858DC61BFC3FC8004E658E /* knewave.ttf */,
+				5FD8604F1C03EADF00E5A754 /* quick_end_jerk.ttf */,
 				5F858DC71BFC3FC8004E658E /* knewave-outline.ttf */,
 				5F858DC81BFC3FC8004E658E /* LeagueGothic-Regular.otf */,
+				5FD8605D1C03EBA200E5A754 /* comic_zine_ot.otf */,
 				5F858DC91BFC3FC8004E658E /* Orbitron Medium.ttf */,
+				5FD860531C03EB1700E5A754 /* Plain_Black_Wide.ttf */,
+				5FD860611C03EBEC00E5A754 /* Bahiana-Regular.otf */,
+				5FD860651C03EC1F00E5A754 /* 3Dumb.ttf */,
+				5FD8605F1C03EBCF00E5A754 /* BPdotsDiamondBold.otf */,
+				5FD860511C03EAFB00E5A754 /* porter-sans-inline-block.otf */,
+				5FD860631C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf */,
+				5FD8605B1C03EB8F00E5A754 /* Dubtronic-Solid.otf */,
+				5FD860551C03EB3100E5A754 /* PermanentMarker.ttf */,
+				5FD860591C03EB7400E5A754 /* Impact_Label.ttf */,
+				5FD860571C03EB5800E5A754 /* NEORD___.ttf */,
 				5F9A18151BFED698000E6351 /* AbrilFatface-Regular.otf */,
 				5F858DCA1BFC3FC8004E658E /* LeagueGothic-Italic.otf */,
 			);
@@ -1309,7 +1348,9 @@
 				5F858DCE1BFC3FC8004E658E /* OstrichSansInline-Regular.otf in Resources */,
 				5FEAF8341B97AB660071BC08 /* TextEditorViewController.xib in Resources */,
 				5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */,
+				5FD860661C03EC1F00E5A754 /* 3Dumb.ttf in Resources */,
 				5FEAF9331B9E2B010071BC08 /* SKGradientEditor.xib in Resources */,
+				5FD860501C03EADF00E5A754 /* quick_end_jerk.ttf in Resources */,
 				5FEAF80C1B9788910071BC08 /* Assets.xcassets in Resources */,
 				5F9A180C1BFE469F000E6351 /* Amatic-Bold.ttf in Resources */,
 				5FEAF90F1B9E2A760071BC08 /* SKColorPicker.xib in Resources */,
@@ -1325,24 +1366,35 @@
 				5F9A18161BFED698000E6351 /* AbrilFatface-Regular.otf in Resources */,
 				5F858DCF1BFC3FC8004E658E /* LeagueScriptNumberOne.otf in Resources */,
 				5F9A18101BFE46C0000E6351 /* Capture_it.ttf in Resources */,
+				5FD8605C1C03EB8F00E5A754 /* Dubtronic-Solid.otf in Resources */,
 				5F9A17F41BFD7229000E6351 /* sparkle2.png in Resources */,
 				5F858DBF1BFC3F4F004E658E /* Chunk.ttf in Resources */,
 				5F858DD01BFC3FC8004E658E /* Blackout Two AM.ttf in Resources */,
 				5F9A18121BFE46DB000E6351 /* riffic.otf in Resources */,
+				5FD860601C03EBCF00E5A754 /* BPdotsDiamondBold.otf in Resources */,
+				5FD8605E1C03EBA200E5A754 /* comic_zine_ot.otf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
+				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */,
+				5FD860541C03EB1700E5A754 /* Plain_Black_Wide.ttf in Resources */,
 				5F9A180A1BFE468B000E6351 /* Pacifico.ttf in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
 				5F858DD11BFC3FC8004E658E /* knewave.ttf in Resources */,
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
+				5FD860521C03EAFB00E5A754 /* porter-sans-inline-block.otf in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
 				5F9A180E1BFE46AD000E6351 /* GrandHotel-Regular.otf in Resources */,
 				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
 				5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */,
 				5FEAF95B1B9E2B8A0071BC08 /* crosshairs@2x.png in Resources */,
+				5FD8605A1C03EB7400E5A754 /* Impact_Label.ttf in Resources */,
+				5FD860581C03EB5800E5A754 /* NEORD___.ttf in Resources */,
 				5F858DD51BFC3FC8004E658E /* LeagueGothic-Italic.otf in Resources */,
+				5FD8604E1C03EAB600E5A754 /* slkscre.ttf in Resources */,
+				5FD860641C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf in Resources */,
 				5FEAF9831B9F160A0071BC08 /* lookup_amatorka.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

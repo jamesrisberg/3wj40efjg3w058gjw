@@ -32,14 +32,14 @@ class MainHandler(webapp2.RequestHandler):
 class GifHandler(webapp2.RequestHandler):
     def get(self, name):
         g = ndb.Key('Gif', name).get()
+        status = 503
+        url = 'https://files.parsetfss.com/bf1ec351-355e-43bb-8dd8-984faf14ae43/tfss-91728182-0032-497c-8453-e3b29aebb300-Content.gif'
         if g:
-            self.response.content_type = 'image/gif'
-            print g.file_url
-            data = urllib2.urlopen(g.file_url).read()
-            self.response.write(data)
-        else:
-            self.response.set_status(503)
-            self.response.write("Still uploading!")
+            status = 200
+            url = g.file_url
+        self.response.content_type = 'image/gif'
+        data = urllib2.urlopen(url).read()
+        self.response.write(data)
 
 class RegisterGifHandler(webapp2.RequestHandler):
     def post(self):

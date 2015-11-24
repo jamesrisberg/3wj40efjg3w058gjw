@@ -20,7 +20,7 @@
 }
 
 - (NSURLComponents *)URLComponents {
-    NSURLComponents *comps = [NSURLComponents componentsWithString:@"http://localhost:12080"];
+    NSURLComponents *comps = [NSURLComponents componentsWithString:@"https://content-1138.appspot.com"];
     return comps;
 }
 
