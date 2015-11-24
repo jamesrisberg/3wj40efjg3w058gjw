@@ -12,5 +12,6 @@
 
 - (void)promptToPickPhotoWithSource:(UIImagePickerControllerSourceType)source;
 - (void)promptToPickPhotoFromImageSearch;
+- (void)setImage:(UIImage *)image;
 
 @end

@@ -30,4 +30,6 @@
 
 - (void)maybeEdited;
 
+- (NSFileWrapper *)fileWrapper;
+
 @end

@@ -133,6 +133,8 @@
 		5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860611C03EBEC00E5A754 /* Bahiana-Regular.otf */; };
 		5FD860641C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860631C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf */; };
 		5FD860661C03EC1F00E5A754 /* 3Dumb.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860651C03EC1F00E5A754 /* 3Dumb.ttf */; };
+		5FD860691C04086F00E5A754 /* CMMediaStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD860681C04086F00E5A754 /* CMMediaStore.m */; };
+		5FD8606C1C044B1E00E5A754 /* EditorViewController+InsertMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */; };
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
@@ -429,6 +431,10 @@
 		5FD860611C03EBEC00E5A754 /* Bahiana-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Bahiana-Regular.otf"; sourceTree = "<group>"; };
 		5FD860631C03EC0B00E5A754 /* Action_Man_Shaded_Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Action_Man_Shaded_Italic.ttf; sourceTree = "<group>"; };
 		5FD860651C03EC1F00E5A754 /* 3Dumb.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 3Dumb.ttf; sourceTree = "<group>"; };
+		5FD860671C04086F00E5A754 /* CMMediaStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMMediaStore.h; sourceTree = "<group>"; };
+		5FD860681C04086F00E5A754 /* CMMediaStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMMediaStore.m; sourceTree = "<group>"; };
+		5FD8606A1C044B1E00E5A754 /* EditorViewController+InsertMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+InsertMedia.h"; sourceTree = "<group>"; };
+		5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+InsertMedia.m"; sourceTree = "<group>"; };
 		5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+Send.h"; sourceTree = "<group>"; };
 		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
 		5FDA80D01C03BF18006CDC21 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
@@ -1003,6 +1009,8 @@
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
 				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
+				5FD860671C04086F00E5A754 /* CMMediaStore.h */,
+				5FD860681C04086F00E5A754 /* CMMediaStore.m */,
 				5F1DDB871BE96C0000D9F8E3 /* Stroke Picking */,
 				5FBF7C031BD6DBF8000FA3F4 /* Animation */,
 				5FEAF9641B9E2DEF0071BC08 /* Drawables */,
@@ -1174,6 +1182,8 @@
 				5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */,
 				5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */,
 				5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */,
+				5FD8606A1C044B1E00E5A754 /* EditorViewController+InsertMedia.h */,
+				5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */,
 				5FEAF8161B9788B20071BC08 /* Canvas.h */,
 				5FEAF8171B9788B20071BC08 /* Canvas.m */,
 				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
@@ -1454,6 +1464,7 @@
 				5FEAF8271B97A2720071BC08 /* TextDrawable.m in Sources */,
 				5F809A441BE1C3740030B538 /* ANGifAppExtension.m in Sources */,
 				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
+				5FD8606C1C044B1E00E5A754 /* EditorViewController+InsertMedia.m in Sources */,
 				5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */,
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
 				5F83475D1BF43C5600721A2C /* OptionsCell.m in Sources */,
@@ -1558,6 +1569,7 @@
 				5F809A571BE1C3740030B538 /* BitmapRotationManipulator.m in Sources */,
 				5FEAF8571B9ADA3A0071BC08 /* UIImage+Trim.m in Sources */,
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
+				5FD860691C04086F00E5A754 /* CMMediaStore.m in Sources */,
 				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
 				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
 				5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */,

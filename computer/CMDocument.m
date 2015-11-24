@@ -39,6 +39,13 @@
 
 @implementation CMDocument
 
+- (NSFileWrapper *)fileWrapper {
+    if (!_fileWrapper) {
+        _fileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
+    }
+    return _fileWrapper;
+}
+
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
     self.fileWrapper = contents;
     NSFileWrapper *canvasWrapper = [self.fileWrapper fileWrappers][@"Canvas"];
@@ -48,10 +55,6 @@
 }
 
 - (id)contentsForType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
-    if (!self.fileWrapper) {
-        self.fileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
-    }
-    
     NSData *canvasData = [NSKeyedArchiver archivedDataWithRootObject:[self.delegate canvasForDocument:self]];
     [self.fileWrapper setData:canvasData forChildWithName:@"Canvas"];
     

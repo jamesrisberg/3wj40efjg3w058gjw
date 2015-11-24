@@ -18,6 +18,8 @@
 #import "StarDrawable.h"
 #import "ParticleDrawable.h"
 #import "UIColor+RandomColors.h"
+#import "EditorViewController+InsertMedia.h"
+@import MobileCoreServices;
 
 @interface InsertItemViewController ()
 
@@ -41,14 +43,12 @@
     QuickCollectionItem *camera = [QuickCollectionItem new];
     camera.icon = [UIImage imageNamed:@"Camera"];
     camera.action = ^{
-        PhotoDrawable *d = addPhoto();
-        [d promptToPickPhotoWithSource:UIImagePickerControllerSourceTypeCamera];
+        [weakSelf.editorVC insertMediaWithSource:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeImage, (id)kUTTypeMovie]];
     };
     QuickCollectionItem *photos = [QuickCollectionItem new];
     photos.icon = [UIImage imageNamed:@"Pictures"];
     photos.action = ^{
-        PhotoDrawable *d = addPhoto();
-        [d promptToPickPhotoWithSource:UIImagePickerControllerSourceTypePhotoLibrary];
+        [weakSelf.editorVC insertMediaWithSource:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeImage, (id)kUTTypeMovie]];;
     };
     QuickCollectionItem *imageSearch = [QuickCollectionItem new];
     imageSearch.icon = [UIImage imageNamed:@"Search"];
