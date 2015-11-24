@@ -122,6 +122,7 @@
 		5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC53BEE1BD57BAB00910F91 /* QuickCollectionModal.m */; };
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
+		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -406,6 +407,8 @@
 		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
 		5FDA80D01C03BF18006CDC21 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
 		5FDA80D11C03BF18006CDC21 /* API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
+		5FDA80D31C03E7C2006CDC21 /* UIColor+RandomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RandomColors.h"; sourceTree = "<group>"; };
+		5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RandomColors.m"; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 			children = (
 				5F9A183D1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.h */,
 				5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */,
+				5FDA80D31C03E7C2006CDC21 /* UIColor+RandomColors.h */,
+				5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */,
 				5F858DD91BFC5207004E658E /* UIBezierPath-Points.h */,
 				5F858DDA1BFC5207004E658E /* UIBezierPath-Points.m */,
 				5F9A18401BFFF0B7000E6351 /* SimplePickerViewController.h */,
@@ -1400,6 +1405,7 @@
 				5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */,
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
 				5F83475D1BF43C5600721A2C /* OptionsCell.m in Sources */,
+				5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5FDA80D21C03BF18006CDC21 /* API.m in Sources */,
 				5F809A4C1BE1C3740030B538 /* ANGifImageFrame.m in Sources */,

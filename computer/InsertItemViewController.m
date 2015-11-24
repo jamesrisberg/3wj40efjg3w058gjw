@@ -17,6 +17,7 @@
 #import "computer-Swift.h"
 #import "StarDrawable.h"
 #import "ParticleDrawable.h"
+#import "UIColor+RandomColors.h"
 
 @interface InsertItemViewController ()
 
@@ -75,7 +76,7 @@
         ShapeDrawable *d = [ShapeDrawable new];
         d.pattern = nil;
         d.path = nil;
-        d.strokeColor = [UIColor redColor];
+        d.strokeColor = [UIColor randomHue];
         d.strokeWidth = 2;
         [weakSelf.editorVC.canvas insertDrawable:d];
         [weakSelf.editorVC startFreehandDrawingToShape:d];
@@ -85,7 +86,7 @@
     circle.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
         d.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 200, 200)];
-        d.pattern = [Pattern solidColor:[UIColor greenColor]];
+        d.pattern = [Pattern solidColor:[UIColor randomHue]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
@@ -93,7 +94,7 @@
     square.icon = [UIImage imageNamed:@"Square"];
     square.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
-        d.pattern = [Pattern solidColor:[UIColor orangeColor]];
+        d.pattern = [Pattern solidColor:[UIColor randomHue]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
@@ -101,7 +102,7 @@
     star.icon = [UIImage imageNamed:@"Star"];
     star.action = ^{
         StarDrawable *d = [StarDrawable new];
-        d.pattern = [Pattern solidColor:[UIColor purpleColor]];
+        d.pattern = [Pattern solidColor:[UIColor randomHue]];
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
