@@ -8,6 +8,8 @@
 
 #import "EditorViewController+InsertMedia.h"
 #import "PhotoDrawable.h"
+#import "CMMediaStore.h"
+#import "VideoDrawable.h"
 @import MobileCoreServices;
 
 @implementation EditorViewController (InsertMedia)
@@ -17,6 +19,7 @@
     picker.sourceType = source;
     picker.mediaTypes = mediaTypes;
     picker.allowsEditing = YES;
+    picker.videoQuality = UIImagePickerControllerQualityTypeMedium;
     picker.delegate = (id)self;
     [self presentViewController:picker animated:YES completion:nil];
 }
@@ -37,7 +40,12 @@
 }
 
 - (void)insertMovieAtURL:(NSURL *)url {
-    
+    [[CMMediaStore shared] resizeAndStoreMediaAtURL:url callback:^(CMMediaID *mediaID) {
+        VideoDrawable *d = [VideoDrawable new];
+        d.frame = CGRectMake(0, 0, 250, 250);
+        d.media = mediaID;
+        [self.canvas insertDrawable:d];
+    }];
 }
 
 - (void)insertImage:(UIImage *)image {

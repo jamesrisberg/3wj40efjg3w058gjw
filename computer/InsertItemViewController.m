@@ -56,8 +56,6 @@
         PhotoDrawable *d = addPhoto();
         [d promptToPickPhotoFromImageSearch];
     };
-    QuickCollectionItem *video = [QuickCollectionItem new];
-    video.icon = [UIImage imageNamed:@"Video"];
     QuickCollectionItem *text = [QuickCollectionItem new];
     text.icon = [UIImage imageNamed:@"Text"];
     text.action = ^{
@@ -137,7 +135,7 @@
         [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    self.items = @[camera, photos, imageSearch, video, text, pen, circle, square, star, gridRepeat, ringRepeat, particle];
+    self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, gridRepeat, ringRepeat, particle];
 }
 
 - (void)insertParticle {

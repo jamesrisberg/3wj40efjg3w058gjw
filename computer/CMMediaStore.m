@@ -7,6 +7,7 @@
 //
 
 #import "CMMediaStore.h"
+@import AVFoundation;
 
 @interface CMMediaID ()
 
@@ -41,6 +42,10 @@
     CMMediaID *ID = [CMMediaID new];
     ID.name = name;
     return ID;
+}
+
+- (void)resizeAndStoreMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback {
+    callback([self storeMediaAtURL:url]); // TODO? or not
 }
 
 @end

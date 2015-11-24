@@ -12,6 +12,7 @@
 #import "ShapeStackList.h"
 #import "ConvenienceCategories.h"
 #import "SubcanvasDrawable.h"
+#import "VideoDrawable.h"
 
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
@@ -430,6 +431,11 @@
         if ([d isKindOfClass:[SubcanvasDrawable class]]) {
             Canvas *sub = [(SubcanvasDrawable *)d subcanvas];
             t = [t maxWith:[sub duration]];
+        } else if ([d isKindOfClass:[VideoDrawable class]]) {
+            VideoDrawable *v = (VideoDrawable *)d;
+            if ([v videoDuration]) {
+                t = [t maxWith:[v videoDuration]];
+            }
         }
     }
     return t;

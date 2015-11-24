@@ -14,6 +14,7 @@
 
 + (CMMediaStore *)shared;
 - (CMMediaID *)storeMediaAtURL:(NSURL *)url;
+- (void)resizeAndStoreMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback;
 
 @end
 
