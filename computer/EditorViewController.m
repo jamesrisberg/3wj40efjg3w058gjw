@@ -779,7 +779,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     if (endTime.frame == 0) {
         endTime = [[FrameTime alloc] initWithFrame:2 atFPS:1];
     }
-    NSTimeInterval extraDuration = (self.canvas.reboundAnimation || self.canvas.repeatCount > 1) ? 0 : 2;
+    NSTimeInterval extraDuration = 0; // (self.canvas.reboundAnimation || self.canvas.repeatCount > 1) ? 0 : 2;
     endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
     return endTime;
 }

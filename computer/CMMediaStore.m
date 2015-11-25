@@ -8,6 +8,7 @@
 
 #import "CMMediaStore.h"
 @import AVFoundation;
+@import Photos;
 
 @interface CMMediaID ()
 
@@ -33,19 +34,33 @@
     return shared;
 }
 
-- (CMMediaID *)storeMediaAtURL:(NSURL *)url {
+- (void)storeMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback {
     NSString *name = [[NSUUID UUID] UUIDString];
     if (url.pathExtension) name = [name stringByAppendingPathExtension:url.pathExtension];
-    
     NSURL *destURL = [NSURL fileURLWithPath:[self.path stringByAppendingPathComponent:name]];
-    [[NSFileManager defaultManager] copyItemAtURL:url toURL:destURL error:nil];
-    CMMediaID *ID = [CMMediaID new];
-    ID.name = name;
-    return ID;
-}
-
-- (void)resizeAndStoreMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback {
-    callback([self storeMediaAtURL:url]); // TODO? or not
+    
+    if ([url.scheme isEqualToString:@"assets-library"]) {
+        PHFetchResult<__kindof PHAsset*> *results = [PHAsset fetchAssetsWithALAssetURLs:@[url] options:nil];
+        [results enumerateObjectsUsingBlock:^(__kindof PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [[PHImageManager defaultManager] requestExportSessionForVideo:obj options:0 exportPreset:AVAssetExportPreset960x540 resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+                // TODO: show export progress
+                exportSession.outputURL = destURL;
+                exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+                [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        CMMediaID *ID = [CMMediaID new];
+                        ID.name = name;
+                        callback(ID);
+                    });
+                }];
+            }];
+        }];
+    } else if (url.isFileURL) {
+        [[NSFileManager defaultManager] copyItemAtURL:url toURL:destURL error:nil];
+        CMMediaID *ID = [CMMediaID new];
+        ID.name = name;
+        callback(ID);
+    }
 }
 
 @end
@@ -73,7 +88,11 @@
 }
 
 - (CMMediaID *)newReference {
-    return [[self mediaStore] storeMediaAtURL:self.url];
+    __block CMMediaID *newId = nil;
+    [[self mediaStore] storeMediaAtURL:self.url callback:^(CMMediaID *mediaID) {
+        newId = mediaID;
+    }];
+    return newId; // TODO: this is shitty
 }
 
 - (NSURL *)url {

@@ -13,8 +13,7 @@
 @interface CMMediaStore : NSObject
 
 + (CMMediaStore *)shared;
-- (CMMediaID *)storeMediaAtURL:(NSURL *)url;
-- (void)resizeAndStoreMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback;
+- (void)storeMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback;
 
 @end
 

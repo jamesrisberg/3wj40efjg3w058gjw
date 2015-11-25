@@ -11,6 +11,7 @@
 #import "CMMediaStore.h"
 #import "VideoDrawable.h"
 @import MobileCoreServices;
+@import AssetsLibrary;
 
 @implementation EditorViewController (InsertMedia)
 
@@ -28,7 +29,9 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     NSString *mediaType = info[UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:(id)kUTTypeMovie]) {
-        [self insertMovieAtURL:info[UIImagePickerControllerMediaURL]];
+        NSURL *url = info[UIImagePickerControllerMediaURL] ? : info[UIImagePickerControllerReferenceURL];
+        NSLog(@"URL: %@", url);
+        [self insertMovieAtURL:url];
     } else if ([mediaType isEqualToString:(id)kUTTypeImage]) {
         UIImage *image = info[UIImagePickerControllerEditedImage] ? : info[UIImagePickerControllerOriginalImage];
         [self insertImage:image];
@@ -40,7 +43,7 @@
 }
 
 - (void)insertMovieAtURL:(NSURL *)url {
-    [[CMMediaStore shared] resizeAndStoreMediaAtURL:url callback:^(CMMediaID *mediaID) {
+    [[CMMediaStore shared] storeMediaAtURL:url callback:^(CMMediaID *mediaID) {
         VideoDrawable *d = [VideoDrawable new];
         d.frame = CGRectMake(0, 0, 250, 250);
         d.media = mediaID;
