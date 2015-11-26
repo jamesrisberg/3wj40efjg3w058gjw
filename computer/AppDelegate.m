@@ -11,6 +11,7 @@
 #import "FilePickerViewController.h"
 #import "ExportTest.h"
 #import <Parse.h>
+#import "FilterPickerViewController.h"
 
 @interface AppDelegate () {
     NSInteger _activityIndicatorCount;

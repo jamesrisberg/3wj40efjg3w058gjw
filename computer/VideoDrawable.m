@@ -9,6 +9,7 @@
 #import "VideoDrawable.h"
 @import AVFoundation;
 #import <ReactiveCocoa.h>
+#import "FilterPickerViewController.h"
 
 @interface VideoDrawable ()
 
@@ -17,6 +18,7 @@
 @property (nonatomic) AVPlayerLayer *playerLayer;
 @property (nonatomic) AVPlayerItemStatus playerItemStatus;
 @property (nonatomic) FrameTime *videoDuration;
+@property (nonatomic) CGSize sizeCache;
 
 @end
 
@@ -24,12 +26,17 @@
 
 #pragma mark Media
 
-- (void)setMedia:(CMMediaID *)media {
-    _media = media;
-    
+- (void)setup {
+    [super setup];
     RAC(self, playerItemStatus) = [[[RACObserve(self, playerItem) map:^id(AVPlayerItem *value) {
         return RACObserve(value, status);
     }] switchToLatest] deliverOnMainThread];
+}
+
+- (void)setMedia:(CMMediaID *)media {
+    _media = media;
+    
+    self.sizeCache = CGSizeZero;
     
     self.playerItem = [AVPlayerItem playerItemWithURL:media.url];
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
@@ -101,10 +108,33 @@
         } else {
             [self.player play];
         }
+        self.sizeCache = self.playerItem.presentationSize;
         [self updateAspectRatio:self.playerItem.presentationSize.width / self.playerItem.presentationSize.height];
         self.playerLayer.frame = self.bounds;
         self.videoDuration = [[FrameTime alloc] initWithFrame:self.playerItem.duration.value atFPS:self.playerItem.duration.timescale];
     }
+}
+
+#pragma mark Options
+
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItems {
+    __weak VideoDrawable *weakSelf = self;
+    QuickCollectionItem *filter = [QuickCollectionItem new];
+    filter.label = NSLocalizedString(@"Filter…", @"");
+    filter.action = ^{
+        [weakSelf addFilter];
+    };
+    return [[super optionsItems] arrayByAddingObject:filter];
+}
+
+- (void)addFilter {
+    __weak VideoDrawable *weakSelf = self;
+    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithMediaID:self.media];
+    // picker.videoOutputSize = self.sizeCache; // TODO: make this less janky
+    picker.callback = ^(CMMediaID *media) {
+        weakSelf.media = media;
+    };
+    [self.vcForPresentingModals presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark Lifecyle

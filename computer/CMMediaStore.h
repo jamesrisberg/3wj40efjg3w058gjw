@@ -14,6 +14,7 @@
 
 + (CMMediaStore *)shared;
 - (void)storeMediaAtURL:(NSURL *)url callback:(void(^)(CMMediaID *mediaID))callback;
+- (CMMediaID *)emptyMediaIDWithFileExtension:(NSString *)extension;
 
 @end
 

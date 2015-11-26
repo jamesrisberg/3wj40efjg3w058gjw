@@ -136,6 +136,10 @@
 		5FD860691C04086F00E5A754 /* CMMediaStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD860681C04086F00E5A754 /* CMMediaStore.m */; };
 		5FD8606C1C044B1E00E5A754 /* EditorViewController+InsertMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */; };
 		5FD8606F1C04F70800E5A754 /* VideoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8606E1C04F70800E5A754 /* VideoDrawable.m */; };
+		5FD860961C065BD800E5A754 /* FilterPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD860941C065BD800E5A754 /* FilterPickerViewController.m */; };
+		5FD860971C065BD800E5A754 /* FilterPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FD860951C065BD800E5A754 /* FilterPickerViewController.xib */; };
+		5FD8609D1C0667DF00E5A754 /* FilterPickerFilterInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */; };
+		5FD860A01C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */; };
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
@@ -438,6 +442,13 @@
 		5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+InsertMedia.m"; sourceTree = "<group>"; };
 		5FD8606D1C04F70800E5A754 /* VideoDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDrawable.h; sourceTree = "<group>"; };
 		5FD8606E1C04F70800E5A754 /* VideoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDrawable.m; sourceTree = "<group>"; };
+		5FD860931C065BD800E5A754 /* FilterPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterPickerViewController.h; sourceTree = "<group>"; };
+		5FD860941C065BD800E5A754 /* FilterPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterPickerViewController.m; sourceTree = "<group>"; };
+		5FD860951C065BD800E5A754 /* FilterPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterPickerViewController.xib; sourceTree = "<group>"; };
+		5FD8609B1C0667DF00E5A754 /* FilterPickerFilterInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterPickerFilterInfo.h; sourceTree = "<group>"; };
+		5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterPickerFilterInfo.m; sourceTree = "<group>"; };
+		5FD8609E1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterThumbnailCollectionViewCell.h; sourceTree = "<group>"; };
+		5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterThumbnailCollectionViewCell.m; sourceTree = "<group>"; };
 		5FDA80CC1C02540C006CDC21 /* EditorViewController+Send.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EditorViewController+Send.h"; sourceTree = "<group>"; };
 		5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EditorViewController+Send.m"; sourceTree = "<group>"; };
 		5FDA80D01C03BF18006CDC21 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
@@ -942,6 +953,20 @@
 			name = "Options menus";
 			sourceTree = "<group>";
 		};
+		5FD860981C065BE000E5A754 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				5FD860931C065BD800E5A754 /* FilterPickerViewController.h */,
+				5FD860941C065BD800E5A754 /* FilterPickerViewController.m */,
+				5FD860951C065BD800E5A754 /* FilterPickerViewController.xib */,
+				5FD8609B1C0667DF00E5A754 /* FilterPickerFilterInfo.h */,
+				5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */,
+				5FD8609E1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.h */,
+				5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */,
+			);
+			name = New;
+			sourceTree = "<group>";
+		};
 		5FE857711BDB60D700B4B245 /* Export */ = {
 			isa = PBXGroup;
 			children = (
@@ -1248,6 +1273,7 @@
 		5FEAF9881B9F160E0071BC08 /* Filtering */ = {
 			isa = PBXGroup;
 			children = (
+				5FD860981C065BE000E5A754 /* New */,
 				5FEAF9891B9F168E0071BC08 /* FilterViewController.h */,
 				5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */,
 				5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */,
@@ -1375,6 +1401,7 @@
 				5FEAF90B1B9E2A760071BC08 /* circle.png in Resources */,
 				5F858DD41BFC3FC8004E658E /* Orbitron Medium.ttf in Resources */,
 				5F858DD31BFC3FC8004E658E /* LeagueGothic-Regular.otf in Resources */,
+				5FD860971C065BD800E5A754 /* FilterPickerViewController.xib in Resources */,
 				5F858DCD1BFC3FC8004E658E /* OstrichSans-Bold.otf in Resources */,
 				5F858DCB1BFC3FC8004E658E /* Blackout Midnight.ttf in Resources */,
 				5F9A17F91BFD7B95000E6351 /* mac2.png in Resources */,
@@ -1541,6 +1568,7 @@
 				5FEAF9451B9E2B2B0071BC08 /* SKImageFill.m in Sources */,
 				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
 				5F858DB61BFBB8A3004E658E /* ColorExtensions.swift in Sources */,
+				5FD860A01C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m in Sources */,
 				5F858DB11BFBB8A3004E658E /* PatternPickerView.swift in Sources */,
 				5F2095FD1BEEBB2800E4C1F1 /* quantize.c in Sources */,
 				5FBF7C151BD82030000FA3F4 /* OptionsTableViewCell.m in Sources */,
@@ -1559,6 +1587,7 @@
 				5F2095FA1BEEBB2800E4C1F1 /* merge.c in Sources */,
 				5F809A681BE1C7540030B538 /* UIImagePixelSource.m in Sources */,
 				5F809A4B1BE1C3740030B538 /* ANGifImageDescriptor.m in Sources */,
+				5FD8609D1C0667DF00E5A754 /* FilterPickerFilterInfo.m in Sources */,
 				5F809A531BE1C3740030B538 /* CGContextCreator.m in Sources */,
 				5F809A511BE1C3740030B538 /* OSCommonImage.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
@@ -1586,6 +1615,7 @@
 				5F8347601BF43D6300721A2C /* OptionsCollectionViewCell.m in Sources */,
 				5F8347631BF4439600721A2C /* InlineViewControllerCollectionViewCell.m in Sources */,
 				5F858DB21BFBB8A3004E658E /* PatternPickerViewController.swift in Sources */,
+				5FD860961C065BD800E5A754 /* FilterPickerViewController.m in Sources */,
 				5F198AEB1BD99BE700B62433 /* SubcanvasDrawable.m in Sources */,
 				5F2095FB1BEEBB2800E4C1F1 /* optimize.c in Sources */,
 				5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */,

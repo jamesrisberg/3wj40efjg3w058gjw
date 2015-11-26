@@ -63,6 +63,14 @@
     }
 }
 
+- (CMMediaID *)emptyMediaIDWithFileExtension:(NSString *)extension {
+    NSString *name = [[NSUUID UUID] UUIDString];
+    if (extension) name = [name stringByAppendingPathExtension:extension];
+    CMMediaID *mediaID = [CMMediaID new];
+    mediaID.name = name;
+    return mediaID;
+}
+
 @end
 
 
