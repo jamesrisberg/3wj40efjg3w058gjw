@@ -10,6 +10,7 @@
 #import "computer-Swift.h"
 #import "FilterViewController.h"
 #import <GPUImage.h>
+#import "FilterPickerViewController.h"
 
 @interface PhotoDrawable () <UIImagePickerControllerDelegate>
 
@@ -86,7 +87,7 @@
     QuickCollectionItem *filter = [QuickCollectionItem new];
     filter.label = @"Filter…";
     filter.action = ^{
-        [weakSelf addFilter];
+        [weakSelf addFilterNew];
     };
     QuickCollectionItem *pickPhoto = [QuickCollectionItem new];
     pickPhoto.label = NSLocalizedString(@"Photo…", @"");
@@ -102,6 +103,13 @@
         [self setImage:filtered];
     }];
     [self.vcForPresentingModals presentViewController:filterVC animated:YES completion:nil];
+}
+
+- (void)addFilterNew {
+    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithImage:self.imageView.image callback:^(UIImage *filtered) {
+        [self setImage:filtered];
+    }];
+    [self.vcForPresentingModals presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)cutOut {

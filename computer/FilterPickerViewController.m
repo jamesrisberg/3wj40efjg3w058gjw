@@ -127,6 +127,10 @@
         [_source addTarget:_filter];
         [_filter addTarget:_outputView];
     }
+    
+    if ([_source isKindOfClass:[GPUImagePicture class]]) {
+        [(GPUImagePicture *)_source processImage];
+    }
 }
 
 - (void)dealloc {
@@ -247,6 +251,8 @@
                 self.currentSourceImage = filtered;
                 self.currentFilterInfo = self.allFilters.firstObject;
                 [self processSource];
+                self.UIBlockCount--;
+                callback();
             });
         });
     }
@@ -260,6 +266,8 @@
         } else {
             self.imageCallback(self.filteredImage);
         }
+        self.videoCallback = nil;
+        self.imageCallback = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
 }
