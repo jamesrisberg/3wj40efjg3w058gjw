@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="blockView" destination="hXa-NQ-avf" id="sFu-3r-ZU0"/>
                 <outlet property="collectionView" destination="Sbm-R2-dgZ" id="JL3-uC-sEl"/>
+                <outlet property="filterOptionsView" destination="D3S-i0-SaF" id="QUq-4F-XaY"/>
                 <outlet property="outputViewContainer" destination="rhU-jv-s89" id="lBx-Hz-vSe"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -63,6 +64,29 @@
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" id="D3S-i0-SaF" customClass="FilterOptionsView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="462"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="CC8-bI-jo8">
+                            <rect key="frame" x="28" y="418" width="264" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <animations/>
+                            <color key="tintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="minimumTrackTintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
+                            <color key="maximumTrackTintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                            <color key="thumbTintColor" red="0.31280549036753935" green="0.31280549036753935" blue="0.31280549036753935" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="mainSliderChanged:" destination="D3S-i0-SaF" eventType="valueChanged" id="Ctq-j6-xVb"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="mainSlider" destination="CC8-bI-jo8" id="pOA-XE-3dB"/>
+                    </connections>
                 </view>
                 <view alpha="0.0" contentMode="scaleToFill" id="hXa-NQ-avf" userLabel="UI Blocker">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

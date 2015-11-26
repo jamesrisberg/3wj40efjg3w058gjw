@@ -45,6 +45,7 @@
 }
 
 - (void)process {
+    self.imageView.image = nil;
     UIImage *pic = self.input;
     GPUImageFilter *filter = self.filter;
     if (pic && filter) {

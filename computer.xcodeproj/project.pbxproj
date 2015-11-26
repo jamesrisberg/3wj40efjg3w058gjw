@@ -27,6 +27,7 @@
 		5F6110071BB1144E00DB4C82 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
+		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -274,6 +275,8 @@
 		5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+ResizeToFit.m"; sourceTree = "<group>"; };
 		5F61100D1BB1E05C00DB4C82 /* SKFontPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKFontPicker.h; sourceTree = "<group>"; };
 		5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFontPicker.m; sourceTree = "<group>"; };
+		5F693FF71C07848800569335 /* FilterOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOptionsView.h; sourceTree = "<group>"; };
+		5F693FF81C07848800569335 /* FilterOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterOptionsView.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -963,6 +966,8 @@
 				5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */,
 				5FD8609E1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.h */,
 				5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */,
+				5F693FF71C07848800569335 /* FilterOptionsView.h */,
+				5F693FF81C07848800569335 /* FilterOptionsView.m */,
 			);
 			name = New;
 			sourceTree = "<group>";
@@ -1528,6 +1533,7 @@
 				5F858DB41BFBB8A3004E658E /* HueSlider.swift in Sources */,
 				5F809A491BE1C3740030B538 /* ANMutableColorArray.m in Sources */,
 				5F2095F71BEEBB2800E4C1F1 /* gifunopt.c in Sources */,
+				5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */,
 				5F809A4D1BE1C3740030B538 /* LZWSpoof.m in Sources */,
 				5F1DDB831BE8608700D9F8E3 /* StarDrawable.m in Sources */,
 				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,

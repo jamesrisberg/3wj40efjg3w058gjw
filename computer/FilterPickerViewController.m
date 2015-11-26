@@ -11,6 +11,7 @@
 #import "FilterThumbnailCollectionViewCell.h"
 #import "FilterPickerFilterInfo.h"
 #import "computer-Swift.h"
+#import "FilterOptionsView.h"
 
 @interface FilterPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -20,7 +21,7 @@
 @property (nonatomic) UIImage *originalImage, *filteredImage, *currentSourceImage;
 
 @property (nonatomic) GPUImageOutput *source;
-@property (nonatomic) GPUImageFilter *filter;
+@property (nonatomic) GPUImageOutput<GPUImageInput> *filter;
 @property (nonatomic) GPUImageView *outputView;
 @property (nonatomic) IBOutlet UIView *outputViewContainer;
 
@@ -39,6 +40,8 @@
 
 @property (nonatomic,copy) void(^videoCallback)(CMMediaID *newMediaID);
 @property (nonatomic,copy) void(^imageCallback)(UIImage *filtered);
+
+@property (nonatomic) IBOutlet FilterOptionsView *filterOptionsView;
 
 @end
 
@@ -75,7 +78,15 @@
         self.currentSourceImage = self.originalImage;
     }
     
-    self.thumbnail = [[UIImage imageNamed:@"bliss.jpg"] resizedWithMaxDimension:150];
+    UIImage *thumb = self.originalImage ? : [UIImage imageNamed:@"bliss.jpg"];
+    self.thumbnail = [thumb resizedWithMaxDimension:150];
+    
+    __weak FilterPickerViewController *weakSelf = self;
+    self.filterOptionsView.onChange = ^{
+        if ([weakSelf.source isKindOfClass:[GPUImagePicture class]]) {
+            [(GPUImagePicture *)weakSelf.source processImage];
+        }
+    };
     
     [self processSource];
 }
@@ -95,6 +106,8 @@
     }
     if (currentFilterInfo) {
         [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:[self.allFilters indexOfObject:currentFilterInfo] inSection:0] animated:NO scrollPosition:UICollectionViewScrollPositionNone];
+        
+        [self.filterOptionsView setFilter:self.filter info:currentFilterInfo];
     }
 }
 
@@ -227,7 +240,7 @@
 
 - (void)applyWithCallback:(void(^)())callback {
     self.UIBlockCount++;
-    GPUImageFilter *filter = self.filter;
+    GPUImageOutput<GPUImageInput> *filter = self.filter;
     self.filter = nil; // take the filter out of the chain
     if ([self isVideo]) {
         [self transcodeMedia:self.filteredMediaID ? : self.originalMediaID withFilter:filter callback:^(CMMediaID *newMediaID) {
@@ -278,7 +291,7 @@
 
 #pragma mark Transcoding
 
-- (void)transcodeMedia:(CMMediaID *)mediaID withFilter:(GPUImageFilter *)filter callback:(void(^)(CMMediaID *newMediaID))callback {
+- (void)transcodeMedia:(CMMediaID *)mediaID withFilter:(GPUImageOutput<GPUImageInput> *)filter callback:(void(^)(CMMediaID *newMediaID))callback {
     GPUImageMovie *movie = [[GPUImageMovie alloc] initWithURL:mediaID.url];
     movie.playAtActualSpeed = NO;
     CMMediaID *newMedia = [[CMMediaStore shared] emptyMediaIDWithFileExtension:@"m4v"];
