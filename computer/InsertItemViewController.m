@@ -155,6 +155,16 @@
         d.particlePreset = ParticlePresetSnow;
         [self.editorVC.canvas insertDrawable:d];
     }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Smoke", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetSmoke;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Colorful orbs", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        ParticleDrawable *d = [ParticleDrawable new];
+        d.particlePreset = ParticlePresetOrbs;
+        [self.editorVC.canvas insertDrawable:d];
+    }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ParticleDrawable *d = [ParticleDrawable new];
         d.particlePreset = ParticlePresetMacaroni;

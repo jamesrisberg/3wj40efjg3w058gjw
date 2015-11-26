@@ -28,6 +28,7 @@
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
 		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
+		5F693FFB1C079BFE00569335 /* orb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F693FFA1C079BFE00569335 /* orb.png */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -277,6 +278,7 @@
 		5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKFontPicker.m; sourceTree = "<group>"; };
 		5F693FF71C07848800569335 /* FilterOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOptionsView.h; sourceTree = "<group>"; };
 		5F693FF81C07848800569335 /* FilterOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterOptionsView.m; sourceTree = "<group>"; };
+		5F693FFA1C079BFE00569335 /* orb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orb.png; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -900,6 +902,7 @@
 				5F9A17EF1BFD5889000E6351 /* spark.png */,
 				5F9A17F11BFD7229000E6351 /* sparkle.png */,
 				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
+				5F693FFA1C079BFE00569335 /* orb.png */,
 				5F9A17F51BFD7B95000E6351 /* mac2.png */,
 				5F9A17F61BFD7B95000E6351 /* mac3.png */,
 				5F9A17F71BFD7B95000E6351 /* mac1.png */,
@@ -1254,9 +1257,9 @@
 				5FEAF81A1B9788BD0071BC08 /* Drawable.m */,
 				5F9A17E81BFD5510000E6351 /* ParticleDrawable.h */,
 				5F9A17E91BFD5510000E6351 /* ParticleDrawable.m */,
+				5F9A17FD1BFD7B99000E6351 /* Particles */,
 				5FD8606D1C04F70800E5A754 /* VideoDrawable.h */,
 				5FD8606E1C04F70800E5A754 /* VideoDrawable.m */,
-				5F9A17FD1BFD7B99000E6351 /* Particles */,
 				5FEAF8221B979A010071BC08 /* PhotoDrawable.h */,
 				5FEAF8231B979A010071BC08 /* PhotoDrawable.m */,
 				5FEAF8251B97A2720071BC08 /* TextDrawable.h */,
@@ -1425,6 +1428,7 @@
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
 				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
+				5F693FFB1C079BFE00569335 /* orb.png in Resources */,
 				5F858DCC1BFC3FC8004E658E /* LeagueSpartan-Bold.otf in Resources */,
 				5FD860541C03EB1700E5A754 /* Plain_Black_Wide.ttf in Resources */,
 				5F9A180A1BFE468B000E6351 /* Pacifico.ttf in Resources */,

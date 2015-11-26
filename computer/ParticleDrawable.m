@@ -63,6 +63,10 @@
         [self snow];
     } else if (particlePreset == ParticlePresetSparkle) {
         [self sparkle];
+    } else if (particlePreset == ParticlePresetOrbs) {
+        [self orbs];
+    } else if (particlePreset == ParticlePresetSmoke) {
+        [self smoke];
     }
     
     if (self.onUpdateParticleLayout) {
@@ -184,6 +188,59 @@
         cell.alphaSpeed = -0.5;
         cell.birthRate = 10;
     }
+}
+
+- (void)smoke {
+    CAEmitterCell *cell = [CAEmitterCell emitterCell];
+    cell.contents = (id)[[UIImage imageNamed:@"spark"] CGImage];
+    cell.color = [UIColor grayColor].CGColor;
+    cell.alphaRange = 0.2;
+    cell.alphaSpeed = -0.6;
+    self.emitter.emitterCells = @[cell];
+    
+    [self updateAspectRatio:2];
+    self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
+        layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.7);
+        layer.emitterSize = CGSizeMake(size.width * 0.7, size.height * 0.2);
+    };
+    for (CAEmitterCell *cell in self.emitter.emitterCells) {
+        cell.birthRate = 100.0 / self.emitter.emitterCells.count;
+        cell.scale = 1.5;
+        cell.scaleRange = 0.5;
+        cell.scaleSpeed = -1.3;
+        cell.lifetime = 1.7;
+        cell.emissionLongitude = -M_PI/2;
+        cell.emissionRange = M_PI/20;
+        cell.velocity = 130;
+        cell.velocityRange = 50;
+    }
+}
+
+- (void)orbs {
+    CAEmitterCell *cell = [CAEmitterCell emitterCell];
+    cell.contents = (id)[[UIImage imageNamed:@"orb"] CGImage];
+    cell.color = [UIColor colorWithRed:0.75 green:0.75 blue:0.75 alpha:1].CGColor;
+    cell.redRange = 0.3;
+    cell.greenRange = 0.3;
+    cell.blueRange = 0.3;
+    cell.birthRate = 14;
+    cell.scale = 0.4;
+    cell.scaleRange = 0.3;
+    cell.scaleSpeed = 0.1;
+    cell.emissionRange = 2 * M_PI;
+    cell.velocity = 140;
+    cell.velocityRange = 40;
+    cell.alphaRange = 0.2;
+    cell.alphaSpeed = -0.2;
+    cell.lifetime = 5;
+    self.emitter.emitterCells = @[cell];
+    
+    [self updateAspectRatio:1];
+    self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
+        layer.emitterPosition = CGPointMake(size.width/2, size.height/2);
+        layer.emitterSize = CGSizeMake(0.05, 0.05);
+    };
+    
 }
 
 - (void)setTime:(FrameTime *)time {

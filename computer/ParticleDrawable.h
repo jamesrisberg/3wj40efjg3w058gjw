@@ -12,7 +12,9 @@ typedef NS_ENUM(NSInteger, ParticlePreset) {
     ParticlePresetFire,
     ParticlePresetSnow,
     ParticlePresetSparkle,
-    ParticlePresetMacaroni
+    ParticlePresetMacaroni,
+    ParticlePresetSmoke,
+    ParticlePresetOrbs
 };
 
 @interface ParticleDrawable : Drawable
