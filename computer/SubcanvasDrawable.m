@@ -316,5 +316,10 @@
     [super setUseTimeForStaticAnimations:useTimeForStaticAnimations];
     self.subcanvas.useTimeForStaticAnimations = useTimeForStaticAnimations;
 }
+#pragma mark Capture
+- (void)setPreparedForStaticScreenshot:(BOOL)preparedForStaticScreenshot {
+    [super setPreparedForStaticScreenshot:preparedForStaticScreenshot];
+    self.subcanvas.preparedForStaticScreenshot = preparedForStaticScreenshot;
+}
 
 @end

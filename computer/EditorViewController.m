@@ -203,10 +203,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     if (!self.view.window) {
         return nil;
     }
+    BOOL wasAlreadyPreparedForSnapshot = self.canvas.preparedForStaticScreenshot;
+    self.canvas.preparedForStaticScreenshot = YES;
     UIGraphicsBeginImageContext(self.canvas.bounds.size);
     [self.canvas drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:YES];
     UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+    self.canvas.preparedForStaticScreenshot = wasAlreadyPreparedForSnapshot;
     return snapshot;
 }
 
@@ -498,6 +501,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
         self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
+        
+        self.canvas.preparedForStaticScreenshot = (mode == EditorModeExportRunning);
         
         [self snapTimeToNearestKeyframe];
         

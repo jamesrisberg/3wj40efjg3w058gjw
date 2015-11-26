@@ -51,4 +51,6 @@
 @property (nonatomic) NSInteger repeatCount;
 @property (nonatomic) BOOL reboundAnimation;
 
+@property (nonatomic) BOOL preparedForStaticScreenshot;
+
 @end

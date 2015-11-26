@@ -586,4 +586,12 @@
     }
 }
 
+#pragma mark Capture
+- (void)setPreparedForStaticScreenshot:(BOOL)preparedForStaticScreenshot {
+    _preparedForStaticScreenshot = preparedForStaticScreenshot;
+    for (Drawable *d in self.drawables) {
+        d.preparedForStaticScreenshot = preparedForStaticScreenshot;
+    }
+}
+
 @end

@@ -64,4 +64,6 @@ extern NSString * const DrawableArrayPasteboardType;
 
 @property (nonatomic) BOOL transientEDUView;
 
+@property (nonatomic) BOOL preparedForStaticScreenshot;
+
 @end

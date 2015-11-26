@@ -20,6 +20,9 @@
 @property (nonatomic) FrameTime *videoDuration;
 @property (nonatomic) CGSize sizeCache;
 
+@property (nonatomic) AVAssetImageGenerator *snapshotGenerator;
+@property (nonatomic) UIImageView *snapshotView;
+
 @end
 
 @implementation VideoDrawable
@@ -42,6 +45,7 @@
     self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
     self.player.muted = YES;
     self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+    self.snapshotGenerator = nil;
 }
 
 - (void)setPlayer:(AVPlayer *)player {
@@ -87,18 +91,26 @@
     [super setTime:time];
     if (self.useTimeForStaticAnimations && [self.playerItem status] == AVPlayerItemStatusReadyToPlay) {
         [self seekToTime:time];
+        if (self.preparedForStaticScreenshot) {
+            [self updateSnapshot];
+        }
     }
 }
 
 - (void)seekToTime:(FrameTime *)time {
+    CMTime cmTime = [self CMTimeForTime:time];
+    if (CMTimeCompare(cmTime, kCMTimeInvalid) != 0) {
+        [self.player seekToTime:cmTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+    }
+}
+
+- (CMTime)CMTimeForTime:(FrameTime *)time {
     NSTimeInterval seconds = time.time;
     NSTimeInterval maxSeconds = CMTimeGetSeconds(self.playerItem.duration);
     seconds = MAX(0, seconds);
     seconds = fmod(seconds, maxSeconds);
     CMTime cmTime = CMTimeMakeWithSeconds(seconds, (int32_t)time.fps ? : 1);
-    if (CMTimeCompare(cmTime, kCMTimeInvalid) != 0) {
-        [self.player seekToTime:cmTime toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
-    }
+    return cmTime;
 }
 
 - (void)setPlayerItemStatus:(AVPlayerItemStatus)playerItemStatus {
@@ -113,6 +125,11 @@
         self.playerLayer.frame = self.bounds;
         self.videoDuration = [[FrameTime alloc] initWithFrame:self.playerItem.duration.value atFPS:self.playerItem.duration.timescale];
     }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.snapshotView.frame = self.bounds;
 }
 
 #pragma mark Options
@@ -153,6 +170,36 @@
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.media forKey:@"media"];
     [aCoder encodeObject:self.videoDuration forKey:@"videoDuration"];
+}
+
+#pragma mark Snapshotting
+- (void)setPreparedForStaticScreenshot:(BOOL)preparedForStaticScreenshot {
+    [super setPreparedForStaticScreenshot:preparedForStaticScreenshot];
+    if (preparedForStaticScreenshot) {
+        if (!self.snapshotView) {
+            self.snapshotView = [[UIImageView alloc] initWithFrame:self.bounds];
+            [self addSubview:self.snapshotView];
+        }
+        [self updateSnapshot];
+    } else {
+        [self.snapshotView removeFromSuperview];
+        self.snapshotView = nil;
+        self.snapshotGenerator = nil;
+    }
+    self.playerLayer.hidden = preparedForStaticScreenshot;
+}
+
+- (void)updateSnapshot {
+    if (!self.snapshotGenerator) {
+        self.snapshotGenerator = [[AVAssetImageGenerator alloc] initWithAsset:[AVAsset assetWithURL:self.media.url]];
+        self.snapshotGenerator.requestedTimeToleranceAfter = kCMTimeZero;
+        self.snapshotGenerator.requestedTimeToleranceBefore = kCMTimeZero;
+        self.snapshotGenerator.appliesPreferredTrackTransform = YES;
+    }
+    CMTime time = [self CMTimeForTime:self.time];
+    if (CMTimeCompare(time, kCMTimeInvalid) != 0) {
+        self.snapshotView.image = [UIImage imageWithCGImage:[self.snapshotGenerator copyCGImageAtTime:time actualTime:nil error:nil]];
+    }
 }
 
 @end
