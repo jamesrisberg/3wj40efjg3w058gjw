@@ -129,11 +129,9 @@
 
 - (void)addFilter {
     __weak VideoDrawable *weakSelf = self;
-    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithMediaID:self.media];
-    // picker.videoOutputSize = self.sizeCache; // TODO: make this less janky
-    picker.callback = ^(CMMediaID *media) {
-        weakSelf.media = media;
-    };
+    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithMediaID:self.media callback:^(CMMediaID *newMediaID) {
+        weakSelf.media = newMediaID;
+    }];
     [self.vcForPresentingModals presentViewController:picker animated:YES completion:nil];
 }
 

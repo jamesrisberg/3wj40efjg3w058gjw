@@ -11,7 +11,7 @@
 
 @interface FilterPickerViewController : UIViewController
 
-+ (FilterPickerViewController *)filterPickerWithMediaID:(CMMediaID *)mediaID;
-@property (nonatomic,copy) void(^callback)(CMMediaID *newMediaID);
++ (FilterPickerViewController *)filterPickerWithMediaID:(CMMediaID *)mediaID callback:(void(^)(CMMediaID *newMediaID))callback;
++ (FilterPickerViewController *)filterPickerWithImage:(UIImage *)image callback:(void(^)(UIImage *filtered))callback;
 
 @end

@@ -14,9 +14,12 @@
 
 @interface FilterPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
+// for video:
 @property (nonatomic) CMMediaID *originalMediaID, *filteredMediaID, *currentSourceMediaID;
+// for photos:
+@property (nonatomic) UIImage *originalImage, *filteredImage, *currentSourceImage;
 
-@property (nonatomic) GPUImageMovie *source;
+@property (nonatomic) GPUImageOutput *source;
 @property (nonatomic) GPUImageFilter *filter;
 @property (nonatomic) GPUImageView *outputView;
 @property (nonatomic) IBOutlet UIView *outputViewContainer;
@@ -34,13 +37,24 @@
 @property (nonatomic) CGSize outputSize;
 @property (nonatomic) GPUImageRotationMode inputRotation;
 
+@property (nonatomic,copy) void(^videoCallback)(CMMediaID *newMediaID);
+@property (nonatomic,copy) void(^imageCallback)(UIImage *filtered);
+
 @end
 
 @implementation FilterPickerViewController
 
-+ (FilterPickerViewController *)filterPickerWithMediaID:(CMMediaID *)mediaID {
++ (FilterPickerViewController *)filterPickerWithMediaID:(CMMediaID *)mediaID callback:(void (^)(CMMediaID *))callback {
     FilterPickerViewController *vc = [[FilterPickerViewController alloc] initWithNibName:@"FilterPickerViewController" bundle:nil];
+    vc.videoCallback = callback;
     vc.originalMediaID = mediaID;
+    return vc;
+}
+
++ (FilterPickerViewController *)filterPickerWithImage:(UIImage *)image callback:(void(^)(UIImage *filtered))callback {
+    FilterPickerViewController *vc = [[FilterPickerViewController alloc] initWithNibName:@"FilterPickerViewController" bundle:nil];
+    vc.originalImage = [image resizedWithMaxDimension:1200];
+    vc.imageCallback = callback;
     return vc;
 }
 
@@ -55,11 +69,15 @@
     [self.outputViewContainer addSubview:self.outputView];
     self.currentFilterInfo = self.allFilters.firstObject;
     
-    self.currentSourceMediaID = self.originalMediaID;
+    if (self.originalMediaID) {
+        self.currentSourceMediaID = self.originalMediaID;
+    } else {
+        self.currentSourceImage = self.originalImage;
+    }
     
     self.thumbnail = [[UIImage imageNamed:@"bliss.jpg"] resizedWithMaxDimension:150];
     
-    [self.source startProcessing];
+    [self processSource];
 }
 
 - (void)setThumbnail:(UIImage *)thumbnail {
@@ -82,7 +100,7 @@
 
 - (void)setSource:(GPUImageMovie *)source {
     [_source removeAllTargets];
-    [_source cancelProcessing];
+    [self stopProcessingSource];
     _source = source;
     [self rebuildFilterChain];
 }
@@ -144,6 +162,11 @@
     return movie;
 }
 
+- (void)setCurrentSourceImage:(UIImage *)currentSourceImage {
+    _currentSourceImage = currentSourceImage;
+    self.source = [[GPUImagePicture alloc] initWithImage:currentSourceImage];
+}
+
 #pragma mark UI
 
 - (void)setUIBlockCount:(NSInteger)UIBlockCount {
@@ -202,27 +225,47 @@
     self.UIBlockCount++;
     GPUImageFilter *filter = self.filter;
     self.filter = nil; // take the filter out of the chain
-    [self transcodeMedia:self.filteredMediaID ? : self.originalMediaID withFilter:filter callback:^(CMMediaID *newMediaID) {
-        if (newMediaID) {
-            NSLog(@"new media: %@", newMediaID.url);
-            self.filteredMediaID = newMediaID;
-            self.currentSourceMediaID = newMediaID;
-            [self.source startProcessing];
-            self.currentFilterInfo = self.allFilters.firstObject;
-        } else {
-            NSLog(@"FilterPickerViewController transcodeMedia: failed!!!"); // TODO: show something
-        }
-        self.UIBlockCount--;
-        callback();
-    }];
+    if ([self isVideo]) {
+        [self transcodeMedia:self.filteredMediaID ? : self.originalMediaID withFilter:filter callback:^(CMMediaID *newMediaID) {
+            if (newMediaID) {
+                NSLog(@"new media: %@", newMediaID.url);
+                self.filteredMediaID = newMediaID;
+                self.currentSourceMediaID = newMediaID;
+                [self processSource];
+                self.currentFilterInfo = self.allFilters.firstObject;
+            } else {
+                NSLog(@"FilterPickerViewController transcodeMedia: failed!!!"); // TODO: show something
+            }
+            self.UIBlockCount--;
+            callback();
+        }];
+    } else {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            UIImage *filtered = [filter imageByFilteringImage:self.filteredImage ? : self.originalImage];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.filteredImage = filtered;
+                self.currentSourceImage = filtered;
+                self.currentFilterInfo = self.allFilters.firstObject;
+                [self processSource];
+            });
+        });
+    }
 }
 
 - (IBAction)applyAndClose:(id)sender {
     [self applyWithCallback:^{
-        [self.originalMediaID dispose];
+        if ([self isVideo]) {
+            [self.originalMediaID dispose];
+            self.videoCallback(self.filteredMediaID);
+        } else {
+            self.imageCallback(self.filteredImage);
+        }
         [self dismissViewControllerAnimated:YES completion:nil];
-        self.callback(self.filteredMediaID);
     }];
+}
+
+- (BOOL)isVideo {
+    return !!self.originalMediaID;
 }
 
 #pragma mark Transcoding
@@ -275,6 +318,20 @@
 - (BOOL)videoAtURLHasAudio:(NSURL *)url {
     AVAsset *anAsset = [AVAsset assetWithURL:url];
     return [anAsset tracksWithMediaType:AVMediaTypeAudio].count > 0;
+}
+
+- (void)processSource {
+    if ([self.source isKindOfClass:[GPUImageMovie class]]) {
+        [(GPUImageMovie *)self.source startProcessing];
+    } else if ([self.source isKindOfClass:[GPUImagePicture class]]) {
+        [(GPUImagePicture *)self.source processImage];
+    }
+}
+
+- (void)stopProcessingSource {
+    if ([self.source isKindOfClass:[GPUImageMovie class]]) {
+        [(GPUImageMovie *)self.source cancelProcessing];
+    }
 }
 
 #pragma mark Orientation crap
