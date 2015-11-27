@@ -310,7 +310,19 @@
         return [GPUImageLocalBinaryPatternFilter new];
     }];
     
-    return @[noFilter, brightness, invert, sat, exp, hue, gradientMap, colorize, gamma, contrast, unsharp, blur, sharpen, toon, pixellate, whiteBalance, haze, localBinary, erode, dilate, stretch, pinch, bulge, swirl, zoom, motion, vignette, kuwuhara, emboss, post, cga, tilt, sketch, xy, canny, sobel, crosshatch, halftone, polka, polarPix, avgLuminance, luminanceThreshold, adaptiveThreshold];
+    FilterPickerFilterInfo *witchHouse = [FilterPickerFilterInfo new];
+    [witchHouse setFilterBlock:^GPUImageOutput<GPUImageInput> *{
+        GPUImageFilter *witchHouse = [[GPUImageFilter alloc] initWithFragmentShaderFromFile:@"WitchHouse"];
+        GPUImageBoxBlurFilter *blur = [GPUImageBoxBlurFilter new];
+        blur.blurRadiusInPixels *= 0.7;
+        GPUImageFilterGroup *group = [GPUImageFilterGroup new];
+        group.initialFilters = @[witchHouse];
+        group.terminalFilter = blur;
+        [witchHouse addTarget:blur];
+        return group;
+    }];
+    
+    return @[noFilter, brightness, invert, sat, exp, hue, gradientMap, witchHouse, colorize, gamma, contrast, unsharp, blur, sharpen, toon, pixellate, whiteBalance, haze, localBinary, erode, dilate, stretch, pinch, bulge, swirl, zoom, motion, vignette, kuwuhara, emboss, post, cga, tilt, sketch, xy, canny, sobel, crosshatch, halftone, polka, polarPix, avgLuminance, luminanceThreshold, adaptiveThreshold];
 }
 
 - (instancetype)init {

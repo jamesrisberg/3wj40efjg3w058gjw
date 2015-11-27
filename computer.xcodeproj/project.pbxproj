@@ -30,6 +30,7 @@
 		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
 		5F693FFB1C079BFE00569335 /* orb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F693FFA1C079BFE00569335 /* orb.png */; };
 		5F6940011C07A04A00569335 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6940001C07A04A00569335 /* smoke.png */; };
+		5F6940071C081AC900569335 /* WitchHouse.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F6940061C081AC900569335 /* WitchHouse.fsh */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -281,6 +282,7 @@
 		5F693FF81C07848800569335 /* FilterOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterOptionsView.m; sourceTree = "<group>"; };
 		5F693FFA1C079BFE00569335 /* orb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orb.png; sourceTree = "<group>"; };
 		5F6940001C07A04A00569335 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
+		5F6940061C081AC900569335 /* WitchHouse.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = WitchHouse.fsh; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -670,6 +672,26 @@
 			name = "Text editing";
 			sourceTree = "<group>";
 		};
+		5F6940021C081A7F00569335 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF9891B9F168E0071BC08 /* FilterViewController.h */,
+				5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */,
+				5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */,
+				5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */,
+				5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */,
+				5FEAF9771B9F160A0071BC08 /* ShowcaseFilterViewController.h */,
+				5FEAF9781B9F160A0071BC08 /* ShowcaseFilterViewController.m */,
+				5FEAF9791B9F160A0071BC08 /* CustomFilter.fsh */,
+				5FEAF97A1B9F160A0071BC08 /* lookup_amatorka.png */,
+				5FEAF97B1B9F160A0071BC08 /* lookup_miss_etikate.png */,
+				5FEAF97C1B9F160A0071BC08 /* lookup_soft_elegance_1.png */,
+				5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */,
+				5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */,
+			);
+			name = Old;
+			sourceTree = "<group>";
+		};
 		5F809A061BE1C3740030B538 /* ANGif */ = {
 			isa = PBXGroup;
 			children = (
@@ -960,22 +982,6 @@
 				5FBF7C0D1BD82030000FA3F4 /* MultiButtonOptionsCell.m */,
 			);
 			name = "Options menus";
-			sourceTree = "<group>";
-		};
-		5FD860981C065BE000E5A754 /* New */ = {
-			isa = PBXGroup;
-			children = (
-				5FD860931C065BD800E5A754 /* FilterPickerViewController.h */,
-				5FD860941C065BD800E5A754 /* FilterPickerViewController.m */,
-				5FD860951C065BD800E5A754 /* FilterPickerViewController.xib */,
-				5FD8609B1C0667DF00E5A754 /* FilterPickerFilterInfo.h */,
-				5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */,
-				5FD8609E1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.h */,
-				5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */,
-				5F693FF71C07848800569335 /* FilterOptionsView.h */,
-				5F693FF81C07848800569335 /* FilterOptionsView.m */,
-			);
-			name = New;
 			sourceTree = "<group>";
 		};
 		5FE857711BDB60D700B4B245 /* Export */ = {
@@ -1284,20 +1290,17 @@
 		5FEAF9881B9F160E0071BC08 /* Filtering */ = {
 			isa = PBXGroup;
 			children = (
-				5FD860981C065BE000E5A754 /* New */,
-				5FEAF9891B9F168E0071BC08 /* FilterViewController.h */,
-				5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */,
-				5FEAF9741B9F160A0071BC08 /* ShowcaseFilterListController.h */,
-				5FEAF9751B9F160A0071BC08 /* ShowcaseFilterListController.m */,
-				5FEAF9761B9F160A0071BC08 /* ShowcaseFilterViewController.xib */,
-				5FEAF9771B9F160A0071BC08 /* ShowcaseFilterViewController.h */,
-				5FEAF9781B9F160A0071BC08 /* ShowcaseFilterViewController.m */,
-				5FEAF9791B9F160A0071BC08 /* CustomFilter.fsh */,
-				5FEAF97A1B9F160A0071BC08 /* lookup_amatorka.png */,
-				5FEAF97B1B9F160A0071BC08 /* lookup_miss_etikate.png */,
-				5FEAF97C1B9F160A0071BC08 /* lookup_soft_elegance_1.png */,
-				5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */,
-				5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */,
+				5FD860931C065BD800E5A754 /* FilterPickerViewController.h */,
+				5FD860941C065BD800E5A754 /* FilterPickerViewController.m */,
+				5FD860951C065BD800E5A754 /* FilterPickerViewController.xib */,
+				5FD8609B1C0667DF00E5A754 /* FilterPickerFilterInfo.h */,
+				5FD8609C1C0667DF00E5A754 /* FilterPickerFilterInfo.m */,
+				5FD8609E1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.h */,
+				5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */,
+				5F693FF71C07848800569335 /* FilterOptionsView.h */,
+				5F693FF81C07848800569335 /* FilterOptionsView.m */,
+				5F6940061C081AC900569335 /* WitchHouse.fsh */,
+				5F6940021C081A7F00569335 /* Old */,
 			);
 			name = Filtering;
 			sourceTree = "<group>";
@@ -1388,6 +1391,7 @@
 				5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */,
 				5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */,
 				5FEAF9091B9E2A760071BC08 /* shadow.png in Resources */,
+				5F6940071C081AC900569335 /* WitchHouse.fsh in Resources */,
 				5FEAF9581B9E2B8A0071BC08 /* huePointer@2x.png in Resources */,
 				5FEAF9841B9F160A0071BC08 /* lookup_miss_etikate.png in Resources */,
 				5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */,
