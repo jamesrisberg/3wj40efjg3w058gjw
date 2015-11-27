@@ -31,6 +31,7 @@
 		5F693FFB1C079BFE00569335 /* orb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F693FFA1C079BFE00569335 /* orb.png */; };
 		5F6940011C07A04A00569335 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6940001C07A04A00569335 /* smoke.png */; };
 		5F6940071C081AC900569335 /* WitchHouse.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F6940061C081AC900569335 /* WitchHouse.fsh */; };
+		5F6940331C09035900569335 /* ProgressBarWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940321C09035900569335 /* ProgressBarWindow.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -283,6 +284,8 @@
 		5F693FFA1C079BFE00569335 /* orb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orb.png; sourceTree = "<group>"; };
 		5F6940001C07A04A00569335 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		5F6940061C081AC900569335 /* WitchHouse.fsh */ = {isa = PBXFileReference; explicitFileType = sourcecode.glsl; fileEncoding = 4; path = WitchHouse.fsh; sourceTree = "<group>"; };
+		5F6940311C09035900569335 /* ProgressBarWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressBarWindow.h; sourceTree = "<group>"; };
+		5F6940321C09035900569335 /* ProgressBarWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressBarWindow.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -1183,6 +1186,8 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5F6940311C09035900569335 /* ProgressBarWindow.h */,
+				5F6940321C09035900569335 /* ProgressBarWindow.m */,
 				5F9A183D1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.h */,
 				5F9A183E1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m */,
 				5FDA80D31C03E7C2006CDC21 /* UIColor+RandomColors.h */,
@@ -1628,6 +1633,7 @@
 				5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */,
 				5F2095FE1BEEBB2800E4C1F1 /* strerror.c in Sources */,
 				5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */,
+				5F6940331C09035900569335 /* ProgressBarWindow.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,
 				5FE857741BDB69A000B4B245 /* Exporter.m in Sources */,
 				5F8347601BF43D6300721A2C /* OptionsCollectionViewCell.m in Sources */,

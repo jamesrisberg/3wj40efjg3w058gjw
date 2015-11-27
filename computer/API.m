@@ -7,6 +7,7 @@
 //
 
 #import "API.h"
+#import "ProgressBarWindow.h"
 
 @implementation API
 
@@ -35,6 +36,11 @@
 }
 
 - (void)uploadParseFile:(PFFile *)file atShareableURL:(NSString *)url callback:(void (^)(BOOL success, NSError *error))callback {
+    ProgressBarWindowItem *progressItem = [ProgressBarWindowItem new];
+    progressItem.minDisplayTime = 0.1;
+    progressItem.title = NSLocalizedString(@"Uploading GIF…", @"");
+    progressItem.progress = 0;
+    
     NSURLComponents *shareableURLComps = [NSURLComponents componentsWithString:url];
     NSString *name = [shareableURLComps.path substringFromIndex:1];
     [file saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -42,9 +48,9 @@
             NSURLComponents *comps = [self URLComponents];
             comps.path = @"/register";
             comps.queryItems = @[
-                               [NSURLQueryItem queryItemWithName:@"name" value:name],
-                               [NSURLQueryItem queryItemWithName:@"fileUrl" value:file.url]
-                               ];
+                                 [NSURLQueryItem queryItemWithName:@"name" value:name],
+                                 [NSURLQueryItem queryItemWithName:@"fileUrl" value:file.url]
+                                 ];
             NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:comps.URL];
             req.HTTPMethod = @"POST";
             [[[NSURLSession sharedSession] dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -53,6 +59,13 @@
                     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
                     if (result) {
                         BOOL success = [[result objectForKey:@"success"] boolValue];
+                        if (success) {
+                            ProgressBarWindowItem *success = [ProgressBarWindowItem new];
+                            success.progress = 1;
+                            success.minDisplayTime = 1;
+                            success.title = NSLocalizedString(@"Finished uploading GIF", @"");
+                            [[ProgressBarWindow shared] performSelectorOnMainThread:@selector(addItems:) withObject:@[success] waitUntilDone:NO];
+                        }
                         callback(success, nil);
                     } else {
                         callback(NO, err);
@@ -64,7 +77,11 @@
         } else {
             callback(NO, error);
         }
+    } progressBlock:^(int percentDone) {
+        progressItem.progress = percentDone / 100.0;
     }];
+    
+    [[ProgressBarWindow shared] addItems:@[progressItem]];
 }
 
 @end
