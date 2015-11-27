@@ -29,6 +29,7 @@
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
 		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
 		5F693FFB1C079BFE00569335 /* orb.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F693FFA1C079BFE00569335 /* orb.png */; };
+		5F6940011C07A04A00569335 /* smoke.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6940001C07A04A00569335 /* smoke.png */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -279,6 +280,7 @@
 		5F693FF71C07848800569335 /* FilterOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterOptionsView.h; sourceTree = "<group>"; };
 		5F693FF81C07848800569335 /* FilterOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterOptionsView.m; sourceTree = "<group>"; };
 		5F693FFA1C079BFE00569335 /* orb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orb.png; sourceTree = "<group>"; };
+		5F6940001C07A04A00569335 /* smoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smoke.png; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -904,6 +906,7 @@
 				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
 				5F693FFA1C079BFE00569335 /* orb.png */,
 				5F9A17F51BFD7B95000E6351 /* mac2.png */,
+				5F6940001C07A04A00569335 /* smoke.png */,
 				5F9A17F61BFD7B95000E6351 /* mac3.png */,
 				5F9A17F71BFD7B95000E6351 /* mac1.png */,
 				5F9A17F81BFD7B95000E6351 /* mac4.png */,
@@ -1437,6 +1440,7 @@
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FD860521C03EAFB00E5A754 /* porter-sans-inline-block.otf in Resources */,
 				5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */,
+				5F6940011C07A04A00569335 /* smoke.png in Resources */,
 				5F9A180E1BFE46AD000E6351 /* GrandHotel-Regular.otf in Resources */,
 				5FEAF9241B9E2AE80071BC08 /* SKImagePicker.xib in Resources */,
 				5FEAF9851B9F160A0071BC08 /* lookup_soft_elegance_1.png in Resources */,

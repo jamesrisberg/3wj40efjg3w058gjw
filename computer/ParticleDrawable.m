@@ -192,27 +192,28 @@
 
 - (void)smoke {
     CAEmitterCell *cell = [CAEmitterCell emitterCell];
-    cell.contents = (id)[[UIImage imageNamed:@"spark"] CGImage];
-    cell.color = [UIColor grayColor].CGColor;
-    cell.alphaRange = 0.2;
-    cell.alphaSpeed = -0.6;
+    cell.contents = (id)[[UIImage imageNamed:@"smoke"] CGImage];
+    cell.color = [UIColor colorWithWhite:0.5 alpha:0.3].CGColor;
+    cell.alphaRange = 0.1;
+    cell.alphaSpeed = -0.15;
     self.emitter.emitterCells = @[cell];
+    //self.emitter.renderMode = kCAEmitterLayerAdditive;
     
     [self updateAspectRatio:2];
     self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
         layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.7);
-        layer.emitterSize = CGSizeMake(size.width * 0.7, size.height * 0.2);
+        layer.emitterSize = CGSizeMake(size.width * 0.01, size.height * 0.01);
     };
     for (CAEmitterCell *cell in self.emitter.emitterCells) {
-        cell.birthRate = 100.0 / self.emitter.emitterCells.count;
-        cell.scale = 1.5;
-        cell.scaleRange = 0.5;
-        cell.scaleSpeed = -1.3;
-        cell.lifetime = 1.7;
+        cell.birthRate = 70 / self.emitter.emitterCells.count;
+        cell.scale = 0;
+        cell.scaleRange = 0;
+        cell.scaleSpeed = 0.25;
+        cell.lifetime = 4;
         cell.emissionLongitude = -M_PI/2;
-        cell.emissionRange = M_PI/20;
-        cell.velocity = 130;
-        cell.velocityRange = 50;
+        cell.emissionRange = M_PI/12;
+        cell.velocity = 100;
+        cell.velocityRange = 20;
     }
 }
 
