@@ -78,9 +78,6 @@
         self.currentSourceImage = self.originalImage;
     }
     
-    UIImage *thumb = self.originalImage ? : [UIImage imageNamed:@"bliss.jpg"];
-    self.thumbnail = [thumb resizedWithMaxDimension:150];
-    
     __weak FilterPickerViewController *weakSelf = self;
     self.filterOptionsView.onChange = ^{
         if ([weakSelf.source isKindOfClass:[GPUImagePicture class]]) {
@@ -91,7 +88,9 @@
         return [weakSelf convertPointToImageCoordinates:p fromView:weakSelf.filterOptionsView];
     };
     
-    [self processSource];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self processSource];
+    });
 }
 
 - (void)setThumbnail:(UIImage *)thumbnail {
@@ -171,6 +170,9 @@
     self.inputRotation = [self rotationForTrack:videoTrack];
     
     self.source = currentSourceMediaID ? [self movieWithMedia:currentSourceMediaID] : nil;
+    
+    AVAssetImageGenerator *thumbnailGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
+    self.thumbnail = [[UIImage imageWithCGImage:[thumbnailGenerator copyCGImageAtTime:kCMTimeZero actualTime:nil error:nil]] resizedWithMaxDimension:150];
 }
 
 - (GPUImageMovie *)movieWithMedia:(CMMediaID *)mediaID {
@@ -186,6 +188,7 @@
     _currentSourceImage = currentSourceImage;
     self.source = [[GPUImagePicture alloc] initWithImage:currentSourceImage];
     self.outputSize = currentSourceImage.size;
+    self.thumbnail = [currentSourceImage resizedWithMaxDimension:150];
 }
 
 #pragma mark UI
