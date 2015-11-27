@@ -208,91 +208,94 @@ BOOL const DefaultTransitionShouldAnimate = YES;
     while (1)
     {
         
-		if(writerInput.readyForMoreMediaData){
-            
-			presentTime = CMTimeMake(i, fps);
-            
-			if (i >= [array count]) {
-				buffer = NULL;
-			} else {
-                id frame = array[i];
-                UIImage *image = nil;
-                if ([frame isKindOfClass:[UIImage class]]) {
-                    image = frame;
-                } else if ([frame isKindOfClass:[OnDemandImage class]]) {
-                    OnDemandImage *od = frame;
-                    image = od.fn(od.userInfo);
-                }
-				// buffer = [HJImagesToVideo pixelBufferFromCGImage:[image CGImage] size:CGSizeMake(480, 320)];
-                buffer = [HJImagesToVideo pixelBufferFromCGImage:[image CGImage] size:size];
-			}
-			
-			if (buffer) {
-                //append buffer
+        @autoreleasepool {
+            if(writerInput.readyForMoreMediaData){
                 
-                BOOL appendSuccess = [HJImagesToVideo appendToAdapter:adaptor
-                                                          pixelBuffer:buffer
-                                                               atTime:presentTime
-                                                            withInput:writerInput];
-                NSAssert(appendSuccess, @"Failed to append");
+                presentTime = CMTimeMake(i, fps);
                 
-                if (shouldAnimateTransitions && i + 1 < array.count) {
-
-                    //Create time each fade frame is displayed
-                    CMTime fadeTime = CMTimeMake(1, fps*TransitionFrameCount);
-            
-                    //Add a delay, causing the base image to have more show time before fade begins.
-                    for (int b = 0; b < FramesToWaitBeforeTransition; b++) {
-                        presentTime = CMTimeAdd(presentTime, fadeTime);
+                if (i >= [array count]) {
+                    buffer = NULL;
+                } else {
+                    id frame = array[i];
+                    UIImage *image = nil;
+                    if ([frame isKindOfClass:[UIImage class]]) {
+                        image = frame;
+                    } else if ([frame isKindOfClass:[OnDemandImage class]]) {
+                        OnDemandImage *od = frame;
+                        image = od.fn(od.userInfo);
                     }
-                    
-                    //Adjust fadeFrameCount so that the number and curve of the fade frames and their alpha stay consistant
-                    NSInteger framesToFadeCount = TransitionFrameCount - FramesToWaitBeforeTransition;
-                    
-                    //Apply fade frames
-                    for (double j = 1; j < framesToFadeCount; j++) {
-                        
-                        buffer = [HJImagesToVideo crossFadeImage:[array[i] CGImage]
-                                                         toImage:[array[i + 1] CGImage]
-                                                          atSize:CGSizeMake(480, 320)
-                                                       withAlpha:j/framesToFadeCount];
-                        
-                        BOOL appendSuccess = [HJImagesToVideo appendToAdapter:adaptor
-                                                                  pixelBuffer:buffer
-                                                                       atTime:presentTime
-                                                                    withInput:writerInput];
-                        presentTime = CMTimeAdd(presentTime, fadeTime);
-                        
-                        NSAssert(appendSuccess, @"Failed to append");
-                    }
+                    // buffer = [HJImagesToVideo pixelBufferFromCGImage:[image CGImage] size:CGSizeMake(480, 320)];
+                    buffer = [HJImagesToVideo pixelBufferFromCGImage:[image CGImage] size:size];
                 }
-                CVPixelBufferRelease(buffer);
-                buffer = NULL;
-                i++;
-			} else {
-				
-				//Finish the session:
-				[writerInput markAsFinished];
                 
-				[videoWriter finishWritingWithCompletionHandler:^{
-                    NSLog(@"Successfully closed video writer");
-                    if (videoWriter.status == AVAssetWriterStatusCompleted) {
-                        if (callbackBlock) {
-                            callbackBlock(YES);
+                if (buffer) {
+                    //append buffer
+                    
+                    BOOL appendSuccess = [HJImagesToVideo appendToAdapter:adaptor
+                                                              pixelBuffer:buffer
+                                                                   atTime:presentTime
+                                                                withInput:writerInput];
+                    NSAssert(appendSuccess, @"Failed to append");
+                    
+                    if (shouldAnimateTransitions && i + 1 < array.count) {
+                        
+                        //Create time each fade frame is displayed
+                        CMTime fadeTime = CMTimeMake(1, fps*TransitionFrameCount);
+                        
+                        //Add a delay, causing the base image to have more show time before fade begins.
+                        for (int b = 0; b < FramesToWaitBeforeTransition; b++) {
+                            presentTime = CMTimeAdd(presentTime, fadeTime);
                         }
-                    } else {
-                        if (callbackBlock) {
-                            callbackBlock(NO);
+                        
+                        //Adjust fadeFrameCount so that the number and curve of the fade frames and their alpha stay consistant
+                        NSInteger framesToFadeCount = TransitionFrameCount - FramesToWaitBeforeTransition;
+                        
+                        //Apply fade frames
+                        for (double j = 1; j < framesToFadeCount; j++) {
+                            
+                            buffer = [HJImagesToVideo crossFadeImage:[array[i] CGImage]
+                                                             toImage:[array[i + 1] CGImage]
+                                                              atSize:CGSizeMake(480, 320)
+                                                           withAlpha:j/framesToFadeCount];
+                            
+                            BOOL appendSuccess = [HJImagesToVideo appendToAdapter:adaptor
+                                                                      pixelBuffer:buffer
+                                                                           atTime:presentTime
+                                                                        withInput:writerInput];
+                            presentTime = CMTimeAdd(presentTime, fadeTime);
+                            
+                            NSAssert(appendSuccess, @"Failed to append");
                         }
                     }
-                }];
-				
-				CVPixelBufferPoolRelease(adaptor.pixelBufferPool);
-				
-				NSLog (@"Done");
-                break;
+                    CVPixelBufferRelease(buffer);
+                    buffer = NULL;
+                    i++;
+                } else {
+                    
+                    //Finish the session:
+                    [writerInput markAsFinished];
+                    
+                    [videoWriter finishWritingWithCompletionHandler:^{
+                        NSLog(@"Successfully closed video writer");
+                        if (videoWriter.status == AVAssetWriterStatusCompleted) {
+                            if (callbackBlock) {
+                                callbackBlock(YES);
+                            }
+                        } else {
+                            if (callbackBlock) {
+                                callbackBlock(NO);
+                            }
+                        }
+                    }];
+                    
+                    CVPixelBufferPoolRelease(adaptor.pixelBufferPool);
+                    
+                    NSLog (@"Done");
+                    break;
+                }
             }
         }
+        
     }
 }
 

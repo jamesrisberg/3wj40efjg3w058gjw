@@ -30,12 +30,12 @@
     
     // [ExportTest exportTestWithVC:self.window.rootViewController];
     
-    FilterPickerViewController *vc = [FilterPickerViewController filterPickerWithImage:[UIImage imageNamed:@"bliss.jpg"] callback:^(UIImage *filtered) {
+    /*FilterPickerViewController *vc = [FilterPickerViewController filterPickerWithImage:[UIImage imageNamed:@"bliss.jpg"] callback:^(UIImage *filtered) {
         
     }];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.window.rootViewController presentViewController:vc animated:YES completion:nil];
-    });
+    });*/
     
     /*EditorViewController *editorVC = (id)self.window.rootViewController;
     NSURL *singleDoc  = [[CMDocument documentsURL] URLByAppendingPathComponent:@"doc.computerdoc"];

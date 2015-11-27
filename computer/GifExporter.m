@@ -53,8 +53,10 @@
         CGImageDestinationSetProperties(destination, (__bridge CFDictionaryRef)fileProperties);
         
         [self enumerateFrameTimes:^(FrameTime *time) {
-            UIImage *frameImage = [self renderFrameAtTime:time size:size];
-            CGImageDestinationAddImage(destination, frameImage.CGImage, (__bridge CFDictionaryRef)frameProps);
+            @autoreleasepool {
+                UIImage *frameImage = [self renderFrameAtTime:time size:size];
+                CGImageDestinationAddImage(destination, frameImage.CGImage, (__bridge CFDictionaryRef)frameProps);
+            }
         }];
         
         if (!CGImageDestinationFinalize(destination)) {
