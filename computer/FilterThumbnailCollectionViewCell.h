@@ -11,7 +11,7 @@
 
 @interface FilterThumbnailCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic) GPUImageFilter *filter;
+@property (nonatomic) GPUImageOutput<GPUImageInput> *filter;
 @property (nonatomic) UIImage *input;
 
 @end

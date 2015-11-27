@@ -14,7 +14,7 @@
 @property (nonatomic) FilterPickerFilterInfo *filterInfo;
 @property (nonatomic) GPUImageOutput<GPUImageInput> *filter;
 
-@property (nonatomic) FilterParameter *mainSliderParam;
+@property (nonatomic) FilterParameter *mainSliderParam, *mainPointParam;
 
 @end
 
@@ -31,6 +31,7 @@
     }
     
     self.mainSliderParam = [paramsByType[@(FilterParameterTypeFloat)] firstObject];
+    self.mainPointParam = [paramsByType[@(FilterParameterTypePoint)] firstObject];
 }
 
 - (void)setMainSliderParam:(FilterParameter *)mainSliderParam {
@@ -46,6 +47,22 @@
 - (IBAction)mainSliderChanged:(id)sender {
     if (self.mainSliderParam) {
         [self.filter setValue:@(self.mainSlider.value) forKey:self.mainSliderParam.key];
+        self.onChange();
+    }
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self touchedAtPoint:[touches.anyObject locationInView:self]];
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self touchedAtPoint:[touches.anyObject locationInView:self]];
+}
+
+- (void)touchedAtPoint:(CGPoint)point {
+    if (self.mainPointParam) {
+        CGPoint p = self.transformPointIntoImageCoordinates(point);
+        [self.filter setValue:[NSValue valueWithCGPoint:p] forKey:self.mainPointParam.key];
         self.onChange();
     }
 }

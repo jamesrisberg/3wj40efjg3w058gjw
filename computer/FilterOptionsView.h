@@ -18,5 +18,6 @@
 - (IBAction)mainSliderChanged:(id)sender;
 
 @property (nonatomic,copy) void(^onChange)();
+@property (nonatomic,copy) CGPoint(^transformPointIntoImageCoordinates)(CGPoint p);
 
 @end

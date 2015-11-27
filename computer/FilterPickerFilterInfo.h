@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSInteger, FilterParameterType) {
     FilterParameterTypeFloat,
-    FilterParameterTypeColor
+    FilterParameterTypeColor,
+    FilterParameterTypePoint
 };
 
 @interface FilterParameter : NSObject
@@ -35,5 +36,7 @@ typedef NS_ENUM(NSInteger, FilterParameterType) {
 // convenience:
 - (void)addSliderForKey:(NSString *)key min:(CGFloat)min max:(CGFloat)max name:(NSString *)name;
 - (void)addColorPickerForKey:(NSString *)key name:(NSString *)name;
+- (void)addPointPickerForKey:(NSString *)key name:(NSString *)name;
+@property (nonatomic) NSString *name;
 
 @end

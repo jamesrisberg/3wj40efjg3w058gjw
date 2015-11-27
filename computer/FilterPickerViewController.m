@@ -87,6 +87,9 @@
             [(GPUImagePicture *)weakSelf.source processImage];
         }
     };
+    self.filterOptionsView.transformPointIntoImageCoordinates = ^CGPoint(CGPoint p) {
+        return [weakSelf convertPointToImageCoordinates:p fromView:weakSelf.filterOptionsView];
+    };
     
     [self processSource];
 }
@@ -182,6 +185,7 @@
 - (void)setCurrentSourceImage:(UIImage *)currentSourceImage {
     _currentSourceImage = currentSourceImage;
     self.source = [[GPUImagePicture alloc] initWithImage:currentSourceImage];
+    self.outputSize = currentSourceImage.size;
 }
 
 #pragma mark UI
@@ -223,6 +227,17 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (CGPoint)convertPointToImageCoordinates:(CGPoint)point fromView:(UIView *)view {
+    CGSize imageSize = self.outputSize;
+    CGSize imageContainerSize = self.outputView.bounds.size;
+    CGFloat scale = MIN(imageContainerSize.width / imageSize.width, imageContainerSize.height / imageSize.height);
+    CGSize imageRenderedSize = CGSizeMake(imageSize.width * scale, imageSize.height * scale);
+    CGRect imageRenderedRect = CGRectMake((imageContainerSize.width - imageRenderedSize.width) / 2, (imageContainerSize.height - imageRenderedSize.height) / 2, imageRenderedSize.width, imageRenderedSize.height);
+    point = [self.outputView convertPoint:point fromView:view];
+    point = CGPointMake((point.x - imageRenderedRect.origin.x) / imageRenderedRect.size.width, (point.y - imageRenderedRect.origin.y) / imageRenderedRect.size.height);
+    return point;
 }
 
 #pragma mark Actions
