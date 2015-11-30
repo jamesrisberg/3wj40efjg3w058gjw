@@ -43,6 +43,8 @@
 @property (nonatomic) UIPercentDrivenInteractiveTransition *interactiveOptionsTransition;
 @property (nonatomic) BOOL rendering;
 
+@property (nonatomic) CMDrawableView *canvasView;
+
 @end
 
 @implementation Canvas
@@ -81,7 +83,7 @@
     self.repeatCount = 1;
     self.reboundAnimation = NO;
     
-    self.canvas = [CMCanvas new];
+    self.canvas = [[CMCanvas alloc] initWithKey:CMGenerateKey()];
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -295,7 +297,7 @@
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
     CMDrawableKeyframe *keyframe = [drawable.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
     keyframe.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-    [self.canvas.drawables addObject:drawable];
+    [self.canvas.contents addObject:drawable];
 }
 
 - (void)createGroup:(id)sender {
@@ -433,6 +435,14 @@
 
 #pragma mark Layout
 
+- (void)setCanvasView:(CMDrawableView *)canvasView {
+    if (canvasView != _canvasView) {
+        [_canvasView removeFromSuperview];
+        _canvasView = canvasView;
+        [self addSubview:canvasView];
+    }
+}
+
 - (void)resizeBoundsToFitContent {
     if (self.drawables.count > 0) {
         CGFloat minX = MAXFLOAT;
@@ -465,6 +475,11 @@
     } else {
         self.bounds = CGRectMake(0, 0, 1, 1);
     }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.canvasView.frame = self.bounds;
 }
 
 #pragma mark Selection
@@ -593,31 +608,7 @@
 }
 
 - (void)render {
-    if (!_drawableViewsForKeys) {
-        _drawableViewsForKeys = [NSMutableDictionary new];
-    }
-    NSArray *keys = [self.canvas.drawables map:^id(id obj) {
-        return [obj key];
-    }];
-    NSSet *keySet = [NSSet setWithArray:keys];
-    for (NSString *oldKey in _drawableViewsForKeys.allKeys) {
-        if (![keySet containsObject:oldKey]) {
-            [_drawableViewsForKeys[oldKey] removeFromSuperview];
-            [_drawableViewsForKeys removeObjectForKey:oldKey];
-        }
-    }
-    
-    for (CMDrawable *drawable in self.canvas.drawables) {
-        CMDrawableView *existing = _drawableViewsForKeys[drawable.key];
-        CMDrawableView *newView = [drawable renderToView:existing atTime:self.time];
-        if (newView == existing) {
-            [self bringSubviewToFront:newView];
-        } else {
-            [existing removeFromSuperview];
-            [self addSubview:newView];
-        }
-        _drawableViewsForKeys[drawable.key] = newView;
-    }
+    self.canvasView = [self.canvas renderToView:self.canvasView atTime:self.time];
 }
 
 @end

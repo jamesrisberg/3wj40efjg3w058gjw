@@ -11,6 +11,8 @@
 #import "EVInterpolation.h"
 @class CMDrawableKeyframe;
 
+NSString* CMGenerateKey();
+
 @interface CMDrawableView : UIView
 
 @end
@@ -18,6 +20,7 @@
 
 @interface CMDrawable : NSObject <NSCoding>
 
+- (instancetype)initWithKey:(NSString *)key;
 - (NSArray<NSString*>*)keysForCoding;
 @property (nonatomic) CGFloat boundsDiagonal;
 @property (nonatomic,readonly) KeyframeStore *keyframeStore;

@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "CMDrawable.h"
 
-@interface CMCanvas : NSObject
+@interface CMCanvas : CMDrawable
 
-@property (nonatomic) NSMutableArray<__kindof CMDrawable*> *drawables;
+@property (nonatomic) NSMutableArray<__kindof CMDrawable*> *contents;
 
 @end

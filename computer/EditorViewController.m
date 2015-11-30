@@ -192,12 +192,12 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 #pragma mark Document delegate
-- (Canvas *)canvasForDocument:(CMDocument *)document {
-    return self.canvas;
+- (void)document:(CMDocument *)document loadedCanvas:(CMCanvas *)canvas {
+    self.canvas.canvas = canvas;
 }
 
-- (void)document:(CMDocument *)document loadedCanvas:(Canvas *)canvas {
-    [self reinitializeWithCanvas:canvas];
+- (CMCanvas *)canvasForDocument:(CMDocument *)document {
+    return self.canvas.canvas;
 }
 
 - (UIImage *)canvasSnapshotForDocument:(CMDocument *)document {
@@ -717,7 +717,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (BOOL)timelineView:(TimelineView *)timelineView shouldIndicateKeyframesExistAtTime:(FrameTime *)time {
-    for (CMDrawable *d in [self.canvas.canvas drawables]) {
+    for (CMDrawable *d in [self.canvas.canvas contents]) {
         if ([d.keyframeStore keyframeAtTime:time] != nil) {
             return YES;
         }

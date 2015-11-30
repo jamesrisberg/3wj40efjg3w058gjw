@@ -84,7 +84,7 @@
     QuickCollectionItem *circle = [QuickCollectionItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
     circle.action = ^{
-        CMShapeDrawable *shape = [CMShapeDrawable new];
+        CMShapeDrawable *shape = [[CMShapeDrawable alloc] initWithKey:CMGenerateKey()];
         CGRect r = CGRectMake(0, 0, 100, 100);
         shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
         shape.fillColor = [UIColor purpleColor];

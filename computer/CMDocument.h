@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class CMDocument, Canvas;
+@class CMDocument, CMCanvas;
 @protocol CMDocumentDelegate <NSObject>
 
-- (void)document:(CMDocument *)document loadedCanvas:(Canvas *)canvas;
-- (Canvas *)canvasForDocument:(CMDocument *)document;
+- (void)document:(CMDocument *)document loadedCanvas:(CMCanvas *)canvas;
+- (CMCanvas *)canvasForDocument:(CMDocument *)document;
 
 - (UIImage *)canvasSnapshotForDocument:(CMDocument *)document;
 

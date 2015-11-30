@@ -23,7 +23,7 @@
 @implementation CMShapeDrawable
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"lineWidth", @"strokeColor", @"fillColor", @"path"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokeColor", @"fillColor", @"path"]];
 }
 
 - (UIView *)renderToView:(UIView *)existingOrNil atTime:(FrameTime *)time {

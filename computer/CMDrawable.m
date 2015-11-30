@@ -8,6 +8,10 @@
 
 #import "CMDrawable.h"
 
+NSString* CMGenerateKey() {
+    return [NSUUID UUID].UUIDString;
+}
+
 @interface CMDrawable ()
 
 @property (nonatomic) KeyframeStore *keyframeStore;
@@ -17,11 +21,11 @@
 
 @implementation CMDrawable
 
-- (instancetype)init {
+- (instancetype)initWithKey:(NSString *)key {
     self = [super init];
     self.keyframeStore = [KeyframeStore new];
     self.boundsDiagonal = 100;
-    self.key = [NSUUID UUID].UUIDString;
+    self.key = key;
     return self;
 }
 
