@@ -91,7 +91,7 @@
     addText.action = ^{
         TextDrawable *d = [TextDrawable new];
         d.bounds = CGRectMake(0, 0, 250, 250);
-        [weakSelf.editor.canvas insertDrawable:d];
+        // [weakSelf.editor.canvas insertDrawable:d];
     };
     IconBarModel *time = [IconBarModel new];
     time.image = [UIImage imageNamed:@"Time"];

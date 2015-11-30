@@ -51,6 +51,7 @@ extern NSString * const DrawableArrayPasteboardType;
  - alpha
  - staticAnimation
  */
+
 - (void)updatedKeyframeProperties;
 @property (nonatomic,copy) void(^onKeyframePropertiesUpdated)(); // set by the editor
 
@@ -67,3 +68,4 @@ extern NSString * const DrawableArrayPasteboardType;
 @property (nonatomic) BOOL preparedForStaticScreenshot;
 
 @end
+ 

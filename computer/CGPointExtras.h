@@ -47,6 +47,8 @@ CGFloat NPRandomContinuousFloat(CGFloat x); // (-1..1)
     
 CGRect NPBoundingBoxOfRotatedRect(CGSize size, CGPoint center, CGFloat rotation, CGFloat scale);
     
+    CGFloat CGRectDiagonal(CGRect r);
+    
 #ifdef __cplusplus
 }
 #endif

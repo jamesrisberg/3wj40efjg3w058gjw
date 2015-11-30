@@ -32,12 +32,16 @@
     
     __weak Drawable *_lastSelection;
     __weak Drawable *_selectionBeforeFirstTap;
+    CADisplayLink *_displayLink;
+    
+    NSMutableDictionary<NSString*, __kindof CMDrawableView*> *_drawableViewsForKeys;
 }
 
 @property (nonatomic,readonly) Drawable *singleSelection;
 
 @property (nonatomic) CGFloat touchForceFraction;
 @property (nonatomic) UIPercentDrivenInteractiveTransition *interactiveOptionsTransition;
+@property (nonatomic) BOOL rendering;
 
 @end
 
@@ -57,6 +61,11 @@
     }
 }
 
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+    [super willMoveToWindow:newWindow];
+    self.rendering = !!newWindow;
+}
+
 - (void)setup {
     _touches = [NSMutableSet new];
     self.multipleTouchEnabled = YES;
@@ -71,6 +80,8 @@
     
     self.repeatCount = 1;
     self.reboundAnimation = NO;
+    
+    self.canvas = [CMCanvas new];
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -214,13 +225,7 @@
 }
 
 - (NSArray<__kindof Drawable*>*)drawables {
-    return [self.subviews map:^id(id obj) {
-        if ([obj isKindOfClass:[Drawable class]]) {
-            return obj;
-        } else {
-            return nil;
-        }
-    }];
+    return @[];
 }
 
 #pragma mark Geometry
@@ -228,7 +233,7 @@
 - (NSArray *)allHitsAtPoint:(CGPoint)pos {
     CGFloat centerLeeway = 40; // for small objects
     NSMutableArray *hits = [NSMutableArray new];
-    for (Drawable *d in self.subviews.reverseObjectEnumerator) {
+    for (Drawable *d in [self drawables].reverseObjectEnumerator) {
         // TODO: take into account transforms; don't use UIView's own math
         if ([d pointInside:[d convertPoint:pos fromView:self] withEvent:nil]) {
             [hits addObject:d];
@@ -287,35 +292,10 @@
 
 #pragma mark Actions
 
-- (void)insertDrawable:(Drawable *)drawable {
-    [self _addDrawableToCanvas:drawable];
-    
-    if (!drawable.transientEDUView) {
-        // remove all transient EDU views:
-        for (Drawable *d in [self drawables]) {
-            if (d.transientEDUView) {
-                [d delete:nil];
-            }
-        }
-    }
-    
-    drawable.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-    
-    BOOL animate = !!self.window;
-    if (animate) {
-        CGFloat scaleFactor = 1.6;
-        drawable.scale *= scaleFactor;
-        CGFloat oldAlpha = drawable.alpha;
-        drawable.alpha = 0;
-        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            drawable.scale /= scaleFactor;
-            drawable.alpha = oldAlpha;
-        } completion:^(BOOL finished) {
-            
-        }];
-    }
-    self.selectedItems = [NSSet setWithObject:drawable];
-    [drawable updatedKeyframeProperties];
+- (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
+    CMDrawableKeyframe *keyframe = [drawable.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
+    keyframe.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    [self.canvas.drawables addObject:drawable];
 }
 
 - (void)createGroup:(id)sender {
@@ -460,7 +440,7 @@
         CGFloat maxX = -MAXFLOAT;
         CGFloat maxY = -MAXFLOAT;
         for (Drawable *d in self.drawables) {
-            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
+            /*for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
                 CGRect bounds = [keyframe.properties[@"bounds"] CGRectValue];
                 CGPoint center = [keyframe.properties[@"center"] CGPointValue];
                 CGFloat scale = [keyframe.properties[@"scale"] floatValue];
@@ -470,7 +450,7 @@
                 minY = MIN(minY, bbox.origin.y);
                 maxX = MAX(maxX, CGRectGetMaxX(bbox));
                 maxY = MAX(maxY, CGRectGetMaxY(bbox));
-            }
+            }*/
         }
         CGFloat width = MAX(1, maxX - minX);
         CGFloat height = MAX(1, maxY - minY);
@@ -480,7 +460,7 @@
                 CGPoint c = [val CGPointValue];
                 return [NSValue valueWithCGPoint:CGPointMake(c.x - minX, c.y - minY)];
             }];
-            d.center = [[d.keyframeStore interpolatedPropertiesAtTime:self.time][@"center"] CGPointValue];
+            // d.center = [[d.keyframeStore interpolatedPropertiesAtTime:self.time][@"center"] CGPointValue];
         }
     } else {
         self.bounds = CGRectMake(0, 0, 1, 1);
@@ -591,6 +571,52 @@
     _preparedForStaticScreenshot = preparedForStaticScreenshot;
     for (Drawable *d in self.drawables) {
         d.preparedForStaticScreenshot = preparedForStaticScreenshot;
+    }
+}
+
+#pragma mark Rendering
+
+- (void)setRendering:(BOOL)rendering {
+    if (rendering != self.rendering) {
+        if (rendering) {
+            _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(render)];
+            [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
+        } else {
+            [_displayLink invalidate];
+            _displayLink = nil;
+        }
+    }
+}
+
+- (BOOL)rendering {
+    return !!_displayLink;
+}
+
+- (void)render {
+    if (!_drawableViewsForKeys) {
+        _drawableViewsForKeys = [NSMutableDictionary new];
+    }
+    NSArray *keys = [self.canvas.drawables map:^id(id obj) {
+        return [obj key];
+    }];
+    NSSet *keySet = [NSSet setWithArray:keys];
+    for (NSString *oldKey in _drawableViewsForKeys.allKeys) {
+        if (![keySet containsObject:oldKey]) {
+            [_drawableViewsForKeys[oldKey] removeFromSuperview];
+            [_drawableViewsForKeys removeObjectForKey:oldKey];
+        }
+    }
+    
+    for (CMDrawable *drawable in self.canvas.drawables) {
+        CMDrawableView *existing = _drawableViewsForKeys[drawable.key];
+        CMDrawableView *newView = [drawable renderToView:existing atTime:self.time];
+        if (newView == existing) {
+            [self bringSubviewToFront:newView];
+        } else {
+            [existing removeFromSuperview];
+            [self addSubview:newView];
+        }
+        _drawableViewsForKeys[drawable.key] = newView;
     }
 }
 

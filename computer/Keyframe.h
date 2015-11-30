@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+@class CMDrawableKeyframe;
+#import "EVInterpolation.h"
 
-@interface FrameTime : NSObject <NSCoding>
+@interface FrameTime : NSObject <NSCoding, EVInterpolation>
 
 // frameTime will be converted to lowest-common-denominator
 - (instancetype)initWithFrame:(NSInteger)frame atFPS:(NSInteger)fps;
@@ -22,24 +24,17 @@
 
 @end
 
-@interface Keyframe : NSObject <NSCoding>
-
-- (instancetype)init;
-@property (nonatomic) FrameTime *frameTime;
-@property (nonatomic) NSMutableDictionary<__kindof NSString*, id> *properties;
-
-@end
-
 @interface KeyframeStore : NSObject <NSCoding>
 
-- (void)storeKeyframe:(Keyframe *)keyframe;
-- (Keyframe *)keyframeAtTime:(FrameTime *)time;
-- (Keyframe *)keyframeBeforeTime:(FrameTime *)time;
-- (Keyframe *)keyframeAfterTime:(FrameTime *)time;
-- (NSDictionary<__kindof NSString*, id>*)interpolatedPropertiesAtTime:(FrameTime *)time;
+- (void)storeKeyframe:(CMDrawableKeyframe *)keyframe;
+- (CMDrawableKeyframe *)keyframeAtTime:(FrameTime *)time;
+- (CMDrawableKeyframe *)keyframeBeforeTime:(FrameTime *)time;
+- (CMDrawableKeyframe *)keyframeAfterTime:(FrameTime *)time;
+- (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time;
+- (CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time;
 
 - (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block;
-- (NSArray<__kindof Keyframe*>*)allKeyframes;
+- (NSArray<__kindof CMDrawableKeyframe*>*)allKeyframes;
 
 - (FrameTime *)maxTime;
 

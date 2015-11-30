@@ -19,6 +19,8 @@
 #import "ParticleDrawable.h"
 #import "UIColor+RandomColors.h"
 #import "EditorViewController+InsertMedia.h"
+#import "CGPointExtras.h"
+#import "CMShapeDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -36,7 +38,7 @@
     PhotoDrawable* (^addPhoto)() = ^{
         PhotoDrawable *d = [PhotoDrawable new];
         d.bounds = CGRectMake(0, 0, 250, 250);
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
         return d;
     };
     
@@ -61,7 +63,7 @@
     text.action = ^{
         TextDrawable *d = [TextDrawable new];
         d.bounds = CGRectMake(0, 0, 300, 200);
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     QuickCollectionItem *particle = [QuickCollectionItem new];
     particle.icon = [UIImage imageNamed:@"Fire"];
@@ -76,16 +78,25 @@
         d.path = nil;
         d.strokeColor = [UIColor randomHue];
         d.strokeWidth = 2;
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
         [weakSelf.editorVC startFreehandDrawingToShape:d];
     };
     QuickCollectionItem *circle = [QuickCollectionItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
     circle.action = ^{
+        CMShapeDrawable *shape = [CMShapeDrawable new];
+        CGRect r = CGRectMake(0, 0, 100, 100);
+        shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
+        shape.fillColor = [UIColor purpleColor];
+        shape.strokeColor = [UIColor blackColor];
+        shape.strokeWidth = 2;
+        shape.boundsDiagonal = CGRectDiagonal(r);
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:shape];
+        
         ShapeDrawable *d = [ShapeDrawable new];
         d.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 200, 200)];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     QuickCollectionItem *square = [QuickCollectionItem new];
@@ -93,7 +104,7 @@
     square.action = ^{
         ShapeDrawable *d = [ShapeDrawable new];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     QuickCollectionItem *star = [QuickCollectionItem new];
@@ -101,7 +112,7 @@
     star.action = ^{
         StarDrawable *d = [StarDrawable new];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     QuickCollectionItem *gridRepeat = [QuickCollectionItem new];
@@ -112,12 +123,12 @@
         text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
         text.rotation = M_PI/4;
         text.transientEDUView = YES;
-        [canvas insertDrawable:text];
+        // [canvas insertDrawable:text];
         SubcanvasDrawable *d = [SubcanvasDrawable new];
         d.subcanvas = canvas;
         d.xRepeat = 3;
         d.yRepeat = 3;
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     QuickCollectionItem *ringRepeat = [QuickCollectionItem new];
@@ -127,19 +138,19 @@
         TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
         text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
         text.transientEDUView = YES;
-        [canvas insertDrawable:text];
+        // [canvas insertDrawable:text];
         SubcanvasDrawable *d = [SubcanvasDrawable new];
         d.subcanvas = canvas;
         d.rotatedCopies = 6;
         d.rotationOffset = 3;
-        [weakSelf.editorVC.canvas insertDrawable:d];
+        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, gridRepeat, ringRepeat, particle];
 }
 
 - (void)insertParticle {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    /*UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         ParticleDrawable *d = [ParticleDrawable new];
         d.particlePreset = ParticlePresetFire;
@@ -171,7 +182,7 @@
         [self.editorVC.canvas insertDrawable:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
-    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];*/
 }
 
 @end

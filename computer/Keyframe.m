@@ -8,6 +8,7 @@
 
 #import "Keyframe.h"
 #import "EVInterpolation.h"
+#import "CMShapeDrawable.h"
 
 NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     while (b != 0) {
@@ -84,32 +85,9 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return nil; // TODO
 }
 
-@end
-
-
-
-@implementation Keyframe
-
-- (instancetype)init {
-    self = [super init];
-    self.properties = [NSMutableDictionary new];
-    return self;
-}
-
-- (NSComparisonResult)compare:(Keyframe *)other {
-    return [self.frameTime compare:other.frameTime];
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [self init];
-    self.properties = [aDecoder decodeObjectForKey:@"properties"];
-    self.frameTime = [aDecoder decodeObjectForKey:@"frameTime"];
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:self.properties forKey:@"properties"];
-    [aCoder encodeObject:self.frameTime forKey:@"frameTime"];
+- (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
+    NSInteger m = 10000;
+    return [[FrameTime alloc] initWithFrame:(self.time + [(FrameTime *)other time]) * m / 2 atFPS:m];
 }
 
 @end
@@ -132,17 +110,17 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     [aCoder encodeObject:self.keyframes forKey:@"keyframes"];
 }
 
-- (void)storeKeyframe:(Keyframe *)keyframe {
+- (void)storeKeyframe:(CMDrawableKeyframe *)keyframe {
     if (!self.keyframes) self.keyframes = [NSMutableArray new];
-    Keyframe *existing = [self keyframeAtTime:keyframe.frameTime];
+    CMDrawableKeyframe *existing = [self keyframeAtTime:keyframe.frameTime];
     if (existing) [self.keyframes removeObject:existing]; // TODO: make this more efficient
     [self.keyframes addObject:keyframe];
     [self.keyframes sortUsingSelector:@selector(compare:)];
 }
 
-- (Keyframe *)keyframeAtTime:(FrameTime *)time {
+- (CMDrawableKeyframe *)keyframeAtTime:(FrameTime *)time {
     // TODO: do this more efficiently:
-    for (Keyframe *keyframe in self.keyframes) {
+    for (CMDrawableKeyframe *keyframe in self.keyframes) {
         NSComparisonResult comp = [keyframe.frameTime compare:time];
         if (comp == NSOrderedSame) {
             return keyframe;
@@ -153,10 +131,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return nil;
 }
 
-- (Keyframe *)keyframeBeforeTime:(FrameTime *)time {
+- (CMDrawableKeyframe *)keyframeBeforeTime:(FrameTime *)time {
     // TODO: do this more efficiently:
-    Keyframe *latest = nil;
-    for (Keyframe *keyframe in self.keyframes) {
+    CMDrawableKeyframe *latest = nil;
+    for (CMDrawableKeyframe *keyframe in self.keyframes) {
         NSComparisonResult comp = [keyframe.frameTime compare:time];
         if (comp == NSOrderedAscending) {
             latest = keyframe;
@@ -167,9 +145,9 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return latest;
 }
 
-- (Keyframe *)keyframeAfterTime:(FrameTime *)time {
+- (CMDrawableKeyframe *)keyframeAfterTime:(FrameTime *)time {
     // TODO: do this more efficiently:
-    for (Keyframe *keyframe in self.keyframes) {
+    for (CMDrawableKeyframe *keyframe in self.keyframes) {
         if ([time compare:keyframe.frameTime] == NSOrderedAscending) {
             return keyframe;
         }
@@ -177,61 +155,52 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return nil;
 }
 
-- (NSDictionary<__kindof NSString*, id>*)interpolatedPropertiesAtTime:(FrameTime *)time {
-    Keyframe *exact = [self keyframeAtTime:time];
+- (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time {
+    CMDrawableKeyframe *exact = [self keyframeAtTime:time];
     if (exact) {
-        return exact.properties;
+        return exact;
     }
-    Keyframe *before = [self keyframeBeforeTime:time];
-    Keyframe *after = [self keyframeAfterTime:time];
+    CMDrawableKeyframe *before = [self keyframeBeforeTime:time];
+    CMDrawableKeyframe *after = [self keyframeAfterTime:time];
     if (!before && after) {
-        return after.properties;
+        return after;
     }
     if (!after && before) {
-        return before.properties;
+        return before;
     }
     double interpolation = ([time time] - [before.frameTime time]) / ([after.frameTime time] - [before.frameTime time]);
-    NSMutableDictionary *interpolated = [NSMutableDictionary new];
-    NSMutableSet *allKeys = [NSMutableSet setWithArray:before.properties.allKeys];
-    [allKeys addObjectsFromArray:after.properties.allKeys];
-    for (NSString *key in allKeys) {
-        id val = nil;
-        
-        id beforeVal = before.properties[key];
-        id afterVal = after.properties[key];
-        if (beforeVal && !afterVal) {
-            val = beforeVal;
-        } else if (afterVal && !beforeVal) {
-            val = afterVal;
-        } else if (beforeVal && afterVal) {
-            val = [(id<EVInterpolation>)beforeVal interpolatedWith:afterVal progress:interpolation];
-        }
-        if (val) {
-            interpolated[key] = val;
-        }
+    return [before interpolatedWith:after progress:interpolation];
+}
+
+- (CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time {
+    CMDrawableKeyframe *k = [self keyframeAtTime:time];
+    if (!k) {
+        k = [CMDrawableKeyframe new];
+        [self storeKeyframe:k];
     }
-    return interpolated;
+    return k;
 }
 
 - (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block {
-    for (Keyframe *k in self.keyframes) {
+    /*for (CMDrawableKeyframe *k in self.keyframes) {
         id val = k.properties[property];
         if (val) {
             k.properties[property] = block(val);
         }
-    }
+    }*/
+    // TODO
 }
 
-- (NSArray<__kindof Keyframe*>*)allKeyframes {
+- (NSArray<__kindof CMDrawableKeyframe*>*)allKeyframes {
     return self.keyframes;
 }
 
 - (FrameTime *)maxTime {
-    return [(Keyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
+    return [(CMDrawableKeyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
 }
 
 - (void)removeKeyframeAtTime:(FrameTime *)time {
-    Keyframe *keyframe = [self keyframeAtTime:time];
+    CMDrawableKeyframe *keyframe = [self keyframeAtTime:time];
     if (keyframe) {
         [self.keyframes removeObject:keyframe]; // TODO: more efficient
     }

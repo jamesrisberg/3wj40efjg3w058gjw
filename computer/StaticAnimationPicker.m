@@ -26,7 +26,7 @@
 
 - (void)setAnimationDict:(NSDictionary *)animationDict {
     _animationDict = animationDict;
-    if (!self.preview) {
+    /*if (!self.preview) {
         // do some setup:
         self.backgroundColor = [UIColor whiteColor];
         self.preview = [ShapeDrawable new];
@@ -44,7 +44,7 @@
     StaticAnimation *anim = [StaticAnimation new];
     [anim addAnimationDict:animationDict];
     self.preview.staticAnimation = anim;
-    [self.preview updatedKeyframeProperties];
+    [self.preview updatedKeyframeProperties];*/
 }
 
 - (void)setDisplayAsSelected:(BOOL)displayAsSelected {
@@ -54,7 +54,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.preview.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    // self.preview.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
 @end

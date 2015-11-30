@@ -298,10 +298,10 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 }
 
 - (void)keyframePropertiesChangedAtTime:(FrameTime *)time {
-    Keyframe *keyframe = [Keyframe new];
+    /*Keyframe *keyframe = [Keyframe new];
     keyframe.frameTime = time;
     [keyframe.properties addEntriesFromDictionary:[self currentKeyframeProperties]];
-    [self.keyframeStore storeKeyframe:keyframe];
+    [self.keyframeStore storeKeyframe:keyframe];*/
 }
 
 - (void)updatedKeyframeProperties {
@@ -346,7 +346,7 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     
     BOOL hasExactKeyframe = !![self.keyframeStore keyframeAtTime:time];
     if (self.keyframeStore.allKeyframes.count > 0) {
-        [self setCurrentKeyframeProperties:[self.keyframeStore interpolatedPropertiesAtTime:time]];
+        // [self setCurrentKeyframeProperties:[self.keyframeStore interpolatedPropertiesAtTime:time]];
     }
     self.dimmed = !hasExactKeyframe && !self.suppressTimingVisualizations;;
 }

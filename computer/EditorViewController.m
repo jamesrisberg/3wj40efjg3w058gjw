@@ -29,6 +29,7 @@
 #import "UIBarButtonItem+BorderedButton.h"
 #import "RepetitionPicker.h"
 #import "VideoConstants.h"
+#import "CMDrawable.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -440,7 +441,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         CGPoint translationCorrection = CGPointMake(newOriginOffsetFromPinch.x - originOffsetFromPinch.x, newOriginOffsetFromPinch.y - originOffsetFromPinch.y);
         translationCorrection = CGPointScale(translationCorrection, 1.0 / scrollView.zoomScale);
         
-        for (Drawable *d in self.canvas.subviews) {
+        /*for (Drawable *d in self.canvas.subviews) {
             for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
                 CGPoint center = [keyframe.properties[@"center"] CGPointValue];
                 CGFloat scale = [keyframe.properties[@"scale"] floatValue];
@@ -451,7 +452,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
                 keyframe.properties[@"center"] = [NSValue valueWithCGPoint:newCenter];
                 keyframe.properties[@"scale"] = @(newScale);
             }
-        }
+        }*/
         
         self.canvas.time = self.canvas.time; // trigger update based on keyframes
     }
@@ -716,7 +717,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (BOOL)timelineView:(TimelineView *)timelineView shouldIndicateKeyframesExistAtTime:(FrameTime *)time {
-    for (Drawable *d in [self.canvas drawables]) {
+    for (CMDrawable *d in [self.canvas.canvas drawables]) {
         if ([d.keyframeStore keyframeAtTime:time] != nil) {
             return YES;
         }

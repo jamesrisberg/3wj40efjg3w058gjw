@@ -125,3 +125,7 @@ CGRect NPBoundingBoxOfRotatedRect(CGSize size, CGPoint center, CGFloat rotation,
     return CGRectMake(minX, minY, maxX - minX, maxY - minY);
 }
 
+CGFloat CGRectDiagonal(CGRect r) {
+    return sqrt(pow(CGRectGetWidth(r), 2) + pow(CGRectGetHeight(r), 2));
+}
+

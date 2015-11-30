@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Keyframe.h"
 @class Drawable, ShapeStackList;
+#import "CMCanvas.h"
 
 @class Canvas;
 @protocol CanvasDelegate <NSObject>
@@ -24,8 +25,12 @@
 
 @interface Canvas : UIView <NSCopying, TimeAware>
 
-- (void)insertDrawable:(Drawable *)drawable;
-- (NSArray<__kindof Drawable*>*)drawables;
+// - (void)insertDrawable:(Drawable *)drawable;
+// - (NSArray<__kindof Drawable*>*)drawables;
+
+- (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable;
+
+@property (nonatomic) CMCanvas *canvas;
 
 @property (nonatomic) NSSet *selectedItems;
 @property (nonatomic) BOOL multipleSelectionEnabled;
