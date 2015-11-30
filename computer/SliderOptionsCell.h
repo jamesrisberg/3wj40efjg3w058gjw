@@ -12,6 +12,7 @@
 
 @property (nonatomic) CGFloat value; // 0-1
 @property (nonatomic,copy) void (^onValueChange)(CGFloat val);
+@property (nonatomic,copy) void (^onTouchUp)();
 
 - (CGFloat)getRampedValueWithMin:(CGFloat)min max:(CGFloat)max;
 - (void)setRampedValue:(NSInteger)val withMin:(CGFloat)min max:(CGFloat)max;

@@ -8,6 +8,7 @@
 
 #import "CMDrawable.h"
 #import "computer-Swift.h"
+#import "SliderOptionsCell.h"
 
 @interface CMDrawable ()
 
@@ -110,13 +111,59 @@
 - (UIView *)propertiesModalTopActionViewWithEditor:(CanvasEditor *)editor {
     return nil;
 }
+
 - (UIViewController *)createInlineViewControllerForEditingWithEditor:(CanvasEditor *)editor {
     return nil;
 }
 
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor {
-    return @[];
+    OptionsViewCellModel *alpha = [self sliderForKeyOnKeyframeObject:@"alpha" title:NSLocalizedString(@"Opacity", @"") editor:editor];
+    return @[alpha];
 }
+
+- (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor {
+    __weak CMDrawable *weakSelf = self;
+    FrameTime *time = editor.time;
+    __weak CanvasEditor *weakEditor = editor;
+    
+    __block CMTransaction *transaction = nil;
+    OptionsViewCellModel *model = [OptionsViewCellModel new];
+    model.title = title;
+    model.cellClass = [SliderOptionsCell class];
+    model.onCreate = ^(OptionsCell *cell){
+        SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
+        sliderCell.value = [[[weakSelf.keyframeStore interpolatedKeyframeAtTime:time] valueForKey:key] floatValue];
+        __weak SliderOptionsCell *weakSliderCell = sliderCell;
+        sliderCell.onValueChange = ^(CGFloat val) {
+            if (!transaction) {
+                CMDrawableKeyframe *oldKeyframe = [[weakSelf.keyframeStore keyframeAtTime:time] copy];
+                transaction = [[CMTransaction alloc] initNonFinalizedWithTarget:editor action:^(id target) {
+                    [[weakSelf.keyframeStore createKeyframeAtTimeIfNeeded:time] setValue:@(val) forKey:key];
+                    weakSliderCell.value = val;
+                } undo:^(id target) {
+                    [weakSelf.keyframeStore removeKeyframeAtTime:time];
+                    if (oldKeyframe) {
+                        [weakSelf.keyframeStore storeKeyframe:oldKeyframe];
+                    }
+                    weakSliderCell.value = val;
+                }];
+                [[weakEditor transactionStack] doTransaction:transaction];
+            } else {
+                // update the transaction:
+                transaction.action = ^(id target) {
+                    [[weakSelf.keyframeStore createKeyframeAtTimeIfNeeded:time] setValue:@(val) forKey:key];
+                    weakSliderCell.value = val;
+                };
+            }
+        };
+        sliderCell.onTouchUp = ^{
+            transaction.finalized = YES;
+            transaction = nil;
+        };
+    };
+    return model;
+}
+
 
 - (id)copy {
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];

@@ -424,7 +424,7 @@
 }
 
 - (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d {
-    // TODO
+    [d.keyframeStore removeKeyframeAtTime:self.time];
 }
 
 #pragma mark Time

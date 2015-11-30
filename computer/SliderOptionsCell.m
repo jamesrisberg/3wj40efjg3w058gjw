@@ -25,12 +25,17 @@
     self.slider.maximumValue = 1;
     [self addSubview:self.slider];
     [self.slider addTarget:self action:@selector(changedValue) forControlEvents:UIControlEventValueChanged];
+    [self.slider addTarget:self action:@selector(touchUp) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGFloat height = [self.slider intrinsicContentSize].height;
     self.slider.frame = CGRectMake(40, (self.bounds.size.height - height)/2, self.bounds.size.width - 40*2, height);
+}
+
+- (void)touchUp {
+    if (self.onTouchUp) self.onTouchUp();
 }
 
 - (void)changedValue {
