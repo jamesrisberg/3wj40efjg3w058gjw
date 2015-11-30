@@ -6,7 +6,7 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "Drawable.h"
 #import "CGPointExtras.h"
 #import "ShapeStackList.h"
@@ -18,36 +18,38 @@
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
 #define TAP_STACK_REUSE_MAX_TIME 2.5
 
-@interface Canvas () {
+@interface CanvasEditor () {
     BOOL _setup;
     NSMutableSet *_touches;
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
-    __weak Drawable *_selectionAfterFirstTap;
+    __weak CMDrawable *_selectionAfterFirstTap;
     CGRect _previousTouchBoundsInSelection;
-    NSSet *_selectedItems;
+    NSSet<CMDrawable*> *_selectedItems;
     
     NSArray *_tapStack;
     CFAbsoluteTime _tapStackGeneratedAtTime;
     CGPoint _tapStackGeneratedAtPoint;
     
-    __weak Drawable *_lastSelection;
-    __weak Drawable *_selectionBeforeFirstTap;
+    __weak CMDrawable *_lastSelection;
+    __weak CMDrawable *_selectionBeforeFirstTap;
     CADisplayLink *_displayLink;
     
-    NSMutableDictionary<NSString*, __kindof CMDrawableView*> *_drawableViewsForKeys;
+    CMTransaction *_currentObjectMoveTransaction;
 }
 
-@property (nonatomic,readonly) Drawable *singleSelection;
+@property (nonatomic,readonly) CMDrawable *singleSelection;
 
 @property (nonatomic) CGFloat touchForceFraction;
 @property (nonatomic) UIPercentDrivenInteractiveTransition *interactiveOptionsTransition;
 @property (nonatomic) BOOL rendering;
 
-@property (nonatomic) CMDrawableView *canvasView;
+@property (nonatomic) _CMCanvasView *canvasView;
+
+@property (nonatomic) CMTransactionStack *transactionStack;
 
 @end
 
-@implementation Canvas
+@implementation CanvasEditor
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -69,6 +71,8 @@
 }
 
 - (void)setup {
+    self.transactionStack = [CMTransactionStack new];
+    
     _touches = [NSMutableSet new];
     self.multipleTouchEnabled = YES;
     if (!self.time) self.time = [[FrameTime alloc] initWithFrame:0 atFPS:1];
@@ -83,7 +87,7 @@
     self.repeatCount = 1;
     self.reboundAnimation = NO;
     
-    self.canvas = [[CMCanvas alloc] initWithKey:CMGenerateKey()];
+    self.canvas = [CMCanvas new];
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -124,7 +128,8 @@
 
 - (void)longPress:(UILongPressGestureRecognizer *)rec {
     if (rec.state == UIGestureRecognizerStateBegan) {
-        UIView *topView = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
+        CMDrawable *topDrawable = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
+        CMDrawableView *topView = [self.canvasView viewForDrawable:topDrawable];
         self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
         [self.editorShapeStackList show];
         [self updateForceReading];
@@ -133,18 +138,39 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [_touches addObjectsFromArray:touches.allObjects];
+    
+    if (!_currentObjectMoveTransaction && self.singleSelection) {
+        CMDrawable *selection = self.singleSelection;
+        CMDrawableKeyframe *existingKeyframe = [[self.singleSelection.keyframeStore keyframeAtTime:self.time] copy];
+        FrameTime *time = self.time;
+        _currentObjectMoveTransaction = [[CMTransaction alloc] initNonFinalizedWithTarget:self action:^(id target) {
+            
+        } undo:^(id target) {
+            [selection.keyframeStore removeKeyframeAtTime:time];
+            if (existingKeyframe) {
+                [selection.keyframeStore storeKeyframe:[existingKeyframe copy]];
+            }
+        }];
+        [self.transactionStack doTransaction:_currentObjectMoveTransaction];
+
+    }
+    
     if (_touches.count > 1) {
         NSArray *down = _touches.allObjects;
         CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
-        _currentGestureTransformsDrawableAboutTouchPoint = [self.singleSelection pointInside:[self.singleSelection convertPoint:touchMidpoint fromView:self] withEvent:nil];
+        CMDrawableView *view = [self.canvasView viewForDrawable:self.singleSelection];
+        _currentGestureTransformsDrawableAboutTouchPoint = [view pointInside:[view convertPoint:touchMidpoint fromView:self] withEvent:nil];
     }
     if (self.singleSelection) {
-        _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.singleSelection];
+        CMDrawableView *view = [self.canvasView viewForDrawable:self.singleSelection];
+        _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:view];
     }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self updateForceReading];
+    
+    CMDrawable *singleSelection = self.singleSelection;
     
     NSArray *down = _touches.allObjects;
     CGPoint t1 = [down[0] locationInView:self];
@@ -153,9 +179,19 @@
     CGFloat motionMultiplier = self.touchForceFraction > 0.9 ? 0.4 : 1;
     
     if (_touches.count == 1) {
-        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + (t1.x - t1prev.x) * motionMultiplier, self.singleSelection.center.y + (t1.y - t1prev.y) * motionMultiplier);
-        [self.singleSelection updatedKeyframeProperties];
+        CGPoint translation = CGPointMake((t1.x - t1prev.x) * motionMultiplier, (t1.y - t1prev.y) * motionMultiplier);
+        if (!CGPointEqualToPoint(translation, CGPointZero)) {
+            CMDrawableKeyframe *selectionKeyframe = [[self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time] copy];
+            selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + translation.x, selectionKeyframe.center.y + translation.y);
+            
+            [_currentObjectMoveTransaction setAction:^(id target){
+                [singleSelection.keyframeStore storeKeyframe:selectionKeyframe];
+            }];
+        }
     } else if (_touches.count == 2) {
+        
+        CMDrawableKeyframe *selectionKeyframe = [[self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time] copy];
+        
         CGPoint t2 = [down[1] locationInView:self];
         CGPoint t2prev = [down[1] previousLocationInView:self];
         CGFloat rotation = atan2(t2.y - t1.y, t2.x - t1.x);
@@ -166,39 +202,50 @@
         CGPoint prevPos = CGPointMake((t1prev.x + t2prev.x)/2, (t1prev.y + t2prev.y)/2);
         CGFloat toRotate = rotation - prevRotation;
         CGFloat toScale = scale / prevScale;
-        self.singleSelection.rotation += toRotate * motionMultiplier;
-        self.singleSelection.scale = self.singleSelection.scale * (1-motionMultiplier) + self.singleSelection.scale * toScale * motionMultiplier;
+        
+        if (toRotate || toScale) {
+            selectionKeyframe.rotation += toRotate * motionMultiplier;
+            selectionKeyframe.scale = selectionKeyframe.scale * (1-motionMultiplier) + selectionKeyframe.scale * toScale * motionMultiplier;
+        }
         
         if (_currentGestureTransformsDrawableAboutTouchPoint) {
             CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
-            CGPoint drawableOffset = CGPointMake(self.singleSelection.center.x - touchMidpoint.x, self.singleSelection.center.y - touchMidpoint.y);
+            CGPoint drawableOffset = CGPointMake(selectionKeyframe.center.x - touchMidpoint.x, selectionKeyframe.center.y - touchMidpoint.y);
             drawableOffset = CGPointScale(drawableOffset, toScale);
             CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
             CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
             drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
-            self.singleSelection.center = CGPointAdd(touchMidpoint, CGPointScale(drawableOffset, motionMultiplier));
+            selectionKeyframe.center = CGPointAdd(touchMidpoint, CGPointScale(drawableOffset, motionMultiplier));
         }
         
-        self.singleSelection.center = CGPointMake(self.singleSelection.center.x + (pos.x - prevPos.x) * motionMultiplier, self.singleSelection.center.y + (pos.y - prevPos.y) * motionMultiplier);
+        selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + (pos.x - prevPos.x) * motionMultiplier, selectionKeyframe.center.y + (pos.y - prevPos.y) * motionMultiplier);
         
-        [self.singleSelection updatedKeyframeProperties];
+        [_currentObjectMoveTransaction setAction:^(id target){
+            [singleSelection.keyframeStore storeKeyframe:selectionKeyframe];
+        }];
     } else if (_touches.count == 3) {
         if (self.singleSelection) {
+            CMDrawableKeyframe *selectionKeyframe = [self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
+            // TODO: implement
+            
+            /*
             CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.singleSelection];
             CGSize internalSize = CGSizeMake(self.singleSelection.bounds.size.width + touchBounds.size.width - _previousTouchBoundsInSelection.size.width, self.singleSelection.bounds.size.height + touchBounds.size.height - _previousTouchBoundsInSelection.size.height);
             [self.singleSelection setInternalSize:internalSize];
             [self.singleSelection updatedKeyframeProperties];
             _previousTouchBoundsInSelection = touchBounds;
             
-            [self.singleSelection updatedKeyframeProperties];
+            [self.singleSelection updatedKeyframeProperties];*/
         }
     }
-    [self.delegate canvasSelectionRectNeedsUpdate:self];
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     for (id touch in touches) [_touches removeObject:touch];
     [self updateForceReading];
+    
+    _currentObjectMoveTransaction.finalized = YES;
+    _currentObjectMoveTransaction = nil;
 }
 
 - (void)updateForceReading {
@@ -213,6 +260,10 @@
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     for (id touch in touches) [_touches removeObject:touch];
     [self updateForceReading];
+    
+    // TODO: roll back transaction?
+    _currentObjectMoveTransaction.finalized = YES;
+    _currentObjectMoveTransaction = nil;
 }
 
 - (CGRect)boundingRectForTouchesUsingCoordinateSpaceOfView:(UIView *)view {
@@ -226,24 +277,10 @@
     return rect;
 }
 
-- (NSArray<__kindof Drawable*>*)drawables {
-    return @[];
-}
-
 #pragma mark Geometry
 
-- (NSArray *)allHitsAtPoint:(CGPoint)pos {
-    CGFloat centerLeeway = 40; // for small objects
-    NSMutableArray *hits = [NSMutableArray new];
-    for (Drawable *d in [self drawables].reverseObjectEnumerator) {
-        // TODO: take into account transforms; don't use UIView's own math
-        if ([d pointInside:[d convertPoint:pos fromView:self] withEvent:nil]) {
-            [hits addObject:d];
-        } else if (CGPointDistance(pos, d.center) < centerLeeway) {
-            [hits addObject:d];
-        }
-    }
-    return hits;
+- (NSArray<CMDrawable*> *)allHitsAtPoint:(CGPoint)pos {
+    return [self.canvasView hitsAtPoint:pos withCanvas:self.canvas];
 }
 
 - (NSArray *)allItemsOverlappingView:(UIView *)view {
@@ -257,7 +294,7 @@
     return hits;
 }
 
-- (Drawable *)doHitTest:(CGPoint)pos {
+- (CMDrawable *)doHitTest:(CGPoint)pos {
     return [self allHitsAtPoint:pos].firstObject;
 }
 
@@ -276,7 +313,7 @@
         [self addSubview:drawable];
     }
     drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-    __weak Canvas *weakSelf = self;
+    __weak CanvasEditor *weakSelf = self;
     __weak Drawable *weakDrawable = drawable;
     drawable.onKeyframePropertiesUpdated = ^{
         [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
@@ -297,12 +334,20 @@
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
     CMDrawableKeyframe *keyframe = [drawable.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
     keyframe.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-    [self.canvas.contents addObject:drawable];
+    
+    [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+        [[[target canvas] contents] addObject:drawable];
+    } undo:^(id target) {
+        [[[target canvas] contents] removeObject:drawable];
+    }]];
+    
 }
 
 - (void)createGroup:(id)sender {
-    NSArray<__kindof Drawable*> *selection = self.selectedItems.allObjects;
-    selection = [selection sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+    NSArray<__kindof CMDrawable*> *selection = self.selectedItems.allObjects;
+    
+    
+    /*selection = [selection sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
         NSInteger i1 = [[[obj1 superview] subviews] indexOfObject:obj1];
         NSInteger i2 = [[[obj2 superview] subviews] indexOfObject:obj2];
         return i1 < i2 ? NSOrderedAscending : NSOrderedDescending;
@@ -329,7 +374,7 @@
             group.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2); //CGPointMake(group.center.x + firstItemPosition.x - firstItemNewPosition.x, group.center.y + firstItemPosition.y - firstItemNewPosition.y);
             [group updatedKeyframeProperties];
         }
-    }
+    }*/
 }
 
 - (void)copy:(id)sender {
@@ -348,77 +393,17 @@
 }
 
 - (void)delete:(id)sender {
-    for (Drawable *d in self.selectedItems) {
-        [d delete:sender];
+    for (CMDrawable *d in self.selectedItems) {
+        // [d delete:sender];
     }
-}
-
-#pragma mark Coding
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    // deliberately DON'T call super
-    [aCoder encodeObject:[self drawables] forKey:@"drawables"];
-    [aCoder encodeObject:self.time forKey:@"time"];
-    [aCoder encodeInteger:self.repeatCount forKey:@"repeatCount"];
-    [aCoder encodeBool:self.reboundAnimation forKey:@"reboundAnimation"];
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [self initWithFrame:CGRectZero]; // deliberately DON'T call super
-    for (Drawable *d in [aDecoder decodeObjectForKey:@"drawables"]) {
-        [self _addDrawableToCanvas:d];
-    }
-    self.time = [aDecoder decodeObjectForKey:@"time"];
-    self.repeatCount = [aDecoder decodeIntegerForKey:@"repeatCount"] ? : 1;
-    self.reboundAnimation = [aDecoder decodeBoolForKey:@"reboundAnimation"];
-    return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-    return [self copy];
-}
-
-- (id)copy {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
-    return [NSKeyedUnarchiver unarchiveObjectWithData:data];
 }
 
 #pragma mark Time
-- (void)setTime:(FrameTime *)time {
-    _time = time;
-    for (Drawable *d in [self drawables]) {
-        d.time = time;
-    }
-    [self.delegate canvasSelectionRectNeedsUpdate:self];
-}
-
-- (void)setUseTimeForStaticAnimations:(BOOL)useTimeForStaticAnimations {
-    _useTimeForStaticAnimations = useTimeForStaticAnimations;
-    for (Drawable *d in [self drawables]) {
-        d.useTimeForStaticAnimations = useTimeForStaticAnimations;
-    }
-}
-
-
-- (void)setSuppressTimingVisualizations:(BOOL)suppressTimingVisualizations {
-    _suppressTimingVisualizations = suppressTimingVisualizations;
-    for (Drawable *d in [self drawables]) {
-        d.suppressTimingVisualizations = suppressTimingVisualizations;
-    }
-}
 
 - (FrameTime *)duration {
     FrameTime *t = [[FrameTime alloc] initWithFrame:0 atFPS:1];
-    for (Drawable *d in self.drawables) {
-        t = [[d.keyframeStore maxTime] maxWith:t];
-        if ([d isKindOfClass:[SubcanvasDrawable class]]) {
-            Canvas *sub = [(SubcanvasDrawable *)d subcanvas];
-            t = [t maxWith:[sub duration]];
-        } else if ([d isKindOfClass:[VideoDrawable class]]) {
-            VideoDrawable *v = (VideoDrawable *)d;
-            if ([v videoDuration]) {
-                t = [t maxWith:[v videoDuration]];
-            }
-        }
+    for (CMDrawable *d in self.canvas.contents) {
+        t = [[d maxTime] maxWith:t];
     }
     return t;
 }
@@ -435,7 +420,7 @@
 
 #pragma mark Layout
 
-- (void)setCanvasView:(CMDrawableView *)canvasView {
+- (void)setCanvasView:(_CMCanvasView *)canvasView {
     if (canvasView != _canvasView) {
         [_canvasView removeFromSuperview];
         _canvasView = canvasView;
@@ -444,13 +429,13 @@
 }
 
 - (void)resizeBoundsToFitContent {
-    if (self.drawables.count > 0) {
+    /*if (self.drawables.count > 0) {
         CGFloat minX = MAXFLOAT;
         CGFloat minY = MAXFLOAT;
         CGFloat maxX = -MAXFLOAT;
         CGFloat maxY = -MAXFLOAT;
         for (Drawable *d in self.drawables) {
-            /*for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
+            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
                 CGRect bounds = [keyframe.properties[@"bounds"] CGRectValue];
                 CGPoint center = [keyframe.properties[@"center"] CGPointValue];
                 CGFloat scale = [keyframe.properties[@"scale"] floatValue];
@@ -460,7 +445,7 @@
                 minY = MIN(minY, bbox.origin.y);
                 maxX = MAX(maxX, CGRectGetMaxX(bbox));
                 maxY = MAX(maxY, CGRectGetMaxY(bbox));
-            }*/
+            }
         }
         CGFloat width = MAX(1, maxX - minX);
         CGFloat height = MAX(1, maxY - minY);
@@ -474,7 +459,7 @@
         }
     } else {
         self.bounds = CGRectMake(0, 0, 1, 1);
-    }
+    }*/
 }
 
 - (void)layoutSubviews {
@@ -483,27 +468,14 @@
 }
 
 #pragma mark Selection
-- (NSSet *)selectedItems {
+- (NSSet<CMDrawable*> *)selectedItems {
     return _selectedItems ? : [NSSet set];
 }
 
-- (void)setSelectedItems:(NSSet *)selectedItems {
-    __weak Canvas *weakSelf = self;
-    
-    for (Drawable *old in _selectedItems) {
-        old.onShapeUpdate = nil;
-    }
-    
+- (void)setSelectedItems:(NSSet<CMDrawable*> *)selectedItems {    
     _selectedItems = selectedItems.copy ? : [NSSet new];
     
-    for (Drawable *d in selectedItems) {
-        d.onShapeUpdate = ^{
-            [weakSelf.delegate canvasSelectionRectNeedsUpdate:weakSelf];
-        };
-    }
-    
     [self.delegate canvasDidChangeSelection:self];
-    [self.delegate canvasSelectionRectNeedsUpdate:self];
     
     _lastSelection = selectedItems.anyObject;
 }
@@ -515,8 +487,8 @@
     }
 }
 
-- (void)userGesturedToSelectDrawable:(Drawable *)d {
-    if (d.transientEDUView) return;
+- (void)userGesturedToSelectDrawable:(CMDrawable *)d {
+    // if (d.transientEDUView) return;
     
     NSMutableSet *newSelection = self.selectedItems.mutableCopy;
     if (d == nil) {
@@ -549,44 +521,9 @@
     }
 }
 
-#pragma mark Force Touch
-- (void)setTouchForceFraction:(CGFloat)touchForceFraction {
-    _touchForceFraction = touchForceFraction;
-    return; // DISABLED
-    if (!self.editorShapeStackList.hidden) {
-        touchForceFraction = 0;
-    }
-    CGFloat minForce = 0.3;
-    CGFloat maxForce = 1;
-    if (touchForceFraction > minForce) {
-        if (!self.interactiveOptionsTransition) {
-            self.interactiveOptionsTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
-            [self.delegate canvasShowShouldOptions:self withInteractivePresenter:self.interactiveOptionsTransition touchPos:CGPointZero];
-        }
-    }
-    if (self.interactiveOptionsTransition) {
-        CGFloat percentComplete = MIN(1, (touchForceFraction - minForce) / (maxForce - minForce));
-        NSLog(@"Percent: %f", percentComplete);
-        CGFloat oldPercentage = self.interactiveOptionsTransition.percentComplete;
-        [self.interactiveOptionsTransition updateInteractiveTransition:percentComplete];
-        if (self.interactiveOptionsTransition.percentComplete == 1 && oldPercentage < 1) {
-            //[_singleTouchPressTimer invalidate];
-            //_singleTouchPressTimer = nil;
-            [self.interactiveOptionsTransition finishInteractiveTransition];
-        }
-    }
-    if (touchForceFraction < minForce) {
-        [self.interactiveOptionsTransition cancelInteractiveTransition];
-        self.interactiveOptionsTransition = nil;
-    }
-}
-
 #pragma mark Capture
 - (void)setPreparedForStaticScreenshot:(BOOL)preparedForStaticScreenshot {
     _preparedForStaticScreenshot = preparedForStaticScreenshot;
-    for (Drawable *d in self.drawables) {
-        d.preparedForStaticScreenshot = preparedForStaticScreenshot;
-    }
 }
 
 #pragma mark Rendering
@@ -608,7 +545,7 @@
 }
 
 - (void)render {
-    self.canvasView = [self.canvas renderToView:self.canvasView atTime:self.time];
+    self.canvasView = (id)[self.canvas renderToView:self.canvasView atTime:self.time];
 }
 
 @end

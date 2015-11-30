@@ -20,6 +20,8 @@
 
 - (FrameTime *)maxWith:(FrameTime *)other;
 
+- (NSComparisonResult)compare:(FrameTime *)other;
+
 + (FrameTime *)leastCommonMultipleForTimes:(NSArray<__kindof FrameTime*>*)times maxTime:(NSTimeInterval)max;
 
 @end
@@ -39,6 +41,8 @@
 - (FrameTime *)maxTime;
 
 - (void)removeKeyframeAtTime:(FrameTime *)time;
+
+@property (nonatomic) Class keyframeClass;
 
 @end
 

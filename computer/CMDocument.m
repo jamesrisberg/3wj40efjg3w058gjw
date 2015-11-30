@@ -7,7 +7,7 @@
 //
 
 #import "CMDocument.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 
 @interface NSFileWrapper (CMAdditions)
 
@@ -49,7 +49,7 @@
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
     self.fileWrapper = contents;
     NSFileWrapper *canvasWrapper = [self.fileWrapper fileWrappers][@"Canvas"];
-    Canvas *canvas = [NSKeyedUnarchiver unarchiveObjectWithData:canvasWrapper.regularFileContents];
+    CanvasEditor *canvas = [NSKeyedUnarchiver unarchiveObjectWithData:canvasWrapper.regularFileContents];
     [self.delegate document:self loadedCanvas:canvas];
     return YES;
 }

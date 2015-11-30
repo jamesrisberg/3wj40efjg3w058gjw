@@ -175,7 +175,8 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
 - (CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time {
     CMDrawableKeyframe *k = [self keyframeAtTime:time];
     if (!k) {
-        k = [CMDrawableKeyframe new];
+        k = [[self interpolatedKeyframeAtTime:time] copy] ? : [self.keyframeClass new];
+        k.frameTime = time;
         [self storeKeyframe:k];
     }
     return k;

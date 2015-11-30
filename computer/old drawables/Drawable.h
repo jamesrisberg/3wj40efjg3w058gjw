@@ -14,7 +14,7 @@
 
 extern NSString * const DrawableArrayPasteboardType;
 
-@class Canvas;
+@class CanvasEditor;
 @interface Drawable : UIView <NSCopying, TimeAware>
 
 - (void)primaryEditAction;
@@ -25,7 +25,7 @@ extern NSString * const DrawableArrayPasteboardType;
 - (QuickCollectionItem *)mainAction;
 - (UIView *)propertiesModalTopActionView;
 - (UIViewController *)createInlineViewControllerForEditing;
-- (Canvas *)canvas;
+- (CanvasEditor *)canvas;
 @property (nonatomic,copy) void (^onShapeUpdate)();
 
 - (void)setInternalSize:(CGSize)size;

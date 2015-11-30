@@ -21,11 +21,12 @@ NSString* CMGenerateKey() {
 
 @implementation CMDrawable
 
-- (instancetype)initWithKey:(NSString *)key {
+- (instancetype)init {
     self = [super init];
     self.keyframeStore = [KeyframeStore new];
+    self.keyframeStore.keyframeClass = [self keyframeClass];
     self.boundsDiagonal = 100;
-    self.key = key;
+    self.key = [NSUUID UUID].UUIDString;
     return self;
 }
 
@@ -61,6 +62,10 @@ NSString* CMGenerateKey() {
     return v;
 }
 
+- (FrameTime *)maxTime {
+    return self.keyframeStore.maxTime;
+}
+
 @end
 
 @implementation CMDrawableKeyframe
@@ -92,12 +97,24 @@ NSString* CMGenerateKey() {
     }
 }
 
+- (NSComparisonResult)compare:(id)other {
+    return [self.frameTime compare:[other frameTime]];
+}
+
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
     CMDrawableKeyframe *i = [CMDrawableKeyframe new];
     for (NSString *key in [self keys]) {
         [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
     }
     return i;
+}
+
+- (id)copy {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
 }
 
 @end

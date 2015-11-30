@@ -14,3 +14,10 @@
 @property (nonatomic) NSMutableArray<__kindof CMDrawable*> *contents;
 
 @end
+
+@interface _CMCanvasView : CMDrawableView
+
+- (NSArray<CMDrawable*> *)hitsAtPoint:(CGPoint)point withCanvas:(CMCanvas *)associatedCanvas;
+- (CMDrawableView *)viewForDrawable:(CMDrawable *)drawable;
+
+@end

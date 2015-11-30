@@ -8,7 +8,7 @@
 
 #import "Drawable.h"
 #import "QuickCollectionModal.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "computer-Swift.h"
 #import "OptionsView.h"
 #import "SliderOptionsCell.h"
@@ -98,12 +98,8 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
     return [NPSoftModalPresentationController getViewControllerForPresentationInWindow:self.window];
 }
 
-- (Canvas *)canvas {
-    if ([self.superview isKindOfClass:[Canvas class]]) {
-        return (id)self.superview;
-    } else {
-        return nil;
-    }
+- (CanvasEditor *)canvas {
+    return nil;
 }
 
 #pragma mark Options

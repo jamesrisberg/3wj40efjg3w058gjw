@@ -9,7 +9,7 @@
 #import "InsertItemViewController.h"
 #import "EditorViewController.h"
 #import "PhotoDrawable.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "TextDrawable.h"
 #import "ShapeDrawable.h"
 #import "SubcanvasDrawable.h"
@@ -84,7 +84,7 @@
     QuickCollectionItem *circle = [QuickCollectionItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
     circle.action = ^{
-        CMShapeDrawable *shape = [[CMShapeDrawable alloc] initWithKey:CMGenerateKey()];
+        CMShapeDrawable *shape = [CMShapeDrawable new];
         CGRect r = CGRectMake(0, 0, 100, 100);
         shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
         shape.fillColor = [UIColor purpleColor];
@@ -118,7 +118,7 @@
     QuickCollectionItem *gridRepeat = [QuickCollectionItem new];
     gridRepeat.icon = [UIImage imageNamed:@"GridRepeat"];
     gridRepeat.action = ^{
-        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        CanvasEditor *canvas = [[CanvasEditor alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
         text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
         text.rotation = M_PI/4;
@@ -134,7 +134,7 @@
     QuickCollectionItem *ringRepeat = [QuickCollectionItem new];
     ringRepeat.icon = [UIImage imageNamed:@"RingRepeat"];
     ringRepeat.action = ^{
-        Canvas *canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+        CanvasEditor *canvas = [[CanvasEditor alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
         TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
         text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
         text.transientEDUView = YES;

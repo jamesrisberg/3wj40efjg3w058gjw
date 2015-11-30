@@ -7,7 +7,7 @@
 //
 
 #import "SubcanvasDrawable.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "EditorViewController.h"
 #import "OptionsView.h"
 #import "SliderOptionsCell.h"
@@ -59,11 +59,11 @@
     _rotationOffset = 2;
     
     if (!self.subcanvas) {
-        self.subcanvas = [Canvas new];
+        self.subcanvas = [CanvasEditor new];
     }
 }
 
-- (void)setSubcanvas:(Canvas *)canvas {
+- (void)setSubcanvas:(CanvasEditor *)canvas {
     [_subcanvas removeFromSuperview];
     _subcanvas = canvas;
     canvas.suppressTimingVisualizations = YES;
@@ -140,7 +140,7 @@
 
 - (void)editSubcanvas {
     __weak SubcanvasDrawable *weakSelf = self;
-    EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self.subcanvas callback:^(Canvas *edited) {
+    EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self.subcanvas callback:^(CanvasEditor *edited) {
         weakSelf.subcanvas = edited;
     }];
     [[self vcForPresentingModals] presentViewController:editorVC animated:YES completion:nil];

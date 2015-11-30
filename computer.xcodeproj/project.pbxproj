@@ -41,6 +41,7 @@
 		5F6940C51C0BD20200569335 /* TextDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940BC1C0BD20200569335 /* TextDrawable.m */; };
 		5F6940C61C0BD20200569335 /* VideoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940BE1C0BD20200569335 /* VideoDrawable.m */; };
 		5F6940C81C0BD29E00569335 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
+		5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940CA1C0CC84600569335 /* CMTransaction.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -167,7 +168,7 @@
 		5FEAF80A1B9788910071BC08 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF8081B9788910071BC08 /* Main.storyboard */; };
 		5FEAF80C1B9788910071BC08 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF80B1B9788910071BC08 /* Assets.xcassets */; };
 		5FEAF80F1B9788910071BC08 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF80D1B9788910071BC08 /* LaunchScreen.storyboard */; };
-		5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8171B9788B20071BC08 /* Canvas.m */; };
+		5FEAF8181B9788B20071BC08 /* CanvasEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8171B9788B20071BC08 /* CanvasEditor.m */; };
 		5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */; };
 		5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF8201B978BF50071BC08 /* IconBar.m */; };
 		5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */; };
@@ -307,6 +308,8 @@
 		5F6940BC1C0BD20200569335 /* TextDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextDrawable.m; sourceTree = "<group>"; };
 		5F6940BD1C0BD20200569335 /* VideoDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDrawable.h; sourceTree = "<group>"; };
 		5F6940BE1C0BD20200569335 /* VideoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDrawable.m; sourceTree = "<group>"; };
+		5F6940C91C0CC84600569335 /* CMTransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMTransaction.h; sourceTree = "<group>"; };
+		5F6940CA1C0CC84600569335 /* CMTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMTransaction.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -506,8 +509,8 @@
 		5FEAF80B1B9788910071BC08 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FEAF80E1B9788910071BC08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FEAF8101B9788910071BC08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5FEAF8161B9788B20071BC08 /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
-		5FEAF8171B9788B20071BC08 /* Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Canvas.m; sourceTree = "<group>"; };
+		5FEAF8161B9788B20071BC08 /* CanvasEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasEditor.h; sourceTree = "<group>"; };
+		5FEAF8171B9788B20071BC08 /* CanvasEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasEditor.m; sourceTree = "<group>"; };
 		5FEAF81C1B978B3C0071BC08 /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
 		5FEAF81D1B978B3C0071BC08 /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		5FEAF81F1B978BF50071BC08 /* IconBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconBar.h; sourceTree = "<group>"; };
@@ -1104,6 +1107,8 @@
 				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
 				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
+				5F6940C91C0CC84600569335 /* CMTransaction.h */,
+				5F6940CA1C0CC84600569335 /* CMTransaction.m */,
 				5FD860671C04086F00E5A754 /* CMMediaStore.h */,
 				5FD860681C04086F00E5A754 /* CMMediaStore.m */,
 				5F1DDB871BE96C0000D9F8E3 /* Stroke Picking */,
@@ -1281,8 +1286,8 @@
 				5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */,
 				5FD8606A1C044B1E00E5A754 /* EditorViewController+InsertMedia.h */,
 				5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */,
-				5FEAF8161B9788B20071BC08 /* Canvas.h */,
-				5FEAF8171B9788B20071BC08 /* Canvas.m */,
+				5FEAF8161B9788B20071BC08 /* CanvasEditor.h */,
+				5FEAF8171B9788B20071BC08 /* CanvasEditor.m */,
 				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
 				5F6110061BB1144E00DB4C82 /* FreehandInputView.m */,
 				5FEAF81F1B978BF50071BC08 /* IconBar.h */,
@@ -1592,6 +1597,7 @@
 				5F2095F31BEEBB2800E4C1F1 /* giffunc.c in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
 				5F809A451BE1C3740030B538 /* ANGifNetscapeAppExtension.m in Sources */,
+				5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */,
 				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
 				5F6940C61C0BD20200569335 /* VideoDrawable.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
@@ -1649,7 +1655,7 @@
 				5FD8609D1C0667DF00E5A754 /* FilterPickerFilterInfo.m in Sources */,
 				5F809A531BE1C3740030B538 /* CGContextCreator.m in Sources */,
 				5F809A511BE1C3740030B538 /* OSCommonImage.m in Sources */,
-				5FEAF8181B9788B20071BC08 /* Canvas.m in Sources */,
+				5FEAF8181B9788B20071BC08 /* CanvasEditor.m in Sources */,
 				5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */,
 				5F2095F51BEEBB2800E4C1F1 /* gifsicle.c in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,

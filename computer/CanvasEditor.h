@@ -10,20 +10,20 @@
 #import "Keyframe.h"
 @class Drawable, ShapeStackList;
 #import "CMCanvas.h"
+#import "CMTransaction.h"
 
-@class Canvas;
+@class CanvasEditor;
 @protocol CanvasDelegate <NSObject>
 
-- (void)canvasDidChangeSelection:(Canvas *)canvas;
-- (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas;
-- (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas;
-- (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel;
-- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos;
+- (void)canvasDidChangeSelection:(CanvasEditor *)canvas;
+- (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas;
+- (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel;
+- (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos;
 
 @end
 
 
-@interface Canvas : UIView <NSCopying, TimeAware>
+@interface CanvasEditor : UIView <TimeAware>
 
 // - (void)insertDrawable:(Drawable *)drawable;
 // - (NSArray<__kindof Drawable*>*)drawables;
@@ -32,9 +32,9 @@
 
 @property (nonatomic) CMCanvas *canvas;
 
-@property (nonatomic) NSSet *selectedItems;
+@property (nonatomic) NSSet<CMDrawable*> *selectedItems;
 @property (nonatomic) BOOL multipleSelectionEnabled;
-- (void)userGesturedToSelectDrawable:(Drawable *)d;
+- (void)userGesturedToSelectDrawable:(CMDrawable *)d;
 
 @property (nonatomic, weak) ShapeStackList *editorShapeStackList;
 
@@ -57,5 +57,7 @@
 @property (nonatomic) BOOL reboundAnimation;
 
 @property (nonatomic) BOOL preparedForStaticScreenshot;
+
+@property (nonatomic,readonly) CMTransactionStack *transactionStack;
 
 @end

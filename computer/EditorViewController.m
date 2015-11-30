@@ -7,7 +7,7 @@
 //
 
 #import "EditorViewController.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "IconBar.h"
 #import "Drawable.h"
 #import <ReactiveCocoa.h>
@@ -42,7 +42,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     CGPoint _scrollViewPreviousContentOffset;
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
-    NSMutableArray<__kindof UIView*> *_selectionRects;
     NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
 }
 
@@ -50,7 +49,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) UIView *toolbarView;
 @property (nonatomic) IconBar *iconBar;
 @property (nonatomic) CGFloat toolbarHeight;
-@property (nonatomic) Canvas *canvas;
+@property (nonatomic) CanvasEditor *canvas;
 @property (nonatomic) ShapeStackList *shapeStackList;
 @property (nonatomic) UIScrollView *dummyScrollView;
 @property (nonatomic) TimelineView *timeline;
@@ -58,7 +57,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 @property (nonatomic) BOOL hideSelectionRects;
 
-@property (nonatomic,copy) void (^modalEditingCallback)(Canvas *canvas);
+@property (nonatomic,copy) void (^modalEditingCallback)(CanvasEditor *canvas);
 
 @property (nonatomic) UIView *transientOverlayView;
 
@@ -116,7 +115,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [weakSelf.canvas userGesturedToSelectDrawable:drawable];
     };
     
-    [self reinitializeWithCanvas:self.canvas ? : [Canvas new]];
+    [self reinitializeWithCanvas:self.canvas ? : [CanvasEditor new]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationWillTerminateNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -126,13 +125,15 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setModalEditingCallback:(void (^)(Canvas *))modalEditingCallback {
+- (void)setModalEditingCallback:(void (^)(CanvasEditor *))modalEditingCallback {
     _modalEditingCallback = modalEditingCallback;
     self.iconBar.isModalEditing = modalEditingCallback != nil;
 }
 
-- (void)reinitializeWithCanvas:(Canvas *)canvas {
+- (void)reinitializeWithCanvas:(CanvasEditor *)canvas {
     BOOL canvasWasHidden = self.canvas && self.canvas.hidden;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CMTransactionStackDidExecuteTransactionNotification object:self.canvas.transactionStack];
     
     // __weak EditorViewController *weakSelf = self;
     // clean up old canvas:
@@ -146,6 +147,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.canvas.hidden = canvasWasHidden;
     [self.view insertSubview:self.canvas atIndex:0];
     [self setMode:self.mode];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editorExecutedTransaction) name:CMTransactionStackDidExecuteTransactionNotification object:self.canvas.transactionStack];
 }
 
 #pragma mark Document
@@ -302,7 +305,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 #pragma mark Canvas delegate
-- (void)canvasDidChangeSelection:(Canvas *)canvas {
+- (void)editorExecutedTransaction {
+    [self.timeline keyframeAvailabilityUpdatedForTime:self.canvas.time];
+}
+
+- (void)canvasDidChangeSelection:(CanvasEditor *)canvas {
     // TODO: flash selection rect
     
     if (self.mode == EditorModePanelView) {
@@ -310,50 +317,19 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     }
 }
 
-- (void)canvasSelectionRectNeedsUpdate:(Canvas *)canvas {
-    if (!_selectionRects) _selectionRects = [NSMutableArray new];
-    while (_selectionRects.count < canvas.selectedItems.count) {
-        UIView *rect = [UIView new];
-        rect.userInteractionEnabled = NO;
-        rect.layer.borderColor = [UIColor redColor].CGColor;
-        rect.layer.borderWidth = 1.5;
-        rect.hidden = self.hideSelectionRects;
-        [self.view insertSubview:rect aboveSubview:self.canvas];
-        [_selectionRects addObject:rect];
-    }
-    while (_selectionRects.count > canvas.selectedItems.count) {
-        [_selectionRects.lastObject removeFromSuperview];
-        [_selectionRects removeLastObject];
-    }
-    NSInteger i = 0;
-    for (Drawable *selection in canvas.selectedItems) {
-        UIView *rect = _selectionRects[i++];
-        rect.bounds = CGRectMake(0, 0, selection.bounds.size.width * selection.scale, selection.bounds.size.height * selection.scale);
-        rect.center = [self.view convertPoint:selection.center fromView:selection.superview];
-        rect.transform = CGAffineTransformMakeRotation(selection.rotation);
-    }
-}
-
-- (void)canvasDidUpdateKeyframesForCurrentTime:(Canvas *)canvas {
+- (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas {
     [self.timeline keyframeAvailabilityUpdatedForTime:canvas.time];
     [self.document maybeEdited];
 }
 
-- (void)canvas:(Canvas *)canvas shouldShowEditingPanel:(UIView *)panel {
+- (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel {
     self.panelView = panel;
     self.mode = EditorModePanelView;
 }
 
-- (void)canvasShowShouldOptions:(Canvas *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
+- (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
     [self showOptionsInteractively:presenter touchPos:pos];
     [self.document maybeEdited];
-}
-
-- (void)setHideSelectionRects:(BOOL)hideSelectionRects {
-    _hideSelectionRects = hideSelectionRects;
-    for (UIView *rect in _selectionRects) {
-        rect.hidden = hideSelectionRects;
-    }
 }
 
 #pragma mark Overlays
@@ -371,7 +347,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touchPos:(CGPoint)pos {
-    if (self.canvas.selectedItems.count) {
+    /*if (self.canvas.selectedItems.count) {
         Drawable *d = self.canvas.selectedItems.anyObject;
         PropertiesModal *modal = [PropertiesModal new];
         if (!CGPointEqualToPoint(pos, CGPointZero)) modal.touchPointInWindowCoordinates = [self.view.window convertPoint:pos fromView:self.canvas];
@@ -382,7 +358,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         modal.topActionView = [d propertiesModalTopActionView];
         modal.mainAction = [d mainAction];
         [self presentViewController:modal animated:YES completion:nil];
-    }
+    }*/
 }
 
 - (void)setToolbarView:(UIView *)toolbarView {
@@ -500,7 +476,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         
         [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
-        self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
+        // self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
         self.canvas.preparedForStaticScreenshot = (mode == EditorModeExportRunning);
@@ -614,7 +590,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Modal editing
 
-+ (EditorViewController *)modalEditorForCanvas:(Canvas *)canvas callback:(void(^)(Canvas *edited))callback {
++ (EditorViewController *)modalEditorForCanvas:(CanvasEditor *)canvas callback:(void(^)(CanvasEditor *edited))callback {
     EditorViewController *vc = [self editor];
     [vc reinitializeWithCanvas:[canvas copy]];
     vc.modalEditingCallback = callback;

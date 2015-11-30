@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Canvas, FrameTime, EditorViewController;
+@class CanvasEditor, FrameTime, EditorViewController;
 
 @class Exporter;
 @protocol ExporterDelegate <NSObject>

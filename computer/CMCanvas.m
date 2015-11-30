@@ -8,8 +8,9 @@
 
 #import "CMCanvas.h"
 #import "ConvenienceCategories.h"
+#import "CGPointExtras.h"
 
-@interface _CMCanvasView : CMDrawableView
+@interface _CMCanvasView ()
 
 @property (nonatomic) NSMutableDictionary<NSString*,CMDrawableView*> *viewsByKey;
 
@@ -23,14 +24,52 @@
     return self;
 }
 
+- (NSArray<CMDrawable*> *)hitsAtPoint:(CGPoint)point withCanvas:(CMCanvas *)associatedCanvas {
+    const CGFloat centerLeeway = 40; // for small objects
+    
+    NSMutableArray *hitViews = [NSMutableArray new];
+    for (CMDrawableView *view in self.viewsByKey.allValues) {
+        // TODO: take into account transforms; don't use UIView's own math
+        if ([view pointInside:[view convertPoint:point fromView:self] withEvent:nil]) {
+            [hitViews addObject:view];
+        } else if (CGPointDistance(point, view.center) < centerLeeway) {
+            [hitViews addObject:view];
+        }
+    }
+    
+    NSDictionary *viewsByKey = [associatedCanvas.contents mapToDict:^id(__autoreleasing id *key) {
+        CMDrawable *drawable = *key;
+        *key = drawable.key;
+        return drawable;
+    }];
+    
+    NSArray *hitKeys = [hitViews map:^id(id obj) {
+        // TOOD speed this up
+        for (NSString *key in _viewsByKey) {
+            if (_viewsByKey[key] == obj) {
+                return key;
+            }
+        }
+        return nil;
+    }];
+    
+    return [hitKeys map:^id(id obj) {
+        return viewsByKey[obj];
+    }];
+}
+
+- (CMDrawableView *)viewForDrawable:(CMDrawable *)drawable {
+    return self.viewsByKey[drawable.key];
+}
+
 @end
 
 
 
 @implementation CMCanvas
 
-- (instancetype)initWithKey:(NSString *)key {
-    self = [super initWithKey:key];
+- (instancetype)init {
+    self = [super init];
     self.contents = [NSMutableArray new];
     return self;
 }

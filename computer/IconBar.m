@@ -7,7 +7,7 @@
 //
 
 #import "IconBar.h"
-#import "Canvas.h"
+#import "CanvasEditor.h"
 #import "PhotoDrawable.h"
 #import "EditorViewController.h"
 #import "TextDrawable.h"
