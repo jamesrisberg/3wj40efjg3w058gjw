@@ -13,6 +13,9 @@
 #import "ConvenienceCategories.h"
 #import "SubcanvasDrawable.h"
 #import "VideoDrawable.h"
+#import "computer-Swift.h"
+#import "CMDrawable.h"
+#import "CMCanvas.h"
 
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
@@ -63,6 +66,10 @@
         _setup = YES;
         [self setup];
     }
+}
+
+- (UIViewController *)vcForModals {
+    return [NPSoftModalPresentationController getViewControllerForPresentationInWindow:self.window];
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow {
@@ -394,8 +401,30 @@
 
 - (void)delete:(id)sender {
     for (CMDrawable *d in self.selectedItems) {
-        // [d delete:sender];
+        [self deleteDrawable:d]; // TODO: group as one single transaction
     }
+}
+
+- (void)deleteDrawable:(CMDrawable *)d {
+    NSInteger index = [self.canvas.contents indexOfObject:d];
+    [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+        [[target canvas].contents removeObject:d];
+    } undo:^(id target) {
+        [[target canvas].contents insertObject:d atIndex:index];
+    }]];
+}
+
+- (void)duplicateDrawable:(CMDrawable *)d {
+    CMDrawable *copy = [d copy];
+    [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+        [[target canvas].contents addObject:copy];
+    } undo:^(id target) {
+        [[target canvas].contents removeObject:copy];
+    }]];
+}
+
+- (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d {
+    // TODO
 }
 
 #pragma mark Time

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "Keyframe.h"
 @class Drawable, ShapeStackList;
-#import "CMCanvas.h"
 #import "CMTransaction.h"
+@class CMCanvas, CMDrawable;
 
 @class CanvasEditor;
 @protocol CanvasDelegate <NSObject>
@@ -59,5 +59,13 @@
 @property (nonatomic) BOOL preparedForStaticScreenshot;
 
 @property (nonatomic,readonly) CMTransactionStack *transactionStack;
+
+- (UIViewController *)vcForModals;
+
+#pragma mark Actions
+
+- (void)deleteDrawable:(CMDrawable *)d;
+- (void)duplicateDrawable:(CMDrawable *)d;
+- (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d;
 
 @end

@@ -30,6 +30,7 @@
 #import "RepetitionPicker.h"
 #import "VideoConstants.h"
 #import "CMDrawable.h"
+#import "CMCanvas.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -329,7 +330,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
     [self showOptionsInteractively:presenter touchPos:pos];
-    [self.document maybeEdited];
 }
 
 #pragma mark Overlays
@@ -347,18 +347,18 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touchPos:(CGPoint)pos {
-    /*if (self.canvas.selectedItems.count) {
-        Drawable *d = self.canvas.selectedItems.anyObject;
+    if (self.canvas.selectedItems.count) {
+        CMDrawable *d = self.canvas.selectedItems.anyObject;
         PropertiesModal *modal = [PropertiesModal new];
         if (!CGPointEqualToPoint(pos, CGPointZero)) modal.touchPointInWindowCoordinates = [self.view.window convertPoint:pos fromView:self.canvas];
         modal.interactivePresentation = transition;
-        modal.items = [d optionsItems];
-        modal.optionsCellModels = [d optionsViewCellModels];
-        modal.inlineViewController = [d createInlineViewControllerForEditing];
-        modal.topActionView = [d propertiesModalTopActionView];
-        modal.mainAction = [d mainAction];
+        modal.items = [d optionsItemsWithEditor:self.canvas];
+        modal.optionsCellModels = [d optionsViewCellModelsWithEditor:self.canvas];
+        modal.inlineViewController = [d createInlineViewControllerForEditingWithEditor:self.canvas];
+        modal.topActionView = [d propertiesModalTopActionViewWithEditor:self.canvas];
+        modal.mainAction = [d mainActionWithEditor:self.canvas];
         [self presentViewController:modal animated:YES completion:nil];
-    }*/
+    }
 }
 
 - (void)setToolbarView:(UIView *)toolbarView {

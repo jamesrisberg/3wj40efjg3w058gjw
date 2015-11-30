@@ -7,10 +7,7 @@
 //
 
 #import "CMDrawable.h"
-
-NSString* CMGenerateKey() {
-    return [NSUUID UUID].UUIDString;
-}
+#import "computer-Swift.h"
 
 @interface CMDrawable ()
 
@@ -64,6 +61,69 @@ NSString* CMGenerateKey() {
 
 - (FrameTime *)maxTime {
     return self.keyframeStore.maxTime;
+}
+
+#pragma mark Options UI
+
+
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor {
+    NSMutableArray *items = [NSMutableArray new];
+    __weak CMDrawable *weakSelf = self;
+    __weak CanvasEditor *weakEditor = editor;
+    QuickCollectionItem *delete = [QuickCollectionItem new];
+    delete.label = NSLocalizedString(@"Delete", @"");
+    delete.action = ^{
+        [weakEditor deleteDrawable:weakSelf];
+    };
+    [items addObject:delete];
+    QuickCollectionItem *duplicate = [QuickCollectionItem new];
+    duplicate.label = NSLocalizedString(@"Duplicate", @"");
+    duplicate.action = ^{
+        [weakEditor duplicateDrawable:weakSelf];
+    };
+    [items addObject:duplicate];
+    QuickCollectionItem *animations = [QuickCollectionItem new];
+    animations.label = NSLocalizedString(@"Animations…", @"");
+    animations.action = ^{
+        // [weakSelf showStaticAnimationPicker];
+    };
+    [items addObject:animations];
+    
+    BOOL isAtZeroTime = editor.time.time == 0;
+    BOOL hasOtherKeyframes = self.keyframeStore.maxTime.time > 0;
+    BOOL hasKeyframeAtCurrentTime = !![self.keyframeStore keyframeAtTime:editor.time];
+    if (hasKeyframeAtCurrentTime && (!isAtZeroTime || hasOtherKeyframes)) {
+        QuickCollectionItem *removeKeyframe = [QuickCollectionItem new];
+        removeKeyframe.label = NSLocalizedString(@"Delete keyframe", @"");
+        removeKeyframe.action = ^{
+            [weakEditor deleteCurrentKeyframeForDrawable:weakSelf];
+        };
+        [items addObject:removeKeyframe];
+    }
+    return items;
+}
+
+- (QuickCollectionItem *)mainActionWithEditor:(CanvasEditor *)editor {
+    return nil;
+}
+
+- (UIView *)propertiesModalTopActionViewWithEditor:(CanvasEditor *)editor {
+    return nil;
+}
+- (UIViewController *)createInlineViewControllerForEditingWithEditor:(CanvasEditor *)editor {
+    return nil;
+}
+
+- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor {
+    return @[];
+}
+
+- (id)copy {
+    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
 }
 
 @end
