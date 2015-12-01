@@ -16,6 +16,7 @@ class PatternPickerView: UIView {
         }
     }
     var onPatternChanged: (Pattern -> ())?
+    var onPatternChangeTransactionEnded: (() -> ())?
     var shouldEditModally: (() -> ())?
     private func _updatePattern(pattern: Pattern) {
         self.pattern = pattern
@@ -51,6 +52,13 @@ class PatternPickerView: UIView {
                 let newPrimaryColor = UIColor(hue: CGFloat(hue), saturation: s, brightness: v, alpha: a)
                 let pattern = Pattern(type: p.pattern.type, primaryColor: newPrimaryColor, secondaryColor: p.pattern.secondaryColor)
                 p._updatePattern(pattern)
+            }
+        }
+        
+        cell.onTouchUp = {
+            [weak self] in
+            if let cb = self!.onPatternChangeTransactionEnded {
+                cb()
             }
         }
         

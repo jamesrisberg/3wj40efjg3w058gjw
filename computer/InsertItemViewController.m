@@ -87,7 +87,7 @@
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGRect r = CGRectMake(0, 0, 100, 100);
         shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
-        shape.fillColor = [UIColor purpleColor];
+        shape.pattern = [Pattern solidColor:[UIColor purpleColor]];
         shape.strokeColor = [UIColor blackColor];
         shape.strokeWidth = 2;
         shape.boundsDiagonal = CGRectDiagonal(r);

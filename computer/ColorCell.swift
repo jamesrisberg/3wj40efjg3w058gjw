@@ -64,13 +64,20 @@ class ColorCell: UIView {
     }
     
     var onHueChanged: (Float -> ())?
+    var onTouchUp: (() -> ())?
     
     func tapped(rec: UITapGestureRecognizer) {
         pickHueAtX(rec.locationInView(self).x)
+        if let cb = onTouchUp {
+            cb()
+        }
     }
     
     func panned(rec: UIPanGestureRecognizer) {
         pickHueAtX(rec.locationInView(self).x)
+        if rec.state == .Ended, let cb = onTouchUp {
+            cb()
+        }
     }
     
     override func layoutSubviews() {

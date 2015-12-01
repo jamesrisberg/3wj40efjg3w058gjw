@@ -182,6 +182,9 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
     
     func dismiss(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+        if let cb = parentView.onPatternChangeTransactionEnded {
+            cb()
+        }
     }
     
     var parentView: PatternPickerView!

@@ -7,11 +7,13 @@
 //
 
 #import "CMDrawable.h"
+@class Pattern;
 
 @interface CMShapeDrawable : CMDrawable
 
 @property (nonatomic) UIBezierPath *path;
-@property (nonatomic) UIColor *fillColor, *strokeColor;
+@property (nonatomic) Pattern *pattern;
+@property (nonatomic) UIColor *strokeColor;
 @property (nonatomic) CGFloat strokeWidth;
 
 @end
