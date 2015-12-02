@@ -39,6 +39,8 @@
 - (UIViewController *)createInlineViewControllerForEditingWithEditor:(CanvasEditor *)editor;
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor;
 
+- (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor;
+
 @end
 
 

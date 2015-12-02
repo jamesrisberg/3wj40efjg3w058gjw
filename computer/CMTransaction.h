@@ -16,6 +16,7 @@ typedef void (^CMTransactionBlock)(id target);
 
 - (instancetype)initWithTarget:(id)target action:(CMTransactionBlock)action undo:(CMTransactionBlock)inverse;
 - (instancetype)initNonFinalizedWithTarget:(id)target action:(CMTransactionBlock)action undo:(CMTransactionBlock)inverse;
+- (instancetype)initImplicitlyFinalizaledWhenTouchesEndWithTarget:(id)target action:(CMTransactionBlock)action undo:(CMTransactionBlock)inverse;
 @property (nonatomic,copy) CMTransactionBlock action, inverse;
 @property (nonatomic) id target;
 @property (nonatomic) BOOL finalized;

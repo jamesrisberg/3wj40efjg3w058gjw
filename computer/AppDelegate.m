@@ -12,9 +12,11 @@
 #import "ExportTest.h"
 #import <Parse.h>
 #import "FilterPickerViewController.h"
+#import "CMWindow.h"
 
 @interface AppDelegate () {
     NSInteger _activityIndicatorCount;
+    UIWindow *_window;
 }
 
 @end
@@ -24,6 +26,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
     
     [Parse setApplicationId:@"HOKpgx4PlskFPZkAvtBxk1OnpIAWQlJpdNuGUo1w"
                   clientKey:@"AKgMJl0JTZ32BGgVmgGL5h19ia0NBBeMEYc2q1oi"];
@@ -79,6 +83,19 @@
 - (void)incrementNetworkActivityIndicator:(NSInteger)i {
     _activityIndicatorCount += i;
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:_activityIndicatorCount > 0];
+}
+
+#pragma mark Custom UIWindow
+
+- (UIWindow *)window {
+    if (!_window) {
+        _window = [[CMWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    }
+    return _window;
+}
+
+- (void)setWindow:(UIWindow *)window {
+    // DO NOTHING (???)
 }
 
 @end

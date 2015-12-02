@@ -17,3 +17,9 @@
 @property (nonatomic) CGFloat strokeWidth;
 
 @end
+
+@interface CMShapeDrawableKeyframe : CMDrawableKeyframe
+
+@property (nonatomic) CGFloat strokeScale, strokeStart, strokeEnd;
+
+@end

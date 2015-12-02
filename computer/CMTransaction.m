@@ -7,12 +7,14 @@
 //
 
 #import "CMTransaction.h"
+#import "CMWindow.h"
 
 static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"CMTransactionStackDidExecuteTransactionNotification";
 
 @interface CMTransaction ()
 
 @property (nonatomic,weak) CMTransactionStack *stack;
+@property (nonatomic) BOOL finalizeOnTouchUp;
 
 @end
 
@@ -32,6 +34,12 @@ static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"
     return self;
 }
 
+- (instancetype)initImplicitlyFinalizaledWhenTouchesEndWithTarget:(id)target action:(CMTransactionBlock)action undo:(CMTransactionBlock)inverse {
+    self = [self initNonFinalizedWithTarget:target action:action undo:inverse];
+    self.finalizeOnTouchUp = YES;
+    return self;
+}
+
 - (void)setAction:(CMTransactionBlock)action {
     _action = action;
     [self.stack _transactionDidUpdate:self];
@@ -48,6 +56,25 @@ static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"
 @end
 
 @implementation CMTransactionStack
+
+- (instancetype)init {
+    self = [super init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(touchesEnded) name:CMWindowGlobalTouchesEndedNotification object:nil];
+    return self;
+}
+
+- (void)touchesEnded {
+    NSMutableArray *transactions = [NSMutableArray new];
+    [transactions addObjectsFromArray:self.undoStack];
+    [transactions addObjectsFromArray:self.redoStack];
+    for (CMTransaction *t in transactions) {
+        if (t.finalizeOnTouchUp) t.finalized = YES;
+    }
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)doTransaction:(CMTransaction *)transaction {
     transaction.stack = self;

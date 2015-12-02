@@ -8,6 +8,7 @@
 
 #import "CMShapeDrawable.h"
 #import "computer-Swift.h"
+#import "StrokePickerViewController.h"
 
 @interface _CMGradientView : UIView
 @end
@@ -102,10 +103,13 @@
 
 - (UIView *)renderToView:(UIView *)existingOrNil atTime:(FrameTime *)time {
     _CMShapeView *shapeView = [existingOrNil isKindOfClass:[_CMShapeView class]] ? (id)existingOrNil : [_CMShapeView new];
+    CMShapeDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     CAShapeLayer *shapeLayer = (id)shapeView.layer;
     shapeLayer.strokeColor = self.strokeColor.CGColor;
-    shapeLayer.lineWidth = self.strokeWidth;
+    shapeLayer.lineWidth = self.strokeWidth * keyframe.strokeScale;
     shapeLayer.path = self.path.CGPath;
+    shapeLayer.strokeStart = keyframe.strokeStart;
+    shapeLayer.strokeEnd = keyframe.strokeEnd;
     shapeView.pattern = self.pattern;
     [super renderToView:shapeView atTime:time];
     return shapeView;
@@ -146,8 +150,77 @@
     return picker;
 }
 
+- (Class)keyframeClass {
+    return [CMShapeDrawableKeyframe class];
+}
+
 - (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor {
-    return [super optionsViewCellModelsWithEditor:editor];
+    OptionsViewCellModel *strokeScale = [self sliderForKeyOnKeyframeObject:@"strokeScale" title:NSLocalizedString(@"Stroke scale", @"") editor:editor];
+    OptionsViewCellModel *strokeStart = [self sliderForKeyOnKeyframeObject:@"strokeStart" title:NSLocalizedString(@"Stroke start", @"") editor:editor];
+    OptionsViewCellModel *strokeEnd = [self sliderForKeyOnKeyframeObject:@"strokeEnd" title:NSLocalizedString(@"Stroke end", @"") editor:editor];
+    return [[super optionsViewCellModelsWithEditor:editor] arrayByAddingObjectsFromArray:@[strokeScale, strokeStart, strokeEnd]];
+}
+
+- (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor {
+    __weak CMShapeDrawable *weakSelf = self;
+    
+    QuickCollectionItem *editStroke = [QuickCollectionItem new];
+    editStroke.label = NSLocalizedString(@"Stroke…", @"");
+    editStroke.action = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf editStrokeWithEditor:editor];
+        });
+    };
+    
+    return [[super optionsItemsWithEditor:editor] arrayByAddingObjectsFromArray:@[editStroke]];
+}
+
+- (void)editStrokeWithEditor:(CanvasEditor *)editor {
+    __block CMTransaction *t = nil;
+    
+    StrokePickerViewController *picker = [StrokePickerViewController new];
+    picker.color = self.strokeColor;
+    picker.width = self.strokeWidth;
+    __weak CMShapeDrawable *weakSelf = self;
+    picker.onChange = ^(CGFloat width, UIColor *color) {
+        if (!t || t.finalized) {
+            CGFloat oldWidth = weakSelf.strokeWidth;
+            UIColor *oldColor = weakSelf.strokeColor;
+            t = [[CMTransaction alloc] initImplicitlyFinalizaledWhenTouchesEndWithTarget:editor action:^(id target) {
+                weakSelf.strokeWidth = width;
+                weakSelf.strokeColor = color;
+            } undo:^(id target) {
+                weakSelf.strokeWidth = oldWidth;
+                weakSelf.strokeColor = oldColor;
+            }];
+            [editor.transactionStack doTransaction:t];
+        } else {
+            t.action = ^(id target) {
+                weakSelf.strokeWidth = width;
+                weakSelf.strokeColor = color;
+            };
+        }
+        
+        weakSelf.strokeColor = color;
+        weakSelf.strokeWidth = width;
+    };
+    [NPSoftModalPresentationController presentViewController:picker];
+}
+
+
+@end
+
+@implementation CMShapeDrawableKeyframe
+
+- (instancetype)init {
+    self = [super init];
+    self.strokeScale = 1;
+    self.strokeEnd = 1;
+    return self;
+}
+
+- (NSArray<NSString*>*)keys {
+    return [[super keys] arrayByAddingObjectsFromArray:@[@"strokeScale", @"strokeStart", @"strokeEnd"]];
 }
 
 @end

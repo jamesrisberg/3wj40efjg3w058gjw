@@ -29,11 +29,11 @@
 @interface KeyframeStore : NSObject <NSCoding>
 
 - (void)storeKeyframe:(CMDrawableKeyframe *)keyframe;
-- (CMDrawableKeyframe *)keyframeAtTime:(FrameTime *)time;
-- (CMDrawableKeyframe *)keyframeBeforeTime:(FrameTime *)time;
-- (CMDrawableKeyframe *)keyframeAfterTime:(FrameTime *)time;
-- (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time;
-- (CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time;
+- (__kindof CMDrawableKeyframe *)keyframeAtTime:(FrameTime *)time;
+- (__kindof CMDrawableKeyframe *)keyframeBeforeTime:(FrameTime *)time;
+- (__kindof CMDrawableKeyframe *)keyframeAfterTime:(FrameTime *)time;
+- (__kindof CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time;
+- (__kindof CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time;
 
 - (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block;
 - (NSArray<__kindof CMDrawableKeyframe*>*)allKeyframes;
