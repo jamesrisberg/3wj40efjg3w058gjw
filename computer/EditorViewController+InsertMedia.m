@@ -9,6 +9,7 @@
 #import "EditorViewController+InsertMedia.h"
 // #import "PhotoDrawable.h"
 #import "CMMediaStore.h"
+#import "CMPhotoDrawable.h"
 // #import "VideoDrawable.h"
 @import MobileCoreServices;
 @import AssetsLibrary;
@@ -52,10 +53,13 @@
 }
 
 - (void)insertImage:(UIImage *)image {
+    CMPhotoDrawable *p = [CMPhotoDrawable new];
+    [p setImage:image withTransactionStack:self.canvas.transactionStack];
     /*PhotoDrawable *d = [PhotoDrawable new];
     d.bounds = CGRectMake(0, 0, 250, 250);
     [d setImage:image];
     [self.canvas insertDrawable:d];*/
+    [self.canvas insertDrawableAtCurrentTime:p];
 }
 
 @end

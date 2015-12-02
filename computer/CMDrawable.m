@@ -23,7 +23,7 @@
     self = [super init];
     self.keyframeStore = [KeyframeStore new];
     self.keyframeStore.keyframeClass = [self keyframeClass];
-    self.boundsDiagonal = 100;
+    self.boundsDiagonal = 200;
     self.key = [NSUUID UUID].UUIDString;
     return self;
 }
@@ -62,6 +62,10 @@
 
 - (FrameTime *)maxTime {
     return self.keyframeStore.maxTime;
+}
+
+- (CGFloat)aspectRatio {
+    return 1;
 }
 
 #pragma mark Options UI

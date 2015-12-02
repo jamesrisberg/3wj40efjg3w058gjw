@@ -41,6 +41,8 @@
 
 - (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor;
 
+- (CGFloat)aspectRatio;
+
 @end
 
 

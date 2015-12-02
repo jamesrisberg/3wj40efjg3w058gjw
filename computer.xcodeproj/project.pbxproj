@@ -43,6 +43,7 @@
 		5F6940C81C0BD29E00569335 /* FreehandInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110061BB1144E00DB4C82 /* FreehandInputView.m */; };
 		5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940CA1C0CC84600569335 /* CMTransaction.m */; };
 		5F6940CE1C0E924900569335 /* CMWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940CD1C0E924900569335 /* CMWindow.m */; };
+		5F6940D11C0EA1F900569335 /* CMPhotoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -313,6 +314,8 @@
 		5F6940CA1C0CC84600569335 /* CMTransaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMTransaction.m; sourceTree = "<group>"; };
 		5F6940CC1C0E924900569335 /* CMWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMWindow.h; sourceTree = "<group>"; };
 		5F6940CD1C0E924900569335 /* CMWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMWindow.m; sourceTree = "<group>"; };
+		5F6940CF1C0EA1F900569335 /* CMPhotoDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPhotoDrawable.h; sourceTree = "<group>"; };
+		5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPhotoDrawable.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -742,6 +745,8 @@
 				5F6940AC1C0BD1B600569335 /* CMCanvas.m */,
 				5F6940A81C0BCBA000569335 /* CMShapeDrawable.h */,
 				5F6940A91C0BCBA000569335 /* CMShapeDrawable.m */,
+				5F6940CF1C0EA1F900569335 /* CMPhotoDrawable.h */,
+				5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */,
 			);
 			name = "New drawables";
 			sourceTree = "<group>";
@@ -1552,6 +1557,7 @@
 				5F2095FF1BEEBB2800E4C1F1 /* support.c in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
 				5FE857701BDB54E700B4B245 /* CropView.m in Sources */,
+				5F6940D11C0EA1F900569335 /* CMPhotoDrawable.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
 				5F2095F11BEEBB2800E4C1F1 /* clp.c in Sources */,
