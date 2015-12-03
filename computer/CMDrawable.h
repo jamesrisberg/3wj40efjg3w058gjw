@@ -14,6 +14,7 @@
 #import "CanvasEditor.h"
 #import "QuickCollectionModal.h"
 #import "OptionsView.h"
+#import "PropertyModel.h"
 
 @interface CMDrawableView : UIView
 
@@ -42,6 +43,11 @@
 - (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor;
 
 - (CGFloat)aspectRatio;
+
+- (NSArray<PropertyGroupModel*>*)propertyGroups;
+- (NSArray<PropertyModel*>*)animatableProperties;
+- (NSArray<PropertyModel*>*)uniqueObjectProperties;
+- (NSString *)drawableTypeDisplayName;
 
 @end
 

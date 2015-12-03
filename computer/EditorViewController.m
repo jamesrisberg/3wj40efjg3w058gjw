@@ -31,6 +31,7 @@
 #import "VideoConstants.h"
 #import "CMDrawable.h"
 #import "CMCanvas.h"
+#import "PropertiesView.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -44,6 +45,9 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     CGFloat _scrollViewPreviousZoomScale;
     UIView *_dummyScrollViewZoomingView;
     NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
+    
+    NSArray<CMDrawable*> *_drawablesForPropertiesModal;
+    __weak PropertiesView *_propertiesView;
 }
 
 @property (nonatomic) UIView *toolbar;
@@ -113,6 +117,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [self.view addSubview:self.shapeStackList];
     self.shapeStackList.hidden = YES;
     self.shapeStackList.onDrawableSelected = ^(Drawable *drawable){
+        // TODO: CMMigration
         [weakSelf.canvas userGesturedToSelectDrawable:drawable];
     };
     
@@ -308,6 +313,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 #pragma mark Canvas delegate
 - (void)editorExecutedTransaction {
     [self.timeline keyframeAvailabilityUpdatedForTime:self.canvas.time];
+    [_propertiesView reloadValues];
 }
 
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas {
@@ -330,6 +336,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
     [self showOptionsInteractively:presenter touchPos:pos];
+}
+
+- (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables {
+    _drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
+    [self setMode:EditorModeShowingPropertiesView];
 }
 
 #pragma mark Overlays
@@ -535,10 +546,24 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         } else if (mode == EditorModeSelection) {
             self.toolbarView = [self createSelectionIconBar];
             [self addAuxiliaryModeResetButton];
+        } else if (mode == EditorModeShowingPropertiesView) {
+            PropertiesView *propView = [[PropertiesView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
+            _propertiesView = propView;
+            [propView setDrawables:self.canvas.selectedItems.allObjects withEditor:self.canvas time:self.canvas.time transactionStack:self.canvas.transactionStack]; // TODO: support moving through time?
+            self.toolbarView = propView;
+            
+            [self addAuxiliaryModeResetButton];
+            
+            UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
+            [delete addTarget:self.canvas action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
+            [self configureViewWithFloatingButtonAppearance:delete];
+            // TODO: reset mode on delete?
+            [self setFloatingButton:delete forPosition:FloatingButtonPositionTopLeft];
         }
         
         if (oldMode == EditorModeTimeline) {
             self.timeline = nil;
+            
         }
         
         self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning || mode == EditorModeExportCropping);

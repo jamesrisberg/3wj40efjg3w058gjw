@@ -155,7 +155,7 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return nil;
 }
 
-- (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time {
+- (CMDrawableKeyframe *)_interpolatedKeyframeAtTime:(FrameTime *)time {
     CMDrawableKeyframe *exact = [self keyframeAtTime:time];
     if (exact) {
         return exact;
@@ -170,6 +170,12 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     }
     double interpolation = ([time time] - [before.frameTime time]) / ([after.frameTime time] - [before.frameTime time]);
     return [before interpolatedWith:after progress:interpolation];
+}
+
+- (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time {
+    CMDrawableKeyframe *k = [[self _interpolatedKeyframeAtTime:time] copy];
+    k.frameTime = time;
+    return k;
 }
 
 - (CMDrawableKeyframe *)createKeyframeAtTimeIfNeeded:(FrameTime *)time {

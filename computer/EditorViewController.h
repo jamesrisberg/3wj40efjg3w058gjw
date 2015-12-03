@@ -20,7 +20,8 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModePanelView,
     EditorModeExportCropping,
     EditorModeExportRunning,
-    EditorModeSelection
+    EditorModeSelection,
+    EditorModeShowingPropertiesView
 };
 
 @interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>

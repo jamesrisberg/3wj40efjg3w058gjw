@@ -44,6 +44,13 @@
 		5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940CA1C0CC84600569335 /* CMTransaction.m */; };
 		5F6940CE1C0E924900569335 /* CMWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940CD1C0E924900569335 /* CMWindow.m */; };
 		5F6940D11C0EA1F900569335 /* CMPhotoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */; };
+		5F6940D41C0F794E00569335 /* PropertiesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940D31C0F794E00569335 /* PropertiesView.m */; };
+		5F6940D71C0F796400569335 /* PropertyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940D61C0F796400569335 /* PropertyModel.m */; };
+		5F6940DD1C0F798C00569335 /* PropertiesViewTabControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940DC1C0F798C00569335 /* PropertiesViewTabControl.m */; };
+		5F6940E01C0F799E00569335 /* PropertiesViewTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940DF1C0F799E00569335 /* PropertiesViewTable.m */; };
+		5F6940E41C0FA71C00569335 /* PropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940E31C0FA71C00569335 /* PropertyViewTableCell.m */; };
+		5F6940E71C0FAF1D00569335 /* SliderPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940E61C0FAF1D00569335 /* SliderPropertyViewTableCell.m */; };
+		5F6940EA1C0FAF2900569335 /* ButtonsPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -316,6 +323,20 @@
 		5F6940CD1C0E924900569335 /* CMWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMWindow.m; sourceTree = "<group>"; };
 		5F6940CF1C0EA1F900569335 /* CMPhotoDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPhotoDrawable.h; sourceTree = "<group>"; };
 		5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPhotoDrawable.m; sourceTree = "<group>"; };
+		5F6940D21C0F794E00569335 /* PropertiesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesView.h; sourceTree = "<group>"; };
+		5F6940D31C0F794E00569335 /* PropertiesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertiesView.m; sourceTree = "<group>"; };
+		5F6940D51C0F796400569335 /* PropertyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyModel.h; sourceTree = "<group>"; };
+		5F6940D61C0F796400569335 /* PropertyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyModel.m; sourceTree = "<group>"; };
+		5F6940DB1C0F798C00569335 /* PropertiesViewTabControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesViewTabControl.h; sourceTree = "<group>"; };
+		5F6940DC1C0F798C00569335 /* PropertiesViewTabControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertiesViewTabControl.m; sourceTree = "<group>"; };
+		5F6940DE1C0F799E00569335 /* PropertiesViewTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertiesViewTable.h; sourceTree = "<group>"; };
+		5F6940DF1C0F799E00569335 /* PropertiesViewTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertiesViewTable.m; sourceTree = "<group>"; };
+		5F6940E21C0FA71C00569335 /* PropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyViewTableCell.h; sourceTree = "<group>"; };
+		5F6940E31C0FA71C00569335 /* PropertyViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PropertyViewTableCell.m; sourceTree = "<group>"; };
+		5F6940E51C0FAF1D00569335 /* SliderPropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderPropertyViewTableCell.h; sourceTree = "<group>"; };
+		5F6940E61C0FAF1D00569335 /* SliderPropertyViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderPropertyViewTableCell.m; sourceTree = "<group>"; };
+		5F6940E81C0FAF2900569335 /* ButtonsPropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonsPropertyViewTableCell.h; sourceTree = "<group>"; };
+		5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonsPropertyViewTableCell.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -751,6 +772,27 @@
 			name = "New drawables";
 			sourceTree = "<group>";
 		};
+		5F6940E11C0F7CDE00569335 /* New properties UI */ = {
+			isa = PBXGroup;
+			children = (
+				5F6940D21C0F794E00569335 /* PropertiesView.h */,
+				5F6940D31C0F794E00569335 /* PropertiesView.m */,
+				5F6940DB1C0F798C00569335 /* PropertiesViewTabControl.h */,
+				5F6940DC1C0F798C00569335 /* PropertiesViewTabControl.m */,
+				5F6940DE1C0F799E00569335 /* PropertiesViewTable.h */,
+				5F6940DF1C0F799E00569335 /* PropertiesViewTable.m */,
+				5F6940D51C0F796400569335 /* PropertyModel.h */,
+				5F6940D61C0F796400569335 /* PropertyModel.m */,
+				5F6940E21C0FA71C00569335 /* PropertyViewTableCell.h */,
+				5F6940E31C0FA71C00569335 /* PropertyViewTableCell.m */,
+				5F6940E51C0FAF1D00569335 /* SliderPropertyViewTableCell.h */,
+				5F6940E61C0FAF1D00569335 /* SliderPropertyViewTableCell.m */,
+				5F6940E81C0FAF2900569335 /* ButtonsPropertyViewTableCell.h */,
+				5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */,
+			);
+			name = "New properties UI";
+			sourceTree = "<group>";
+		};
 		5F809A061BE1C3740030B538 /* ANGif */ = {
 			isa = PBXGroup;
 			children = (
@@ -1105,6 +1147,7 @@
 				5F6940CD1C0E924900569335 /* CMWindow.m */,
 				5FDA80D01C03BF18006CDC21 /* API.h */,
 				5FDA80D11C03BF18006CDC21 /* API.m */,
+				5F6940E11C0F7CDE00569335 /* New properties UI */,
 				5F6940C71C0BD20700569335 /* New drawables */,
 				5F6940AE1C0BD20200569335 /* old drawables */,
 				5F858DBA1BFBB8A7004E658E /* Pattern Picker */,
@@ -1565,6 +1608,7 @@
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
 				5F809A441BE1C3740030B538 /* ANGifAppExtension.m in Sources */,
 				5FEAF85F1B9B8EC20071BC08 /* TouchForwardingView.m in Sources */,
+				5F6940E41C0FA71C00569335 /* PropertyViewTableCell.m in Sources */,
 				5FD8606C1C044B1E00E5A754 /* EditorViewController+InsertMedia.m in Sources */,
 				5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */,
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
@@ -1605,6 +1649,7 @@
 				5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */,
 				5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */,
 				5F809A4A1BE1C3740030B538 /* ANGifDataSubblock.m in Sources */,
+				5F6940E01C0F799E00569335 /* PropertiesViewTable.m in Sources */,
 				5F2095F31BEEBB2800E4C1F1 /* giffunc.c in Sources */,
 				5F6940CE1C0E924900569335 /* CMWindow.m in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
@@ -1612,6 +1657,7 @@
 				5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */,
 				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
 				5F6940C61C0BD20200569335 /* VideoDrawable.m in Sources */,
+				5F6940EA1C0FAF2900569335 /* ButtonsPropertyViewTableCell.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
 				5F809A471BE1C3740030B538 /* ANColorTable.m in Sources */,
 				5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */,
@@ -1642,7 +1688,10 @@
 				5F809A461BE1C3740030B538 /* ANAvgColorTable.m in Sources */,
 				5F2096011BEEBB2800E4C1F1 /* xform.c in Sources */,
 				5FEAF9451B9E2B2B0071BC08 /* SKImageFill.m in Sources */,
+				5F6940DD1C0F798C00569335 /* PropertiesViewTabControl.m in Sources */,
 				5F6940C01C0BD20200569335 /* ParticleDrawable.m in Sources */,
+				5F6940E71C0FAF1D00569335 /* SliderPropertyViewTableCell.m in Sources */,
+				5F6940D71C0F796400569335 /* PropertyModel.m in Sources */,
 				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
 				5F858DB61BFBB8A3004E658E /* ColorExtensions.swift in Sources */,
 				5FD860A01C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m in Sources */,
@@ -1687,6 +1736,7 @@
 				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
 				5FBF7C191BD82566000FA3F4 /* SliderOptionsCell.m in Sources */,
 				5F2095FE1BEEBB2800E4C1F1 /* strerror.c in Sources */,
+				5F6940D41C0F794E00569335 /* PropertiesView.m in Sources */,
 				5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */,
 				5F6940331C09035900569335 /* ProgressBarWindow.m in Sources */,
 				5FEAF8541B9AD96E0071BC08 /* UIImageView+ImageRect.swift in Sources */,

@@ -19,6 +19,7 @@
 - (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas;
 - (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel;
 - (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos;
+- (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables;
 
 @end
 

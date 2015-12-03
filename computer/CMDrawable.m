@@ -68,8 +68,40 @@
     return 1;
 }
 
-#pragma mark Options UI
+#pragma mark New Options UI
 
+- (NSArray<PropertyGroupModel*>*)propertyGroups {
+    PropertyGroupModel *animatable = [PropertyGroupModel new];
+    animatable.title = NSLocalizedString(@"Properties", @"");
+    animatable.properties = [self animatableProperties];
+    
+    PropertyGroupModel *unique = [PropertyGroupModel new];
+    unique.title = [self drawableTypeDisplayName];
+    unique.properties = [self uniqueObjectProperties];
+    
+    return @[unique, animatable];
+}
+
+- (NSString *)drawableTypeDisplayName {
+    return NSLocalizedString(@"Object", @"");
+}
+
+- (NSArray<PropertyModel*>*)animatableProperties {
+    PropertyModel *opacity = [PropertyModel new];
+    opacity.title = NSLocalizedString(@"Opacity", @"");
+    opacity.type = PropertyModelTypeSlider;
+    opacity.valueMin = 0;
+    opacity.valueMax = 1;
+    opacity.isKeyframeProperty = YES;
+    opacity.key = @"alpha";
+    return @[opacity];
+}
+
+- (NSArray<PropertyModel*>*)uniqueObjectProperties {
+    return @[];
+}
+
+#pragma mark Options UI
 
 - (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor {
     NSMutableArray *items = [NSMutableArray new];
@@ -213,7 +245,7 @@
 }
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
-    CMDrawableKeyframe *i = [CMDrawableKeyframe new];
+    CMDrawableKeyframe *i = [[self class] new];
     for (NSString *key in [self keys]) {
         [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
     }

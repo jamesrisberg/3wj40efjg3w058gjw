@@ -129,7 +129,7 @@
                 [self userGesturedToSelectDrawable:_selectionBeforeFirstTap];
             }
         }
-        [self.delegate canvasShowShouldOptions:self withInteractivePresenter:nil touchPos:[rec locationInView:self]];
+        [self.delegate canvas:self shouldShowPropertiesViewForDrawables:self.selectedItems.allObjects];
     }
 }
 
