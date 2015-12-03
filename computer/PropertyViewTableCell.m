@@ -78,7 +78,7 @@
             [keyframe setValue:value forKey:weakSelf.model.key];
             [drawable.keyframeStore storeKeyframe:keyframe];
         } else {
-            [weakSelf.model setValue:value forKey:weakSelf.model.key];
+            [drawable setValue:value forKey:weakSelf.model.key];
         }
     };
 }

@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
     FloatingButtonPositionTopLeft,
     FloatingButtonPositionTopRight,
+    FloatingButtonPositionBottomLeft,
     _FloatingButtonPositionMax
 };
 
@@ -46,7 +47,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     UIView *_dummyScrollViewZoomingView;
     NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
     
-    NSArray<CMDrawable*> *_drawablesForPropertiesModal;
     __weak PropertiesView *_propertiesView;
 }
 
@@ -72,6 +72,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 @property (nonatomic) Exporter *currentExporter;
 @property (nonatomic,weak) CropView *cropView;
+
+@property (nonatomic) NSArray<CMDrawable*> *drawablesForPropertiesModal;
 
 // mode=cropping preview playback:
 @property (nonatomic) BOOL playingPreviewNow;
@@ -240,6 +242,9 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     UIView *bottomRight = _floatingButtons[@(FloatingButtonPositionBottomRight)];
     bottomRight.frame = CGRectMake(self.view.bounds.size.width - bottomRight.frame.size.width - 15, self.toolbar.frame.origin.y - bottomRight.frame.size.height - 15, bottomRight.frame.size.width, bottomRight.frame.size.height);
     
+    UIView *bottomLeft = _floatingButtons[@(FloatingButtonPositionBottomLeft)];
+    bottomLeft.frame = CGRectMake(15, self.toolbar.frame.origin.y - bottomLeft.frame.size.height - 15, bottomLeft.frame.size.width, bottomLeft.frame.size.height);
+    
     UIView *topLeft = _floatingButtons[@(FloatingButtonPositionTopLeft)];
     topLeft.frame = CGRectMake(15, [[self topLayoutGuide] length] + 15, topLeft.frame.size.width, topLeft.frame.size.height);
     
@@ -268,7 +273,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self.view insertSubview:buttonOrNil aboveSubview:self.toolbar];
         [self viewDidLayoutSubviews];
         buttonOrNil.alpha = 0;
-        if (pos == FloatingButtonPositionBottomRight) {
+        if (pos == FloatingButtonPositionBottomRight || pos == FloatingButtonPositionBottomLeft) {
             buttonOrNil.transform = CGAffineTransformMakeTranslation(0, 40);
         } else if (pos == FloatingButtonPositionTopLeft || pos == FloatingButtonPositionTopRight) {
             buttonOrNil.transform = CGAffineTransformMakeTranslation(0, -40);
@@ -296,8 +301,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     UIButton *done = [UIButton buttonWithType:UIButtonTypeCustom];
     [done setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [done setTitle:title forState:UIControlStateNormal];
-    [self configureViewWithFloatingButtonAppearance:done];
     done.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+    [self configureViewWithFloatingButtonAppearance:done];
     [done sizeToFit];
     done.frame = CGRectMake(0, 0, done.frame.size.width + 40, done.frame.size.height + 14);
     [done addTarget:self action:@selector(resetMode) forControlEvents:UIControlEventTouchUpInside];
@@ -305,6 +310,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)configureViewWithFloatingButtonAppearance:(UIView *)view {
+    [view sizeToFit];
+    view.frame = CGRectMake(0, 0, view.frame.size.width + 40, view.frame.size.height + 14);
     view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
     view.layer.cornerRadius = 5;
     view.clipsToBounds = YES;
@@ -313,13 +320,24 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 #pragma mark Canvas delegate
 - (void)editorExecutedTransaction {
     [self.timeline keyframeAvailabilityUpdatedForTime:self.canvas.time];
-    [_propertiesView reloadValues];
+    
+    BOOL anyEditedDrawablesWereHidden = NO;
+    for (CMDrawable *d in _drawablesForPropertiesModal) {
+        if (![self.canvas.canvas.contents containsObject:d]) {
+            anyEditedDrawablesWereHidden = YES;
+        }
+    }
+    if (anyEditedDrawablesWereHidden) {
+        self.drawablesForPropertiesModal = nil;
+    } else {
+        [_propertiesView reloadValues];
+    }
 }
 
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas {
     // TODO: flash selection rect
     
-    if (self.mode == EditorModePanelView) {
+    if (self.mode == EditorModePanelView || self.mode == EditorModeShowingPropertiesView) {
         [self resetMode];
     }
 }
@@ -335,8 +353,12 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables {
-    _drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
-    [self setMode:EditorModeShowingPropertiesView];
+    self.drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
+}
+
+- (void)setDrawablesForPropertiesModal:(NSArray<CMDrawable *> *)drawablesForPropertiesModal {
+    _drawablesForPropertiesModal = drawablesForPropertiesModal;
+    [self setMode:drawablesForPropertiesModal.count > 0? EditorModeShowingPropertiesView : EditorModeNormal];
 }
 
 #pragma mark Overlays
@@ -532,15 +554,18 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             [self addAuxiliaryModeResetButton];
             
             UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
+            delete.titleLabel.font = [UIFont systemFontOfSize:12];
+            [delete setTitle:NSLocalizedString(@"Delete", @"") forState:UIControlStateNormal];
             [delete addTarget:self.canvas action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
             [self configureViewWithFloatingButtonAppearance:delete];
             // TODO: reset mode on delete?
-            [self setFloatingButton:delete forPosition:FloatingButtonPositionTopLeft];
+            [self setFloatingButton:delete forPosition:FloatingButtonPositionBottomLeft];
         }
         
         if (oldMode == EditorModeTimeline) {
             self.timeline = nil;
-            
+        } else if (oldMode == EditorModeShowingPropertiesView) {
+            self.drawablesForPropertiesModal = nil;
         }
         
         self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning || mode == EditorModeExportCropping);
@@ -832,8 +857,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     
     if (animated) {
         self.playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.playButton.frame = CGRectMake(0, 0, 40, 40);
         [self configureViewWithFloatingButtonAppearance:self.playButton];
+        self.playButton.frame = CGRectMake(0, 0, 40, 40);
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width/2;
         [self.playButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.playButton addTarget:self action:@selector(togglePlayback) forControlEvents:UIControlEventTouchUpInside];

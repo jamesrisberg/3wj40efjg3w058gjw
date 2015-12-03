@@ -115,39 +115,45 @@
     return shapeView;
 }
 
-- (UIView *)propertiesModalTopActionViewWithEditor:(CanvasEditor *)editor {
-    PatternPickerView *picker = [[PatternPickerView alloc] initWithFrame:CGRectMake(0, 0, 10, 44)];
-    picker.pattern = self.pattern ? : [Pattern solidColor:[UIColor clearColor]];
-    __weak CMShapeDrawable *weakSelf = self;
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
+    PropertyModel *fill = [PropertyModel new];
+    fill.type = PropertyModelTypeFill;
+    fill.key = @"pattern";
+    fill.title = NSLocalizedString(@"Fill", @"");
     
-    __block CMTransaction *transaction = nil;
+    PropertyModel *strokeWidth = [PropertyModel new];
+    strokeWidth.title = NSLocalizedString(@"Stroke width", @"");
+    strokeWidth.key = @"strokeWidth";
+    strokeWidth.type = PropertyModelTypeSlider;
     
-    picker.onPatternChanged = ^(Pattern *pattern) {
-        weakSelf.pattern = pattern;
-        if (!transaction) {
-            Pattern *oldPattern = weakSelf.pattern;
-            transaction = [[CMTransaction alloc] initNonFinalizedWithTarget:editor action:^(id target) {
-                [weakSelf setPattern:pattern];
-            } undo:^(id target) {
-                [weakSelf setPattern:oldPattern];
-            }];
-            [editor.transactionStack doTransaction:transaction];
-        } else {
-            transaction.action = ^(id target) {
-                [weakSelf setPattern:pattern];
-            };
-        }
-    };
-    picker.onPatternChangeTransactionEnded = ^{
-        [transaction setFinalized:YES];
-        transaction = nil;
-    };
+    PropertyModel *strokeColor = [PropertyModel new];
+    strokeColor.title = NSLocalizedString(@"Stroke color", @"");
+    strokeColor.key = @"strokeColor";
+    strokeColor.type = PropertyModelTypeColor;
     
-    __weak PatternPickerView *weakPicker = picker;
-    picker.shouldEditModally = ^{
-        [weakPicker editModally:[editor vcForModals]];
-    };
-    return picker;
+    return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[fill, strokeColor, strokeWidth]];
+}
+
+- (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor {
+    PropertyModel *strokeScale = [PropertyModel new];
+    strokeScale.type = PropertyModelTypeSlider;
+    strokeScale.title = NSLocalizedString(@"Stroke width multiplier", @"");
+    strokeScale.key = @"strokeScale";
+    strokeScale.isKeyframeProperty = YES;
+    strokeScale.valueMin = 0;
+    strokeScale.valueMax = 10;
+    
+    PropertyModel *strokeStart = [PropertyModel new];
+    strokeStart.title = NSLocalizedString(@"Stroke start", @"");
+    PropertyModel *strokeEnd = [PropertyModel new];
+    strokeEnd.title = NSLocalizedString(@"Stroke end", @"");
+    for (PropertyModel *model in @[strokeStart, strokeEnd]) {
+        model.valueMax = 1;
+        model.isKeyframeProperty = YES;
+        model.type = PropertyModelTypeSlider;
+    }
+    
+    return [[super animatablePropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[strokeScale, strokeStart, strokeEnd]];
 }
 
 - (Class)keyframeClass {

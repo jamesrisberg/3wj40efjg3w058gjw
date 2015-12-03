@@ -11,7 +11,8 @@
 typedef NS_ENUM(NSInteger, PropertyModelType) {
     PropertyModelTypeSlider,
     PropertyModelTypeButtons,
-    PropertyModelTypeFill
+    PropertyModelTypeFill,
+    PropertyModelTypeColor
 };
 
 @interface PropertyModel : NSObject
