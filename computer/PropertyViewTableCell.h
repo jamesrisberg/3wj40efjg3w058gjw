@@ -23,4 +23,6 @@
 @property (nonatomic) id value;
 - (void)saveValue:(id)value;
 
++ (CGFloat)heightWithModel:(PropertyModel *)model;
+
 @end

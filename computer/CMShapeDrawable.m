@@ -101,7 +101,8 @@
     return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokeColor", @"pattern", @"path"]];
 }
 
-- (UIView *)renderToView:(UIView *)existingOrNil atTime:(FrameTime *)time {
+- (UIView *)renderToView:(UIView *)existingOrNil context:(CMRenderContext *)ctx {
+    FrameTime *time = ctx.time;
     _CMShapeView *shapeView = [existingOrNil isKindOfClass:[_CMShapeView class]] ? (id)existingOrNil : [_CMShapeView new];
     CMShapeDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     CAShapeLayer *shapeLayer = (id)shapeView.layer;
@@ -111,7 +112,7 @@
     shapeLayer.strokeStart = keyframe.strokeStart;
     shapeLayer.strokeEnd = keyframe.strokeEnd;
     shapeView.pattern = self.pattern;
-    [super renderToView:shapeView atTime:time];
+    [super renderToView:shapeView context:ctx];
     return shapeView;
 }
 

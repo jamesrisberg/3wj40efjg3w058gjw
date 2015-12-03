@@ -78,7 +78,7 @@
     return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"contents"]];
 }
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil atTime:(FrameTime *)time {
+- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {    
     _CMCanvasView *v = [existingOrNil isKindOfClass:[_CMCanvasView class]] ? (id)existingOrNil : [_CMCanvasView new];
     
     NSArray *keys = [self.contents map:^id(id obj) {
@@ -94,7 +94,7 @@
     
     for (CMDrawable *drawable in self.contents) {
         CMDrawableView *existing = v.viewsByKey[drawable.key];
-        CMDrawableView *newView = [drawable renderToView:existing atTime:time];
+        CMDrawableView *newView = [drawable renderToView:existing context:ctx];
         if (newView == existing) {
             [v bringSubviewToFront:newView];
         } else {

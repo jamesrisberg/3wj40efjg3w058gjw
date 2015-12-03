@@ -11,6 +11,7 @@
 #import "EVInterpolation.h"
 @class CMDrawableKeyframe;
 @class OptionsViewCellModel;
+@class StaticAnimation;
 #import "CanvasEditor.h"
 #import "QuickCollectionModal.h"
 #import "OptionsView.h"
@@ -20,6 +21,13 @@
 
 @end
 
+@interface CMRenderContext : NSObject
+
+@property (nonatomic) FrameTime *time;
+@property (nonatomic) BOOL useFrameTimeForStaticAnimations;
+@property (nonatomic) BOOL renderMetaInfo;
+
+@end
 
 @interface CMDrawable : NSObject <NSCoding, NSCopying>
 
@@ -30,7 +38,7 @@
 - (Class)keyframeClass;
 @property (nonatomic,readonly) NSString *key;
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil atTime:(FrameTime *)time;
+- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
 
 - (FrameTime *)maxTime;
 
@@ -49,6 +57,7 @@
 @property (nonatomic) FrameTime *frameTime;
 @property (nonatomic) CGPoint center;
 @property (nonatomic) CGFloat scale, rotation, alpha;
+@property (nonatomic) StaticAnimation *staticAnimation;
 - (NSArray<NSString*>*)keys;
 
 @end

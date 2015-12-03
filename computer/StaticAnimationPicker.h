@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Drawable;
+@class StaticAnimation;
 
 @interface StaticAnimationPicker : UIView
 
-@property (nonatomic,weak) Drawable *drawable;
+@property (nonatomic) StaticAnimation *animation;
+@property (nonatomic,copy) void (^animationDidChange)();
 
 @end

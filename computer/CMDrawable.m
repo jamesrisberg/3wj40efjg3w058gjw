@@ -10,6 +10,13 @@
 #import "computer-Swift.h"
 #import "SliderOptionsCell.h"
 #import "PropertyViewTableCell.h"
+#import "StaticAnimation.h"
+
+@implementation CMRenderContext
+
+@end
+
+
 
 @interface CMDrawable ()
 
@@ -51,13 +58,19 @@
     return [CMDrawableKeyframe class];
 }
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil atTime:(FrameTime *)time {
+- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
+    FrameTime *time = ctx.time;
+    
     CMDrawableView *v = [existingOrNil isKindOfClass:[CMDrawableView class]] ? existingOrNil : [CMDrawableView new];
     CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     v.center = keyframe.center;
     v.bounds = CGRectMake(0, 0, self.boundsDiagonal / sqrt(2), self.boundsDiagonal / sqrt(2)); // TODO: is math
     v.alpha = keyframe.alpha;
     v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale, keyframe.scale);
+    
+    v.alpha = [keyframe.staticAnimation adjustAlpha:v.alpha time:time.time];
+    v.transform = [keyframe.staticAnimation adjustTransform:v.transform time:time.time];
+    
     return v;
 }
 
@@ -146,11 +159,12 @@
     self.alpha = 1;
     self.scale = 1;
     self.rotation = 0;
+    self.staticAnimation = [StaticAnimation new];
     return self;
 }
 
 - (NSArray<NSString*>*)keys {
-    return @[@"center", @"scale", @"rotation", @"alpha", @"frameTime"];
+    return @[@"center", @"scale", @"rotation", @"alpha", @"frameTime", @"staticAnimation"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

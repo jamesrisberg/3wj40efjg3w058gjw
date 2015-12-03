@@ -109,11 +109,9 @@
     _setupYet = YES;
 }
 
-- (void)setDrawable:(Drawable *)drawable {
-    _drawable = drawable;
-    if (!_setupYet) {
-        [self setup];
-    }
+- (void)setAnimation:(StaticAnimation *)animation {
+    _animation = animation;
+    if (!_setupYet) [self setup];
 }
 
 #pragma mark Layout
@@ -142,7 +140,7 @@
     
     StaticAnimationPreview *cell = (StaticAnimationPreview *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.animationDict = animationDict;
-    cell.displayAsSelected = [self.drawable.staticAnimation matchesAnimationDict:animationDict];
+    cell.displayAsSelected = [self.animation matchesAnimationDict:animationDict];
     return cell;
 }
 
@@ -152,20 +150,20 @@
     
     StaticAnimationPreview *cell = (StaticAnimationPreview *)[collectionView cellForItemAtIndexPath:indexPath];
     BOOL enable = !cell.displayAsSelected;
-    StaticAnimation *newAnimationDict = self.drawable.staticAnimation.copy;
+    StaticAnimation *newAnimationDict = self.animation.copy;
     if (enable) {
         [newAnimationDict addAnimationDict:animationDict];
     } else {
         [newAnimationDict removeAnimationDict:animationDict];
     }
-    self.drawable.staticAnimation = newAnimationDict;
-    [self.drawable updatedKeyframeProperties];
+    self.animation = newAnimationDict;
     [self updateAnimationCellSelections];
+    self.animationDidChange();
 }
 
 - (void)updateAnimationCellSelections {
     for (StaticAnimationPreview *cell in [self.collectionView visibleCells]) {
-        cell.displayAsSelected = [self.drawable.staticAnimation matchesAnimationDict:cell.animationDict];
+        cell.displayAsSelected = [self.animation matchesAnimationDict:cell.animationDict];
     }
 }
 

@@ -25,6 +25,10 @@
     return self;
 }
 
++ (CGFloat)heightWithModel:(PropertyModel *)model {
+    return 44;
+}
+
 - (void)setup {
     self.backgroundColor = [UIColor clearColor];
 }

@@ -199,7 +199,7 @@ NSString * const DrawableArrayPasteboardType = @"com.nateparrott.computer.Drawab
 
 - (void)showStaticAnimationPicker {
     StaticAnimationPicker *picker = [StaticAnimationPicker new];
-    picker.drawable = self;
+    // picker.drawable = self;
     [self.canvas.delegate canvas:self.canvas shouldShowEditingPanel:picker];
 }
 

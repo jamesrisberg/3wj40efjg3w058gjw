@@ -542,7 +542,7 @@
     }
 }
 
-- (Drawable *)singleSelection {
+- (CMDrawable *)singleSelection {
     if (_selectedItems.count == 1) {
         return _selectedItems.anyObject;
     } else {
@@ -574,7 +574,11 @@
 }
 
 - (void)render {
-    self.canvasView = (id)[self.canvas renderToView:self.canvasView atTime:self.time];
+    CMRenderContext *ctx = [CMRenderContext new];
+    ctx.time = self.time;
+    ctx.renderMetaInfo = YES;
+    ctx.useFrameTimeForStaticAnimations = NO;
+    self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
 }
 
 @end

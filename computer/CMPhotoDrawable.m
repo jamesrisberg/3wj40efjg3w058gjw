@@ -53,9 +53,9 @@
     return _aspectRatio;
 }
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil atTime:(FrameTime *)time {
+- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
     CMPhotoDrawableView *v = [existingOrNil isKindOfClass:[CMPhotoDrawableView class]] ? (id)existingOrNil : [CMPhotoDrawableView new];
-    [super renderToView:v atTime:time];
+    [super renderToView:v context:ctx];
     v.image = self.image;
     return v;
 }
