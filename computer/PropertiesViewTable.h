@@ -14,5 +14,6 @@
 @property (nonatomic) __weak CMTransactionStack *transactionStack;
 - (void)setProperties:(NSArray<PropertyModel*>*)properties onDrawables:(NSArray<CMDrawable*>*)drawables time:(FrameTime *)time;
 - (void)reloadValues;
+@property (nonatomic) BOOL singleView;
 
 @end

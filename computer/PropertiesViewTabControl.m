@@ -30,7 +30,8 @@
     for (UIButton *old in _buttons) [old removeFromSuperview];
     _buttons = [tabTitles map:^id(id obj) {
         UIButton *b = [UIButton buttonWithType:UIButtonTypeCustom];
-        [b setTitle:obj forState:UIControlStateNormal];
+        [b setTitle:[obj uppercaseString] forState:UIControlStateNormal];
+        b.titleLabel.font = [UIFont boldSystemFontOfSize:12];
         [self addSubview:b];
         [b addTarget:self action:@selector(tapped:) forControlEvents:UIControlEventTouchUpInside];
         return b;

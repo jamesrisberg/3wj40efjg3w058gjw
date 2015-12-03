@@ -7,15 +7,34 @@
 //
 
 #import "StaticAnimationsPropertyTableViewCell.h"
+#import "StaticAnimationPicker.h"
+
+@interface StaticAnimationsPropertyTableViewCell ()
+
+@property (nonatomic) StaticAnimationPicker *picker;
+
+@end
 
 @implementation StaticAnimationsPropertyTableViewCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)setup {
+    [super setup];
+    self.picker = [[StaticAnimationPicker alloc] initWithFrame:self.bounds];
+    [self addSubview:self.picker];
+    __weak StaticAnimationsPropertyTableViewCell *weakSelf = self;
+    self.picker.animationDidChange = ^{
+        [weakSelf saveValue:weakSelf.picker.animation];
+    };
 }
-*/
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.picker.frame = self.bounds;
+}
+
+- (void)reloadValue {
+    [super reloadValue];
+    self.picker.animation = self.value;
+}
 
 @end

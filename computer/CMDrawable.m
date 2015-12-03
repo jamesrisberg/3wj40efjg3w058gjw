@@ -68,8 +68,9 @@
     v.alpha = keyframe.alpha;
     v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale, keyframe.scale);
     
-    v.alpha = [keyframe.staticAnimation adjustAlpha:v.alpha time:time.time];
-    v.transform = [keyframe.staticAnimation adjustTransform:v.transform time:time.time];
+    NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
+    v.alpha = [keyframe.staticAnimation adjustAlpha:v.alpha time:staticAnimationTime];
+    v.transform = [keyframe.staticAnimation adjustTransform:v.transform time:staticAnimationTime];
     
     return v;
 }
@@ -93,7 +94,16 @@
     unique.title = [self drawableTypeDisplayName];
     unique.properties = [self uniqueObjectPropertiesWithEditor:editor];
     
-    return @[unique, animatable];
+    PropertyGroupModel *staticAnimation = [PropertyGroupModel new];
+    staticAnimation.title = NSLocalizedString(@"Animation", @"");
+    staticAnimation.singleView = YES;
+    PropertyModel *staticAnimationProp = [PropertyModel new];
+    staticAnimationProp.isKeyframeProperty = YES;
+    staticAnimationProp.type = PropertyModelTypeStaticAnimation;
+    staticAnimationProp.key = @"staticAnimation";
+    staticAnimation.properties = @[staticAnimationProp];
+    
+    return @[unique, animatable, staticAnimation];
 }
 
 - (NSString *)drawableTypeDisplayName {

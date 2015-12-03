@@ -72,4 +72,26 @@
     }]];
 }
 
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
+    PropertyModel *actions = [PropertyModel new];
+    actions.type = PropertyModelTypeButtons;
+    actions.title = NSLocalizedString(@"Actions", @"");
+    actions.buttonTitles = @[NSLocalizedString(@"Filter", @""), NSLocalizedString(@"Cut out", @"")];
+    actions.buttonSelectorNames = @[@"filter:", @"cutOut:"];
+    
+    return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[actions]];
+}
+
+- (void)filter:(id)sender {
+    // TODO
+}
+
+- (void)cutOut:(id)sender {
+    // TODO
+}
+
+- (NSString *)drawableTypeDisplayName {
+    return NSLocalizedString(@"Image", @"");
+}
+
 @end

@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
     PropertyModelTypeSlider,
     PropertyModelTypeButtons,
     PropertyModelTypeFill,
-    PropertyModelTypeColor
+    PropertyModelTypeColor,
+    PropertyModelTypeStaticAnimation
 };
 
 @interface PropertyModel : NSObject
@@ -39,5 +40,6 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
 
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSArray<PropertyModel*> *properties;
+@property (nonatomic) BOOL singleView;
 
 @end

@@ -76,13 +76,14 @@
     _disposable = [[[[RACSignal combineLatest:@[RACObserve(self, selectedGroupIndex), RACObserve(self, groups), RACObserve(self, drawables), RACObserve(self, time)]] throttle:0.01] subscribeNext:^(RACTuple *x) {
         NSInteger groupIndex = [[x first] integerValue];
         NSArray<PropertyGroupModel*> *groups = [x second];
-        NSArray *properties = @[];
+        PropertyGroupModel *group = nil;
         if (groupIndex < groups.count) {
-            properties = [groups[groupIndex] properties];
+            group = groups[groupIndex];
         }
         NSArray *selection = [x third];
         FrameTime *time = [x fourth];
-        [weakSelf.table setProperties:properties onDrawables:selection time:time];
+        [weakSelf.table setProperties:group.properties onDrawables:selection time:time];
+        weakSelf.table.singleView = group.singleView;
     }] asScopedDisposable];
     
     _tabControl.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.9];

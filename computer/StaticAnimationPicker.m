@@ -13,12 +13,16 @@
 #import "SKColorFill.h"
 #import "VideoConstants.h"
 #import "computer-Swift.h"
+#import "CanvasViewerLite.h"
+#import "CMShapeDrawable.h"
+#import "CMCanvas.h"
 
 @interface StaticAnimationPreview : UICollectionViewCell
 
 @property (nonatomic) NSDictionary *animationDict;
 @property (nonatomic) BOOL displayAsSelected;
-@property (nonatomic) ShapeDrawable *preview;
+@property (nonatomic) CanvasViewerLite *preview;
+@property (nonatomic) CMShapeDrawable *shape;
 
 @end
 
@@ -26,16 +30,18 @@
 
 - (void)setAnimationDict:(NSDictionary *)animationDict {
     _animationDict = animationDict;
-    /*if (!self.preview) {
+    if (!self.preview) {
         // do some setup:
+        self.shape = [CMShapeDrawable new];
+        self.shape.boundsDiagonal = 30;
+        UIBezierPath *p = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, 10)];
+        self.shape.path = p;
+        self.shape.pattern = [Pattern solidColor:[UIColor redColor]];
+        
         self.backgroundColor = [UIColor whiteColor];
-        self.preview = [ShapeDrawable new];
-        UIBezierPath *p = self.preview.path;
-        [p applyTransform:CGAffineTransformMakeRotation(M_PI/4)];
-        self.preview.path = p;
-        [self.preview setInternalSize:CGSizeMake(30, 30)];
-        self.preview.pattern = [Pattern solidColor:[UIColor redColor]];
-        [self addSubview:self.preview];
+        self.preview = [[CanvasViewerLite alloc] initWithFrame:self.bounds];
+        [self.preview.canvas.contents addObject:self.shape];
+        [self.contentView addSubview:self.preview];
         
         self.layer.borderWidth = 3;
         self.layer.borderColor = [UIColor clearColor].CGColor;
@@ -43,8 +49,11 @@
     }
     StaticAnimation *anim = [StaticAnimation new];
     [anim addAnimationDict:animationDict];
-    self.preview.staticAnimation = anim;
-    [self.preview updatedKeyframeProperties];*/
+    
+    CMShapeDrawableKeyframe *kf = [self.shape.keyframeStore createKeyframeAtTimeIfNeeded:[[FrameTime alloc] initWithFrame:0 atFPS:1]];
+    kf.rotation = M_PI/4;
+    kf.staticAnimation = anim;
+    [self.shape.keyframeStore storeKeyframe:kf];
 }
 
 - (void)setDisplayAsSelected:(BOOL)displayAsSelected {
@@ -54,7 +63,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    // self.preview.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    self.preview.frame = self.bounds;
+    CMShapeDrawableKeyframe *kf = [self.shape.keyframeStore interpolatedKeyframeAtTime:[[FrameTime alloc] initWithFrame:0 atFPS:1]];
+    kf.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    [self.shape.keyframeStore storeKeyframe:kf];
 }
 
 @end

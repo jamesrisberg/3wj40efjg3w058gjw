@@ -41,6 +41,12 @@
     }
 }
 
+- (void)setSingleView:(BOOL)singleView {
+    _singleView = singleView;
+    self.scrollEnabled = !singleView;
+    [self reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 #pragma mark Table
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -68,6 +74,10 @@
     cell.transactionStack = self.transactionStack;
     [cell reloadValue];
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return self.singleView ? self.bounds.size.height : 44;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {

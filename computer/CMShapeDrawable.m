@@ -44,9 +44,9 @@
         [self addSubview:patternView];
         if (!_maskShape) {
             _maskShape = [CAShapeLayer layer];
-            _maskShape.path = shape.path;
             _maskShape.strokeColor = nil;
             _maskShape.fillColor = [UIColor blackColor].CGColor;
+            _maskShape.path = shape.path;
         }
         patternView.layer.mask = _maskShape;
     } else {
@@ -92,7 +92,6 @@
     self.maskShape.frame = self.bounds;
 }
 
-
 @end
 
 @implementation CMShapeDrawable
@@ -104,15 +103,25 @@
 - (UIView *)renderToView:(UIView *)existingOrNil context:(CMRenderContext *)ctx {
     FrameTime *time = ctx.time;
     _CMShapeView *shapeView = [existingOrNil isKindOfClass:[_CMShapeView class]] ? (id)existingOrNil : [_CMShapeView new];
+    
+    [super renderToView:shapeView context:ctx];
+    
+    UIBezierPath *path = self.path.copy;
+    CGRect pathBounds = path.bounds;
+    [path applyTransform:CGAffineTransformMakeTranslation(-pathBounds.origin.x, -pathBounds.origin.y)];
+    [path applyTransform:CGAffineTransformMakeScale(shapeView.bounds.size.width / pathBounds.size.width, shapeView.bounds.size.height / pathBounds.size.height)];
+    // [path applyTransform:CGAffineTransformMakeScale(shapeView.bounds.size.width/2, shapeView.bounds.size.height/2)];
+    
     CMShapeDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     CAShapeLayer *shapeLayer = (id)shapeView.layer;
+    shapeLayer.path = path.CGPath;
     shapeLayer.strokeColor = self.strokeColor.CGColor;
     shapeLayer.lineWidth = self.strokeWidth * keyframe.strokeScale;
-    shapeLayer.path = self.path.CGPath;
+    shapeLayer.path = path.CGPath;
     shapeLayer.strokeStart = keyframe.strokeStart;
     shapeLayer.strokeEnd = keyframe.strokeEnd;
     shapeView.pattern = self.pattern;
-    [super renderToView:shapeView context:ctx];
+    shapeView.maskShape.path = path.CGPath;
     return shapeView;
 }
 
@@ -191,6 +200,10 @@
         weakSelf.strokeWidth = width;
     };
     [NPSoftModalPresentationController presentViewController:picker];
+}
+
+- (NSString *)drawableTypeDisplayName {
+    return NSLocalizedString(@"Shape", @"");
 }
 
 
