@@ -56,7 +56,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PropertyModel *prop = self.properties[indexPath.row];
+    PropertyModel *prop = self.properties[indexPath.section];
     NSString *identifier = NSStringFromClass(prop.cellClass);
     PropertyViewTableCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {

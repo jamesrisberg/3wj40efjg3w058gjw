@@ -334,10 +334,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.mode = EditorModePanelView;
 }
 
-- (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos {
-    [self showOptionsInteractively:presenter touchPos:pos];
-}
-
 - (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables {
     _drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
     [self setMode:EditorModeShowingPropertiesView];
@@ -352,25 +348,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 #pragma mark Toolbar
-
-- (void)showOptions {
-    [self showOptionsInteractively:nil touchPos:CGPointZero];
-}
-
-- (void)showOptionsInteractively:(UIPercentDrivenInteractiveTransition *)transition touchPos:(CGPoint)pos {
-    if (self.canvas.selectedItems.count) {
-        CMDrawable *d = self.canvas.selectedItems.anyObject;
-        PropertiesModal *modal = [PropertiesModal new];
-        if (!CGPointEqualToPoint(pos, CGPointZero)) modal.touchPointInWindowCoordinates = [self.view.window convertPoint:pos fromView:self.canvas];
-        modal.interactivePresentation = transition;
-        modal.items = [d optionsItemsWithEditor:self.canvas];
-        modal.optionsCellModels = [d optionsViewCellModelsWithEditor:self.canvas];
-        modal.inlineViewController = [d createInlineViewControllerForEditingWithEditor:self.canvas];
-        modal.topActionView = [d propertiesModalTopActionViewWithEditor:self.canvas];
-        modal.mainAction = [d mainActionWithEditor:self.canvas];
-        [self presentViewController:modal animated:YES completion:nil];
-    }
-}
 
 - (void)setToolbarView:(UIView *)toolbarView {
     if (toolbarView != _toolbarView) {

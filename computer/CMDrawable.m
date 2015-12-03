@@ -9,6 +9,7 @@
 #import "CMDrawable.h"
 #import "computer-Swift.h"
 #import "SliderOptionsCell.h"
+#import "PropertyViewTableCell.h"
 
 @interface CMDrawable ()
 
@@ -70,14 +71,14 @@
 
 #pragma mark New Options UI
 
-- (NSArray<PropertyGroupModel*>*)propertyGroups {
+- (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor {
     PropertyGroupModel *animatable = [PropertyGroupModel new];
     animatable.title = NSLocalizedString(@"Properties", @"");
-    animatable.properties = [self animatableProperties];
+    animatable.properties = [self animatablePropertiesWithEditor:editor];
     
     PropertyGroupModel *unique = [PropertyGroupModel new];
     unique.title = [self drawableTypeDisplayName];
-    unique.properties = [self uniqueObjectProperties];
+    unique.properties = [self uniqueObjectPropertiesWithEditor:editor];
     
     return @[unique, animatable];
 }
@@ -86,7 +87,7 @@
     return NSLocalizedString(@"Object", @"");
 }
 
-- (NSArray<PropertyModel*>*)animatableProperties {
+- (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor {
     PropertyModel *opacity = [PropertyModel new];
     opacity.title = NSLocalizedString(@"Opacity", @"");
     opacity.type = PropertyModelTypeSlider;
@@ -94,112 +95,20 @@
     opacity.valueMax = 1;
     opacity.isKeyframeProperty = YES;
     opacity.key = @"alpha";
-    return @[opacity];
+    
+    PropertyModel *keyframeActions = [PropertyModel new];
+    keyframeActions.title = NSLocalizedString(@"Current keyframe actions", @"");
+    keyframeActions.type = PropertyModelTypeButtons;
+    keyframeActions.buttonTitles = @[NSLocalizedString(@"Delete", @"")];
+    keyframeActions.buttonSelectorNames = @[@"deleteCurrentKeyframe:"];
+    keyframeActions.availabilitySelectors = @[@"canDeleteCurrentKeyframe:"];
+    
+    return @[opacity, keyframeActions];
 }
 
-- (NSArray<PropertyModel*>*)uniqueObjectProperties {
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
     return @[];
 }
-
-#pragma mark Options UI
-
-- (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor {
-    NSMutableArray *items = [NSMutableArray new];
-    __weak CMDrawable *weakSelf = self;
-    __weak CanvasEditor *weakEditor = editor;
-    QuickCollectionItem *delete = [QuickCollectionItem new];
-    delete.label = NSLocalizedString(@"Delete", @"");
-    delete.action = ^{
-        [weakEditor deleteDrawable:weakSelf];
-    };
-    [items addObject:delete];
-    QuickCollectionItem *duplicate = [QuickCollectionItem new];
-    duplicate.label = NSLocalizedString(@"Duplicate", @"");
-    duplicate.action = ^{
-        [weakEditor duplicateDrawable:weakSelf];
-    };
-    [items addObject:duplicate];
-    QuickCollectionItem *animations = [QuickCollectionItem new];
-    animations.label = NSLocalizedString(@"Animations…", @"");
-    animations.action = ^{
-        // [weakSelf showStaticAnimationPicker];
-    };
-    [items addObject:animations];
-    
-    BOOL isAtZeroTime = editor.time.time == 0;
-    BOOL hasOtherKeyframes = self.keyframeStore.maxTime.time > 0;
-    BOOL hasKeyframeAtCurrentTime = !![self.keyframeStore keyframeAtTime:editor.time];
-    if (hasKeyframeAtCurrentTime && (!isAtZeroTime || hasOtherKeyframes)) {
-        QuickCollectionItem *removeKeyframe = [QuickCollectionItem new];
-        removeKeyframe.label = NSLocalizedString(@"Delete keyframe", @"");
-        removeKeyframe.action = ^{
-            [weakEditor deleteCurrentKeyframeForDrawable:weakSelf];
-        };
-        [items addObject:removeKeyframe];
-    }
-    return items;
-}
-
-- (QuickCollectionItem *)mainActionWithEditor:(CanvasEditor *)editor {
-    return nil;
-}
-
-- (UIView *)propertiesModalTopActionViewWithEditor:(CanvasEditor *)editor {
-    return nil;
-}
-
-- (UIViewController *)createInlineViewControllerForEditingWithEditor:(CanvasEditor *)editor {
-    return nil;
-}
-
-- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor {
-    OptionsViewCellModel *alpha = [self sliderForKeyOnKeyframeObject:@"alpha" title:NSLocalizedString(@"Opacity", @"") editor:editor];
-    return @[alpha];
-}
-
-- (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor {
-    __weak CMDrawable *weakSelf = self;
-    FrameTime *time = editor.time;
-    __weak CanvasEditor *weakEditor = editor;
-    
-    __block CMTransaction *transaction = nil;
-    OptionsViewCellModel *model = [OptionsViewCellModel new];
-    model.title = title;
-    model.cellClass = [SliderOptionsCell class];
-    model.onCreate = ^(OptionsCell *cell){
-        SliderOptionsCell *sliderCell = (SliderOptionsCell *)cell;
-        sliderCell.value = [[[weakSelf.keyframeStore interpolatedKeyframeAtTime:time] valueForKey:key] floatValue];
-        __weak SliderOptionsCell *weakSliderCell = sliderCell;
-        sliderCell.onValueChange = ^(CGFloat val) {
-            if (!transaction) {
-                CMDrawableKeyframe *oldKeyframe = [[weakSelf.keyframeStore keyframeAtTime:time] copy];
-                transaction = [[CMTransaction alloc] initNonFinalizedWithTarget:editor action:^(id target) {
-                    [[weakSelf.keyframeStore createKeyframeAtTimeIfNeeded:time] setValue:@(val) forKey:key];
-                    weakSliderCell.value = val;
-                } undo:^(id target) {
-                    [weakSelf.keyframeStore removeKeyframeAtTime:time];
-                    if (oldKeyframe) {
-                        [weakSelf.keyframeStore storeKeyframe:oldKeyframe];
-                    }
-                    weakSliderCell.value = val;
-                }];
-                [[weakEditor transactionStack] doTransaction:transaction];
-            } else {
-                // update the transaction:
-                transaction.action = ^(id target) {
-                    [[weakSelf.keyframeStore createKeyframeAtTimeIfNeeded:time] setValue:@(val) forKey:key];
-                    weakSliderCell.value = val;
-                };
-            }
-        };
-        sliderCell.onTouchUp = ^{
-            transaction.finalized = YES;
-            transaction = nil;
-        };
-    };
-    return model;
-}
-
 
 - (id)copy {
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
@@ -207,6 +116,24 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     return [self copy];
+}
+
+#pragma mark Keyframe actions
+
+- (NSNumber *)canDeleteCurrentKeyframe:(PropertyViewTableCell *)cell {
+    return @(self.keyframeStore.allKeyframes.count > 1 && [self.keyframeStore keyframeAtTime:cell.time] != nil);
+}
+
+- (void)deleteCurrentKeyframe:(PropertyViewTableCell *)cell {
+    if ([self canDeleteCurrentKeyframe:cell].boolValue) {
+        CMDrawableKeyframe *oldKeyframe = [self.keyframeStore keyframeAtTime:cell.time];
+        FrameTime *time = cell.time;
+        [cell.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+            [self.keyframeStore removeKeyframeAtTime:time];
+        } undo:^(id target) {
+            [self.keyframeStore storeKeyframe:oldKeyframe];
+        }]];
+    }
 }
 
 @end

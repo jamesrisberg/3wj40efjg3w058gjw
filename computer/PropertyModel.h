@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
 // for PropertyModelTypeButtons
 @property (nonatomic) NSArray<NSString*> *buttonTitles;
 @property (nonatomic) NSArray<NSString*> *buttonSelectorNames;
+@property (nonatomic) NSArray<NSString*> *availabilitySelectors; // called to determine if buttons should be enabled
 
 - (Class)cellClass;
 

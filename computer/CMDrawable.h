@@ -34,19 +34,11 @@
 
 - (FrameTime *)maxTime;
 
-- (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor;
-- (QuickCollectionItem *)mainActionWithEditor:(CanvasEditor *)editor;
-- (UIView *)propertiesModalTopActionViewWithEditor:(CanvasEditor *)editor;
-- (UIViewController *)createInlineViewControllerForEditingWithEditor:(CanvasEditor *)editor;
-- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor;
-
-- (OptionsViewCellModel *)sliderForKeyOnKeyframeObject:(NSString *)key title:(NSString *)title editor:(CanvasEditor *)editor;
-
 - (CGFloat)aspectRatio;
 
-- (NSArray<PropertyGroupModel*>*)propertyGroups;
-- (NSArray<PropertyModel*>*)animatableProperties;
-- (NSArray<PropertyModel*>*)uniqueObjectProperties;
+- (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor;
+- (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor;
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor;
 - (NSString *)drawableTypeDisplayName;
 
 @end

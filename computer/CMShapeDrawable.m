@@ -154,27 +154,6 @@
     return [CMShapeDrawableKeyframe class];
 }
 
-- (NSArray<__kindof OptionsViewCellModel*>*)optionsViewCellModelsWithEditor:(CanvasEditor *)editor {
-    OptionsViewCellModel *strokeScale = [self sliderForKeyOnKeyframeObject:@"strokeScale" title:NSLocalizedString(@"Stroke scale", @"") editor:editor];
-    OptionsViewCellModel *strokeStart = [self sliderForKeyOnKeyframeObject:@"strokeStart" title:NSLocalizedString(@"Stroke start", @"") editor:editor];
-    OptionsViewCellModel *strokeEnd = [self sliderForKeyOnKeyframeObject:@"strokeEnd" title:NSLocalizedString(@"Stroke end", @"") editor:editor];
-    return [[super optionsViewCellModelsWithEditor:editor] arrayByAddingObjectsFromArray:@[strokeScale, strokeStart, strokeEnd]];
-}
-
-- (NSArray <__kindof QuickCollectionItem*> *)optionsItemsWithEditor:(CanvasEditor *)editor {
-    __weak CMShapeDrawable *weakSelf = self;
-    
-    QuickCollectionItem *editStroke = [QuickCollectionItem new];
-    editStroke.label = NSLocalizedString(@"Stroke…", @"");
-    editStroke.action = ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf editStrokeWithEditor:editor];
-        });
-    };
-    
-    return [[super optionsItemsWithEditor:editor] arrayByAddingObjectsFromArray:@[editStroke]];
-}
-
 - (void)editStrokeWithEditor:(CanvasEditor *)editor {
     __block CMTransaction *t = nil;
     

@@ -37,7 +37,7 @@
     _table.transactionStack = transactionStack;
     self.time = time;
     self.drawables = drawables;
-    self.groups = drawables.count == 1 ? [drawables.firstObject propertyGroups] : @[];
+    self.groups = drawables.count == 1 ? [drawables.firstObject propertyGroupsWithEditor:editor] : @[];
 }
 
 - (void)reloadValues {
