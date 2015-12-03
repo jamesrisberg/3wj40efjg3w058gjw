@@ -87,24 +87,24 @@
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGRect r = CGRectMake(0, 0, 100, 100);
         shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
-        shape.pattern = [Pattern solidColor:[UIColor purpleColor]];
+        shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokeColor = [UIColor blackColor];
         shape.strokeWidth = 2;
         shape.boundsDiagonal = CGRectDiagonal(r);
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:shape];
-        
-        ShapeDrawable *d = [ShapeDrawable new];
-        d.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, 200, 200)];
-        d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
     QuickCollectionItem *square = [QuickCollectionItem new];
     square.icon = [UIImage imageNamed:@"Square"];
     square.action = ^{
-        ShapeDrawable *d = [ShapeDrawable new];
-        d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        // [weakSelf.editorVC.canvas insertDrawable:d];
+        CMShapeDrawable *shape = [CMShapeDrawable new];
+        CGRect r = CGRectMake(0, 0, 100, 100);
+        shape.path = [UIBezierPath bezierPathWithRect:r];
+        shape.pattern = [Pattern solidColor:[UIColor randomHue]];
+        shape.strokeColor = [UIColor blackColor];
+        shape.strokeWidth = 2;
+        shape.boundsDiagonal = CGRectDiagonal(r);
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:shape];
     };
     
     QuickCollectionItem *star = [QuickCollectionItem new];
@@ -115,38 +115,7 @@
         // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     
-    QuickCollectionItem *gridRepeat = [QuickCollectionItem new];
-    gridRepeat.icon = [UIImage imageNamed:@"GridRepeat"];
-    gridRepeat.action = ^{
-        CanvasEditor *canvas = [[CanvasEditor alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
-        text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
-        text.rotation = M_PI/4;
-        text.transientEDUView = YES;
-        // [canvas insertDrawable:text];
-        SubcanvasDrawable *d = [SubcanvasDrawable new];
-        d.subcanvas = canvas;
-        d.xRepeat = 3;
-        d.yRepeat = 3;
-        // [weakSelf.editorVC.canvas insertDrawable:d];
-    };
-    
-    QuickCollectionItem *ringRepeat = [QuickCollectionItem new];
-    ringRepeat.icon = [UIImage imageNamed:@"RingRepeat"];
-    ringRepeat.action = ^{
-        CanvasEditor *canvas = [[CanvasEditor alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
-        TextDrawable *text = [[TextDrawable alloc] initWithFrame:CGRectMake(0, 0, 200, 100)];
-        text.attributedString = [TextDrawable defaultAttributedStringWithText:NSLocalizedString(@"Double-tap to edit contents", @"")];
-        text.transientEDUView = YES;
-        // [canvas insertDrawable:text];
-        SubcanvasDrawable *d = [SubcanvasDrawable new];
-        d.subcanvas = canvas;
-        d.rotatedCopies = 6;
-        d.rotationOffset = 3;
-        // [weakSelf.editorVC.canvas insertDrawable:d];
-    };
-    
-    self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, gridRepeat, ringRepeat, particle];
+    self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, particle];
 }
 
 - (void)insertParticle {
