@@ -94,4 +94,8 @@
     return 44;
 }
 
++ (CGFloat)standardInlineControlPadding {
+    return 8;
+}
+
 @end

@@ -13,7 +13,7 @@
 
 @property (nonatomic) UIBezierPath *path;
 @property (nonatomic) Pattern *pattern;
-@property (nonatomic) UIColor *strokeColor;
+@property (nonatomic) Pattern *strokePattern;
 @property (nonatomic) CGFloat strokeWidth;
 
 @end

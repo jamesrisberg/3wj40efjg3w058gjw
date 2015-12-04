@@ -56,6 +56,7 @@
 		5F7C88731C114A0C0046020B /* CMStarDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88721C114A0C0046020B /* CMStarDrawable.m */; };
 		5F7C88761C1151AC0046020B /* CMTextDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88751C1151AC0046020B /* CMTextDrawable.m */; };
 		5F7C88791C1181CC0046020B /* TextPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */; };
+		5F7C887C1C118DA00046020B /* FillPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -352,6 +353,8 @@
 		5F7C88751C1151AC0046020B /* CMTextDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMTextDrawable.m; sourceTree = "<group>"; };
 		5F7C88771C1181CC0046020B /* TextPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextPropertyTableViewCell.h; sourceTree = "<group>"; };
 		5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextPropertyTableViewCell.m; sourceTree = "<group>"; };
+		5F7C887A1C118DA00046020B /* FillPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FillPropertyTableViewCell.h; sourceTree = "<group>"; };
+		5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillPropertyTableViewCell.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -812,6 +815,8 @@
 				5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */,
 				5F7C88771C1181CC0046020B /* TextPropertyTableViewCell.h */,
 				5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */,
+				5F7C887A1C118DA00046020B /* FillPropertyTableViewCell.h */,
+				5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */,
 			);
 			name = "New properties UI";
 			sourceTree = "<group>";
@@ -1732,6 +1737,7 @@
 				5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */,
 				5F9A183F1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m in Sources */,
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
+				5F7C887C1C118DA00046020B /* FillPropertyTableViewCell.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
 				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,
 				5FEAF9591B9E2B8A0071BC08 /* CPBrightnessSaturationView.m in Sources */,

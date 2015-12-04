@@ -11,6 +11,7 @@
 #import "SliderPropertyViewTableCell.h"
 #import "StaticAnimationsPropertyTableViewCell.h"
 #import "TextPropertyTableViewCell.h"
+#import "FillPropertyTableViewCell.h"
 
 @implementation PropertyModel
 
@@ -23,6 +24,8 @@
         return [StaticAnimationsPropertyTableViewCell class];
     } else if (_type == PropertyModelTypeText) {
         return [TextPropertyTableViewCell class];
+    } else if (_type == PropertyModelTypeFill || _type == PropertyModelTypeColor) {
+        return [FillPropertyTableViewCell class];
     }
     return [PropertyViewTableCell class];
 }

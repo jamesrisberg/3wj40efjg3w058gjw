@@ -27,4 +27,6 @@
 
 + (CGFloat)heightForModel:(PropertyModel *)model;
 
++ (CGFloat)standardInlineControlPadding;
+
 @end

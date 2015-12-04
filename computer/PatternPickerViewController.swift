@@ -14,16 +14,21 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
     
     var pattern = Pattern(type: .SolidColor, primaryColor: UIColor.greenColor(), secondaryColor: nil) {
         didSet {
-            primaryColorPicker.color = pattern.primaryColor
-            secondaryColorPicker.color = pattern.secondaryColorOrDefault
-            secondaryColorPicker.hue.preview.pattern = Pattern(type: .SolidColor, primaryColor: secondaryColorPicker.color, secondaryColor: nil)
-            primaryColorPicker.hue.preview.pattern = pattern
-            _showSecondaryColor = pattern.type.involvesSecondaryColor
-            patternTypePicker.selectedPatternType = pattern.type
-            patternTypePicker.colors = (primaryColorPicker.color, secondaryColorPicker.color)
-            doneButtonWithPreview.pattern = pattern
+            if onlyAllowSolidColors && !(pattern.type == Pattern.PatternType.SolidColor) {
+                pattern = Pattern(type: .SolidColor, primaryColor: pattern.primaryColor, secondaryColor: nil)
+            } else {
+                primaryColorPicker.color = pattern.primaryColor
+                secondaryColorPicker.color = pattern.secondaryColorOrDefault
+                secondaryColorPicker.hue.preview.pattern = Pattern(type: .SolidColor, primaryColor: secondaryColorPicker.color, secondaryColor: nil)
+                primaryColorPicker.hue.preview.pattern = pattern
+                _showSecondaryColor = pattern.type.involvesSecondaryColor
+                patternTypePicker.selectedPatternType = pattern.type
+                patternTypePicker.colors = (primaryColorPicker.color, secondaryColorPicker.color)
+                doneButtonWithPreview.pattern = pattern
+            }
         }
     }
+    var onlyAllowSolidColors = false
     var onChangedPattern: (Pattern -> ())?
     private func _updatePattern(pattern: Pattern) {
         self.pattern = pattern
@@ -172,7 +177,11 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
     
     var contentViews: [UIView] {
         get {
-            return primaryColorPicker.views + [patternTypePicker] + secondaryColorPicker.views + [doneButtonWithPreview]
+            if onlyAllowSolidColors {
+                return primaryColorPicker.views
+            } else {
+                return primaryColorPicker.views + [patternTypePicker] + secondaryColorPicker.views + [doneButtonWithPreview]
+            }
         }
     }
     

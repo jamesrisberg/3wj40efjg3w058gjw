@@ -11,10 +11,15 @@ import UIKit
 class PatternPickerView: UIView {
     var pattern = Pattern(type: .SolidColor, primaryColor: UIColor.greenColor(), secondaryColor: nil) {
         didSet {
-            cell.hue = Float(pattern.primaryColor.hsva.0)
-            cell.preview.pattern = pattern
+            if onlyAllowSolidColors && !(pattern.type == Pattern.PatternType.SolidColor) {
+                pattern = Pattern(type: .SolidColor, primaryColor: pattern.primaryColor, secondaryColor: nil)
+            } else {
+                cell.hue = Float(pattern.primaryColor.hsva.0)
+                cell.preview.pattern = pattern
+            }
         }
     }
+    var onlyAllowSolidColors = false
     var onPatternChanged: (Pattern -> ())?
     var onPatternChangeTransactionEnded: (() -> ())?
     var shouldEditModally: (() -> ())?
@@ -78,6 +83,7 @@ class PatternPickerView: UIView {
     
     func editModally(viewController: UIViewController) {
         let vc = PatternPickerViewController()
+        vc.onlyAllowSolidColors = onlyAllowSolidColors
         vc.pattern = pattern
         vc.onChangedPattern = {
             [weak self]

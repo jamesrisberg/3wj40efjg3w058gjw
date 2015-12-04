@@ -30,7 +30,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    _textView.frame = CGRectInset(self.bounds, 8, 8);
+    _textView.frame = CGRectInset(self.bounds, [[self class] standardInlineControlPadding], [[self class] standardInlineControlPadding]);
 }
 
 - (void)reloadValue {

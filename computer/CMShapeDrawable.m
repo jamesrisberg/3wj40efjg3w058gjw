@@ -97,7 +97,7 @@
 @implementation CMShapeDrawable
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokeColor", @"pattern", @"path"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokePattern", @"pattern", @"path"]];
 }
 
 - (UIView *)renderToView:(UIView *)existingOrNil context:(CMRenderContext *)ctx {
@@ -115,7 +115,7 @@
     CMShapeDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     CAShapeLayer *shapeLayer = (id)shapeView.layer;
     shapeLayer.path = path.CGPath;
-    shapeLayer.strokeColor = self.strokeColor.CGColor;
+    shapeLayer.strokeColor = self.strokePattern.primaryColor.CGColor;
     shapeLayer.lineWidth = self.strokeWidth * keyframe.strokeScale;
     shapeLayer.path = path.CGPath;
     shapeLayer.strokeStart = keyframe.strokeStart;
@@ -139,7 +139,7 @@
     
     PropertyModel *strokeColor = [PropertyModel new];
     strokeColor.title = NSLocalizedString(@"Stroke color", @"");
-    strokeColor.key = @"strokeColor";
+    strokeColor.key = @"strokePattern";
     strokeColor.type = PropertyModelTypeColor;
     
     return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[fill, strokeColor, strokeWidth]];
@@ -169,38 +169,6 @@
 
 - (Class)keyframeClass {
     return [CMShapeDrawableKeyframe class];
-}
-
-- (void)editStrokeWithEditor:(CanvasEditor *)editor {
-    __block CMTransaction *t = nil;
-    
-    StrokePickerViewController *picker = [StrokePickerViewController new];
-    picker.color = self.strokeColor;
-    picker.width = self.strokeWidth;
-    __weak CMShapeDrawable *weakSelf = self;
-    picker.onChange = ^(CGFloat width, UIColor *color) {
-        if (!t || t.finalized) {
-            CGFloat oldWidth = weakSelf.strokeWidth;
-            UIColor *oldColor = weakSelf.strokeColor;
-            t = [[CMTransaction alloc] initImplicitlyFinalizaledWhenTouchesEndWithTarget:editor action:^(id target) {
-                weakSelf.strokeWidth = width;
-                weakSelf.strokeColor = color;
-            } undo:^(id target) {
-                weakSelf.strokeWidth = oldWidth;
-                weakSelf.strokeColor = oldColor;
-            }];
-            [editor.transactionStack doTransaction:t];
-        } else {
-            t.action = ^(id target) {
-                weakSelf.strokeWidth = width;
-                weakSelf.strokeColor = color;
-            };
-        }
-        
-        weakSelf.strokeColor = color;
-        weakSelf.strokeWidth = width;
-    };
-    [NPSoftModalPresentationController presentViewController:picker];
 }
 
 - (NSString *)drawableTypeDisplayName {
