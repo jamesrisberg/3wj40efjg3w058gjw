@@ -8,6 +8,9 @@
 
 #import "CMPhotoDrawable.h"
 #import "CMTransaction.h"
+#import "FilterPickerViewController.h"
+#import "computer-Swift.h"
+#import "PropertyViewTableCell.h"
 
 @interface CMPhotoDrawableView : CMDrawableView {
     UIImageView *_imageView;
@@ -39,6 +42,11 @@
 @end
 
 
+@interface CMPhotoDrawable ()
+
+@property (nonatomic) NSData *photoData;
+
+@end
 
 @implementation CMPhotoDrawable
 
@@ -73,7 +81,7 @@
 }
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"photo", @"aspectRatio"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"photoData", @"aspectRatio"]];
 }
 
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
@@ -86,16 +94,35 @@
     return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[actions]];
 }
 
-- (void)filter:(id)sender {
-    // TODO
+- (void)filter:(PropertyViewTableCell *)sender {
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:[FilterPickerViewController filterPickerWithImage:self.image callback:^(UIImage *filtered) {
+        if (filtered) {
+            [self setImage:filtered withTransactionStack:sender.transactionStack];
+        }
+    }] animated:YES completion:nil];
 }
 
-- (void)cutOut:(id)sender {
-    // TODO
+- (void)cutOut:(PropertyViewTableCell *)sender {
+    StickerExtractViewController *extractVC = (id)[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"StickerExtractVC"];
+    extractVC.onExtractedSticker = ^(UIImage *sticker) {
+        if (sticker) {
+            [self setImage:sticker withTransactionStack:sender.transactionStack];
+        }
+    };
+    extractVC.imageToExtractFrom = self.image;
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:extractVC animated:YES completion:nil];
 }
 
 - (NSString *)drawableTypeDisplayName {
     return NSLocalizedString(@"Image", @"");
+}
+
+- (NSData *)photoData {
+    return self.image ? UIImagePNGRepresentation(self.image) : nil;
+}
+
+- (void)setPhotoData:(NSData *)photoData {
+    self.image = [UIImage imageWithData:photoData];
 }
 
 @end
