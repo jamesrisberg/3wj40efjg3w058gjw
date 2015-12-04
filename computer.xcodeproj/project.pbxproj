@@ -53,6 +53,7 @@
 		5F6940EA1C0FAF2900569335 /* ButtonsPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */; };
 		5F6940ED1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */; };
 		5F6940F01C102A4000569335 /* CanvasViewerLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940EF1C102A4000569335 /* CanvasViewerLite.m */; };
+		5F7C88731C114A0C0046020B /* CMStarDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88721C114A0C0046020B /* CMStarDrawable.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -343,6 +344,8 @@
 		5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticAnimationsPropertyTableViewCell.m; sourceTree = "<group>"; };
 		5F6940EE1C102A4000569335 /* CanvasViewerLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasViewerLite.h; sourceTree = "<group>"; };
 		5F6940EF1C102A4000569335 /* CanvasViewerLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasViewerLite.m; sourceTree = "<group>"; };
+		5F7C88711C114A0C0046020B /* CMStarDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMStarDrawable.h; sourceTree = "<group>"; };
+		5F7C88721C114A0C0046020B /* CMStarDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMStarDrawable.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -772,6 +775,8 @@
 				5F6940AC1C0BD1B600569335 /* CMCanvas.m */,
 				5F6940A81C0BCBA000569335 /* CMShapeDrawable.h */,
 				5F6940A91C0BCBA000569335 /* CMShapeDrawable.m */,
+				5F7C88711C114A0C0046020B /* CMStarDrawable.h */,
+				5F7C88721C114A0C0046020B /* CMStarDrawable.m */,
 				5F6940CF1C0EA1F900569335 /* CMPhotoDrawable.h */,
 				5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */,
 			);
@@ -1623,6 +1628,7 @@
 				5F809AA01BE40C240030B538 /* AFImageSearchResultsViewController.m in Sources */,
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
 				5F83475D1BF43C5600721A2C /* OptionsCell.m in Sources */,
+				5F7C88731C114A0C0046020B /* CMStarDrawable.m in Sources */,
 				5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5FDA80D21C03BF18006CDC21 /* API.m in Sources */,

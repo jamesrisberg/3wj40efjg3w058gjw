@@ -21,6 +21,7 @@
 #import "EditorViewController+InsertMedia.h"
 #import "CGPointExtras.h"
 #import "CMShapeDrawable.h"
+#import "CMStarDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -110,9 +111,12 @@
     QuickCollectionItem *star = [QuickCollectionItem new];
     star.icon = [UIImage imageNamed:@"Star"];
     star.action = ^{
-        StarDrawable *d = [StarDrawable new];
+        CMStarDrawable *d = [CMStarDrawable new];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
-        // [weakSelf.editorVC.canvas insertDrawable:d];
+        d.pattern = [Pattern solidColor:[UIColor randomHue]];
+        d.strokeColor = [UIColor blackColor];
+        d.strokeWidth = 2;
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:d];
     };
     
     self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, particle];

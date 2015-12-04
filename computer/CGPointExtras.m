@@ -129,3 +129,13 @@ CGFloat CGRectDiagonal(CGRect r) {
     return sqrt(pow(CGRectGetWidth(r), 2) + pow(CGRectGetHeight(r), 2));
 }
 
+CGSize CMSizeWithDiagonalAndAspectRatio(CGFloat d, CGFloat a) {
+    /*
+     d = (w^2 + (w/a)^2) ^ 0.5
+     w=> d/sqrt(a^-2 + 1)
+     */
+    CGFloat width = d / sqrt(pow(a, -2) + 1);
+    CGFloat height = width / a;
+    return CGSizeMake(width, height);
+}
+

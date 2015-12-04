@@ -134,6 +134,7 @@
     PropertyModel *strokeWidth = [PropertyModel new];
     strokeWidth.title = NSLocalizedString(@"Stroke width", @"");
     strokeWidth.key = @"strokeWidth";
+    strokeWidth.valueMax = 10;
     strokeWidth.type = PropertyModelTypeSlider;
     
     PropertyModel *strokeColor = [PropertyModel new];

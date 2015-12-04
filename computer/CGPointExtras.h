@@ -49,6 +49,8 @@ CGRect NPBoundingBoxOfRotatedRect(CGSize size, CGPoint center, CGFloat rotation,
     
     CGFloat CGRectDiagonal(CGRect r);
     
+    CGSize CMSizeWithDiagonalAndAspectRatio(CGFloat boundsDiagonal, CGFloat aspectRatio);
+    
 #ifdef __cplusplus
 }
 #endif

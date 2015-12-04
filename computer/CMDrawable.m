@@ -11,6 +11,7 @@
 #import "SliderOptionsCell.h"
 #import "PropertyViewTableCell.h"
 #import "StaticAnimation.h"
+#import "CGPointExtras.h"
 
 @implementation CMRenderContext
 
@@ -64,7 +65,8 @@
     CMDrawableView *v = [existingOrNil isKindOfClass:[CMDrawableView class]] ? existingOrNil : [CMDrawableView new];
     CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
     v.center = keyframe.center;
-    v.bounds = CGRectMake(0, 0, self.boundsDiagonal / sqrt(2), self.boundsDiagonal / sqrt(2)); // TODO: is math
+    CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
+    v.bounds = CGRectMake(0, 0, size.width, size.height); // TODO: is math
     v.alpha = keyframe.alpha;
     v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale, keyframe.scale);
     
