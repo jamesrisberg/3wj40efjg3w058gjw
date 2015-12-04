@@ -22,6 +22,7 @@
 #import "CGPointExtras.h"
 #import "CMShapeDrawable.h"
 #import "CMStarDrawable.h"
+#import "CMTextDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -62,8 +63,13 @@
     QuickCollectionItem *text = [QuickCollectionItem new];
     text.icon = [UIImage imageNamed:@"Text"];
     text.action = ^{
-        TextDrawable *d = [TextDrawable new];
-        d.bounds = CGRectMake(0, 0, 300, 200);
+        CMTextDrawable *d = [CMTextDrawable new];
+        d.aspectRatio = 1.6;
+        NSMutableParagraphStyle *para = [NSParagraphStyle defaultParagraphStyle].mutableCopy;
+        para.alignment = NSTextAlignmentCenter;
+        NSDictionary *attrs = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:14], NSParagraphStyleAttributeName: para};
+        d.text = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Double-tap to edit", @"") attributes:attrs];
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:d];
         // [weakSelf.editorVC.canvas insertDrawable:d];
     };
     QuickCollectionItem *particle = [QuickCollectionItem new];

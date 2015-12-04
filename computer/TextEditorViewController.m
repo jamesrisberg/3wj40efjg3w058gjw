@@ -14,7 +14,8 @@
 #import "StrokePickerViewController.h"
 #import "UIBarButtonItem+BorderedButton.h"
 
-@interface TextEditorViewController () <UITextViewDelegate>
+@interface TextEditorViewController () <UITextViewDelegate> {
+}
 
 @property (nonatomic) IBOutlet UITextView *textView;
 
@@ -38,6 +39,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
     
     UIButton *font = [UIButton buttonWithType:UIButtonTypeCustom];
     [font setTitle:NSLocalizedString(@"Font", @"").uppercaseString forState:UIControlStateNormal];
@@ -69,7 +72,14 @@
     [self typingAttributesChanged];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.textView becomeFirstResponder];
+    self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
+}
+
 - (void)dismiss {
+    self.textChanged(self.textView.attributedText);
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -78,17 +88,11 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:textView action:@selector(resignFirstResponder)];
-    [self.navigationItem setRightBarButtonItem:done animated:YES];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.textView.selectedRange = NSMakeRange(0, self.textView.text.length);
-    });
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    self.textChanged(self.textView.attributedText);
-    [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    // self.textChanged(self.textView.attributedText);
 }
 
 - (void)textViewDidChangeSelection:(UITextView *)textView {
@@ -181,7 +185,7 @@
         }
     }];
     
-    self.textChanged(self.textView.attributedText);
+    // self.textChanged(self.textView.attributedText);
 }
 
 @end

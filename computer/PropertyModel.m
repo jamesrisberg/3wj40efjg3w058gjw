@@ -10,6 +10,7 @@
 #import "ButtonsPropertyViewTableCell.h"
 #import "SliderPropertyViewTableCell.h"
 #import "StaticAnimationsPropertyTableViewCell.h"
+#import "TextPropertyTableViewCell.h"
 
 @implementation PropertyModel
 
@@ -20,6 +21,8 @@
         return [ButtonsPropertyViewTableCell class];
     } else if (_type == PropertyModelTypeStaticAnimation) {
         return [StaticAnimationsPropertyTableViewCell class];
+    } else if (_type == PropertyModelTypeText) {
+        return [TextPropertyTableViewCell class];
     }
     return [PropertyViewTableCell class];
 }

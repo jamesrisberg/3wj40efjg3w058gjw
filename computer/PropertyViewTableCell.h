@@ -23,4 +23,8 @@
 @property (nonatomic) id value;
 - (void)saveValue:(id)value;
 
+- (UIViewController *)viewControllerForModals;
+
++ (CGFloat)heightForModel:(PropertyModel *)model;
+
 @end

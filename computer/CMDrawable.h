@@ -38,7 +38,7 @@
 - (Class)keyframeClass;
 @property (nonatomic,readonly) NSString *key;
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
+- (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
 
 - (FrameTime *)maxTime;
 

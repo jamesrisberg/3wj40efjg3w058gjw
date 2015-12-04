@@ -13,7 +13,8 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
     PropertyModelTypeButtons,
     PropertyModelTypeFill,
     PropertyModelTypeColor,
-    PropertyModelTypeStaticAnimation
+    PropertyModelTypeStaticAnimation,
+    PropertyModelTypeText
 };
 
 @interface PropertyModel : NSObject

@@ -44,7 +44,7 @@
 
 + (void)_scaleAttributedString:(NSAttributedString *)str byScaleFactor:(CGFloat)scale output:(NSMutableAttributedString *)output {
     [str enumerateAttribute:NSFontAttributeName inRange:NSMakeRange(0, str.length) options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        UIFont *oldFont = value;
+        UIFont *oldFont = value ? : [UIFont systemFontOfSize:[UIFont systemFontSize]];
         UIFont *scaledFont = [oldFont fontWithSize:oldFont.pointSize * scale];
         [output removeAttribute:NSFontAttributeName range:range];
         [output addAttribute:NSFontAttributeName value:scaledFont range:range];

@@ -77,7 +77,12 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.singleView ? self.bounds.size.height : 44;
+    if (self.singleView) {
+        return self.bounds.size.height;
+    } else {
+        PropertyModel *model = self.properties[indexPath.section];
+        return [[model cellClass] heightForModel:model];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {

@@ -72,6 +72,10 @@
     }]];
 }
 
+- (NSArray<NSString*>*)keysForCoding {
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"photo", @"aspectRatio"]];
+}
+
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
     PropertyModel *actions = [PropertyModel new];
     actions.type = PropertyModelTypeButtons;

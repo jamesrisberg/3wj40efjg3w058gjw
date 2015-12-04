@@ -59,7 +59,7 @@
     return [CMDrawableKeyframe class];
 }
 
-- (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
+- (__kindof CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
     FrameTime *time = ctx.time;
     
     CMDrawableView *v = [existingOrNil isKindOfClass:[CMDrawableView class]] ? existingOrNil : [CMDrawableView new];

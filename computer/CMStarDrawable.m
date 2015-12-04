@@ -71,7 +71,7 @@
     valley.key = @"valley";
     valley.title = NSLocalizedString(@"Valley", @"");
     
-    return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[points, valley]];
+    return [@[points, valley] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
 }
 
 @end

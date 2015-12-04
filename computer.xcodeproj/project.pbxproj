@@ -54,6 +54,8 @@
 		5F6940ED1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */; };
 		5F6940F01C102A4000569335 /* CanvasViewerLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6940EF1C102A4000569335 /* CanvasViewerLite.m */; };
 		5F7C88731C114A0C0046020B /* CMStarDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88721C114A0C0046020B /* CMStarDrawable.m */; };
+		5F7C88761C1151AC0046020B /* CMTextDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88751C1151AC0046020B /* CMTextDrawable.m */; };
+		5F7C88791C1181CC0046020B /* TextPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -346,6 +348,10 @@
 		5F6940EF1C102A4000569335 /* CanvasViewerLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasViewerLite.m; sourceTree = "<group>"; };
 		5F7C88711C114A0C0046020B /* CMStarDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMStarDrawable.h; sourceTree = "<group>"; };
 		5F7C88721C114A0C0046020B /* CMStarDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMStarDrawable.m; sourceTree = "<group>"; };
+		5F7C88741C1151AC0046020B /* CMTextDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMTextDrawable.h; sourceTree = "<group>"; };
+		5F7C88751C1151AC0046020B /* CMTextDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMTextDrawable.m; sourceTree = "<group>"; };
+		5F7C88771C1181CC0046020B /* TextPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextPropertyTableViewCell.h; sourceTree = "<group>"; };
+		5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextPropertyTableViewCell.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -777,6 +783,8 @@
 				5F6940A91C0BCBA000569335 /* CMShapeDrawable.m */,
 				5F7C88711C114A0C0046020B /* CMStarDrawable.h */,
 				5F7C88721C114A0C0046020B /* CMStarDrawable.m */,
+				5F7C88741C1151AC0046020B /* CMTextDrawable.h */,
+				5F7C88751C1151AC0046020B /* CMTextDrawable.m */,
 				5F6940CF1C0EA1F900569335 /* CMPhotoDrawable.h */,
 				5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */,
 			);
@@ -802,6 +810,8 @@
 				5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */,
 				5F6940EB1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.h */,
 				5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */,
+				5F7C88771C1181CC0046020B /* TextPropertyTableViewCell.h */,
+				5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */,
 			);
 			name = "New properties UI";
 			sourceTree = "<group>";
@@ -1646,6 +1656,7 @@
 				5F8347541BF4138900721A2C /* PropertiesModal.m in Sources */,
 				5F809A561BE1C3740030B538 /* BitmapCropManipulator.m in Sources */,
 				5F809A961BE318240030B538 /* HJImagesToVideo.m in Sources */,
+				5F7C88761C1151AC0046020B /* CMTextDrawable.m in Sources */,
 				5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
 				5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */,
@@ -1653,6 +1664,7 @@
 				5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */,
 				5F858DB81BFBB8A3004E658E /* AlphaSlider.swift in Sources */,
 				5F858DB01BFBB8A3004E658E /* PatternView.swift in Sources */,
+				5F7C88791C1181CC0046020B /* TextPropertyTableViewCell.m in Sources */,
 				5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */,
 				5F858DE11BFCFE5A004E658E /* SwipeMenuView.m in Sources */,
 				5F858DB41BFBB8A3004E658E /* HueSlider.swift in Sources */,

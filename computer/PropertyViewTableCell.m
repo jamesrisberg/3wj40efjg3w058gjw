@@ -10,6 +10,7 @@
 #import "CMDrawable.h"
 #import "Keyframe.h"
 #import "PropertyModel.h"
+#import "computer-Swift.h"
 
 @interface PropertyViewTableCell () {
     CMTransaction *_transaction;
@@ -42,6 +43,8 @@
 
 - (void)saveValue:(id)value {
     if (!self.model.key) return;
+    
+    if ([value isEqual:self.value]) return;
     
     __weak PropertyViewTableCell *weakSelf = self;
     CMDrawable *drawable = self.drawables.firstObject; // TODO: multiple selection
@@ -81,6 +84,14 @@
             [drawable setValue:value forKey:weakSelf.model.key];
         }
     };
+}
+
+- (UIViewController *)viewControllerForModals {
+    return [NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject];
+}
+
++ (CGFloat)heightForModel:(PropertyModel *)model {
+    return 44;
 }
 
 @end
