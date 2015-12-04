@@ -7,15 +7,7 @@
 //
 
 #import "Drawable.h"
-
-typedef NS_ENUM(NSInteger, ParticlePreset) {
-    ParticlePresetFire,
-    ParticlePresetSnow,
-    ParticlePresetSparkle,
-    ParticlePresetMacaroni,
-    ParticlePresetSmoke,
-    ParticlePresetOrbs
-};
+#import "CMParticleDrawable.h"
 
 @interface ParticleDrawable : Drawable
 

@@ -23,6 +23,7 @@
 #import "CMShapeDrawable.h"
 #import "CMStarDrawable.h"
 #import "CMTextDrawable.h"
+#import "CMParticleDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -129,39 +130,39 @@
 }
 
 - (void)insertParticle {
-    /*UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetFire;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Sparkle", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetSparkle;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Snow", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetSnow;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Smoke", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetSmoke;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Colorful orbs", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetOrbs;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        ParticleDrawable *d = [ParticleDrawable new];
+        CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetMacaroni;
-        [self.editorVC.canvas insertDrawable:d];
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
-    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];*/
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
 }
 
 @end

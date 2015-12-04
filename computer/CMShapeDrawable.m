@@ -142,7 +142,7 @@
     strokeColor.key = @"strokePattern";
     strokeColor.type = PropertyModelTypeColor;
     
-    return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[fill, strokeColor, strokeWidth]];
+    return [@[fill, strokeColor, strokeWidth] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
 }
 
 - (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor {

@@ -74,4 +74,8 @@
     return [@[points, valley] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
 }
 
+- (NSString *)drawableTypeDisplayName {
+    return NSLocalizedString(@"Star", @"");
+}
+
 @end

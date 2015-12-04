@@ -44,7 +44,9 @@
 - (void)setSingleView:(BOOL)singleView {
     _singleView = singleView;
     self.scrollEnabled = !singleView;
-    [self reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    if (self.numberOfSections > 0 && [self numberOfRowsInSection:0] > 0) {
+        [self reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 #pragma mark Table
