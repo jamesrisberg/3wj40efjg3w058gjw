@@ -111,7 +111,7 @@
 }
 
 - (CGFloat)preferredAspectRatio {
-    [self.subcanvas resizeBoundsToFitContent]; // TODO: cache this; this is expensive AF!
+    // [self.subcanvas resizeBoundsToFitContent]; // TODO: cache this; this is expensive AF!
     if (self.rotatedCopies > 1) {
         return 1;
     } else {

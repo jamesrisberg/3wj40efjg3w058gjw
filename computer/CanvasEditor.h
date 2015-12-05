@@ -45,8 +45,6 @@
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL suppressTimingVisualizations;
 
-- (void)resizeBoundsToFitContent;
-
 - (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other;
 
 - (FrameTime *)duration;

@@ -457,40 +457,6 @@
     }
 }
 
-- (void)resizeBoundsToFitContent {
-    /*if (self.drawables.count > 0) {
-        CGFloat minX = MAXFLOAT;
-        CGFloat minY = MAXFLOAT;
-        CGFloat maxX = -MAXFLOAT;
-        CGFloat maxY = -MAXFLOAT;
-        for (Drawable *d in self.drawables) {
-            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
-                CGRect bounds = [keyframe.properties[@"bounds"] CGRectValue];
-                CGPoint center = [keyframe.properties[@"center"] CGPointValue];
-                CGFloat scale = [keyframe.properties[@"scale"] floatValue];
-                CGFloat rotation = [keyframe.properties[@"rotation"] floatValue];
-                CGRect bbox = NPBoundingBoxOfRotatedRect(bounds.size, center, rotation, scale);
-                minX = MIN(minX, bbox.origin.x);
-                minY = MIN(minY, bbox.origin.y);
-                maxX = MAX(maxX, CGRectGetMaxX(bbox));
-                maxY = MAX(maxY, CGRectGetMaxY(bbox));
-            }
-        }
-        CGFloat width = MAX(1, maxX - minX);
-        CGFloat height = MAX(1, maxY - minY);
-        self.bounds = CGRectMake(0, 0, width, height);
-        for (Drawable *d in self.drawables) {
-            [d.keyframeStore changePropertyAcrossTime:@"center" block:^id(id val) {
-                CGPoint c = [val CGPointValue];
-                return [NSValue valueWithCGPoint:CGPointMake(c.x - minX, c.y - minY)];
-            }];
-            // d.center = [[d.keyframeStore interpolatedPropertiesAtTime:self.time][@"center"] CGPointValue];
-        }
-    } else {
-        self.bounds = CGRectMake(0, 0, 1, 1);
-    }*/
-}
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.canvasView.frame = self.bounds;
