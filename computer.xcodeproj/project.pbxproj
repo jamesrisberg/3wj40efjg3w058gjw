@@ -58,6 +58,7 @@
 		5F7C88791C1181CC0046020B /* TextPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */; };
 		5F7C887C1C118DA00046020B /* FillPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */; };
 		5F7C887F1C12457D0046020B /* CMParticleDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C887E1C12457D0046020B /* CMParticleDrawable.m */; };
+		5F7C88821C1253650046020B /* CMVideoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88811C1253650046020B /* CMVideoDrawable.m */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -358,6 +359,8 @@
 		5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FillPropertyTableViewCell.m; sourceTree = "<group>"; };
 		5F7C887D1C12457D0046020B /* CMParticleDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMParticleDrawable.h; sourceTree = "<group>"; };
 		5F7C887E1C12457D0046020B /* CMParticleDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMParticleDrawable.m; sourceTree = "<group>"; };
+		5F7C88801C1253650046020B /* CMVideoDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVideoDrawable.h; sourceTree = "<group>"; };
+		5F7C88811C1253650046020B /* CMVideoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVideoDrawable.m; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -795,6 +798,8 @@
 				5F6940D01C0EA1F900569335 /* CMPhotoDrawable.m */,
 				5F7C887D1C12457D0046020B /* CMParticleDrawable.h */,
 				5F7C887E1C12457D0046020B /* CMParticleDrawable.m */,
+				5F7C88801C1253650046020B /* CMVideoDrawable.h */,
+				5F7C88811C1253650046020B /* CMVideoDrawable.m */,
 			);
 			name = "New drawables";
 			sourceTree = "<group>";
@@ -1733,6 +1738,7 @@
 				5F6940E71C0FAF1D00569335 /* SliderPropertyViewTableCell.m in Sources */,
 				5F6940D71C0F796400569335 /* PropertyModel.m in Sources */,
 				5FEAF8501B9AD96E0071BC08 /* AddSubtractToggle.swift in Sources */,
+				5F7C88821C1253650046020B /* CMVideoDrawable.m in Sources */,
 				5F6940ED1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m in Sources */,
 				5F858DB61BFBB8A3004E658E /* ColorExtensions.swift in Sources */,
 				5FD860A01C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m in Sources */,

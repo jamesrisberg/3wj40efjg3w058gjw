@@ -26,6 +26,7 @@
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL useFrameTimeForStaticAnimations;
 @property (nonatomic) BOOL renderMetaInfo;
+@property (nonatomic) BOOL forStaticScreenshot;
 
 @end
 

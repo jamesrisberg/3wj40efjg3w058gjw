@@ -577,6 +577,7 @@
     CMRenderContext *ctx = [CMRenderContext new];
     ctx.time = self.time;
     ctx.renderMetaInfo = YES;
+    ctx.forStaticScreenshot = self.preparedForStaticScreenshot;
     ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations;
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
 }

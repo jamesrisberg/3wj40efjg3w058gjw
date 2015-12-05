@@ -7,10 +7,9 @@
 //
 
 #import "EditorViewController+InsertMedia.h"
-// #import "PhotoDrawable.h"
 #import "CMMediaStore.h"
 #import "CMPhotoDrawable.h"
-// #import "VideoDrawable.h"
+#import "CMVideoDrawable.h"
 @import MobileCoreServices;
 @import AssetsLibrary;
 
@@ -45,6 +44,9 @@
 
 - (void)insertMovieAtURL:(NSURL *)url {
     [[CMMediaStore shared] storeMediaAtURL:url callback:^(CMMediaID *mediaID) {
+        CMVideoDrawable *v = [CMVideoDrawable new];
+        v.media = mediaID;
+        [self.canvas insertDrawableAtCurrentTime:v];
         /*VideoDrawable *d = [VideoDrawable new];
         d.frame = CGRectMake(0, 0, 250, 250);
         d.media = mediaID;
