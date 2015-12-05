@@ -16,6 +16,10 @@
 @property (nonatomic) Pattern *strokePattern;
 @property (nonatomic) CGFloat strokeWidth;
 
+@property (nonatomic) CGFloat aspectRatio;
+
+- (void)setPath:(UIBezierPath *)path usingTransactionStack:(CMTransactionStack *)stack updateAspectRatio:(BOOL)updateAspect;
+
 @end
 
 @interface CMShapeDrawableKeyframe : CMDrawableKeyframe

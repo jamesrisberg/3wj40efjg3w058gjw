@@ -94,7 +94,7 @@
     circle.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGRect r = CGRectMake(0, 0, 100, 100);
-        shape.path = [UIBezierPath bezierPathWithOvalInRect:r];
+        [shape setPath:[UIBezierPath bezierPathWithOvalInRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
         shape.strokeWidth = 2;
@@ -107,7 +107,7 @@
     square.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGRect r = CGRectMake(0, 0, 100, 100);
-        shape.path = [UIBezierPath bezierPathWithRect:r];
+        [shape setPath:[UIBezierPath bezierPathWithRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
         shape.strokeWidth = 2;
@@ -119,7 +119,6 @@
     star.icon = [UIImage imageNamed:@"Star"];
     star.action = ^{
         CMStarDrawable *d = [CMStarDrawable new];
-        d.pattern = [Pattern solidColor:[UIColor randomHue]];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
         d.strokePattern = [Pattern solidColor:[UIColor blackColor]];
         d.strokeWidth = 2;

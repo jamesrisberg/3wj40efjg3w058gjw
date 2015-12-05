@@ -106,7 +106,7 @@
         m.valueMax = 1;
     }
     
-    return [@[textStart, textEnd] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
+    return [@[textStart, textEnd] arrayByAddingObjectsFromArray:[super animatablePropertiesWithEditor:editor]];
 }
 
 @end

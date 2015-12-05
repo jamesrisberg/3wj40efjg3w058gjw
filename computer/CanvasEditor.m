@@ -16,6 +16,7 @@
 #import "computer-Swift.h"
 #import "CMDrawable.h"
 #import "CMCanvas.h"
+#import "CMPhotoDrawable.h"
 
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
@@ -146,16 +147,23 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [_touches addObjectsFromArray:touches.allObjects];
     
-    if (!_currentObjectMoveTransaction && self.singleSelection) {
+    BOOL hasValidOpenTransaction = !!_currentObjectMoveTransaction && !_currentObjectMoveTransaction.finalized;
+    if (!hasValidOpenTransaction && self.singleSelection) {
         CMDrawable *selection = self.singleSelection;
         CMDrawableKeyframe *existingKeyframe = [[self.singleSelection.keyframeStore keyframeAtTime:self.time] copy];
         FrameTime *time = self.time;
-        _currentObjectMoveTransaction = [[CMTransaction alloc] initNonFinalizedWithTarget:self action:^(id target) {
+        CGFloat oldAspectRatio = selection.aspectRatio;
+        CGFloat oldBoundsDiagonal = selection.boundsDiagonal;
+        _currentObjectMoveTransaction = [[CMTransaction alloc] initImplicitlyFinalizaledWhenTouchesEndWithTarget:self action:^(id target) {
             
         } undo:^(id target) {
             [selection.keyframeStore removeKeyframeAtTime:time];
             if (existingKeyframe) {
                 [selection.keyframeStore storeKeyframe:[existingKeyframe copy]];
+            }
+            selection.boundsDiagonal = oldBoundsDiagonal;
+            if ([selection respondsToSelector:@selector(setAspectRatio:)]) {
+                [(id)selection setAspectRatio:oldAspectRatio];
             }
         }];
         [self.transactionStack doTransaction:_currentObjectMoveTransaction];
@@ -232,17 +240,27 @@
         }];
     } else if (_touches.count == 3) {
         if (self.singleSelection) {
-            CMDrawableKeyframe *selectionKeyframe = [self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
-            // TODO: implement
+            CMDrawableKeyframe *selectionKeyframe = [[self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time] copy];
+            CMDrawableView *view = [self.canvasView viewForDrawable:self.singleSelection];
+            CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:view];
+            CGSize currentInternalSize = CMSizeWithDiagonalAndAspectRatio(self.singleSelection.boundsDiagonal, self.singleSelection.aspectRatio);
+            CGSize newInternalSize = CGSizeMake(currentInternalSize.width + (touchBounds.size.width - _previousTouchBoundsInSelection.size.width), currentInternalSize.height + (touchBounds.size.height - _previousTouchBoundsInSelection.size.height));
+            CGFloat newAspectRatio = (newInternalSize.width * newInternalSize.height) ? newInternalSize.width / newInternalSize.height : 1;
+            CGFloat newBoundsDiagonal = sqrt(pow(newInternalSize.width, 2) + pow(newInternalSize.height, 2));
+            CGPoint newCenter = CGPointMake(selectionKeyframe.center.x + CGRectGetMidX(touchBounds) - CGRectGetMidX(_previousTouchBoundsInSelection), selectionKeyframe.center.y + CGRectGetMidY(touchBounds) - CGRectGetMidY(_previousTouchBoundsInSelection));
             
-            /*
-            CGRect touchBounds = [self boundingRectForTouchesUsingCoordinateSpaceOfView:self.singleSelection];
-            CGSize internalSize = CGSizeMake(self.singleSelection.bounds.size.width + touchBounds.size.width - _previousTouchBoundsInSelection.size.width, self.singleSelection.bounds.size.height + touchBounds.size.height - _previousTouchBoundsInSelection.size.height);
-            [self.singleSelection setInternalSize:internalSize];
-            [self.singleSelection updatedKeyframeProperties];
-            _previousTouchBoundsInSelection = touchBounds;
+            selectionKeyframe.center = newCenter;
             
-            [self.singleSelection updatedKeyframeProperties];*/
+            _currentObjectMoveTransaction.action = ^(id target) {
+                [singleSelection.keyframeStore storeKeyframe:selectionKeyframe];
+                singleSelection.boundsDiagonal = newBoundsDiagonal;
+                if ([singleSelection respondsToSelector:@selector(setAspectRatio:)]) {
+                    [(id)singleSelection setAspectRatio:newAspectRatio];
+                }
+            };
+            
+            [self.singleSelection renderToView:view context:[self createRenderContext]];
+            _previousTouchBoundsInSelection = [self boundingRectForTouchesUsingCoordinateSpaceOfView:view];
         }
     }
 }
@@ -250,9 +268,6 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     for (id touch in touches) [_touches removeObject:touch];
     [self updateForceReading];
-    
-    _currentObjectMoveTransaction.finalized = YES;
-    _currentObjectMoveTransaction = nil;
 }
 
 - (void)updateForceReading {
@@ -539,13 +554,17 @@
     return !!_displayLink;
 }
 
-- (void)render {
+- (CMRenderContext *)createRenderContext {
     CMRenderContext *ctx = [CMRenderContext new];
     ctx.time = self.time;
     ctx.renderMetaInfo = YES;
     ctx.forStaticScreenshot = self.preparedForStaticScreenshot;
     ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations;
-    self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
+    return ctx;
+}
+
+- (void)render {
+    self.canvasView = (id)[self.canvas renderToView:self.canvasView context:[self createRenderContext]];
 }
 
 @end

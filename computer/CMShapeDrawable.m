@@ -97,7 +97,7 @@
 @implementation CMShapeDrawable
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokePattern", @"pattern", @"path"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokePattern", @"pattern", @"path", @"aspectRatio"]];
 }
 
 - (UIView *)renderToView:(UIView *)existingOrNil context:(CMRenderContext *)ctx {
@@ -175,6 +175,22 @@
     return NSLocalizedString(@"Shape", @"");
 }
 
+- (void)setPath:(UIBezierPath *)path usingTransactionStack:(CMTransactionStack *)stack updateAspectRatio:(BOOL)updateAspect {
+    UIBezierPath *oldPath = self.path;
+    CGFloat oldAspectRatio = self.aspectRatio;
+    [stack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+        self.path = path;
+        CGRect bounds = path.bounds;
+        if (updateAspect) {
+            self.aspectRatio = bounds.size.height ? bounds.size.width / bounds.size.height : 1;
+        } else {
+            self.aspectRatio = oldAspectRatio;
+        }
+    } undo:^(id target) {
+        self.path = oldPath;
+        self.aspectRatio = oldAspectRatio;
+    }]];
+}
 
 @end
 

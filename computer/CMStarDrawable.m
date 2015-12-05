@@ -15,6 +15,7 @@
     self = [super init];
     self.numberOfPoints = 5;
     self.valley = 0.5;
+    self.aspectRatio = 1;
     return self;
 }
 
