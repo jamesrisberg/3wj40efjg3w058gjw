@@ -10,6 +10,9 @@
 #import <ReactiveCocoa.h>
 #import "CMMediaStore.h"
 @import AVFoundation;
+#import "PropertyViewTableCell.h"
+#import "computer-Swift.h"
+#import "FilterPickerViewController.h"
 
 @interface _CMVideoDrawableView : CMDrawableView
 
@@ -200,6 +203,30 @@
 
 - (CGFloat)aspectRatio {
     return _videoSize.width * _videoSize.height ? _videoSize.width / _videoSize.height : 1;
+}
+
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
+    PropertyModel *actions = [PropertyModel new];
+    actions.type = PropertyModelTypeButtons;
+    actions.title = NSLocalizedString(@"Actions", @"");
+    actions.buttonTitles = @[NSLocalizedString(@"Filter", @"")];
+    actions.buttonSelectorNames = @[@"filter:"];
+    
+    return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[actions]];
+}
+
+- (void)filter:(PropertyViewTableCell *)sender {
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:[FilterPickerViewController filterPickerWithMediaID:self.media callback:^(CMMediaID *newMediaID) {
+        [sender.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+            self.media = newMediaID;
+        } undo:^(id target) {
+            NSLog(@"Video filtering operations can't be undone yet");
+        }]];
+    }] animated:YES completion:nil];
+}
+
+- (NSString *)drawableTypeDisplayName {
+    return NSLocalizedString(@"Video", @"");
 }
 
 @end
