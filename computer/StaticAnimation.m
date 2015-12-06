@@ -124,6 +124,14 @@
     }
 }
 
+- (NSString *)description {
+    NSMutableDictionary *d = [NSMutableDictionary new];
+    for (NSString *key in [self valuesToEncode]) {
+        d[key] = [self valueForKey:key];
+    }
+    return [NSString stringWithFormat:@"<StaticAnimation: %@>", d];
+}
+
 #pragma mark Copy
 
 - (id)copy {

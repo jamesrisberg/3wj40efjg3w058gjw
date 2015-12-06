@@ -36,6 +36,7 @@
         self.shape.boundsDiagonal = 30;
         UIBezierPath *p = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, 10)];
         self.shape.path = p;
+        self.shape.aspectRatio = 1;
         self.shape.pattern = [Pattern solidColor:[UIColor redColor]];
         
         self.backgroundColor = [UIColor whiteColor];
@@ -124,6 +125,7 @@
 - (void)setAnimation:(StaticAnimation *)animation {
     _animation = animation;
     if (!_setupYet) [self setup];
+    [self updateAnimationCellSelections];
 }
 
 #pragma mark Layout
@@ -169,7 +171,6 @@
         [newAnimationDict removeAnimationDict:animationDict];
     }
     self.animation = newAnimationDict;
-    [self updateAnimationCellSelections];
     self.animationDidChange();
 }
 

@@ -94,8 +94,8 @@ static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"
 }
 
 - (void)_transactionDidUpdate:(CMTransaction *)t {
-    [[NSNotificationCenter defaultCenter] postNotificationName:CMTransactionStackDidExecuteTransactionNotification object:self];
     t.action(t.target);
+    [[NSNotificationCenter defaultCenter] postNotificationName:CMTransactionStackDidExecuteTransactionNotification object:self];
 }
 
 - (NSInteger)maxStackDepth {

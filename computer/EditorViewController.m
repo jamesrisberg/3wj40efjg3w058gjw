@@ -218,7 +218,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     BOOL wasAlreadyPreparedForSnapshot = self.canvas.preparedForStaticScreenshot;
     self.canvas.preparedForStaticScreenshot = YES;
     UIGraphicsBeginImageContext(self.canvas.bounds.size);
-    [self.canvas drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:YES];
+    // TODO: force render now
+    [self.canvas.canvasView drawViewHierarchyInRect:self.canvas.bounds afterScreenUpdates:YES];
     UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     self.canvas.preparedForStaticScreenshot = wasAlreadyPreparedForSnapshot;
