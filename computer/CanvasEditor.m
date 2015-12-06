@@ -17,6 +17,7 @@
 #import "CMDrawable.h"
 #import "CMCanvas.h"
 #import "CMPhotoDrawable.h"
+#import "SelectionIndicatorView.h"
 
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
@@ -39,6 +40,8 @@
     CADisplayLink *_displayLink;
     
     CMTransaction *_currentObjectMoveTransaction;
+    
+    NSMutableArray<SelectionIndicatorView *> *_selectionViews;
 }
 
 @property (nonatomic,readonly) CMDrawable *singleSelection;
@@ -79,6 +82,8 @@
 }
 
 - (void)setup {
+    _selectionViews = [NSMutableArray new];
+    
     self.transactionStack = [CMTransactionStack new];
     
     _touches = [NSMutableSet new];
@@ -565,6 +570,28 @@
 
 - (void)render {
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:[self createRenderContext]];
+    
+    while (_selectionViews.count > _selectedItems.count) {
+        [_selectionViews.lastObject removeFromSuperview];
+        [_selectionViews removeLastObject];
+    }
+    
+    while (_selectionViews.count < _selectedItems.count) {
+        SelectionIndicatorView *v = [SelectionIndicatorView new];
+        [self addSubview:v];
+        [_selectionViews addObject:v];
+    }
+    
+    NSArray *allSelectedItems = _selectedItems.allObjects;
+    for (NSInteger i=0; i<_selectionViews.count; i++) {
+        SelectionIndicatorView *selectionView = _selectionViews[i];
+        CMDrawable *d = allSelectedItems[i];
+        CMDrawableView *view = [_canvasView viewForDrawable:d];
+        CMDrawableKeyframe *keyframe = [d.keyframeStore keyframeAtTime:self.time];
+        selectionView.bounds = CGRectMake(0, 0, view.bounds.size.width * keyframe.scale, view.bounds.size.height * keyframe.scale);
+        selectionView.center = [self convertPoint:view.center fromView:view.superview];
+        selectionView.transform = CGAffineTransformMakeRotation(keyframe.rotation);
+    }
 }
 
 @end

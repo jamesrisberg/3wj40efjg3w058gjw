@@ -803,7 +803,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (void)exporter:(Exporter *)exporter drawFrameAtTime:(FrameTime *)time inRect:(CGRect)drawIntoRect {
     [self.timeline scrollToTime:time.time animated:NO];
     self.canvas.time = time;
-    [self.canvas drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
+    [self.canvas.canvasView drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
 }
 
 - (void)exporter:(Exporter *)exporter updateProgress:(double)progress {

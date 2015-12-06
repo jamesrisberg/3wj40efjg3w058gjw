@@ -12,7 +12,7 @@
 #import "CMTransaction.h"
 @class CMCanvas, CMDrawable;
 
-@class CanvasEditor;
+@class CanvasEditor, _CMCanvasView;
 @protocol CanvasDelegate <NSObject>
 
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas;
@@ -60,6 +60,8 @@
 @property (nonatomic,readonly) CMTransactionStack *transactionStack;
 
 - (UIViewController *)vcForModals;
+
+@property (nonatomic,readonly) _CMCanvasView *canvasView;
 
 #pragma mark Actions
 
