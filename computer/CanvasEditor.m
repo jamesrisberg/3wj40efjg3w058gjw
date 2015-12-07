@@ -141,9 +141,16 @@
 
 - (void)longPress:(UILongPressGestureRecognizer *)rec {
     if (rec.state == UIGestureRecognizerStateBegan) {
-        CMDrawable *topDrawable = [self allHitsAtPoint:[_touches.anyObject locationInView:self]].lastObject;
-        CMDrawableView *topView = [self.canvasView viewForDrawable:topDrawable];
-        self.editorShapeStackList.drawables = [self allItemsOverlappingView:topView];
+        NSArray<CMDrawable*> *hitsAtPoint = [self allHitsAtPoint:[_touches.anyObject locationInView:self]];
+        CMDrawable *topDrawable = hitsAtPoint.lastObject;
+        NSArray<CMDrawable*> *drawablesOverlappingTopHit = [self.canvasView allItemsOverlappingDrawable:topDrawable withCanvas:self.canvas];
+        NSMutableSet *drawablesToShow = [NSMutableSet new];
+        [drawablesToShow addObjectsFromArray:hitsAtPoint];
+        [drawablesToShow addObjectsFromArray:drawablesOverlappingTopHit];
+        
+        self.editorShapeStackList.canvasView = self.canvasView;
+        self.editorShapeStackList.canvas = self.canvas;
+        self.editorShapeStackList.drawables = drawablesToShow.allObjects;
         [self.editorShapeStackList show];
         [self updateForceReading];
     }
@@ -308,17 +315,6 @@
 
 - (NSArray<CMDrawable*> *)allHitsAtPoint:(CGPoint)pos {
     return [self.canvasView hitsAtPoint:pos withCanvas:self.canvas];
-}
-
-- (NSArray *)allItemsOverlappingView:(UIView *)view {
-    NSMutableArray *hits = [NSMutableArray new];
-    for (Drawable *d in self.subviews.reverseObjectEnumerator) {
-        if (![d isKindOfClass:[Drawable class]]) continue;
-        if (CGRectIntersectsRect(view.frame, d.frame)) { // TODO: fuck transform math
-            [hits addObject:d];
-        }
-    }
-    return hits;
 }
 
 - (CMDrawable *)doHitTest:(CGPoint)pos {

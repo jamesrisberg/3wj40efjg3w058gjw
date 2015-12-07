@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Drawable;
+@class CMDrawable, _CMCanvasView, CMCanvas;
 
 @interface ShapeStackList : UIView
 
-@property (nonatomic) NSArray *drawables;
-@property (nonatomic,copy) void (^onDrawableSelected)(Drawable *drawable);
+@property (nonatomic,weak) _CMCanvasView *canvasView;
+@property (nonatomic,weak) CMCanvas *canvas;
+
+// set this _after_ setting canvasView and canvas
+// will automatically be sorted in reverse-z order
+@property (nonatomic) NSArray<CMDrawable*> *drawables;
+
+@property (nonatomic,copy) void (^onDrawableSelected)(CMDrawable *drawable);
 - (void)show;
 - (void)hide;
-- (BOOL)shown;
 
 @end

@@ -19,6 +19,8 @@
 
 @interface CMDrawableView : UIView
 
+- (CGRect)unrotatedBoundingBox;
+
 @end
 
 @interface CMRenderContext : NSObject

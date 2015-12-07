@@ -7,7 +7,8 @@
 //
 
 #import "ShapeStackList.h"
-#import "Drawable.h"
+#import "CMDrawable.h"
+#import "CMCanvas.h"
 
 #define SnapshotViewTag 37985
 #define CellHeight 50
@@ -39,7 +40,13 @@
     return self;
 }
 
-- (void)setDrawables:(NSArray *)drawables {
+- (void)setDrawables:(NSArray<CMDrawable*> *)drawables {
+    // sort drawables in table order (reverse z order)
+    drawables = [drawables sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger z1 = [self.canvas.contents indexOfObject:obj1];
+        NSInteger z2 = [self.canvas.contents indexOfObject:obj2];
+        return z2 - z1;
+    }];
     _drawables = drawables;
     if (!self.tableView) {
         self.tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
@@ -93,11 +100,12 @@
     
     for (UITableViewCell *cell in self.tableView.visibleCells.reverseObjectEnumerator) {
         UIView *snapshotInCell = [cell viewWithTag:SnapshotViewTag];
-        Drawable *drawable = self.drawables[[self.tableView indexPathForCell:cell].row];
-        UIView *snapshotInRoot = [drawable snapshotViewAfterScreenUpdates:NO];
+        CMDrawable *drawable = self.drawables[[self.tableView indexPathForCell:cell].row];
+        CMDrawableView *drawableView = [self.canvasView viewForDrawable:drawable];
+        UIView *snapshotInRoot = [drawableView snapshotViewAfterScreenUpdates:NO];
         [animationRootView addSubview:snapshotInRoot];
-        snapshotInRoot.center = [animationRootView convertPoint:drawable.center fromView:drawable.superview];
-        snapshotInRoot.transform = drawable.transform;
+        snapshotInRoot.center = [animationRootView convertPoint:drawableView.center fromView:drawableView.superview];
+        snapshotInRoot.transform = drawableView.transform;
         
         snapshotInCell.hidden = YES;
         [UIView animateWithDuration:flyDuration delay:fadeDuration options:0 animations:^{
@@ -163,8 +171,9 @@
     UIView *oldSnapshot = [cell viewWithTag:SnapshotViewTag];
     [oldSnapshot removeFromSuperview];
     
-    Drawable *drawable = self.drawables[indexPath.row];
-    UIView *snapshot = [drawable snapshotViewAfterScreenUpdates:NO];
+    CMDrawable *drawable = self.drawables[indexPath.row];
+    CMDrawableView *drawableView = [self.canvasView viewForDrawable:drawable];
+    UIView *snapshot = [drawableView snapshotViewAfterScreenUpdates:NO];
     [cell addSubview:snapshot];
     
     cell.showsReorderControl = YES;
@@ -189,21 +198,22 @@
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
     NSMutableArray *drawables = self.drawables.mutableCopy;
-    Drawable *d = drawables[sourceIndexPath.row];
+    CMDrawable *d = drawables[sourceIndexPath.row];
     [drawables removeObject:d];
     [drawables insertObject:d atIndex:destinationIndexPath.row];
     _drawables = drawables;
     
     NSArray *drawablesInViewOrder = drawables.reverseObjectEnumerator.allObjects;
+    
     NSInteger destinationIndex = drawablesInViewOrder.count - 1 - destinationIndexPath.row;
     if (destinationIndex == 0 && drawablesInViewOrder.count > 1) {
-        Drawable *drawableAboveThisOne = drawablesInViewOrder[1];
-        [d removeFromSuperview];
-        [drawableAboveThisOne.superview insertSubview:d belowSubview:drawableAboveThisOne];
+        CMDrawable *drawableAboveThisOne = drawablesInViewOrder[1];
+        [self.canvas.contents removeObject:d];
+        [self.canvas.contents insertObject:d atIndex:[self.canvas.contents indexOfObject:drawableAboveThisOne]];
     } else if (destinationIndex > 0) {
-        Drawable *drawableBelowThisOne = drawablesInViewOrder[destinationIndex-1];
-        [d removeFromSuperview];
-        [drawableBelowThisOne.superview insertSubview:d aboveSubview:drawableBelowThisOne];
+        CMDrawableView *drawableBelowThisOne = drawablesInViewOrder[destinationIndex-1];
+        [self.canvas.contents removeObject:d];
+        [self.canvas.contents insertObject:d atIndex:[self.canvas.contents indexOfObject:drawableBelowThisOne] + 1];
     }
 }
 

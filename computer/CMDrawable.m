@@ -217,4 +217,8 @@
 
 @implementation CMDrawableView
 
+- (CGRect)unrotatedBoundingBox {
+    return self.frame; // TODO: math
+}
+
 @end

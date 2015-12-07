@@ -118,8 +118,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.shapeStackList = [[ShapeStackList alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:self.shapeStackList];
     self.shapeStackList.hidden = YES;
-    self.shapeStackList.onDrawableSelected = ^(Drawable *drawable){
-        // TODO: CMMigration
+    self.shapeStackList.onDrawableSelected = ^(CMDrawable *drawable){
         [weakSelf.canvas userGesturedToSelectDrawable:drawable];
     };
     

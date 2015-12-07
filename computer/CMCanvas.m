@@ -58,6 +58,19 @@
     }];
 }
 
+- (NSArray<CMDrawable*> *)allItemsOverlappingDrawable:(CMDrawable *)d withCanvas:(CMCanvas *)associatedCanvas {
+    CMDrawableView *v = [self viewForDrawable:d];
+    CGRect bbox = v.unrotatedBoundingBox;
+    return [associatedCanvas.contents map:^id(id obj) {
+        CMDrawableView *v2 = [self viewForDrawable:obj];
+        if (CGRectIntersectsRect(v2.unrotatedBoundingBox, bbox)) {
+            return obj;
+        } else {
+            return nil;
+        }
+    }];
+}
+
 - (CMDrawableView *)viewForDrawable:(CMDrawable *)drawable {
     return self.viewsByKey[drawable.key];
 }
