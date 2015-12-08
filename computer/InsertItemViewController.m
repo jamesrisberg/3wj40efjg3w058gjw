@@ -81,13 +81,7 @@
     QuickCollectionItem *pen = [QuickCollectionItem new];
     pen.icon = [UIImage imageNamed:@"Pen"];
     pen.action = ^{
-        ShapeDrawable *d = [ShapeDrawable new];
-        d.pattern = nil;
-        d.path = nil;
-        d.strokeColor = [UIColor randomHue];
-        d.strokeWidth = 2;
-        // [weakSelf.editorVC.canvas insertDrawable:d];
-        [weakSelf.editorVC startFreehandDrawingToShape:d];
+        [weakSelf.editorVC startFreehandDrawing];
     };
     QuickCollectionItem *circle = [QuickCollectionItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];

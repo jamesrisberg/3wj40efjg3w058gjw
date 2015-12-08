@@ -23,6 +23,7 @@
 @property (nonatomic) BOOL displayAsSelected;
 @property (nonatomic) CanvasViewerLite *preview;
 @property (nonatomic) CMShapeDrawable *shape;
+@property (nonatomic,copy) void(^onTap)();
 
 @end
 
@@ -47,6 +48,8 @@
         self.layer.borderWidth = 3;
         self.layer.borderColor = [UIColor clearColor].CGColor;
         self.layer.cornerRadius = 5;
+        
+        [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)]];
     }
     StaticAnimation *anim = [StaticAnimation new];
     [anim addAnimationDict:animationDict];
@@ -68,6 +71,10 @@
     CMShapeDrawableKeyframe *kf = [self.shape.keyframeStore interpolatedKeyframeAtTime:[[FrameTime alloc] initWithFrame:0 atFPS:1]];
     kf.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     [self.shape.keyframeStore storeKeyframe:kf];
+}
+
+- (void)tapped:(UITapGestureRecognizer *)sender {
+    self.onTap();
 }
 
 @end
@@ -155,22 +162,23 @@
     StaticAnimationPreview *cell = (StaticAnimationPreview *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.animationDict = animationDict;
     cell.displayAsSelected = [self.animation matchesAnimationDict:animationDict];
+    __weak StaticAnimationPicker *weakSelf = self;
+    cell.onTap = ^{
+        [weakSelf toggleAnimationDict:animationDict];
+    };
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSArray *section = _sections[indexPath.section];
-    NSDictionary *animationDict = section[indexPath.item];
-    
-    StaticAnimationPreview *cell = (StaticAnimationPreview *)[collectionView cellForItemAtIndexPath:indexPath];
-    BOOL enable = !cell.displayAsSelected;
-    StaticAnimation *newAnimationDict = self.animation.copy;
+- (void)toggleAnimationDict:(NSDictionary *)animationDict {
+    StaticAnimation *newAnimation = self.animation.copy;
+    BOOL wasEnabled = [self.animation matchesAnimationDict:animationDict];
+    BOOL enable = !wasEnabled;
     if (enable) {
-        [newAnimationDict addAnimationDict:animationDict];
+        [newAnimation addAnimationDict:animationDict];
     } else {
-        [newAnimationDict removeAnimationDict:animationDict];
+        [newAnimation removeAnimationDict:animationDict];
     }
-    self.animation = newAnimationDict;
+    self.animation = newAnimation;
     self.animationDidChange();
 }
 

@@ -481,6 +481,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         EditorMode oldMode = _mode;
         _mode = mode;
         
+        if (oldMode == EditorModeDrawing) {
+            FreehandInputView *input = (id)self.transientOverlayView;
+            [input insertWithCanvasEditor:self.canvas];
+        }
+        
         self.transientOverlayView = nil;
         self.toolbarView = self.iconBar;
         
@@ -525,6 +530,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             [toolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
             toolbar.tintColor = [UIColor whiteColor];
             self.toolbarView = toolbar;
+            FreehandInputView *inputView = [FreehandInputView new];
+            self.transientOverlayView = inputView;
         } else if (mode == EditorModeTimeline) {
             self.timeline = [TimelineView new];
             self.toolbarView = self.timeline;
@@ -586,23 +593,19 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Freehand Drawing
 
-- (void)startFreehandDrawingToShape:(ShapeDrawable *)shape {
+- (void)startFreehandDrawing {
     self.mode = EditorModeDrawing;
-    
-    FreehandInputView *inputView = [FreehandInputView new];
-    inputView.shape = shape;
-    self.transientOverlayView = inputView;
 }
 
 - (void)editFreehandStrokeStyle {
     FreehandInputView *iv = (id)self.transientOverlayView;
     if ([iv isKindOfClass:[FreehandInputView class]]) {
         StrokePickerViewController *picker = [[StrokePickerViewController alloc] init];
-        picker.width = iv.shape.strokeWidth;
-        picker.color = iv.shape.strokeColor;
+        picker.width = iv.strokeWidth;
+        picker.color = iv.strokeColor;
         picker.onChange = ^(CGFloat width, UIColor *color) {
-            iv.shape.strokeWidth = width;
-            iv.shape.strokeColor = color;
+            iv.strokeWidth = width;
+            iv.strokeColor = color;
         };
         [NPSoftModalPresentationController presentViewController:picker fromViewController:self];
     }

@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 
 @property (nonatomic, readonly) CanvasEditor *canvas;
 - (void)showOptions;
-- (void)startFreehandDrawingToShape:(ShapeDrawable *)shape;
+- (void)startFreehandDrawing;
 @property (nonatomic) EditorMode mode;
 - (void)enterSelectionMode;
 

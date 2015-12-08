@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-@class ShapeDrawable;
+@class ShapeDrawable, CanvasEditor;
 
 @interface FreehandInputView : UIView
 
-@property (nonatomic) ShapeDrawable *shape;
+@property (nonatomic) UIBezierPath *path;
+@property (nonatomic) UIColor *strokeColor;
+@property (nonatomic) CGFloat strokeWidth;
 
 - (void)undoLastStroke;
+
+- (void)insertWithCanvasEditor:(CanvasEditor *)c;
 
 @end

@@ -8,19 +8,69 @@
 
 #import "FreehandInputView.h"
 #import "ShapeDrawable.h"
+#import "CMCanvas.h"
+#import "CMTransaction.h"
+#import "CMShapeDrawable.h"
+#import "CanvasEditor.h"
+#import "CGPointExtras.h"
+#import "computer-Swift.h"
 
-@interface FreehandInputView ()
-
-@property (nonatomic) UIBezierPath *path;
-@property (nonatomic) NSMutableArray *previewStrokeStack;
+@interface FreehandInputView () {
+    CMTransactionStack *_stack;
+    CMTransaction *_current;
+}
 
 @end
 
 @implementation FreehandInputView
 
+- (instancetype)init {
+    self = [super init];
+    self.strokeWidth = 2;
+    self.strokeColor = [UIColor blackColor];
+    _stack = [CMTransactionStack new];
+    self.path = [UIBezierPath bezierPath];
+    [self shapeLayer].fillColor = nil;
+    return self;
+}
+
+#pragma mark Shape Layer
+
++ (Class)layerClass {
+    return [CAShapeLayer class];
+}
+
+- (CAShapeLayer *)shapeLayer {
+    return (id)self.layer;
+}
+
+- (void)setPath:(UIBezierPath *)path {
+    _path = path;
+    [self shapeLayer].path = path.CGPath;
+}
+
+- (void)setStrokeColor:(UIColor *)strokeColor {
+    _strokeColor = strokeColor;
+    [self shapeLayer].strokeColor = strokeColor.CGColor;
+}
+
+- (void)setStrokeWidth:(CGFloat)strokeWidth {
+    _strokeWidth = strokeWidth;
+    [self shapeLayer].lineWidth = strokeWidth;
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    self.path = self.shape.path.copy ? : [UIBezierPath bezierPath];
-    [self.path moveToPoint:[[touches anyObject] locationInView:self.shape]];
+    CGPoint p = [touches.anyObject locationInView:self];
+    __weak FreehandInputView *weakSelf = self;
+    UIBezierPath *oldPath = self.path;
+    UIBezierPath *newPath = oldPath.copy;
+    [newPath moveToPoint:p];
+    _current = [[CMTransaction alloc] initImplicitlyFinalizaledWhenTouchesEndWithTarget:self action:^(id target) {
+        weakSelf.path = newPath;
+    } undo:^(id target) {
+        weakSelf.path = oldPath;
+    }];
+    [_stack doTransaction:_current];
 }
 
 /*- (void)touchesEstimatedPropertiesUpdated:(NSSet *)touches {
@@ -28,38 +78,35 @@
 }*/
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
-    NSMutableArray *points = [NSMutableArray new];
-    [points addObjectsFromArray:[event coalescedTouchesForTouch:touch]];
-    [points addObject:touch];
-    for (UITouch *touch in points) {
-        [self.path addLineToPoint:[touch locationInView:self.shape]];
-    }
-    [self.shape _setPathWithoutFittingContent:self.path];
+    CGPoint p = [touches.anyObject locationInView:self];
+    UIBezierPath *path = self.path.copy;
+    [path addLineToPoint:p];
+    __weak FreehandInputView *weakSelf = self;
+    _current.action = ^(id target) {
+        weakSelf.path = path;
+    };
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    self.shape.path = self.path;
     
-    if (!self.previewStrokeStack) {
-        self.previewStrokeStack = [NSMutableArray new];
-        [self.previewStrokeStack addObject:[UIBezierPath bezierPath]];
-    }
-    [self.previewStrokeStack addObject:self.shape.path];
-    while (self.previewStrokeStack.count > 10) {
-        [self.previewStrokeStack removeObjectAtIndex:0];
-    }
-}
-
-- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    self.shape.path = self.path;
 }
 
 - (void)undoLastStroke {
-    if (self.previewStrokeStack.count >= 2) {
-        [self.previewStrokeStack removeLastObject];
-        self.shape.path = self.previewStrokeStack.lastObject;
-    }
+    [_stack undo];
+}
+
+- (void)insertWithCanvasEditor:(CanvasEditor *)c {
+    CGRect bounds = self.path.bounds;
+    CMShapeDrawable *shape = [CMShapeDrawable new];
+    shape.strokeWidth = self.strokeWidth;
+    shape.strokePattern = [Pattern solidColor:self.strokeColor];
+    shape.path = self.path;
+    shape.aspectRatio = bounds.size.height ? bounds.size.width / bounds.size.height : 1;
+    shape.boundsDiagonal = CGRectDiagonal(bounds);
+    CMShapeDrawableKeyframe *keyframe = [shape.keyframeStore createKeyframeAtTimeIfNeeded:c.time];
+    keyframe.center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+    [shape.keyframeStore storeKeyframe:keyframe];
+    [c.canvas.contents addObject:shape];
 }
 
 @end

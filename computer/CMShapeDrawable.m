@@ -96,6 +96,15 @@
 
 @implementation CMShapeDrawable
 
+- (instancetype)init {
+    self = [super init];
+    self.aspectRatio = 1;
+    self.pattern = [Pattern solidColor:[UIColor clearColor]];
+    self.strokeWidth = 0;
+    self.strokePattern = [Pattern solidColor:[UIColor blackColor]];
+    return self;
+}
+
 - (NSArray<NSString*>*)keysForCoding {
     return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"strokeWidth", @"strokePattern", @"pattern", @"path", @"aspectRatio"]];
 }
