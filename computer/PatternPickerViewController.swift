@@ -53,7 +53,10 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
             hue.onHueChanged = {
                 [weak self]
                 (hue) in
-                let (_,s,v,a) = self!.color.hsva
+                var (_,s,v,a) = self!.color.hsva
+                if s == 0 { s = 1 }
+                if v == 0 { v = 1 }
+                if a == 0 { a = 1 }
                 self!._updateColor(UIColor(hue: CGFloat(hue), saturation: s, brightness: v, alpha: a))
             }
             satVal.onSatValChanged = {

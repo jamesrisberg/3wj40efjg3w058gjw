@@ -53,7 +53,16 @@ class PatternPickerView: UIView {
             [weak self]
             (hue) in
             if let p = self {
-                let (_, s, v, a) = p.pattern.primaryColor.hsva
+                var (_, s, v, a) = p.pattern.primaryColor.hsva
+                if s == 0 {
+                    s = 1
+                }
+                if v == 0 {
+                    v = 1
+                }
+                if a == 0 {
+                    a = 1
+                }
                 let newPrimaryColor = UIColor(hue: CGFloat(hue), saturation: s, brightness: v, alpha: a)
                 let pattern = Pattern(type: p.pattern.type, primaryColor: newPrimaryColor, secondaryColor: p.pattern.secondaryColor)
                 p._updatePattern(pattern)
