@@ -414,33 +414,21 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if ([self isScrollViewMoving:scrollView]) {
         
-        CGPoint correctedOffset = CGPointMake(scrollView.contentOffset.x / scrollView.zoomScale, scrollView.contentOffset.y / scrollView.zoomScale);
-        CGPoint translation = CGPointMake(correctedOffset.x - _scrollViewPreviousContentOffset.x, correctedOffset.y - _scrollViewPreviousContentOffset.y);
-        _scrollViewPreviousContentOffset = correctedOffset;
         CGFloat zoom = scrollView.zoomScale / _scrollViewPreviousZoomScale;
         _scrollViewPreviousZoomScale = scrollView.zoomScale;
         
-        CGPoint zoomCenter = [scrollView.pinchGestureRecognizer locationInView:self.canvas];
+        CGPoint translation = CGPointZero;
+        if (!scrollView.isZooming || scrollView.isZoomBouncing) {
+            translation = CGPointMake(scrollView.contentOffset.x - _scrollViewPreviousContentOffset.x, scrollView.contentOffset.y - _scrollViewPreviousContentOffset.y);
+        }
+        _scrollViewPreviousContentOffset = scrollView.contentOffset;
         
-        CGPoint originOffsetFromPinch = CGPointMake(-zoomCenter.x, -zoomCenter.y);
-        CGPoint newOriginOffsetFromPinch = CGPointMake(-zoomCenter.x * zoom, -zoomCenter.y * zoom);
-        CGPoint translationCorrection = CGPointMake(newOriginOffsetFromPinch.x - originOffsetFromPinch.x, newOriginOffsetFromPinch.y - originOffsetFromPinch.y);
-        translationCorrection = CGPointScale(translationCorrection, 1.0 / scrollView.zoomScale);
+        CGFloat translationScale = self.canvas.screenSpan / self.canvas.bounds.size.width;
         
-        /*for (Drawable *d in self.canvas.subviews) {
-            for (Keyframe *keyframe in d.keyframeStore.allKeyframes) {
-                CGPoint center = [keyframe.properties[@"center"] CGPointValue];
-                CGFloat scale = [keyframe.properties[@"scale"] floatValue];
-                CGPoint offsetFromPinch = CGPointMake(center.x - zoomCenter.x, center.y - zoomCenter.y);
-                CGPoint newOffsetFromPinch = CGPointMake(offsetFromPinch.x * zoom, offsetFromPinch.y * zoom);
-                CGPoint newCenter = CGPointMake(center.x - translation.x + newOffsetFromPinch.x - offsetFromPinch.x - translationCorrection.x, center.y - translation.y + newOffsetFromPinch.y - offsetFromPinch.y - translationCorrection.y);
-                CGFloat newScale = scale * zoom;
-                keyframe.properties[@"center"] = [NSValue valueWithCGPoint:newCenter];
-                keyframe.properties[@"scale"] = @(newScale);
-            }
-        }*/
-        
-        self.canvas.time = self.canvas.time; // trigger update based on keyframes
+        self.canvas.screenSpan /= zoom;
+        // NSLog(@"screen span: %f", self.canvas.screenSpan);
+        self.canvas.centerOfVisibleArea = CGPointMake(self.canvas.centerOfVisibleArea.x + translation.x * translationScale, self.canvas.centerOfVisibleArea.y + translation.y);
+        // NSLog(@"Center: %@", NSStringFromCGPoint(self.canvas.centerOfVisibleArea));
     }
 }
 

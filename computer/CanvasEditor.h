@@ -63,6 +63,12 @@
 
 @property (nonatomic,readonly) _CMCanvasView *canvasView;
 
+#pragma mark Coordinates
+
+@property (nonatomic) CGPoint centerOfVisibleArea;
+@property (nonatomic) CGFloat screenSpan; // if 100, then a 100pt-wide object will fill the canvas view
+@property (nonatomic,readonly) id<UICoordinateSpace> canvasCoordinateSpace;
+
 #pragma mark Actions
 
 - (void)deleteDrawable:(CMDrawable *)d;

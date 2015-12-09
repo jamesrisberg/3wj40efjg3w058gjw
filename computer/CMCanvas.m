@@ -18,6 +18,7 @@
 
 @implementation _CMCanvasView
 
+
 - (instancetype)init {
     self = [super init];
     self.viewsByKey = [NSMutableDictionary new];
@@ -93,6 +94,8 @@
 
 - (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {    
     _CMCanvasView *v = [existingOrNil isKindOfClass:[_CMCanvasView class]] ? (id)existingOrNil : [_CMCanvasView new];
+    v.bounds = CGRectMake(0, 0, ctx.canvasSize.width, ctx.canvasSize.height);
+    ctx.canvasView = v;
     
     NSArray *keys = [self.contents map:^id(id obj) {
         return [obj key];

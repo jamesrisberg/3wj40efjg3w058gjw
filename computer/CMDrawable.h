@@ -29,6 +29,9 @@
 @property (nonatomic) BOOL useFrameTimeForStaticAnimations;
 @property (nonatomic) BOOL renderMetaInfo;
 @property (nonatomic) BOOL forStaticScreenshot;
+@property (nonatomic) id<UICoordinateSpace> coordinateSpace;
+@property (nonatomic) UIView *canvasView;
+@property (nonatomic) CGSize canvasSize;
 
 @end
 

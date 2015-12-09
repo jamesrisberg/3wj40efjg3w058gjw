@@ -23,6 +23,63 @@
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
 #define TAP_STACK_REUSE_MAX_TIME 2.5
 
+@interface CanvasCoordinateSpace : NSObject <UICoordinateSpace>
+
+@property (nonatomic,weak) _CMCanvasView *canvasView;
+@property (nonatomic) CGPoint center;
+@property (nonatomic) CGFloat screenSpan;
+@property (nonatomic) CGRect bounds;
+
+@end
+
+
+@implementation CanvasCoordinateSpace
+
+- (CGPoint)convertPointToCanvasView:(CGPoint)point {
+    CGPoint originOffset = [self originOffset];
+    return CGPointMake((point.x - originOffset.x) * [self canvasZoom], (point.y - originOffset.y) * [self canvasZoom]);
+}
+
+- (CGPoint)convertPointFromCanvasView:(CGPoint)pointInView {
+    CGPoint originOffset = [self originOffset];
+    return CGPointMake(pointInView.x / [self canvasZoom] + originOffset.x, pointInView.y / [self canvasZoom] + originOffset.y);
+}
+
+- (CGPoint)convertPoint:(CGPoint)point toCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
+    return [_canvasView convertPoint:[self convertPointToCanvasView:point] toCoordinateSpace:coordinateSpace];
+}
+
+- (CGFloat)canvasZoom { // multiply to convert canvas coords to screen coords
+    return _canvasView.bounds.size.width / _screenSpan;
+}
+
+- (CGPoint)originOffset {
+    CGFloat screenSpanX = _screenSpan;
+    CGFloat screenSpanY = _canvasView.bounds.size.height / [self canvasZoom];
+    return CGPointMake(_center.x - screenSpanX/2, _center.y - screenSpanY/2);
+}
+
+- (CGPoint)convertPoint:(CGPoint)point fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
+    CGPoint pointInView = [_canvasView convertPoint:point fromCoordinateSpace:_canvasView];
+    return [self convertPointFromCanvasView:pointInView];
+}
+
+- (CGRect)convertRect:(CGRect)rect toCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
+    CGPoint pointInView = [self convertPointToCanvasView:rect.origin];
+    CGRect rectInView = CGRectMake(pointInView.x, pointInView.y, rect.size.width * [self canvasZoom], rect.size.height * [self canvasZoom]);
+    return [_canvasView convertRect:rectInView toCoordinateSpace:coordinateSpace];
+}
+
+- (CGRect)convertRect:(CGRect)rect fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
+    CGRect rectInView = [_canvasView convertRect:rect fromCoordinateSpace:coordinateSpace];
+    CGPoint point = [self convertPointFromCanvasView:rectInView.origin];
+    return CGRectMake(point.x, point.y, rectInView.size.width / [self canvasZoom], rectInView.size.height / [self canvasZoom]);
+}
+
+@end
+
+
+
 @interface CanvasEditor () {
     BOOL _setup;
     NSMutableSet *_touches;
@@ -101,6 +158,8 @@
     self.reboundAnimation = NO;
     
     self.canvas = [CMCanvas new];
+    
+    self.screenSpan = 1000;
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -205,8 +264,10 @@
     
     CGFloat motionMultiplier = self.touchForceFraction > 0.9 ? 0.4 : 1;
     
+    CGFloat translationScale = _screenSpan / _canvasView.bounds.size.width;
+    
     if (_touches.count == 1) {
-        CGPoint translation = CGPointMake((t1.x - t1prev.x) * motionMultiplier, (t1.y - t1prev.y) * motionMultiplier);
+        CGPoint translation = CGPointMake((t1.x - t1prev.x) * motionMultiplier * translationScale, (t1.y - t1prev.y) * motionMultiplier * translationScale);
         if (!CGPointEqualToPoint(translation, CGPointZero)) {
             CMDrawableKeyframe *selectionKeyframe = [[self.singleSelection.keyframeStore createKeyframeAtTimeIfNeeded:self.time] copy];
             selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + translation.x, selectionKeyframe.center.y + translation.y);
@@ -237,15 +298,16 @@
         
         if (_currentGestureTransformsDrawableAboutTouchPoint) {
             CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
-            CGPoint drawableOffset = CGPointMake(selectionKeyframe.center.x - touchMidpoint.x, selectionKeyframe.center.y - touchMidpoint.y);
+            CGPoint touchMidpointInCanvas = [self.canvasCoordinateSpace convertPoint:touchMidpoint fromCoordinateSpace:self];
+            CGPoint drawableOffset = CGPointMake(selectionKeyframe.center.x - touchMidpointInCanvas.x, selectionKeyframe.center.y - touchMidpointInCanvas.y);
             drawableOffset = CGPointScale(drawableOffset, toScale);
             CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
             CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
             drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
-            selectionKeyframe.center = CGPointAdd(touchMidpoint, CGPointScale(drawableOffset, motionMultiplier));
+            selectionKeyframe.center = CGPointAdd(touchMidpointInCanvas, drawableOffset);
         }
         
-        selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + (pos.x - prevPos.x) * motionMultiplier, selectionKeyframe.center.y + (pos.y - prevPos.y) * motionMultiplier);
+        selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + (pos.x - prevPos.x) * motionMultiplier * translationScale, selectionKeyframe.center.y + (pos.y - prevPos.y) * motionMultiplier * translationScale);
         
         [_currentObjectMoveTransaction setAction:^(id target){
             [singleSelection.keyframeStore storeKeyframe:selectionKeyframe];
@@ -356,7 +418,8 @@
 
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
     CMDrawableKeyframe *keyframe = [drawable.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
-    keyframe.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    keyframe.center = self.centerOfVisibleArea;
+    keyframe.scale = self.screenSpan / self.bounds.size.width;
     
     [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
         [[[target canvas] contents] addObject:drawable];
@@ -537,6 +600,16 @@
     _preparedForStaticScreenshot = preparedForStaticScreenshot;
 }
 
+#pragma mark Coordinates
+
+- (id<UICoordinateSpace>)canvasCoordinateSpace {
+    CanvasCoordinateSpace *c = [CanvasCoordinateSpace new];
+    c.center = self.centerOfVisibleArea;
+    c.screenSpan = self.screenSpan;
+    c.canvasView = self.canvasView;
+    return c;
+}
+
 #pragma mark Rendering
 
 - (void)setRendering:(BOOL)rendering {
@@ -561,6 +634,8 @@
     ctx.renderMetaInfo = YES;
     ctx.forStaticScreenshot = self.preparedForStaticScreenshot;
     ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations;
+    ctx.coordinateSpace = [self canvasCoordinateSpace];
+    ctx.canvasSize = self.bounds.size;
     return ctx;
 }
 
@@ -584,8 +659,9 @@
         CMDrawable *d = allSelectedItems[i];
         CMDrawableView *view = [_canvasView viewForDrawable:d];
         CMDrawableKeyframe *keyframe = [d.keyframeStore keyframeAtTime:self.time];
-        selectionView.bounds = CGRectMake(0, 0, view.bounds.size.width * keyframe.scale, view.bounds.size.height * keyframe.scale);
-        selectionView.center = [self convertPoint:view.center fromView:view.superview];
+        CGSize size = [self.canvasCoordinateSpace convertRect:CGRectMake(keyframe.center.x, keyframe.center.y, view.bounds.size.width * keyframe.scale, view.bounds.size.height * keyframe.scale) toCoordinateSpace:self].size;
+        selectionView.bounds = CGRectMake(0, 0, size.width, size.height);
+        selectionView.center = [self.canvasCoordinateSpace convertPoint:keyframe.center toCoordinateSpace:self];
         selectionView.transform = CGAffineTransformMakeRotation(keyframe.rotation);
     }
 }

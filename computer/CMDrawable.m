@@ -64,11 +64,18 @@
     
     CMDrawableView *v = [existingOrNil isKindOfClass:[CMDrawableView class]] ? existingOrNil : [CMDrawableView new];
     CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
-    v.center = keyframe.center;
+    
+    CGPoint center = keyframe.center;
+    if (ctx.coordinateSpace) center = [ctx.coordinateSpace convertPoint:center toCoordinateSpace:ctx.canvasView];
+    v.center = center;
+    
+    CGFloat canvasScale = 1;
+    if (ctx.coordinateSpace) canvasScale = [ctx.coordinateSpace convertRect:CGRectMake(center.x, center.y, canvasScale, canvasScale) toCoordinateSpace:ctx.canvasView].size.width;
+    
     CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
     v.bounds = CGRectMake(0, 0, size.width, size.height); // TODO: is math
     v.alpha = keyframe.alpha;
-    v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale, keyframe.scale);
+    v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
     
     NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
     v.alpha = [keyframe.staticAnimation adjustAlpha:v.alpha time:staticAnimationTime];
