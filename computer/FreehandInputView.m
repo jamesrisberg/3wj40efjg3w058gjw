@@ -98,13 +98,13 @@
 - (void)insertWithCanvasEditor:(CanvasEditor *)c {
     CGRect bounds = self.path.bounds;
     CMShapeDrawable *shape = [CMShapeDrawable new];
-    shape.strokeWidth = self.strokeWidth;
+    shape.strokeWidth = self.strokeWidth / c.canvasZoom;
     shape.strokePattern = [Pattern solidColor:self.strokeColor];
     shape.path = self.path;
     shape.aspectRatio = bounds.size.height ? bounds.size.width / bounds.size.height : 1;
-    shape.boundsDiagonal = CGRectDiagonal(bounds);
+    shape.boundsDiagonal = CGRectDiagonal(bounds) / c.canvasZoom;
     CMShapeDrawableKeyframe *keyframe = [shape.keyframeStore createKeyframeAtTimeIfNeeded:c.time];
-    keyframe.center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+    keyframe.center = [c.canvasCoordinateSpace convertPoint:CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds)) fromCoordinateSpace:self];
     [shape.keyframeStore storeKeyframe:keyframe];
     [c.canvas.contents addObject:shape];
 }

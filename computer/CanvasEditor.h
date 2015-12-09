@@ -69,6 +69,8 @@
 @property (nonatomic) CGFloat screenSpan; // if 100, then a 100pt-wide object will fill the canvas view
 @property (nonatomic,readonly) id<UICoordinateSpace> canvasCoordinateSpace;
 
+- (CGFloat)canvasZoom; // multiply to convert canvas coords to screen coords
+
 #pragma mark Actions
 
 - (void)deleteDrawable:(CMDrawable *)d;
