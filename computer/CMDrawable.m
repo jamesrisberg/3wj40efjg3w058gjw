@@ -12,8 +12,8 @@
 #import "PropertyViewTableCell.h"
 #import "StaticAnimation.h"
 #import "CGPointExtras.h"
-#import "TestWrapper.h"
 #import "NSMutableArray+Utility.h"
+#import "CMRepeatingWrapper.h"
 
 @implementation CMRenderContext
 
@@ -35,6 +35,10 @@
     self.keyframeStore = [KeyframeStore new];
     self.keyframeStore.keyframeClass = [self keyframeClass];
     self.boundsDiagonal = 200;
+    self.xRepeat = 1;
+    self.xRepeatGap = 1;
+    self.yRepeat = 1;
+    self.yRepeatGap = 1;
     self.key = [NSUUID UUID].UUIDString;
     return self;
 }
@@ -54,7 +58,7 @@
 }
 
 - (NSArray<NSString*>*)keysForCoding {
-    return @[@"boundsDiagonal", @"keyframeStore", @"key"];
+    return @[@"boundsDiagonal", @"keyframeStore", @"key", @"xRepeat", @"xRepeatGap", @"yRepeat", @"yRepeatGap"];
 }
 
 - (Class)keyframeClass {
@@ -98,7 +102,9 @@
     staticAnimationProp.key = @"staticAnimation";
     staticAnimation.properties = @[staticAnimationProp];
     
-    return @[unique, animatable, staticAnimation];
+    PropertyGroupModel *repeating = [self repeatingPropertiesGroupModel];
+    
+    return @[unique, animatable, staticAnimation, repeating];
 }
 
 - (NSString *)drawableTypeDisplayName {
@@ -126,6 +132,40 @@
 
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
     return @[];
+}
+
+- (PropertyGroupModel *)repeatingPropertiesGroupModel {
+    PropertyModel *xRepeat = [PropertyModel new];
+    xRepeat.title = NSLocalizedString(@"Horizontal repeat", @"");
+    xRepeat.type = PropertyModelTypeSlider;
+    xRepeat.valueMin = 1;
+    xRepeat.valueMax = 7;
+    xRepeat.key = @"xRepeat";
+    
+    PropertyModel *xGap = [PropertyModel new];
+    xGap.title = NSLocalizedString(@"Horizontal spacing", @"");
+    xGap.type = PropertyModelTypeSlider;
+    xGap.valueMax = 3;
+    xGap.key = @"xRepeatGap";
+    
+    PropertyModel *yRepeat = [PropertyModel new];
+    yRepeat.title = NSLocalizedString(@"Vertical repeat", @"");
+    yRepeat.type = PropertyModelTypeSlider;
+    yRepeat.valueMin = 1;
+    yRepeat.valueMax = 7;
+    yRepeat.key = @"yRepeat";
+    
+    PropertyModel *yGap = [PropertyModel new];
+    yGap.title = NSLocalizedString(@"Vertical spacing", @"");
+    yGap.type = PropertyModelTypeSlider;
+    yGap.valueMax = 3;
+    yGap.key = @"yRepeatGap";
+    
+    PropertyGroupModel *group = [PropertyGroupModel new];
+    group.title = NSLocalizedString(@"Repeat", @"");
+    group.properties = @[xRepeat, xGap, yRepeat, yGap];
+    
+    return group;
 }
 
 - (id)copy {
@@ -178,13 +218,37 @@
 }
 
 - (NSArray<CMDrawableWrapperFunction>*)wrappers {
-    CMDrawableWrapperFunction func = ^(CMDrawableView *child, CMDrawableView *oldView){
-        TestWrapper *testWrapper = [oldView isKindOfClass:[TestWrapper class]] ? (id)oldView : [TestWrapper new];
-        testWrapper.child = child;
-        testWrapper.wrapsView = child;
-        return testWrapper;
-    };
-    return @[func];
+    NSMutableArray *wrappers = [NSMutableArray new];
+    
+    if (self.xRepeat > 1) {
+        NSInteger repeat = self.xRepeat;
+        CGFloat gap = self.xRepeatGap;
+        CMDrawableWrapperFunction fn = ^CMDrawableView*(CMDrawableView *child, CMDrawableView *old) {
+            CMRepeatingWrapper *v = [old isKindOfClass:[CMRepeatingWrapper class]] ? (id)old : [CMRepeatingWrapper new];
+            v.count = repeat;
+            v.gap = gap;
+            v.vertical = NO;
+            v.child = child;
+            return v;
+        };
+        [wrappers addObject:fn];
+    }
+    
+    if (self.yRepeat > 1) {
+        NSInteger repeat = self.yRepeat;
+        CGFloat gap = self.yRepeatGap;
+        CMDrawableWrapperFunction fn = ^CMDrawableView*(CMDrawableView *child, CMDrawableView *old) {
+            CMRepeatingWrapper *v = [old isKindOfClass:[CMRepeatingWrapper class]] ? (id)old : [CMRepeatingWrapper new];
+            v.count = repeat;
+            v.gap = gap;
+            v.vertical = YES;
+            v.child = child;
+            return v;
+        };
+        [wrappers addObject:fn];
+    }
+    
+    return wrappers;
 }
 
 #pragma mark Keyframe actions

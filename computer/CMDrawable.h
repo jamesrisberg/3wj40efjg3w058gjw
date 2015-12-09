@@ -62,6 +62,12 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 
 - (NSArray<CMDrawableWrapperFunction>*)wrappers;
 
+// repeating:
+@property (nonatomic) NSInteger xRepeat;
+@property (nonatomic) CGFloat xRepeatGap;
+@property (nonatomic) NSInteger yRepeat;
+@property (nonatomic) CGFloat yRepeatGap;
+
 @end
 
 
