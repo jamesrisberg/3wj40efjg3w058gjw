@@ -12,6 +12,8 @@
 #import "PropertyViewTableCell.h"
 #import "StaticAnimation.h"
 #import "CGPointExtras.h"
+#import "TestWrapper.h"
+#import "NSMutableArray+Utility.h"
 
 @implementation CMRenderContext
 
@@ -60,26 +62,10 @@
 }
 
 - (__kindof CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
-    FrameTime *time = ctx.time;
-    
     CMDrawableView *v = [existingOrNil isKindOfClass:[CMDrawableView class]] ? existingOrNil : [CMDrawableView new];
-    CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
-    
-    CGPoint center = keyframe.center;
-    if (ctx.coordinateSpace) center = [ctx.coordinateSpace convertPoint:center toCoordinateSpace:ctx.canvasView];
-    v.center = center;
-    
-    CGFloat canvasScale = 1;
-    if (ctx.coordinateSpace) canvasScale = [ctx.coordinateSpace convertRect:CGRectMake(center.x, center.y, canvasScale, canvasScale) toCoordinateSpace:ctx.canvasView].size.width;
     
     CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
     v.bounds = CGRectMake(0, 0, size.width, size.height); // TODO: is math
-    v.alpha = keyframe.alpha;
-    v.transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
-    
-    NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
-    v.alpha = [keyframe.staticAnimation adjustAlpha:v.alpha time:staticAnimationTime];
-    v.transform = [keyframe.staticAnimation adjustTransform:v.transform time:staticAnimationTime];
     
     return v;
 }
@@ -148,6 +134,57 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     return [self copy];
+}
+
+#pragma mark Wrappers
+
+- (__kindof CMDrawableView *)renderFullyWrappedWithView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
+    NSMutableArray *stackOfOldViews = [NSMutableArray new];
+    CMDrawableView *v = existingOrNil;
+    while (v) {
+        [stackOfOldViews addObject:v];
+        v = v.wrapsView;
+    }
+    
+    CMDrawableView *result = [self renderToView:stackOfOldViews.pop context:ctx];
+    for (CMDrawableWrapperFunction fn in [self wrappers]) {
+        result = fn(result, stackOfOldViews.pop);
+    }
+    
+    CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
+    CGPoint center = keyframe.center;
+    
+    CGFloat canvasScale = 1;
+    if (ctx.coordinateSpace) canvasScale = [ctx.coordinateSpace convertRect:CGRectMake(center.x, center.y, canvasScale, canvasScale) toCoordinateSpace:ctx.canvasView].size.width;
+    
+    CGFloat alpha = keyframe.alpha;
+    CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
+    
+    NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
+    alpha = [keyframe.staticAnimation adjustAlpha:alpha time:staticAnimationTime];
+    transform = [keyframe.staticAnimation adjustTransform:transform time:staticAnimationTime];
+    
+    result.alpha = alpha;
+    result.transform = transform;
+    
+    if (ctx.coordinateSpace) {
+        result.center = [ctx.coordinateSpace convertPoint:center toCoordinateSpace:ctx.canvasView];
+    } else {
+        // CanvasViewerLite doesn't have a coordinate space...
+        result.center = center;
+    }
+    
+    return result;
+}
+
+- (NSArray<CMDrawableWrapperFunction>*)wrappers {
+    CMDrawableWrapperFunction func = ^(CMDrawableView *child, CMDrawableView *oldView){
+        TestWrapper *testWrapper = [oldView isKindOfClass:[TestWrapper class]] ? (id)oldView : [TestWrapper new];
+        testWrapper.child = child;
+        testWrapper.wrapsView = child;
+        return testWrapper;
+    };
+    return @[func];
 }
 
 #pragma mark Keyframe actions

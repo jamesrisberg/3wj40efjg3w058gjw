@@ -110,7 +110,7 @@
     
     for (CMDrawable *drawable in self.contents) {
         CMDrawableView *existing = v.viewsByKey[drawable.key];
-        CMDrawableView *newView = [drawable renderToView:existing context:ctx];
+        CMDrawableView *newView = [drawable renderFullyWrappedWithView:existing context:ctx];
         if (newView == existing) {
             [v bringSubviewToFront:newView];
         } else {

@@ -20,6 +20,7 @@
 @interface CMDrawableView : UIView
 
 - (CGRect)unrotatedBoundingBox;
+@property (nonatomic,weak) CMDrawableView *wrapsView;
 
 @end
 
@@ -35,6 +36,8 @@
 
 @end
 
+typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMDrawableView *oldResult);
+
 @interface CMDrawable : NSObject <NSCoding, NSCopying>
 
 - (instancetype)init;
@@ -46,6 +49,8 @@
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
 
+- (__kindof CMDrawableView *)renderFullyWrappedWithView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
+
 - (FrameTime *)maxTime;
 
 - (CGFloat)aspectRatio;
@@ -54,6 +59,8 @@
 - (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor;
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor;
 - (NSString *)drawableTypeDisplayName;
+
+- (NSArray<CMDrawableWrapperFunction>*)wrappers;
 
 @end
 

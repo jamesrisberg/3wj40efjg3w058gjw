@@ -22,6 +22,8 @@
 		5F2095FF1BEEBB2800E4C1F1 /* support.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095EE1BEEBB2800E4C1F1 /* support.c */; };
 		5F2096011BEEBB2800E4C1F1 /* xform.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095F01BEEBB2800E4C1F1 /* xform.c */; };
 		5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */; };
+		5F5543201C18C20D00592152 /* TestWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F55431F1C18C20D00592152 /* TestWrapper.m */; };
+		5F5543231C18C40200592152 /* NSMutableArray+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543221C18C40200592152 /* NSMutableArray+Utility.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
 		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
@@ -290,6 +292,10 @@
 		5F2096071BEEBEEE00E4C1F1 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		5F3CEDAC1BE1937E00D824E2 /* FilePreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilePreviewViewController.h; sourceTree = "<group>"; };
 		5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePreviewViewController.m; sourceTree = "<group>"; };
+		5F55431E1C18C20D00592152 /* TestWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWrapper.h; sourceTree = "<group>"; };
+		5F55431F1C18C20D00592152 /* TestWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestWrapper.m; sourceTree = "<group>"; };
+		5F5543211C18C40200592152 /* NSMutableArray+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Utility.h"; sourceTree = "<group>"; };
+		5F5543221C18C40200592152 /* NSMutableArray+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utility.m"; sourceTree = "<group>"; };
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
 		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
@@ -805,6 +811,8 @@
 				5F7C88811C1253650046020B /* CMVideoDrawable.m */,
 				5F7C88831C13D04D0046020B /* SelectionIndicatorView.h */,
 				5F7C88841C13D04D0046020B /* SelectionIndicatorView.m */,
+				5F55431E1C18C20D00592152 /* TestWrapper.h */,
+				5F55431F1C18C20D00592152 /* TestWrapper.m */,
 			);
 			name = "New drawables";
 			sourceTree = "<group>";
@@ -1349,6 +1357,8 @@
 				5F900E211BBDE3A3000D4C7C /* ExpandingButton.m */,
 				5FEAF82F1B97AB4D0071BC08 /* NPKeyboardAvoidanceView.h */,
 				5FEAF82D1B97AB340071BC08 /* NPKeyboardAvoidanceView.m */,
+				5F5543211C18C40200592152 /* NSMutableArray+Utility.h */,
+				5F5543221C18C40200592152 /* NSMutableArray+Utility.m */,
 				5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */,
 				5FEAF82A1B97A9CC0071BC08 /* UIFont+Sizing.h */,
 				5FEAF82B1B97A9CC0071BC08 /* UIFont+Sizing.m */,
@@ -1709,6 +1719,7 @@
 				5F6940EA1C0FAF2900569335 /* ButtonsPropertyViewTableCell.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
 				5F809A471BE1C3740030B538 /* ANColorTable.m in Sources */,
+				5F5543201C18C20D00592152 /* TestWrapper.m in Sources */,
 				5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */,
 				5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */,
 				5F809A9C1BE40B650030B538 /* ImageSearchViewController.swift in Sources */,
@@ -1732,6 +1743,7 @@
 				5F809A481BE1C3740030B538 /* ANCutColorTable.m in Sources */,
 				5FEAF8531B9AD96E0071BC08 /* Grabcut.mm in Sources */,
 				5F6940C81C0BD29E00569335 /* FreehandInputView.m in Sources */,
+				5F5543231C18C40200592152 /* NSMutableArray+Utility.m in Sources */,
 				5F7C887F1C12457D0046020B /* CMParticleDrawable.m in Sources */,
 				5FEAF9231B9E2AE80071BC08 /* SKImagePicker.m in Sources */,
 				5F83475A1BF4162200721A2C /* OptionsView.m in Sources */,
