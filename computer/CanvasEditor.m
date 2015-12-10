@@ -377,7 +377,7 @@
 #pragma mark Geometry
 
 - (NSArray<CMDrawable*> *)allHitsAtPoint:(CGPoint)pos {
-    return [self.canvasView hitsAtPoint:pos withCanvas:self.canvas];
+    return [self.canvasView hitsAtPoint:pos withCanvas:self.canvas].reversed;
 }
 
 - (CMDrawable *)doHitTest:(CGPoint)pos {
