@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="JN6-g6-AB4">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <scenes>
+        <!--Photo Picker-->
+        <scene sceneID="t1d-5R-to8">
+            <objects>
+                <viewController id="JN6-g6-AB4" customClass="CMPhotoPicker" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dwy-Q6-hcJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="pnT-iU-o33"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RfR-NF-qkh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyt-cG-DZe">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.81960784310000001" green="0.1764705882" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="kU9-4p-Tho"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PQs-Rs-d56">
+                                <rect key="frame" x="0.0" y="524" width="106" height="44"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.81960784310000001" green="0.1764705882" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="L02-L9-cGv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="Pick Photo">
+                                    <color key="titleColor" red="0.99195677042007446" green="0.99622899293899536" blue="0.99192315340042114" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pickPhoto:" destination="JN6-g6-AB4" eventType="touchUpInside" id="r3l-Pb-RW9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WkI-5T-0DM">
+                                <rect key="frame" x="107" y="524" width="106" height="44"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.81960784310000001" green="0.1764705882" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="UXx-3U-HH7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="Camera">
+                                    <color key="titleColor" red="0.99195677042007446" green="0.99622899293899536" blue="0.99192315340042114" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="JN6-g6-AB4" eventType="touchUpInside" id="5Fs-2i-t2N"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhp-9H-v5c">
+                                <rect key="frame" x="214" y="524" width="106" height="44"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.81960784310000001" green="0.1764705882" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="B2n-5i-m1O"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                <state key="normal" title="Image Search">
+                                    <color key="titleColor" red="0.99195677042007446" green="0.99622899293899536" blue="0.99192315340042114" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="imageSearch:" destination="JN6-g6-AB4" eventType="touchUpInside" id="8FD-Xh-rNl"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="100" verticalCompressionResistancePriority="100" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3cb-6x-evk">
+                                <rect key="frame" x="0.0" y="44" width="320" height="480"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2ro-CS-WnM">
+                                    <size key="itemSize" width="90" height="90"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="aYv-aZ-E0l" customClass="_CMPhotoPickerSnapshotCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="90" height="90"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <animations/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <animations/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="JN6-g6-AB4" id="cda-GE-znd"/>
+                                    <outlet property="delegate" destination="JN6-g6-AB4" id="C3M-RC-Z08"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3cb-6x-evk" firstAttribute="top" secondItem="vyt-cG-DZe" secondAttribute="bottom" id="4GB-8B-tHe"/>
+                            <constraint firstItem="WkI-5T-0DM" firstAttribute="leading" secondItem="PQs-Rs-d56" secondAttribute="trailing" constant="1" id="5LC-IH-zA5"/>
+                            <constraint firstItem="vyt-cG-DZe" firstAttribute="top" secondItem="dwy-Q6-hcJ" secondAttribute="bottom" id="8wK-fp-ixZ"/>
+                            <constraint firstItem="uhp-9H-v5c" firstAttribute="leading" secondItem="WkI-5T-0DM" secondAttribute="trailing" constant="1" id="94I-Lg-DLd"/>
+                            <constraint firstItem="pnT-iU-o33" firstAttribute="top" secondItem="WkI-5T-0DM" secondAttribute="bottom" id="MFO-3a-9gM"/>
+                            <constraint firstItem="WkI-5T-0DM" firstAttribute="width" secondItem="uhp-9H-v5c" secondAttribute="width" id="SBw-So-HrB"/>
+                            <constraint firstItem="uhp-9H-v5c" firstAttribute="top" secondItem="3cb-6x-evk" secondAttribute="bottom" id="XDO-lu-hbA"/>
+                            <constraint firstAttribute="trailing" secondItem="3cb-6x-evk" secondAttribute="trailing" id="XgR-bE-x79"/>
+                            <constraint firstAttribute="trailing" secondItem="vyt-cG-DZe" secondAttribute="trailing" id="Zb1-xh-qhE"/>
+                            <constraint firstItem="pnT-iU-o33" firstAttribute="top" secondItem="PQs-Rs-d56" secondAttribute="bottom" id="d6Z-bM-Npg"/>
+                            <constraint firstItem="3cb-6x-evk" firstAttribute="leading" secondItem="RfR-NF-qkh" secondAttribute="leading" id="eOQ-Bp-MgH"/>
+                            <constraint firstItem="pnT-iU-o33" firstAttribute="top" secondItem="uhp-9H-v5c" secondAttribute="bottom" id="f4B-Uo-pFD"/>
+                            <constraint firstAttribute="trailing" secondItem="uhp-9H-v5c" secondAttribute="trailing" id="hqB-FP-GZ3"/>
+                            <constraint firstItem="PQs-Rs-d56" firstAttribute="width" secondItem="WkI-5T-0DM" secondAttribute="width" id="nU1-F0-YTH"/>
+                            <constraint firstItem="vyt-cG-DZe" firstAttribute="leading" secondItem="RfR-NF-qkh" secondAttribute="leading" id="tdz-Z5-NuX"/>
+                            <constraint firstItem="PQs-Rs-d56" firstAttribute="leading" secondItem="RfR-NF-qkh" secondAttribute="leading" id="zcV-45-MRe"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="568"/>
+                    <connections>
+                        <outlet property="collectionView" destination="3cb-6x-evk" id="Mx5-j5-PAJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K96-re-c7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="372"/>
+        </scene>
+        <!--Photo Picker Test View Controller-->
+        <scene sceneID="kkY-f1-Xs1">
+            <objects>
+                <viewController storyboardIdentifier="Test" id="ssi-kJ-d1T" customClass="_CMPhotoPickerTestViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iw2-Mr-lmK"/>
+                        <viewControllerLayoutGuide type="bottom" id="fu7-DF-xHN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rs4-ie-bGp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MiX-Sv-m8z">
+                                <rect key="frame" x="40" y="92" width="240" height="266"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="WWY-4h-fCb" appends="YES" id="Zv2-OK-Sz3"/>
+                                </connections>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M42-Vs-IwX">
+                                <rect key="frame" x="27" y="15" width="111" height="40"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.81960784310000001" green="0.1764705882" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.99194461107254028" green="0.99615627527236938" blue="0.99600595235824585" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="text field" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eUw-kF-oaR">
+                                <rect key="frame" x="170" y="15" width="97" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dEn-MY-xED">
+                                <rect key="frame" x="183" y="53" width="51" height="31"/>
+                                <animations/>
+                            </switch>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="MiX-Sv-m8z" id="tJv-J4-LCq"/>
+                        <outlet property="v1" destination="M42-Vs-IwX" id="Xle-T3-hLJ"/>
+                        <outlet property="v2" destination="eUw-kF-oaR" id="5OC-X2-mgP"/>
+                        <outlet property="v3" destination="dEn-MY-xED" id="qpS-pD-VFZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Bj-S7-eUV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="WWY-4h-fCb">
+                    <connections>
+                        <action selector="pick:" destination="ssi-kJ-d1T" id="DHc-Hx-YtK"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="748" y="447"/>
+        </scene>
+    </scenes>
+</document>

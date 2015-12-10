@@ -24,6 +24,9 @@
 		5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */; };
 		5F5543231C18C40200592152 /* NSMutableArray+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543221C18C40200592152 /* NSMutableArray+Utility.m */; };
 		5F5543291C18CF0B00592152 /* CMRepeatingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543281C18CF0B00592152 /* CMRepeatingWrapper.m */; };
+		5F55432C1C19403000592152 /* CMPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F55432B1C19403000592152 /* CMPhotoPicker.m */; };
+		5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */; };
+		5F5543311C1944C400592152 /* _CMPhotoPickerTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
 		5F693FF91C07848800569335 /* FilterOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F693FF81C07848800569335 /* FilterOptionsView.m */; };
@@ -296,6 +299,11 @@
 		5F5543221C18C40200592152 /* NSMutableArray+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utility.m"; sourceTree = "<group>"; };
 		5F5543271C18CF0B00592152 /* CMRepeatingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMRepeatingWrapper.h; sourceTree = "<group>"; };
 		5F5543281C18CF0B00592152 /* CMRepeatingWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMRepeatingWrapper.m; sourceTree = "<group>"; };
+		5F55432A1C19403000592152 /* CMPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPhotoPicker.h; sourceTree = "<group>"; };
+		5F55432B1C19403000592152 /* CMPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPhotoPicker.m; sourceTree = "<group>"; };
+		5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CMPhotoPicker.storyboard; sourceTree = "<group>"; };
+		5F55432F1C1944C400592152 /* _CMPhotoPickerTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CMPhotoPickerTestViewController.h; sourceTree = "<group>"; };
+		5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CMPhotoPickerTestViewController.m; sourceTree = "<group>"; };
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
 		5F6110051BB1144E00DB4C82 /* FreehandInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FreehandInputView.h; sourceTree = "<group>"; };
 		5F6110061BB1144E00DB4C82 /* FreehandInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FreehandInputView.m; sourceTree = "<group>"; };
@@ -1379,6 +1387,11 @@
 				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
 				5F6110081BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.h */,
 				5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */,
+				5F55432A1C19403000592152 /* CMPhotoPicker.h */,
+				5F55432B1C19403000592152 /* CMPhotoPicker.m */,
+				5F55432F1C1944C400592152 /* _CMPhotoPickerTestViewController.h */,
+				5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */,
+				5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1580,6 +1593,7 @@
 				5FD860601C03EBCF00E5A754 /* BPdotsDiamondBold.otf in Resources */,
 				5FD8605E1C03EBA200E5A754 /* comic_zine_ot.otf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */,
 				5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
 				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
@@ -1706,12 +1720,14 @@
 				5F809A4D1BE1C3740030B538 /* LZWSpoof.m in Sources */,
 				5FEAF9341B9E2B010071BC08 /* SKGradientPointEditor.m in Sources */,
 				5FEAF84F1B9AD96E0071BC08 /* StickerExtractViewController.swift in Sources */,
+				5F5543311C1944C400592152 /* _CMPhotoPickerTestViewController.m in Sources */,
 				5FE857651BD9DE3700B4B245 /* StaticAnimationPicker.m in Sources */,
 				5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */,
 				5F809A4A1BE1C3740030B538 /* ANGifDataSubblock.m in Sources */,
 				5F6940E01C0F799E00569335 /* PropertiesViewTable.m in Sources */,
 				5F2095F31BEEBB2800E4C1F1 /* giffunc.c in Sources */,
 				5F6940CE1C0E924900569335 /* CMWindow.m in Sources */,
+				5F55432C1C19403000592152 /* CMPhotoPicker.m in Sources */,
 				5FEAF81E1B978B3C0071BC08 /* EditorViewController.m in Sources */,
 				5F809A451BE1C3740030B538 /* ANGifNetscapeAppExtension.m in Sources */,
 				5F6940CB1C0CC84600569335 /* CMTransaction.m in Sources */,

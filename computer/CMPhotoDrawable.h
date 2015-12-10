@@ -14,5 +14,6 @@
 @property (nonatomic) UIImage *image;
 @property (nonatomic) CGFloat aspectRatio;
 - (void)setImage:(UIImage *)image withTransactionStack:(CMTransactionStack *)stack;
+- (void)promptToPickPhotoFromImageSearchWithTransactionStack:(CMTransactionStack *)transactionStack;
 
 @end

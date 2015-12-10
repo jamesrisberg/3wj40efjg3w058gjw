@@ -125,4 +125,18 @@
     self.image = [UIImage imageWithData:photoData];
 }
 
+- (void)promptToPickPhotoFromImageSearchWithTransactionStack:(CMTransactionStack *)transactionStack {
+    ImageSearchViewController *vc = [ImageSearchViewController new];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    __weak UINavigationController *weakNav = nav;
+    __weak CMPhotoDrawable *weakSelf = self;
+    vc.onImagePicked = ^(UIImage *image) {
+        if (image) {
+            [weakSelf setImage:image withTransactionStack:transactionStack];
+        }
+        [weakNav dismissViewControllerAnimated:YES completion:nil];
+    };
+    [[NPSoftModalPresentationController getViewControllerForPresentation] presentViewController:nav animated:YES completion:nil];
+}
+
 @end

@@ -22,6 +22,10 @@ class NPSoftModalPresentationController: UIPresentationController, UIViewControl
         return parent
     }
     
+    class func getViewControllerForPresentation() -> UIViewController {
+        return getViewControllerForPresentationInWindow(UIApplication.sharedApplication().windows.first!)
+    }
+    
     class func presentViewController(viewController: UIViewController) {
         presentViewController(viewController, fromViewController: getViewControllerForPresentationInWindow(UIApplication.sharedApplication().windows.first!))
     }

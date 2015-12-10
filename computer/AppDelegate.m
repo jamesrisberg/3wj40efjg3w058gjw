@@ -27,10 +27,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    
-    
     [Parse setApplicationId:@"HOKpgx4PlskFPZkAvtBxk1OnpIAWQlJpdNuGUo1w"
                   clientKey:@"AKgMJl0JTZ32BGgVmgGL5h19ia0NBBeMEYc2q1oi"];
+    
+    // self.window.rootViewController = [[UIStoryboard storyboardWithName:@"CMPhotoPicker" bundle:nil] instantiateViewControllerWithIdentifier:@"Test"];
     
     // [ExportTest exportTestWithVC:self.window.rootViewController];
     

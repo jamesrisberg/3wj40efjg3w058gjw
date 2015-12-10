@@ -24,6 +24,7 @@
 #import "CMStarDrawable.h"
 #import "CMTextDrawable.h"
 #import "CMParticleDrawable.h"
+#import "CMPhotoDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -38,12 +39,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     __weak InsertItemViewController *weakSelf = self;
-    PhotoDrawable* (^addPhoto)() = ^{
-        PhotoDrawable *d = [PhotoDrawable new];
-        d.bounds = CGRectMake(0, 0, 250, 250);
-        // [weakSelf.editorVC.canvas insertDrawable:d];
-        return d;
-    };
+    
+    CMTransactionStack *transactionStack = weakSelf.editorVC.canvas.transactionStack;
     
     QuickCollectionItem *camera = [QuickCollectionItem new];
     camera.icon = [UIImage imageNamed:@"Camera"];
@@ -58,8 +55,12 @@
     QuickCollectionItem *imageSearch = [QuickCollectionItem new];
     imageSearch.icon = [UIImage imageNamed:@"Search"];
     imageSearch.action = ^{
-        PhotoDrawable *d = addPhoto();
-        [d promptToPickPhotoFromImageSearch];
+        CMPhotoDrawable *p = [CMPhotoDrawable new];
+        [p setImage:[UIImage imageNamed:@"PlaceholderImage"] withTransactionStack:transactionStack];
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:p];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [p promptToPickPhotoFromImageSearchWithTransactionStack:transactionStack];
+        });
     };
     QuickCollectionItem *text = [QuickCollectionItem new];
     text.icon = [UIImage imageNamed:@"Text"];
