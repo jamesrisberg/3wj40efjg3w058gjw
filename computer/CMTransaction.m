@@ -103,6 +103,8 @@ static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"
 }
 
 - (void)undo {
+    if (!self.canUndo) return;
+    
     CMTransaction *t = self.undoStack.lastObject;
     [self.undoStack removeLastObject];
     t.inverse(t.target);
@@ -117,6 +119,8 @@ static NSString * const CMTransactionStackDidExecuteTransactionNotification = @"
 }
 
 - (void)redo {
+    if (!self.canRedo) return;
+    
     CMTransaction *t = self.redoStack.lastObject;
     [self.redoStack removeLastObject];
     t.action(t.target);
