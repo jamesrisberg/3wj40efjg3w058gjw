@@ -1,0 +1,1 @@
+../../../SYImageColorTools/Classes/SYImageColorGetter.h

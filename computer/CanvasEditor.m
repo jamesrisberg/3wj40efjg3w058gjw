@@ -377,7 +377,13 @@
 #pragma mark Geometry
 
 - (NSArray<CMDrawable*> *)allHitsAtPoint:(CGPoint)pos {
-    return [self.canvasView hitsAtPoint:pos withCanvas:self.canvas].reversed;
+    // in reverse-height order:
+    NSArray *hits = [self.canvasView hitsAtPoint:pos withCanvas:self.canvas];
+    return [hits sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger h1 = [self.canvas.contents indexOfObject:obj1];
+        NSInteger h2 = [self.canvas.contents indexOfObject:obj2];
+        return h2 - h1;
+    }];
 }
 
 - (CMDrawable *)doHitTest:(CGPoint)pos {

@@ -8,6 +8,7 @@
 
 #import "FilterOptionsView.h"
 #import "ConvenienceCategories.h"
+#import "CMPhotoPicker.h"
 
 @interface FilterOptionsView ()
 
@@ -15,6 +16,7 @@
 @property (nonatomic) GPUImageOutput<GPUImageInput> *filter;
 
 @property (nonatomic) FilterParameter *mainSliderParam, *mainPointParam;
+@property (nonatomic) FilterParameter *colorFromImageParam;
 
 @end
 
@@ -32,6 +34,18 @@
     
     self.mainSliderParam = [paramsByType[@(FilterParameterTypeFloat)] firstObject];
     self.mainPointParam = [paramsByType[@(FilterParameterTypePoint)] firstObject];
+    self.colorFromImageParam = [paramsByType[@(FilterParameterTypeColorPickedFromImage)] firstObject];
+    
+    self.action.hidden = YES;
+    [self.action removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+    if (info.hasSecondaryInput) {
+        self.action.hidden = NO;
+        [self.action setTitle:NSLocalizedString(@"Change Background", @"") forState:UIControlStateNormal];
+        [self.action addTarget:self action:@selector(changeSecondaryInputImage) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    [self.action sizeToFit];
+    self.action.frame = CGRectMake(self.action.frame.origin.x, self.action.frame.origin.y, self.action.frame.size.width + 20, self.action.frame.size.height + 20);
 }
 
 - (void)setMainSliderParam:(FilterParameter *)mainSliderParam {
@@ -53,6 +67,12 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self touchedAtPoint:[touches.anyObject locationInView:self]];
+    if (self.colorFromImageParam) {
+        self.getColorAtPointBlock([touches.anyObject locationInView:self], ^(UIColor *color){
+            [self.filter setValue:color forKey:self.colorFromImageParam.key];
+            self.onChange();
+        });
+    }
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -65,6 +85,16 @@
         [self.filter setValue:[NSValue valueWithCGPoint:p] forKey:self.mainPointParam.key];
         self.onChange();
     }
+}
+
+- (void)changeSecondaryInputImage {
+    CMPhotoPicker *picker = [CMPhotoPicker photoPicker];
+    __weak FilterOptionsView *weakSelf = self;
+    picker.snapshotViews = self.snapshotsForImagePicker;
+    picker.imageCallback = ^(UIImage *image) {
+        weakSelf.onChangeSecondaryInputImage(image);
+    };
+    [picker present];
 }
 
 @end

@@ -35,6 +35,7 @@
 }
 
 - (void)setFilter:(GPUImageFilter *)filter {
+    _customImage = nil;
     _filter = filter;
     [self process];
 }
@@ -45,19 +46,30 @@
 }
 
 - (void)process {
-    self.imageView.image = nil;
-    UIImage *pic = self.input;
-    GPUImageFilter *filter = self.filter;
-    if (pic && filter) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            UIImage *result = [filter imageByFilteringImage:pic];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (pic == self.input && filter == self.filter) {
-                    self.imageView.image = result;
-                }
+    if (self.customImage) {
+        self.imageView.image = self.customImage;
+    } else {
+        self.imageView.image = nil;
+        UIImage *pic = self.input;
+        GPUImageOutput<GPUImageInput> *filter = self.filter;
+        if (pic && filter) {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                UIImage *result = [filter imageByFilteringImage:pic];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (pic == self.input && filter == self.filter) {
+                        self.imageView.image = result;
+                    }
+                });
             });
-        });
+        }
     }
 }
 
+- (void)setCustomImage:(UIImage *)customImage {
+    _customImage = customImage;
+    _filter = nil;
+    [self process];
+}
+
 @end
+

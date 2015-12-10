@@ -10,6 +10,7 @@ pod 'AsyncImageView'
 pod 'GPUImage'
 pod 'ALGReversedFlowLayout'
 pod 'Parse'
+pod 'SYImageColorTools'
 
 end
 

@@ -14,4 +14,6 @@
 + (FilterPickerViewController *)filterPickerWithMediaID:(CMMediaID *)mediaID callback:(void(^)(CMMediaID *newMediaID))callback;
 + (FilterPickerViewController *)filterPickerWithImage:(UIImage *)image callback:(void(^)(UIImage *filtered))callback;
 
+@property (nonatomic) NSArray<UIView*> *snapshotsForImagePicker;
+
 @end

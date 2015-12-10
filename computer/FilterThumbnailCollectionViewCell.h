@@ -11,7 +11,10 @@
 
 @interface FilterThumbnailCollectionViewCell : UICollectionViewCell
 
+// these two are mutually exclusive:
 @property (nonatomic) GPUImageOutput<GPUImageInput> *filter;
+@property (nonatomic) UIImage *customImage;
+
 @property (nonatomic) UIImage *input;
 
 @end

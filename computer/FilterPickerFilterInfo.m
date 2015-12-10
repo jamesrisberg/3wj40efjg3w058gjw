@@ -322,7 +322,21 @@
         return group;
     }];
     
-    return @[noFilter, brightness, invert, sat, exp, hue, gradientMap, witchHouse, colorize, gamma, contrast, unsharp, blur, sharpen, toon, pixellate, whiteBalance, haze, localBinary, erode, dilate, stretch, pinch, bulge, swirl, zoom, motion, vignette, kuwuhara, emboss, post, cga, tilt, sketch, xy, canny, sobel, crosshatch, halftone, polka, polarPix, avgLuminance, luminanceThreshold, adaptiveThreshold];
+    FilterPickerFilterInfo *greenScreen = [FilterPickerFilterInfo new];
+    [greenScreen setFilterBlock:^GPUImageOutput<GPUImageInput> *{
+        GPUImageFilter *filter = [GPUImageChromaKeyBlendFilter new];
+        return filter;
+    }];
+    greenScreen.hasSecondaryInput = YES;
+    greenScreen.customThumbnailImageName = @"GreenScreenThumbnail";
+    FilterParameter *greenScreenColor = [FilterParameter new];
+    greenScreenColor.type = FilterParameterTypeColorPickedFromImage;
+    greenScreenColor.key = @"greenScreenColor";
+    greenScreenColor.name = NSLocalizedString(@"Color to replace", @"");
+    [greenScreen.parameters addObject:greenScreenColor];
+    [greenScreen addSliderForKey:@"thresholdSensitivity" min:0 max:1 name:NSLocalizedString(@"Threshold", @"")];
+    
+    return @[noFilter, brightness, invert, greenScreen, sat, exp, hue, gradientMap, witchHouse, colorize, gamma, contrast, unsharp, blur, sharpen, toon, pixellate, whiteBalance, haze, localBinary, erode, dilate, stretch, pinch, bulge, swirl, zoom, motion, vignette, kuwuhara, emboss, post, cga, tilt, sketch, xy, canny, sobel, crosshatch, halftone, polka, polarPix, avgLuminance, luminanceThreshold, adaptiveThreshold];
 }
 
 - (instancetype)init {

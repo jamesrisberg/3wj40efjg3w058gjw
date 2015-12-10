@@ -20,4 +20,11 @@
 @property (nonatomic,copy) void(^onChange)();
 @property (nonatomic,copy) CGPoint(^transformPointIntoImageCoordinates)(CGPoint p);
 
+@property (nonatomic) IBOutlet UIButton *action;
+@property (nonatomic,copy) void(^onChangeSecondaryInputImage)(UIImage *image);
+
+@property (nonatomic) NSArray<UIView*> *snapshotsForImagePicker;
+
+@property (nonatomic,copy) void(^getColorAtPointBlock)(CGPoint pointInFilterOptionsView, void(^callback)(UIColor *color));
+
 @end

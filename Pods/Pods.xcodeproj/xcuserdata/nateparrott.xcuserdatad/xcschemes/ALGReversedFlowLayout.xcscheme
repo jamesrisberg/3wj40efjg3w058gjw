@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "25FBE4F304AF9ED2FB2B9B25"
+               BlueprintIdentifier = "C019BBE96CB63F2CDF67574C"
                BuildableName = "libALGReversedFlowLayout.a"
                BlueprintName = "ALGReversedFlowLayout"
                ReferencedContainer = "container:Pods.xcodeproj">

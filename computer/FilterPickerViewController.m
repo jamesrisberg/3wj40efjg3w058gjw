@@ -12,6 +12,9 @@
 #import "FilterPickerFilterInfo.h"
 #import "computer-Swift.h"
 #import "FilterOptionsView.h"
+#import "ConvenienceCategories.h"
+#import <SYImageColorGetter.h>
+#import "UIImage+ColorAtPixel.h"
 
 @interface FilterPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -43,6 +46,8 @@
 
 @property (nonatomic) IBOutlet FilterOptionsView *filterOptionsView;
 
+@property (nonatomic) GPUImagePicture *secondaryInputImage;
+
 @end
 
 @implementation FilterPickerViewController
@@ -66,7 +71,14 @@
     
     [self.collectionView registerClass:[FilterThumbnailCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     
-    self.allFilters = [FilterPickerFilterInfo allFilters];
+    self.allFilters = [[FilterPickerFilterInfo allFilters] map:^id(id obj) {
+        if ([obj showOnlyForVideo] && !self.originalMediaID) {
+            return nil;
+        }
+        return obj;
+    }];
+    
+    self.secondaryInputImage = [[GPUImagePicture alloc] initWithImage:[UIImage imageNamed:@"bliss"]];
     
     self.outputView = [GPUImageView new];
     [self.outputViewContainer addSubview:self.outputView];
@@ -86,6 +98,22 @@
     };
     self.filterOptionsView.transformPointIntoImageCoordinates = ^CGPoint(CGPoint p) {
         return [weakSelf convertPointToImageCoordinates:p fromView:weakSelf.filterOptionsView];
+    };
+    
+    self.filterOptionsView.onChangeSecondaryInputImage = ^(UIImage *image) {
+        weakSelf.secondaryInputImage = [[GPUImagePicture alloc] initWithImage:image];
+    };
+    
+    self.filterOptionsView.getColorAtPointBlock = ^(CGPoint point, void(^callback)(UIColor *color)) {
+        UIGraphicsBeginImageContext(weakSelf.outputViewContainer.bounds.size);
+        [weakSelf.outputViewContainer drawViewHierarchyInRect:weakSelf.outputViewContainer.bounds afterScreenUpdates:NO];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        point = [weakSelf.outputViewContainer convertPoint:point fromView:weakSelf.filterOptionsView];
+        UIColor *color = [image colorAtPixel:point];
+        
+        callback(color);
     };
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -134,12 +162,23 @@
     [self.filter setInputRotation:inputRotation atIndex:0];
 }
 
+- (void)setSecondaryInputImage:(GPUImagePicture *)secondaryInputImage {
+    [_secondaryInputImage removeAllTargets];
+    _secondaryInputImage = secondaryInputImage;
+    [self rebuildFilterChain];
+}
+
 - (void)rebuildFilterChain {
     if (_source && _filter && _outputView) {
         [_source removeAllTargets];
         [_filter removeAllTargets];
         
         [_source addTarget:_filter];
+        [self.secondaryInputImage removeAllTargets];
+        if (self.currentFilterInfo.hasSecondaryInput) {
+            [self.secondaryInputImage addTarget:_filter atTextureLocation:1];
+            [self.secondaryInputImage processImage];
+        }
         [_filter addTarget:_outputView];
     }
     
@@ -210,8 +249,13 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FilterThumbnailCollectionViewCell *thumbnail = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    thumbnail.input = self.thumbnail;
-    thumbnail.filter = [self.allFilters[indexPath.item] createFilter];
+    FilterPickerFilterInfo *info = self.allFilters[indexPath.item];
+    if (info.customThumbnailImageName) {
+        thumbnail.customImage = [UIImage imageNamed:info.customThumbnailImageName];
+    } else {
+        thumbnail.input = self.thumbnail;
+        thumbnail.filter = [self.allFilters[indexPath.item] createFilter];
+    }
     return thumbnail;
 }
 
@@ -389,6 +433,14 @@
         return kGPUImageRotateLeft;
     else
         return kGPUImageRotateRight;
+}
+
+#pragma mark Image picking support
+
+- (void)setSnapshotsForImagePicker:(NSArray<UIView *> *)snapshotsForImagePicker {
+    _snapshotsForImagePicker = snapshotsForImagePicker;
+    [self loadView];
+    self.filterOptionsView.snapshotsForImagePicker = snapshotsForImagePicker;
 }
 
 @end

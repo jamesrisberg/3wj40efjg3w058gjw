@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSInteger, FilterParameterType) {
     FilterParameterTypeFloat,
     FilterParameterTypeColor,
-    FilterParameterTypePoint
+    FilterParameterTypePoint,
+    FilterParameterTypeColorPickedFromImage
 };
 
 @interface FilterParameter : NSObject
@@ -38,5 +39,8 @@ typedef NS_ENUM(NSInteger, FilterParameterType) {
 - (void)addColorPickerForKey:(NSString *)key name:(NSString *)name;
 - (void)addPointPickerForKey:(NSString *)key name:(NSString *)name;
 @property (nonatomic) NSString *name;
+@property (nonatomic) BOOL showOnlyForVideo;
+@property (nonatomic) BOOL hasSecondaryInput;
+@property (nonatomic) NSString *customThumbnailImageName;
 
 @end
