@@ -115,7 +115,7 @@
         leftItems = @[done];
     } else {
         IconBarModel *done = [IconBarModel new];
-        done.image = [UIImage imageNamed:@"Grid"];
+        done.image = [UIImage imageNamed:@"BackDown"];
         done.action = ^{
             weakSelf.onDoneButtonPressed();
         };
@@ -135,20 +135,8 @@
         inserter.editorVC = weakSelf.editor;
         [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
     };
-    /*IconBarModel *options = [IconBarModel new];
-    options.image = [UIImage imageNamed:@"Controls"];
-    options.action = ^{
-        [weakSelf.editor showOptions];
-    };*/
     
-    IconBarModel *enterSelectionMode = [IconBarModel new];
-    enterSelectionMode.image = [UIImage imageNamed:@"Grid"]; // TODO: find an icon
-    enterSelectionMode.action = ^{
-        [weakSelf.editor enterSelectionMode];
-    };
-    
-    // IconBarModel *divider = [IconBarModel new];
-    NSArray *rightItems = @[scroll, time, enterSelectionMode, add];
+    NSArray *rightItems = @[scroll, time, add];
     self.models = [leftItems arrayByAddingObjectsFromArray:rightItems];
 }
 
