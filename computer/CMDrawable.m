@@ -169,7 +169,9 @@
 }
 
 - (id)copy {
-    return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+    CMDrawable *d = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self]];
+    d.key = [NSUUID UUID].UUIDString;
+    return d;
 }
 
 - (id)copyWithZone:(NSZone *)zone {

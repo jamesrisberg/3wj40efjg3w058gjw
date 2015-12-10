@@ -189,13 +189,12 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
 }
 
 - (void)changePropertyAcrossTime:(NSString *)property block:(id(^)(id val))block {
-    /*for (CMDrawableKeyframe *k in self.keyframes) {
-        id val = k.properties[property];
+    for (CMDrawableKeyframe *k in self.keyframes) {
+        id val = [k valueForKey:property];
         if (val) {
-            k.properties[property] = block(val);
+            [k setValue:block(val) forKey:property];
         }
-    }*/
-    // TODO
+    }
 }
 
 - (NSArray<__kindof CMDrawableKeyframe*>*)allKeyframes {

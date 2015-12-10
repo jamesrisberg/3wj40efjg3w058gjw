@@ -549,12 +549,21 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             [self addAuxiliaryModeResetButton];
             
             UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
-            delete.titleLabel.font = [UIFont systemFontOfSize:12];
             [delete setTitle:NSLocalizedString(@"Delete", @"") forState:UIControlStateNormal];
-            [delete addTarget:self.canvas action:@selector(delete:) forControlEvents:UIControlEventTouchUpInside];
-            [self configureViewWithFloatingButtonAppearance:delete];
+            [delete addTarget:self.canvas action:@selector(deleteSelection) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIButton *duplicate = [UIButton buttonWithType:UIButtonTypeCustom];
+            [duplicate setTitle:NSLocalizedString(@"Duplicate", @"") forState:UIControlStateNormal];
+            [duplicate addTarget:self action:@selector(duplicateSelection) forControlEvents:UIControlEventTouchUpInside];
+            
+            for (UIButton *button in @[delete, duplicate]) {
+                button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
+                [self configureViewWithFloatingButtonAppearance:button];
+            }
+            
             // TODO: reset mode on delete?
             [self setFloatingButton:delete forPosition:FloatingButtonPositionBottomLeft];
+            [self setFloatingButton:duplicate forPosition:FloatingButtonPositionTopLeft];
         }
         
         if (oldMode == EditorModeTimeline) {
@@ -912,6 +921,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     frameTime = [[FrameTime alloc] initWithFrame:t * 100000 atFPS:100000];
     self.canvas.time = frameTime;
     [self.timeline scrollToTime:t animated:NO];
+}
+
+#pragma mark Actions
+
+- (void)duplicateSelection {
+    [self.canvas duplicateSelection];
+    [self resetMode];
 }
 
 @end

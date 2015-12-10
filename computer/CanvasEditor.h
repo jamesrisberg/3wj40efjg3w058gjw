@@ -50,8 +50,6 @@
 - (FrameTime *)duration;
 - (FrameTime *)loopingDuration; // may return nil
 
-- (void)createGroup:(id)sender;
-
 @property (nonatomic) NSInteger repeatCount;
 @property (nonatomic) BOOL reboundAnimation;
 
@@ -76,5 +74,8 @@
 - (void)deleteDrawable:(CMDrawable *)d;
 - (void)duplicateDrawable:(CMDrawable *)d;
 - (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d;
+
+- (void)deleteSelection;
+- (void)duplicateSelection;
 
 @end

@@ -19,6 +19,7 @@
 #import "CMPhotoDrawable.h"
 #import "SelectionIndicatorView.h"
 
+
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
 #define TAP_STACK_REUSE_MAX_TIME 2.5
@@ -429,40 +430,6 @@
     
 }
 
-- (void)createGroup:(id)sender {
-    NSArray<__kindof CMDrawable*> *selection = self.selectedItems.allObjects;
-    
-    
-    /*selection = [selection sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        NSInteger i1 = [[[obj1 superview] subviews] indexOfObject:obj1];
-        NSInteger i2 = [[[obj2 superview] subviews] indexOfObject:obj2];
-        return i1 < i2 ? NSOrderedAscending : NSOrderedDescending;
-    }];
-    if (selection.count > 0) {
-        if (selection.count == 1 && [selection.firstObject isKindOfClass:[SubcanvasDrawable class]]) {
-            // this is already a group, so don't group it again
-        } else {
-            // DO IT
-            self.selectedItems = [NSSet set];
-            CGPoint firstItemPosition = [self convertPoint:selection.firstObject.center fromView:selection.firstObject.superview];
-            for (Drawable *d in selection) {
-                [self _removeDrawable:d];
-            }
-            SubcanvasDrawable *group = [SubcanvasDrawable new];
-            Canvas *child = [Canvas new];
-            for (Drawable *d in selection) {
-                [child _addDrawableToCanvas:d];
-            }
-            group.subcanvas = child;
-            [group setInternalSize:child.bounds.size];
-            [self _addDrawableToCanvas:group];
-            CGPoint firstItemNewPosition = [self convertPoint:selection.firstObject.center fromView:selection.firstObject.superview];
-            group.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2); //CGPointMake(group.center.x + firstItemPosition.x - firstItemNewPosition.x, group.center.y + firstItemPosition.y - firstItemNewPosition.y);
-            [group updatedKeyframeProperties];
-        }
-    }*/
-}
-
 - (void)copy:(id)sender {
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItems.allObjects];
     [[UIPasteboard generalPasteboard] setData:data forPasteboardType:DrawableArrayPasteboardType];
@@ -478,12 +445,6 @@
     }
 }
 
-- (void)delete:(id)sender {
-    for (CMDrawable *d in self.selectedItems) {
-        [self deleteDrawable:d]; // TODO: group as one single transaction
-    }
-}
-
 - (void)deleteDrawable:(CMDrawable *)d {
     NSInteger index = [self.canvas.contents indexOfObject:d];
     [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
@@ -494,7 +455,13 @@
 }
 
 - (void)duplicateDrawable:(CMDrawable *)d {
+    CGFloat translation = 10 / [self canvasZoom];
     CMDrawable *copy = [d copy];
+    [copy.keyframeStore changePropertyAcrossTime:@"center" block:^id(id val) {
+        CGPoint p = CGPointMake([val CGPointValue].x + translation, [val CGPointValue].y + translation);
+        return [NSValue valueWithCGPoint:p];
+    }];
+    
     [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
         [[target canvas].contents addObject:copy];
     } undo:^(id target) {
@@ -524,6 +491,18 @@
     d.time = self.time;
     d.suppressTimingVisualizations = self.suppressTimingVisualizations;
     d.useTimeForStaticAnimations = self.useTimeForStaticAnimations;
+}
+
+
+- (void)deleteSelection {
+    NSSet *selection = self.selectedItems;
+    self.selectedItems = [NSSet set];
+    for (CMDrawable *d in selection) [self deleteDrawable:d];
+}
+
+- (void)duplicateSelection {
+    NSSet *selection = self.selectedItems;
+    for (CMDrawable *d in selection) [self duplicateDrawable:d];
 }
 
 #pragma mark Layout
