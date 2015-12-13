@@ -478,7 +478,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         self.toolbarView = self.iconBar;
         
         [self clearFloatingButtons];
-        self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection);
+        self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection || mode == EditorModeCreatingGroup);
         // self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
@@ -564,6 +564,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             // TODO: reset mode on delete?
             [self setFloatingButton:delete forPosition:FloatingButtonPositionBottomLeft];
             [self setFloatingButton:duplicate forPosition:FloatingButtonPositionTopLeft];
+        } else if (mode == EditorModeCreatingGroup) {
+            [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
+            UIButton *create = [UIButton buttonWithType:UIButtonTypeCustom];
+            create.titleLabel.font = [UIFont boldSystemFontOfSize:create.titleLabel.font.pointSize];
+            [create setTitle:NSLocalizedString(@"Create Group", @"") forState:UIControlStateNormal];
+            [create addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
+            self.toolbarView = create;
         }
         
         if (oldMode == EditorModeTimeline) {
@@ -928,6 +935,15 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (void)duplicateSelection {
     [self.canvas duplicateSelection];
     [self resetMode];
+}
+
+- (void)beginCreatingGroup {
+    self.mode = EditorModeCreatingGroup;
+}
+
+- (void)createGroup {
+    [self resetMode];
+    // TODO
 }
 
 @end

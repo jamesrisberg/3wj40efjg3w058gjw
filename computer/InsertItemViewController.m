@@ -25,12 +25,14 @@
 #import "CMTextDrawable.h"
 #import "CMParticleDrawable.h"
 #import "CMPhotoDrawable.h"
+#import "UIBarButtonItem+BorderedButton.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSArray *models;
+@property (nonatomic) UIToolbar *topToolbar;
 
 @end
 
@@ -38,6 +40,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // setup top bar:
+    
+    self.topToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    self.topBar = self.topToolbar;
+    [self.topToolbar setBackgroundImage:[UIImage new]
+                  forToolbarPosition:UIToolbarPositionAny
+                          barMetrics:UIBarMetricsDefault];
+    [self.topToolbar setBackgroundColor:[UIColor clearColor]];
+    self.topToolbar.items = @[
+                              [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                              [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Create Group", @"") target:self action:@selector(createGroup)]
+                              ];
+    self.topToolbar.tintColor = [UIColor colorWithWhite:1 alpha:0.6];
+    
+    // setup main items:
+    
     __weak InsertItemViewController *weakSelf = self;
     
     CMTransactionStack *transactionStack = weakSelf.editorVC.canvas.transactionStack;
@@ -157,6 +176,11 @@
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];
     [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)createGroup {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.editorVC beginCreatingGroup];
 }
 
 @end

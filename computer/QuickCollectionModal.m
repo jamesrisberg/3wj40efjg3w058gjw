@@ -100,7 +100,11 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.collectionView.frame = self.view.bounds;
+    
+    CGFloat topInset = self.topBar.frame.size.height;
+    self.collectionView.frame = UIEdgeInsetsInsetRect(self.view.bounds, UIEdgeInsetsMake(topInset, 0, 0, 0));
+    self.topBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.topBar.frame.size.height);
+    
     UICollectionViewFlowLayout *flow = (id)self.collectionView.collectionViewLayout;
     CGFloat margin = 20;
     CGFloat itemSize = flow.itemSize.width;
@@ -116,6 +120,12 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+- (void)setTopBar:(UIView *)topBar {
+    [_topBar removeFromSuperview];
+    _topBar = topBar;
+    [self.view addSubview:_topBar];
 }
 
 #pragma mark Transitioning
@@ -140,9 +150,11 @@
         [container addSubview:self.view];
         self.view.frame = [transitionContext finalFrameForViewController:self];
         self.view.backgroundColor = [UIColor clearColor];
+        self.topBar.alpha = 0;
         [self makeIconsFlyIn:YES withDuration:duration];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.8];
+            self.topBar.alpha = 1;
         } completion:^(BOOL finished) {
             
         }];
@@ -153,6 +165,7 @@
         [self makeIconsFlyIn:NO withDuration:duration];
         [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             self.view.backgroundColor = [UIColor clearColor];
+            self.topBar.alpha = 0;
         } completion:^(BOOL finished) {
             [self.view removeFromSuperview];
             [transitionContext completeTransition:YES];

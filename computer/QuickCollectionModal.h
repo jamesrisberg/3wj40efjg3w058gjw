@@ -23,4 +23,6 @@
 
 @property (nonatomic) CGSize itemSize;
 
+@property (nonatomic) UIView *topBar;
+
 @end
