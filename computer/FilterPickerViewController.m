@@ -439,10 +439,10 @@
 
 #pragma mark Image picking support
 
-- (void)setSnapshotsForImagePicker:(NSArray<UIView *> *)snapshotsForImagePicker {
+- (void)setSnapshotsForImagePicker:(NSArray<UIImage *> *)snapshotsForImagePicker {
     _snapshotsForImagePicker = snapshotsForImagePicker;
-    [self loadView];
-    self.filterOptionsView.snapshotsForImagePicker = snapshotsForImagePicker;
+    [self view];
+    self.filterOptionsView.viewSnapshotsForImagePicker = snapshotsForImagePicker;
 }
 
 @end

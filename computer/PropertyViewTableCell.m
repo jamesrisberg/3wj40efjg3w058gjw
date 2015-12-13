@@ -11,6 +11,7 @@
 #import "Keyframe.h"
 #import "PropertyModel.h"
 #import "computer-Swift.h"
+#import "EditorViewController.h"
 
 @interface PropertyViewTableCell () {
     CMTransaction *_transaction;
@@ -96,6 +97,10 @@
 
 + (CGFloat)standardInlineControlPadding {
     return 8;
+}
+
+- (CMTransactionStack *)transactionStack {
+    return self.editor.canvas.transactionStack;
 }
 
 @end

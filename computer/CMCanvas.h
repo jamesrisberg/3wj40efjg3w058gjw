@@ -20,5 +20,6 @@
 - (NSArray<CMDrawable*> *)hitsAtPoint:(CGPoint)point withCanvas:(CMCanvas *)associatedCanvas;
 - (NSArray<CMDrawable*> *)allItemsOverlappingDrawable:(CMDrawable *)d withCanvas:(CMCanvas *)associatedCanvas;
 - (CMDrawableView *)viewForDrawable:(CMDrawable *)drawable;
+- (NSArray<CMDrawableView*>*)allDrawableViews;
 
 @end

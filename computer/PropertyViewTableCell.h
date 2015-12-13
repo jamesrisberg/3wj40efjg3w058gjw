@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PropertyModel, CMDrawable, FrameTime, CMTransactionStack;
+@class PropertyModel, CMDrawable, FrameTime, CMTransactionStack, CanvasEditor, EditorViewController;
 
 @interface PropertyViewTableCell : UITableViewCell
 
@@ -16,7 +16,8 @@
 @property (nonatomic) PropertyModel *model;
 @property (nonatomic) NSArray<CMDrawable*> *drawables;
 @property (nonatomic) FrameTime *time;
-@property (nonatomic) CMTransactionStack *transactionStack;
+@property (nonatomic,readonly) CMTransactionStack *transactionStack;
+@property (nonatomic) EditorViewController *editor;
 
 - (void)reloadValue;
 // @property (nonatomic,copy) void (^valueDidChange)(id value);

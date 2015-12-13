@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PropertyGroupModel, CMDrawable, CanvasEditor, FrameTime, CMTransactionStack;
+@class PropertyGroupModel, CMDrawable, EditorViewController, FrameTime, CMTransactionStack;
 
 @interface PropertiesView : UIView
 
-- (void)setDrawables:(NSArray<CMDrawable *> *)drawables withEditor:(CanvasEditor *)editor time:(FrameTime *)time transactionStack:(CMTransactionStack *)transactionStack;
+- (void)setDrawables:(NSArray<CMDrawable *> *)drawables withEditor:(EditorViewController *)editor time:(FrameTime *)time;
 - (void)reloadValues;
 
 @end

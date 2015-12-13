@@ -18,7 +18,7 @@
 #import "CMCanvas.h"
 #import "CMPhotoDrawable.h"
 #import "SelectionIndicatorView.h"
-
+#import "UIView+Snapshot.h"
 
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
@@ -654,6 +654,14 @@
         selectionView.center = [self.canvasCoordinateSpace convertPoint:keyframe.center toCoordinateSpace:self];
         selectionView.transform = CGAffineTransformMakeRotation(keyframe.rotation);
     }
+}
+
+#pragma mark Misc.
+
+- (NSArray<UIImage*>*)snapshotsOfAllDrawables {
+    return [self.canvasView.allDrawableViews map:^id(id obj) {
+        return [obj snapshotWithMaxDimension:800];
+    }];
 }
 
 @end

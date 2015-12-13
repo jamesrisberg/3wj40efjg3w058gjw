@@ -27,7 +27,6 @@
 		5F55432C1C19403000592152 /* CMPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F55432B1C19403000592152 /* CMPhotoPicker.m */; };
 		5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */; };
 		5F5543311C1944C400592152 /* _CMPhotoPickerTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */; };
-		5F5543341C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543331C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.m */; };
 		5F5EA6071C1971D700DE85BF /* UIImage+ColorAtPixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5EA6061C1971D700DE85BF /* UIImage+ColorAtPixel.m */; };
 		5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */; };
 		5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F61100E1BB1E05C00DB4C82 /* SKFontPicker.m */; };
@@ -262,6 +261,9 @@
 		5FEAF9861B9F160A0071BC08 /* lookup_soft_elegance_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97D1B9F160A0071BC08 /* lookup_soft_elegance_2.png */; };
 		5FEAF9871B9F160A0071BC08 /* voroni_points2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */; };
 		5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */; };
+		5FEE3E691C1D5CC400423CA6 /* CMGreenScreenFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */; };
+		5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */; };
+		5FEE3E6E1C1D6DAF00423CA6 /* UIView+Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3E6D1C1D6DAF00423CA6 /* UIView+Snapshot.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
 
@@ -306,8 +308,6 @@
 		5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CMPhotoPicker.storyboard; sourceTree = "<group>"; };
 		5F55432F1C1944C400592152 /* _CMPhotoPickerTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CMPhotoPickerTestViewController.h; sourceTree = "<group>"; };
 		5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CMPhotoPickerTestViewController.m; sourceTree = "<group>"; };
-		5F5543321C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GPUImageChromaKeyBlendFilter+GreenScreenColor.h"; sourceTree = "<group>"; };
-		5F5543331C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GPUImageChromaKeyBlendFilter+GreenScreenColor.m"; sourceTree = "<group>"; };
 		5F5EA6051C1971D700DE85BF /* UIImage+ColorAtPixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ColorAtPixel.h"; sourceTree = "<group>"; };
 		5F5EA6061C1971D700DE85BF /* UIImage+ColorAtPixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ColorAtPixel.m"; sourceTree = "<group>"; };
 		5F6110021BB1128900DB4C82 /* TODO.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.txt; sourceTree = "<group>"; };
@@ -693,6 +693,11 @@
 		5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voroni_points2.png; sourceTree = "<group>"; };
 		5FEAF9891B9F168E0071BC08 /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
 		5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		5FEE3E671C1D5CC400423CA6 /* CMGreenScreenFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMGreenScreenFilter.h; sourceTree = "<group>"; };
+		5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMGreenScreenFilter.m; sourceTree = "<group>"; };
+		5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CMGreenScreenFilter.fsh; sourceTree = "<group>"; };
+		5FEE3E6C1C1D6DAF00423CA6 /* UIView+Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Snapshot.h"; sourceTree = "<group>"; };
+		5FEE3E6D1C1D6DAF00423CA6 /* UIView+Snapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Snapshot.m"; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1395,6 +1400,8 @@
 				5FEAF8581B9ADB8B0071BC08 /* UIImage+Resize.swift */,
 				5F6110081BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.h */,
 				5F6110091BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m */,
+				5FEE3E6C1C1D6DAF00423CA6 /* UIView+Snapshot.h */,
+				5FEE3E6D1C1D6DAF00423CA6 /* UIView+Snapshot.m */,
 				5F55432A1C19403000592152 /* CMPhotoPicker.h */,
 				5F55432B1C19403000592152 /* CMPhotoPicker.m */,
 				5F55432F1C1944C400592152 /* _CMPhotoPickerTestViewController.h */,
@@ -1469,9 +1476,10 @@
 				5FD8609F1C066A1200E5A754 /* FilterThumbnailCollectionViewCell.m */,
 				5F693FF71C07848800569335 /* FilterOptionsView.h */,
 				5F693FF81C07848800569335 /* FilterOptionsView.m */,
-				5F5543321C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.h */,
-				5F5543331C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.m */,
 				5F6940061C081AC900569335 /* WitchHouse.fsh */,
+				5FEE3E671C1D5CC400423CA6 /* CMGreenScreenFilter.h */,
+				5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */,
+				5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */,
 				5F6940021C081A7F00569335 /* Old */,
 			);
 			name = Filtering;
@@ -1606,6 +1614,7 @@
 				5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */,
 				5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
+				5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh in Resources */,
 				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F693FFB1C079BFE00569335 /* orb.png in Resources */,
@@ -1756,6 +1765,7 @@
 				5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */,
 				5F858DDB1BFC5207004E658E /* UIBezierPath-Points.m in Sources */,
 				5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */,
+				5FEE3E691C1D5CC400423CA6 /* CMGreenScreenFilter.m in Sources */,
 				5FEAF9421B9E2B2B0071BC08 /* SKFill.m in Sources */,
 				5FEAF8431B9A264F0071BC08 /* CGPointExtras.m in Sources */,
 				5F61100A1BB1CA2D00DB4C82 /* NSAttributedString+ResizeToFit.m in Sources */,
@@ -1806,7 +1816,6 @@
 				5F2095FA1BEEBB2800E4C1F1 /* merge.c in Sources */,
 				5F809A681BE1C7540030B538 /* UIImagePixelSource.m in Sources */,
 				5F809A4B1BE1C3740030B538 /* ANGifImageDescriptor.m in Sources */,
-				5F5543341C1962B000592152 /* GPUImageChromaKeyBlendFilter+GreenScreenColor.m in Sources */,
 				5FD8609D1C0667DF00E5A754 /* FilterPickerFilterInfo.m in Sources */,
 				5F809A531BE1C3740030B538 /* CGContextCreator.m in Sources */,
 				5F809A511BE1C3740030B538 /* OSCommonImage.m in Sources */,
@@ -1818,6 +1827,7 @@
 				5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */,
 				5FEAF9101B9E2A760071BC08 /* SKHueSatPicker.m in Sources */,
 				5F809A521BE1C3740030B538 /* UIImage+ANImageBitmapRep.m in Sources */,
+				5FEE3E6E1C1D6DAF00423CA6 /* UIView+Snapshot.m in Sources */,
 				5FEAF9211B9E2AE80071BC08 /* SKFillPicker.m in Sources */,
 				5FEAF9441B9E2B2B0071BC08 /* SKGradient.m in Sources */,
 				5F6940C51C0BD20200569335 /* TextDrawable.m in Sources */,

@@ -543,7 +543,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         } else if (mode == EditorModeShowingPropertiesView) {
             PropertiesView *propView = [[PropertiesView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
             _propertiesView = propView;
-            [propView setDrawables:self.canvas.selectedItems.allObjects withEditor:self.canvas time:self.canvas.time transactionStack:self.canvas.transactionStack]; // TODO: support moving through time?
+            [propView setDrawables:self.canvas.selectedItems.allObjects withEditor:self time:self.canvas.time]; // TODO: support moving through time?
             self.toolbarView = propView;
             
             [self addAuxiliaryModeResetButton];

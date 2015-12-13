@@ -59,6 +59,10 @@
     }];
 }
 
+- (NSArray<CMDrawableView*>*)allDrawableViews {
+    return _viewsByKey.allValues;
+}
+
 - (NSArray<CMDrawable*> *)allItemsOverlappingDrawable:(CMDrawable *)d withCanvas:(CMCanvas *)associatedCanvas {
     CMDrawableView *v = [self viewForDrawable:d];
     CGRect bbox = v.unrotatedBoundingBox;

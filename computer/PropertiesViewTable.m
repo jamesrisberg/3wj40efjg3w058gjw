@@ -74,7 +74,7 @@
     cell.model = prop;
     cell.time = self.time;
     cell.drawables = self.drawables;
-    cell.transactionStack = self.transactionStack;
+    cell.editor = self.editor;
     [cell reloadValue];
     return cell;
 }

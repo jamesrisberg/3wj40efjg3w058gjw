@@ -23,7 +23,7 @@
 @property (nonatomic) IBOutlet UIButton *action;
 @property (nonatomic,copy) void(^onChangeSecondaryInputImage)(UIImage *image);
 
-@property (nonatomic) NSArray<UIView*> *snapshotsForImagePicker;
+@property (nonatomic) NSArray<UIImage*> *viewSnapshotsForImagePicker;
 
 @property (nonatomic,copy) void(^getColorAtPointBlock)(CGPoint pointInFilterOptionsView, void(^callback)(UIColor *color));
 

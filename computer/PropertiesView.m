@@ -13,12 +13,13 @@
 #import <ReactiveCocoa.h>
 #import "CMDrawable.h"
 #import "ConvenienceCategories.h"
+#import "EditorViewController.h"
 
 @interface PropertiesView () {
     PropertiesViewTabControl *_tabControl;
     
     RACScopedDisposable *_disposable;
-    __weak CMTransactionStack *_transactionStack;
+    __weak EditorViewController *_editor;
 }
 
 @property (nonatomic) NSArray<CMDrawable *> *drawables;
@@ -32,12 +33,12 @@
 
 @implementation PropertiesView
 
-- (void)setDrawables:(NSArray<CMDrawable *> *)drawables withEditor:(CanvasEditor *)editor time:(FrameTime *)time transactionStack:(CMTransactionStack *)transactionStack {
-    _transactionStack = transactionStack;
-    _table.transactionStack = transactionStack;
+- (void)setDrawables:(NSArray<CMDrawable *> *)drawables withEditor:(EditorViewController *)editor time:(FrameTime *)time {
+    _editor = editor;
+    _table.editor = editor;
     self.time = time;
     self.drawables = drawables;
-    self.groups = drawables.count == 1 ? [drawables.firstObject propertyGroupsWithEditor:editor] : @[];
+    self.groups = drawables.count == 1 ? [drawables.firstObject propertyGroupsWithEditor:editor.canvas] : @[];
 }
 
 - (void)reloadValues {
@@ -70,7 +71,7 @@
     RAC(_tabControl, highlightedTabIndex) = RACObserve(self, selectedGroupIndex);
     
     _table = [[PropertiesViewTable alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _table.transactionStack = _transactionStack;
+    _table.editor = _editor;
     [self addSubview:_table];
     
     _disposable = [[[[RACSignal combineLatest:@[RACObserve(self, selectedGroupIndex), RACObserve(self, groups), RACObserve(self, drawables), RACObserve(self, time)]] throttle:0.01] subscribeNext:^(RACTuple *x) {

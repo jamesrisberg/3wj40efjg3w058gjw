@@ -11,23 +11,26 @@
 
 @interface _CMPhotoPickerSnapshotCell : UICollectionViewCell
 
-@property (nonatomic) UIView *snapshot;
+@property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UIImage *snapshot;
 
 @end
 
 @implementation _CMPhotoPickerSnapshotCell
 
-- (void)setSnapshot:(UIView *)snapshot {
-    [_snapshot removeFromSuperview];
+- (void)setSnapshot:(UIImage *)snapshot {
     _snapshot = snapshot;
-    [self.contentView addSubview:snapshot];
+    if (!self.imageView) {
+        self.imageView = [UIImageView new];
+        [self.contentView addSubview:self.imageView];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    self.imageView.image = snapshot;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.snapshot.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-    CGFloat scale = MIN(self.bounds.size.width/self.snapshot.bounds.size.width, self.bounds.size.height/self.snapshot.bounds.size.height);
-    self.snapshot.transform = CGAffineTransformMakeScale(scale, scale);
+    self.imageView.frame = self.bounds;
     
 }
 
@@ -48,8 +51,8 @@
     return [[UIStoryboard storyboardWithName:@"CMPhotoPicker" bundle:nil] instantiateInitialViewController];
 }
 
-- (void)setSnapshotViews:(NSArray<UIView *> *)snapshotViews {
-    _snapshotViews = snapshotViews;
+- (void)setViewSnapshots:(NSArray<UIImage *> *)viewSnapshots {
+    _viewSnapshots = viewSnapshots;
     [self.collectionView reloadData];
 }
 
@@ -113,25 +116,18 @@
 #pragma mark CollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.snapshotViews.count;
+    return self.viewSnapshots.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     _CMPhotoPickerSnapshotCell *cell = (id)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.snapshot = self.snapshotViews[indexPath.row];
+    cell.snapshot = self.viewSnapshots[indexPath.row];
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UIView *snapshot = self.snapshotViews[indexPath.row];
-    CGFloat size = 900;
-    CGFloat scale = MIN(size / snapshot.bounds.size.width, size / snapshot.bounds.size.height);
-    CGSize imageSize = CGSizeMake(snapshot.bounds.size.width * scale, snapshot.bounds.size.height * scale);
-    UIGraphicsBeginImageContext(imageSize);
-    [snapshot drawViewHierarchyInRect:CGRectMake(0, 0, imageSize.width, imageSize.height) afterScreenUpdates:NO];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    [self gotImage:image];
+    UIImage *snapshot = self.viewSnapshots[indexPath.row];
+    [self gotImage:snapshot];
 }
 
 @end

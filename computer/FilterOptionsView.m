@@ -90,7 +90,7 @@
 - (void)changeSecondaryInputImage {
     CMPhotoPicker *picker = [CMPhotoPicker photoPicker];
     __weak FilterOptionsView *weakSelf = self;
-    picker.snapshotViews = self.snapshotsForImagePicker;
+    picker.viewSnapshots = self.viewSnapshotsForImagePicker;
     picker.imageCallback = ^(UIImage *image) {
         weakSelf.onChangeSecondaryInputImage(image);
     };

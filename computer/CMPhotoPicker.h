@@ -12,7 +12,7 @@
 
 + (instancetype)photoPicker;
 
-@property (nonatomic) NSArray<UIView*> *snapshotViews;
+@property (nonatomic) NSArray<UIImage*> *viewSnapshots;
 @property (nonatomic,copy) void (^imageCallback)(UIImage *image);
 
 - (void)present;

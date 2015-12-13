@@ -78,4 +78,8 @@
 - (void)deleteSelection;
 - (void)duplicateSelection;
 
+#pragma mark Misc.
+
+- (NSArray<UIImage*>*)snapshotsOfAllDrawables;
+
 @end

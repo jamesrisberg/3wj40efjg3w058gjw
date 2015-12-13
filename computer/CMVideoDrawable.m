@@ -13,6 +13,8 @@
 #import "PropertyViewTableCell.h"
 #import "computer-Swift.h"
 #import "FilterPickerViewController.h"
+#import "EditorViewController.h"
+#import "CanvasEditor.h"
 
 @interface _CMVideoDrawableView : CMDrawableView
 
@@ -217,13 +219,16 @@
 }
 
 - (void)filter:(PropertyViewTableCell *)sender {
-    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:[FilterPickerViewController filterPickerWithMediaID:self.media callback:^(CMMediaID *newMediaID) {
+    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithMediaID:self.media callback:^(CMMediaID *newMediaID) {
         [sender.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
             self.media = newMediaID;
         } undo:^(id target) {
             NSLog(@"Video filtering operations can't be undone yet");
         }]];
-    }] animated:YES completion:nil];
+    }];
+    picker.snapshotsForImagePicker = [sender.editor.canvas snapshotsOfAllDrawables];
+        
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:picker animated:YES completion:nil];
 }
 
 - (NSString *)drawableTypeDisplayName {

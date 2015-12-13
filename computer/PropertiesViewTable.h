@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@class PropertyModel, CMDrawable, FrameTime, CMTransactionStack;
+@class PropertyModel, CMDrawable, FrameTime, EditorViewController;
 
 @interface PropertiesViewTable : UITableView
 
-@property (nonatomic) __weak CMTransactionStack *transactionStack;
+@property (nonatomic) __weak EditorViewController *editor;
 - (void)setProperties:(NSArray<PropertyModel*>*)properties onDrawables:(NSArray<CMDrawable*>*)drawables time:(FrameTime *)time;
 - (void)reloadValues;
 @property (nonatomic) BOOL singleView;

@@ -23,9 +23,9 @@
     CMPhotoPicker *picker = [CMPhotoPicker photoPicker];
     
     NSArray *views = @[self.v1, self.v2, self.v3];
-    picker.snapshotViews = [views map:^id(id obj) {
+    /*picker.snapshotViews = [views map:^id(id obj) {
         return [obj snapshotViewAfterScreenUpdates:NO];
-    }];
+    }];*/
     picker.imageCallback = ^(UIImage *image) {
         self.imageView.image = image;
     };
