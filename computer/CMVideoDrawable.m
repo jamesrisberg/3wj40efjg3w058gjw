@@ -185,6 +185,7 @@
     _CMVideoDrawableView *v = [existingOrNil isKindOfClass:[_CMVideoDrawableView class]] ? (id)existingOrNil : [_CMVideoDrawableView new];
     [super renderToView:v context:ctx];
     v.media = self.media;
+    v.preparedForStaticScreenshot = ctx.forStaticScreenshot;
     v.useTimeForStaticAnimations = ctx.useFrameTimeForStaticAnimations;
     v.time = ctx.time;
     return v;

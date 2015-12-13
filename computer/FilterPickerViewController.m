@@ -205,6 +205,7 @@
     AVAsset *asset = [AVAsset assetWithURL:self.originalMediaID.url];
     AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     CGSize size = [videoTrack naturalSize];
+    size = CGRectApplyAffineTransform((CGRect){CGPointZero, size}, videoTrack.preferredTransform).size;
     self.outputSize = size;
     self.inputRotation = [self rotationForTrack:videoTrack];
     
@@ -358,6 +359,7 @@
     movie.playAtActualSpeed = NO;
     CMMediaID *newMedia = [[CMMediaStore shared] emptyMediaIDWithFileExtension:@"m4v"];
     GPUImageMovieWriter *writer = [[GPUImageMovieWriter alloc] initWithMovieURL:newMedia.url size:self.outputSize];
+    [writer setInputRotation:self.inputRotation atIndex:0];
     
     [movie addTarget:filter];
     [filter addTarget:writer];
