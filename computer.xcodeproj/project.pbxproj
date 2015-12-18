@@ -180,6 +180,7 @@
 		5FDA80CE1C02540C006CDC21 /* EditorViewController+Send.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80CD1C02540C006CDC21 /* EditorViewController+Send.m */; };
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
+		5FE6C6031C21516900344571 /* CMGroupDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE6C6021C21516900344571 /* CMGroupDrawable.m */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -561,6 +562,8 @@
 		5FDA80D11C03BF18006CDC21 /* API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
 		5FDA80D31C03E7C2006CDC21 /* UIColor+RandomColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RandomColors.h"; sourceTree = "<group>"; };
 		5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RandomColors.m"; sourceTree = "<group>"; };
+		5FE6C6011C21516900344571 /* CMGroupDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMGroupDrawable.h; sourceTree = "<group>"; };
+		5FE6C6021C21516900344571 /* CMGroupDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMGroupDrawable.m; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -814,6 +817,8 @@
 			children = (
 				5F6940A51C0BC9BA00569335 /* CMDrawable.h */,
 				5F6940A61C0BC9BA00569335 /* CMDrawable.m */,
+				5FE6C6011C21516900344571 /* CMGroupDrawable.h */,
+				5FE6C6021C21516900344571 /* CMGroupDrawable.m */,
 				5F6940AB1C0BD1B600569335 /* CMCanvas.h */,
 				5F6940AC1C0BD1B600569335 /* CMCanvas.m */,
 				5F6940A81C0BCBA000569335 /* CMShapeDrawable.h */,
@@ -1723,6 +1728,7 @@
 				5F809A961BE318240030B538 /* HJImagesToVideo.m in Sources */,
 				5F7C88761C1151AC0046020B /* CMTextDrawable.m in Sources */,
 				5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */,
+				5FE6C6031C21516900344571 /* CMGroupDrawable.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
 				5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */,
 				5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */,

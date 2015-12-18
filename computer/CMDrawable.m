@@ -14,8 +14,26 @@
 #import "CGPointExtras.h"
 #import "NSMutableArray+Utility.h"
 #import "CMRepeatingWrapper.h"
+#import "CMCanvas.h"
 
 @implementation CMRenderContext
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [self copy];
+}
+
+- (id)copy {
+    CMRenderContext *ctx = [CMRenderContext new];
+    ctx.time = self.time;
+    ctx.useFrameTimeForStaticAnimations = self.useFrameTimeForStaticAnimations;
+    ctx.renderMetaInfo = self.renderMetaInfo;
+    ctx.forStaticScreenshot = self.forStaticScreenshot;
+    ctx.coordinateSpace = self.coordinateSpace;
+    ctx.canvasView = self.canvasView;
+    ctx.canvasSize = self.canvasSize;
+    ctx.atRoot = self.atRoot;
+    return ctx;
+}
 
 @end
 
@@ -198,6 +216,7 @@
     
     CGFloat canvasScale = 1;
     if (ctx.coordinateSpace) canvasScale = [ctx.coordinateSpace convertRect:CGRectMake(center.x, center.y, canvasScale, canvasScale) toCoordinateSpace:ctx.canvasView].size.width;
+    // NSLog(@"%@: %f", NSStringFromClass([self class]), canvasScale);
     
     CGFloat alpha = keyframe.alpha;
     CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
@@ -271,6 +290,22 @@
     }
 }
 
+#pragma mark Bounding boxes
+
+- (CGRect)boundingBoxForAllTime {
+    CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
+    CGRect box = CGRectNull;
+    for (CMDrawableKeyframe *keyframe in self.keyframeStore.allKeyframes) {
+        CGRect keyframeBox = [keyframe outerBoundingBoxWithBounds:size];
+        if (CGRectIsNull(box)) {
+            box = keyframeBox;
+        } else {
+            box = CGRectUnion(box, keyframeBox);
+        }
+    }
+    return box;
+}
+
 @end
 
 @implementation CMDrawableKeyframe
@@ -321,6 +356,13 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     return [self copy];
+}
+
+- (CGRect)outerBoundingBoxWithBounds:(CGSize)bounds {
+    // TODO: better
+    CGRect box = CGRectMake(self.center.x - bounds.width/2, self.center.y - bounds.height/2, bounds.width, bounds.height);
+    CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(self.rotation), self.scale, self.scale);
+    return CGRectApplyAffineTransform(box, transform);
 }
 
 @end

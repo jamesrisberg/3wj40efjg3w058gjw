@@ -24,15 +24,6 @@
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
 #define TAP_STACK_REUSE_MAX_TIME 2.5
 
-@interface CanvasCoordinateSpace : NSObject <UICoordinateSpace>
-
-@property (nonatomic,weak) _CMCanvasView *canvasView;
-@property (nonatomic) CGPoint center;
-@property (nonatomic) CGFloat screenSpan;
-@property (nonatomic) CGRect bounds;
-
-@end
-
 
 @implementation CanvasCoordinateSpace
 
@@ -61,14 +52,21 @@
 }
 
 - (CGPoint)convertPoint:(CGPoint)point fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
-    CGPoint pointInView = [_canvasView convertPoint:point fromCoordinateSpace:_canvasView];
+    CGPoint pointInView = [_canvasView convertPoint:point fromCoordinateSpace:coordinateSpace];
     return [self convertPointFromCanvasView:pointInView];
 }
 
 - (CGRect)convertRect:(CGRect)rect toCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
     CGPoint pointInView = [self convertPointToCanvasView:rect.origin];
     CGRect rectInView = CGRectMake(pointInView.x, pointInView.y, rect.size.width * [self canvasZoom], rect.size.height * [self canvasZoom]);
-    return [_canvasView convertRect:rectInView toCoordinateSpace:coordinateSpace];
+    // HACK: Coordinate space conversion seems to be broken when the coordinate space is a view with a rotation transform;
+    // calling [view convertRect:rect toCoordinateSpace:view] should return
+    // the same rect, but it doesn't
+    if (coordinateSpace == _canvasView) {
+        return rectInView;
+    } else {
+        return [_canvasView convertRect:rectInView toCoordinateSpace:coordinateSpace];
+    }
 }
 
 - (CGRect)convertRect:(CGRect)rect fromCoordinateSpace:(id <UICoordinateSpace>)coordinateSpace {
@@ -626,6 +624,7 @@
     ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations;
     ctx.coordinateSpace = [self canvasCoordinateSpace];
     ctx.canvasSize = self.bounds.size;
+    ctx.atRoot = YES;
     return ctx;
 }
 

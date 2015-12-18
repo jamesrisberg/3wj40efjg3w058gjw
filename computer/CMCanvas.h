@@ -13,6 +13,10 @@
 
 @property (nonatomic) NSMutableArray<__kindof CMDrawable*> *contents;
 
+- (id<UICoordinateSpace>)childCoordinateSpace:(CMRenderContext *)ctx; // for subclasses like groups
+
+- (CGRect)contentBoundingBox;
+
 @end
 
 @interface _CMCanvasView : CMDrawableView

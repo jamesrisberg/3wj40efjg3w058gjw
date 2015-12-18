@@ -99,7 +99,16 @@
 - (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {    
     _CMCanvasView *v = [existingOrNil isKindOfClass:[_CMCanvasView class]] ? (id)existingOrNil : [_CMCanvasView new];
     v.bounds = CGRectMake(0, 0, ctx.canvasSize.width, ctx.canvasSize.height);
-    ctx.canvasView = v;
+    
+    CMRenderContext *childCtx = ctx.copy;
+    childCtx.canvasView = v;
+    childCtx.atRoot = NO;
+    if (!ctx.atRoot) {
+        // it's a group:
+        [super renderToView:v context:ctx];
+        childCtx.renderMetaInfo = NO;
+        childCtx.coordinateSpace = [self childCoordinateSpace:childCtx];
+    }
     
     NSArray *keys = [self.contents map:^id(id obj) {
         return [obj key];
@@ -114,7 +123,7 @@
     
     for (CMDrawable *drawable in self.contents) {
         CMDrawableView *existing = v.viewsByKey[drawable.key];
-        CMDrawableView *newView = [drawable renderFullyWrappedWithView:existing context:ctx];
+        CMDrawableView *newView = [drawable renderFullyWrappedWithView:existing context:childCtx];
         if (newView == existing) {
             [v bringSubviewToFront:newView];
         } else {
@@ -125,6 +134,22 @@
     }
     
     return v;
+}
+
+- (id<UICoordinateSpace>)childCoordinateSpace:(CMRenderContext *)ctx {
+    return ctx.coordinateSpace;
+}
+
+- (CGRect)contentBoundingBox {
+    if (self.contents.count == 0) {
+        return CGRectZero;
+    } else {
+        CGRect bbox = [self.contents.firstObject boundingBoxForAllTime];
+        for (CMDrawable *d in self.contents) {
+            bbox = CGRectUnion(bbox, [d boundingBoxForAllTime]);
+        }
+        return bbox;
+    }
 }
 
 @end

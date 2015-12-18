@@ -13,6 +13,16 @@
 @class CMCanvas, CMDrawable;
 
 @class CanvasEditor, _CMCanvasView;
+
+@interface CanvasCoordinateSpace : NSObject <UICoordinateSpace>
+
+@property (nonatomic,weak) _CMCanvasView *canvasView;
+@property (nonatomic) CGPoint center;
+@property (nonatomic) CGFloat screenSpan; // horizontal
+@property (nonatomic,readonly) CGRect bounds;
+
+@end
+
 @protocol CanvasDelegate <NSObject>
 
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas;
@@ -65,7 +75,7 @@
 
 @property (nonatomic) CGPoint centerOfVisibleArea;
 @property (nonatomic) CGFloat screenSpan; // if 100, then a 100pt-wide object will fill the canvas view
-@property (nonatomic,readonly) id<UICoordinateSpace> canvasCoordinateSpace;
+@property (nonatomic,readonly) CanvasCoordinateSpace *canvasCoordinateSpace;
 
 - (CGFloat)canvasZoom; // multiply to convert canvas coords to screen coords
 

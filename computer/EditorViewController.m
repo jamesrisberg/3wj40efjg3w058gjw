@@ -32,6 +32,10 @@
 #import "CMDrawable.h"
 #import "CMCanvas.h"
 #import "PropertiesView.h"
+#import "CMGroupDrawable.h"
+#import "CMShapeDrawable.h"
+#import "UIColor+RandomColors.h"
+#import "CMStarDrawable.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -938,11 +942,36 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)beginCreatingGroup {
-    self.mode = EditorModeCreatingGroup;
+    // self.mode = EditorModeCreatingGroup;
+    
+    // test:
+    CMShapeDrawable *shape = [CMShapeDrawable new];
+    CGRect r = CGRectMake(0, 0, 100, 100);
+    [shape setPath:[UIBezierPath bezierPathWithRect:r] usingTransactionStack:self.canvas.transactionStack updateAspectRatio:YES];
+    shape.pattern = [Pattern solidColor:[UIColor randomHue]];
+    shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
+    shape.strokeWidth = 2;
+    shape.boundsDiagonal = CGRectDiagonal(r);
+    CMDrawableKeyframe *shapeKeyframe = [shape.keyframeStore createKeyframeAtTimeIfNeeded:self.canvas.time];
+    shapeKeyframe.center = CGPointMake(0, 0);
+    
+    CMStarDrawable *star = [CMStarDrawable new];
+    star.pattern = [Pattern solidColor:[UIColor randomHue]];
+    star.strokePattern = [Pattern solidColor:[UIColor blackColor]];
+    star.strokeWidth = 2;
+    CMDrawableKeyframe *starKeyframe = [star.keyframeStore createKeyframeAtTimeIfNeeded:self.canvas.time];
+    starKeyframe.center = CGPointMake(100, 100);
+    
+    CMGroupDrawable *g = [CMGroupDrawable new];
+    [g.contents addObject:shape];
+    [g.contents addObject:star];
+    
+    [self.canvas insertDrawableAtCurrentTime:g];
 }
 
 - (void)createGroup {
     [self resetMode];
+    
     // TODO
 }
 

@@ -24,15 +24,17 @@
 
 @end
 
-@interface CMRenderContext : NSObject
+@interface CMRenderContext : NSObject <NSCopying>
 
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL useFrameTimeForStaticAnimations;
 @property (nonatomic) BOOL renderMetaInfo;
 @property (nonatomic) BOOL forStaticScreenshot;
 @property (nonatomic) id<UICoordinateSpace> coordinateSpace;
-@property (nonatomic) UIView *canvasView;
+@property (nonatomic) CGPoint scale;
+@property (nonatomic) _CMCanvasView *canvasView;
 @property (nonatomic) CGSize canvasSize;
+@property (nonatomic) BOOL atRoot; // the view that's been passed this context is the root
 
 @end
 
@@ -68,6 +70,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 @property (nonatomic) NSInteger yRepeat;
 @property (nonatomic) CGFloat yRepeatGap;
 
+- (CGRect)boundingBoxForAllTime;
+
 @end
 
 
@@ -78,5 +82,6 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 @property (nonatomic) CGFloat scale, rotation, alpha;
 @property (nonatomic) StaticAnimation *staticAnimation;
 - (NSArray<NSString*>*)keys;
+- (CGRect)outerBoundingBoxWithBounds:(CGSize)bounds;
 
 @end
