@@ -45,6 +45,7 @@
 - (void)insertMovieAtURL:(NSURL *)url {
     [[CMMediaStore shared] storeMediaAtURL:url callback:^(CMMediaID *mediaID) {
         CMVideoDrawable *v = [CMVideoDrawable new];
+        v.boundsDiagonal = 300;
         v.media = mediaID;
         [self.canvas insertDrawableAtCurrentTime:v];
         /*VideoDrawable *d = [VideoDrawable new];
@@ -56,6 +57,7 @@
 
 - (void)insertImage:(UIImage *)image {
     CMPhotoDrawable *p = [CMPhotoDrawable new];
+    p.boundsDiagonal = 300;
     [p setImage:image withTransactionStack:self.canvas.transactionStack];
     /*PhotoDrawable *d = [PhotoDrawable new];
     d.bounds = CGRectMake(0, 0, 250, 250);

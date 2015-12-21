@@ -211,6 +211,7 @@
     self.source = currentSourceMediaID ? [self movieWithMedia:currentSourceMediaID] : nil;
     
     AVAssetImageGenerator *thumbnailGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:asset];
+    thumbnailGenerator.appliesPreferredTrackTransform = YES;
     self.thumbnail = [[UIImage imageWithCGImage:[thumbnailGenerator copyCGImageAtTime:kCMTimeZero actualTime:nil error:nil]] resizedWithMaxDimension:150];
 }
 
