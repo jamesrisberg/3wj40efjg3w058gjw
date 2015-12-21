@@ -60,7 +60,7 @@
     self.bar.maskView = self.barMask;
     
     for (UILabel *label in @[self.upperLabel, self.lowerLabel]) {
-        label.font = [UIFont boldSystemFontOfSize:8];
+        label.font = [UIFont boldSystemFontOfSize:12];
         label.textAlignment = NSTextAlignmentCenter;
     }
     
@@ -154,7 +154,7 @@
     static ProgressBarWindow *shared;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        shared = [[ProgressBarWindow alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 20)];
+        shared = [[ProgressBarWindow alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 30)];
     });
     return shared;
 }
