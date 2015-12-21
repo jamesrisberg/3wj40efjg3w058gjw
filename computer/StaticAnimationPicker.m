@@ -35,7 +35,12 @@
         // do some setup:
         self.shape = [CMShapeDrawable new];
         self.shape.boundsDiagonal = 30;
-        UIBezierPath *p = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, 10, 10)];
+        UIBezierPath *p = [UIBezierPath bezierPath];
+        [p moveToPoint:CGPointMake(5, 0)];
+        [p addLineToPoint:CGPointMake(10, 5)];
+        [p addLineToPoint:CGPointMake(5, 10)];
+        [p addLineToPoint:CGPointMake(0, 5)];
+        [p closePath];
         self.shape.path = p;
         self.shape.aspectRatio = 1;
         self.shape.pattern = [Pattern solidColor:[UIColor redColor]];
@@ -55,7 +60,7 @@
     [anim addAnimationDict:animationDict];
     
     CMShapeDrawableKeyframe *kf = [self.shape.keyframeStore createKeyframeAtTimeIfNeeded:[[FrameTime alloc] initWithFrame:0 atFPS:1]];
-    kf.rotation = M_PI/4;
+    // kf.rotation = M_PI/4;
     kf.staticAnimation = anim;
     [self.shape.keyframeStore storeKeyframe:kf];
 }

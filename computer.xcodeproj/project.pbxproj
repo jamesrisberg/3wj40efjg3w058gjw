@@ -182,6 +182,7 @@
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
 		5FE6C6031C21516900344571 /* CMGroupDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE6C6021C21516900344571 /* CMGroupDrawable.m */; };
 		5FE6C6091C28782500344571 /* PerlinNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE6C6081C28782500344571 /* PerlinNoise.m */; };
+		5FE6C60B1C28B65E00344571 /* CMGreenScreenFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FE6C60A1C28B65E00344571 /* CMGreenScreenFilter.fsh */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -264,7 +265,7 @@
 		5FEAF9871B9F160A0071BC08 /* voroni_points2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEAF97E1B9F160A0071BC08 /* voroni_points2.png */; };
 		5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */; };
 		5FEE3E691C1D5CC400423CA6 /* CMGreenScreenFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */; };
-		5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */; };
+		5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh */; };
 		5FEE3E6E1C1D6DAF00423CA6 /* UIView+Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE3E6D1C1D6DAF00423CA6 /* UIView+Snapshot.m */; };
 		BA4F52B12D127C027339AA0B /* libPods-computer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */; };
 /* End PBXBuildFile section */
@@ -567,6 +568,7 @@
 		5FE6C6021C21516900344571 /* CMGroupDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMGroupDrawable.m; sourceTree = "<group>"; };
 		5FE6C6071C28782500344571 /* PerlinNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerlinNoise.h; sourceTree = "<group>"; };
 		5FE6C6081C28782500344571 /* PerlinNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerlinNoise.m; sourceTree = "<group>"; };
+		5FE6C60A1C28B65E00344571 /* CMGreenScreenFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CMGreenScreenFilter.fsh; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -701,7 +703,7 @@
 		5FEAF98A1B9F168E0071BC08 /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
 		5FEE3E671C1D5CC400423CA6 /* CMGreenScreenFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMGreenScreenFilter.h; sourceTree = "<group>"; };
 		5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMGreenScreenFilter.m; sourceTree = "<group>"; };
-		5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CMGreenScreenFilter.fsh; sourceTree = "<group>"; };
+		5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = "CMGreenScreenFilter-deltaE.fsh"; sourceTree = "<group>"; };
 		5FEE3E6C1C1D6DAF00423CA6 /* UIView+Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Snapshot.h"; sourceTree = "<group>"; };
 		5FEE3E6D1C1D6DAF00423CA6 /* UIView+Snapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Snapshot.m"; sourceTree = "<group>"; };
 		EDA6A178F7E2F986AD55812E /* Pods-computer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1489,7 +1491,8 @@
 				5F6940061C081AC900569335 /* WitchHouse.fsh */,
 				5FEE3E671C1D5CC400423CA6 /* CMGreenScreenFilter.h */,
 				5FEE3E681C1D5CC400423CA6 /* CMGreenScreenFilter.m */,
-				5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh */,
+				5FE6C60A1C28B65E00344571 /* CMGreenScreenFilter.fsh */,
+				5FEE3E6A1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh */,
 				5F6940021C081A7F00569335 /* Old */,
 			);
 			name = Filtering;
@@ -1576,6 +1579,7 @@
 				5FEAF9821B9F160A0071BC08 /* CustomFilter.fsh in Resources */,
 				5FEAF90D1B9E2A760071BC08 /* checker.png in Resources */,
 				5FEAF91E1B9E2AE80071BC08 /* image.png in Resources */,
+				5FE6C60B1C28B65E00344571 /* CMGreenScreenFilter.fsh in Resources */,
 				5FEAF9801B9F160A0071BC08 /* ShowcaseFilterViewController.xib in Resources */,
 				5F858DD21BFC3FC8004E658E /* knewave-outline.ttf in Resources */,
 				5F9A17FC1BFD7B95000E6351 /* mac4.png in Resources */,
@@ -1624,7 +1628,7 @@
 				5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */,
 				5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
-				5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter.fsh in Resources */,
+				5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh in Resources */,
 				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F693FFB1C079BFE00569335 /* orb.png in Resources */,

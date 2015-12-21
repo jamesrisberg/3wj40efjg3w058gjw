@@ -68,8 +68,7 @@
     return alpha;
 }
 
-- (CGAffineTransform)adjustTransform:(CGAffineTransform)transform time:(NSTimeInterval)time {
-    CGAffineTransform t = CGAffineTransformIdentity;
+- (CGAffineTransform)adjustTransform:(CGAffineTransform)t time:(NSTimeInterval)time {
     CGFloat scale = 1 + (_pulseMagnitude ? _pulseMagnitude * sin(time * _pulseRate * M_PI * 2) : 0);
     t = CGAffineTransformScale(t, scale, scale);
     CGFloat jitterX = _jitterXMagnitude ? _jitterXMagnitude * NPRandomContinuousFloat(time * _jitterRate) : 0;
@@ -78,7 +77,7 @@
     double integerPart;
     CGFloat rotate = _rotationMagnitude * modf(time * _rotationRate, &integerPart) * M_PI * 2;
     t = CGAffineTransformRotate(t, rotate);
-    return CGAffineTransformConcat(transform, t);
+    return t;
 }
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
