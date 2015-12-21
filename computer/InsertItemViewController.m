@@ -38,6 +38,10 @@
 
 @implementation InsertItemViewController
 
++ (CGFloat)defaultItemSize {
+    return 200; // also defined in [CMDrawable init] for some cases, but ugh
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -107,7 +111,8 @@
     circle.icon = [UIImage imageNamed:@"Circle"];
     circle.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
-        CGRect r = CGRectMake(0, 0, 100, 100);
+        CGSize size = CMSizeWithDiagonalAndAspectRatio([[self class] defaultItemSize], 1);
+        CGRect r = (CGRect){CGPointZero, size};
         [shape setPath:[UIBezierPath bezierPathWithOvalInRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
@@ -120,7 +125,8 @@
     square.icon = [UIImage imageNamed:@"Square"];
     square.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
-        CGRect r = CGRectMake(0, 0, 100, 100);
+        CGSize size = CMSizeWithDiagonalAndAspectRatio([[self class] defaultItemSize], 1);
+        CGRect r = (CGRect){CGPointZero, size};
         [shape setPath:[UIBezierPath bezierPathWithRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];

@@ -13,5 +13,6 @@
 @interface InsertItemViewController : QuickCollectionModal
 
 @property (nonatomic) EditorViewController *editorVC;
++ (CGFloat)defaultItemSize;
 
 @end
