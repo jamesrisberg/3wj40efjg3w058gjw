@@ -127,7 +127,9 @@
         if (newView == existing) {
             [v bringSubviewToFront:newView];
         } else {
-            [existing removeFromSuperview];
+            if (existing.superview == v) {
+                [existing removeFromSuperview];
+            }
             [v addSubview:newView];
         }
         v.viewsByKey[drawable.key] = newView;

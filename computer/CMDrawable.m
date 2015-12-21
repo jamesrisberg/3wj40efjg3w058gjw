@@ -202,13 +202,16 @@
     NSMutableArray *stackOfOldViews = [NSMutableArray new];
     CMDrawableView *v = existingOrNil;
     while (v) {
+        // [stackOfOldViews insertObject:v atIndex:0];
         [stackOfOldViews addObject:v];
         v = v.wrapsView;
     }
     
     CMDrawableView *result = [self renderToView:stackOfOldViews.pop context:ctx];
     for (CMDrawableWrapperFunction fn in [self wrappers]) {
-        result = fn(result, stackOfOldViews.pop);
+        CMDrawableView *wrapped = result;
+        result = fn(wrapped, stackOfOldViews.pop);
+        result.wrapsView = wrapped;
     }
     
     CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
@@ -371,6 +374,11 @@
 @end
 
 @implementation CMDrawableView
+
+- (instancetype)init {
+    self = [super init];
+    return self;
+}
 
 - (CGRect)unrotatedBoundingBox {
     return self.frame; // TODO: math

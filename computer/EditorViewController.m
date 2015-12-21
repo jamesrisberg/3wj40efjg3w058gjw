@@ -433,7 +433,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         
         self.canvas.screenSpan /= zoom;
         // NSLog(@"screen span: %f", self.canvas.screenSpan);
-        self.canvas.centerOfVisibleArea = CGPointMake(self.canvas.centerOfVisibleArea.x + translation.x * translationScale, self.canvas.centerOfVisibleArea.y + translation.y);
+        self.canvas.centerOfVisibleArea = CGPointMake(self.canvas.centerOfVisibleArea.x + translation.x * translationScale, self.canvas.centerOfVisibleArea.y + translation.y * translationScale);
         // NSLog(@"Center: %@", NSStringFromCGPoint(self.canvas.centerOfVisibleArea));
     }
 }

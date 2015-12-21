@@ -256,7 +256,7 @@
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
     _CMParticleDrawableView *v = [existingOrNil isKindOfClass:[_CMParticleDrawableView class]] ? (id)existingOrNil : [_CMParticleDrawableView new];
-    [super renderToView:existingOrNil context:ctx];
+    [super renderToView:v context:ctx];
     v.particlePreset = self.particlePreset;
     if (ctx.useFrameTimeForStaticAnimations) {
         [v setTime:ctx.time.time running:NO];
