@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "97FC34AF3B76489C384B0D58"
+               BlueprintIdentifier = "22CE95B86F7EC3AD95B7B45F"
                BuildableName = "libSYImageColorTools.a"
                BlueprintName = "SYImageColorTools"
                ReferencedContainer = "container:Pods.xcodeproj">

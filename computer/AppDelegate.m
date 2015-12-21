@@ -30,6 +30,8 @@
     [Parse setApplicationId:@"HOKpgx4PlskFPZkAvtBxk1OnpIAWQlJpdNuGUo1w"
                   clientKey:@"AKgMJl0JTZ32BGgVmgGL5h19ia0NBBeMEYc2q1oi"];
     
+    srand(time(0));
+    
     // self.window.rootViewController = [[UIStoryboard storyboardWithName:@"CMPhotoPicker" bundle:nil] instantiateViewControllerWithIdentifier:@"Test"];
     
     // [ExportTest exportTestWithVC:self.window.rootViewController];

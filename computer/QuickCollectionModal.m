@@ -8,6 +8,7 @@
 
 #import "QuickCollectionModal.h"
 #import <ALGReversedFlowLayout.h>
+#import <Chameleon.h>
 
 #define RAND_FLOAT ((rand() % 10000) / 10000.0)
 
@@ -57,8 +58,9 @@
     _items = items;
     CGFloat hue = 0;
     for (QuickCollectionItem *model in self.items) {
-        model.color = [UIColor colorWithHue:fmod(hue, 1) saturation:0.8 brightness:0.8 alpha:1];
-        hue += 0.3;
+        UIColor *color = [UIColor colorWithHue:fmod(hue, 1) saturation:0.8 brightness:0.8 alpha:1];
+        hue += 0.12;
+        model.color = [color flatten];
     }
     [self.collectionView reloadData];
 }

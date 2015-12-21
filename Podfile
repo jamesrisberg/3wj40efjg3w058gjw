@@ -11,6 +11,7 @@ pod 'GPUImage'
 pod 'ALGReversedFlowLayout'
 pod 'Parse'
 pod 'SYImageColorTools'
+pod 'ChameleonFramework'
 
 end
 

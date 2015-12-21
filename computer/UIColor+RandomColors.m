@@ -7,10 +7,12 @@
 //
 
 #import "UIColor+RandomColors.h"
+#import <Chameleon.h>
 
 @implementation UIColor (RandomColors)
 
 + (UIColor *)randomHue {
+    // return [UIColor colorWithRandomFlatColorOfShadeStyle:UIShadeStyleDark];
     return [UIColor colorWithHue:(rand() % 1000) / 1000.0 saturation:1 brightness:1 alpha:1];
 }
 

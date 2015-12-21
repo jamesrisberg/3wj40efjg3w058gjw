@@ -3,6 +3,9 @@ PODS:
   - AsyncImageView (1.5.1)
   - AZEncodeURIComponent (1.1.0)
   - Bolts/Tasks (1.5.0)
+  - ChameleonFramework (2.0.6):
+    - ChameleonFramework/Default (= 2.0.6)
+  - ChameleonFramework/Default (2.0.6)
   - GPUImage (0.1.7)
   - NSDictionaryAsURLQuery (0.1.0):
     - AZEncodeURIComponent
@@ -23,6 +26,7 @@ PODS:
 DEPENDENCIES:
   - ALGReversedFlowLayout
   - AsyncImageView
+  - ChameleonFramework
   - GPUImage
   - NSDictionaryAsURLQuery
   - OpenCV (= 2.4.9)
@@ -35,6 +39,7 @@ SPEC CHECKSUMS:
   AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
   AZEncodeURIComponent: 6cacefb75b101041004189b15575200ba0f10985
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
+  ChameleonFramework: a6b466873ff9a4ce3a5196c20bccf1a97ad9f446
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   NSDictionaryAsURLQuery: a0e636080627272d8ed24ab63f3db4d671ffeba7
   OpenCV: bb17904e55fc19b1f0f6c3e29bc04a7dd31eddb9
