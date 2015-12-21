@@ -140,8 +140,8 @@
 
 - (void)editSubcanvas {
     __weak SubcanvasDrawable *weakSelf = self;
-    EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self.subcanvas callback:^(CanvasEditor *edited) {
-        weakSelf.subcanvas = edited;
+    EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self.subcanvas callback:^(CMCanvas *edited) {
+        // weakSelf.subcanvas = edited;
     }];
     [[self vcForPresentingModals] presentViewController:editorVC animated:YES completion:nil];
 }

@@ -7,6 +7,8 @@
 //
 
 #import "CMGroupDrawable.h"
+#import "PropertyViewTableCell.h"
+#import "EditorViewController.h"
 
 @implementation CMGroupDrawable
 
@@ -28,6 +30,27 @@
     space.center = CGPointMake(CGRectGetMidX(contentBounds), CGRectGetMidY(contentBounds));
     
     return space;
+}
+
+- (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
+    PropertyModel *buttons = [PropertyModel new];
+    buttons.buttonSelectorNames = @[@"editGroup:"];
+    buttons.buttonTitles = @[NSLocalizedString(@"Edit Group", nil)];
+    buttons.type = PropertyModelTypeButtons;
+    return [@[buttons] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
+}
+
+- (void)editGroup:(PropertyViewTableCell *)cell {
+    __weak CMGroupDrawable *weakSelf = self;
+    EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self callback:^(CMCanvas *edited) {
+        [weakSelf.contents removeAllObjects];
+        [weakSelf.contents addObjectsFromArray:edited.contents];
+        if (self.contents.count == 0) {
+            [cell.editor.canvas deleteDrawable:weakSelf];
+        }
+    }];
+    editorVC.editPrompt = NSLocalizedString(@"Edit Group", @"");
+    [cell.editor presentViewController:editorVC animated:YES completion:nil];
 }
 
 @end

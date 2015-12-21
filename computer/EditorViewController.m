@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 @property (nonatomic) BOOL hideSelectionRects;
 
-@property (nonatomic,copy) void (^modalEditingCallback)(CanvasEditor *canvas);
+@property (nonatomic,copy) void (^modalEditingCallback)(CMCanvas *canvas);
 
 @property (nonatomic) UIView *transientOverlayView;
 
@@ -86,6 +86,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) CADisplayLink *previewPlaybackDisplayLink;
 @property (nonatomic) BOOL playbackCurrentlyRebounding;
 @property (nonatomic) NSTimeInterval durationCache; // set when entering playback mode
+
+@property (nonatomic) UILabel *editPromptLabel;
 
 @end
 
@@ -136,7 +138,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)setModalEditingCallback:(void (^)(CanvasEditor *))modalEditingCallback {
+- (void)setModalEditingCallback:(void (^)(CMCanvas *))modalEditingCallback {
     _modalEditingCallback = modalEditingCallback;
     self.iconBar.isModalEditing = modalEditingCallback != nil;
 }
@@ -628,9 +630,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Modal editing
 
-+ (EditorViewController *)modalEditorForCanvas:(CanvasEditor *)canvas callback:(void(^)(CanvasEditor *edited))callback {
++ (EditorViewController *)modalEditorForCanvas:(CMCanvas *)canvas callback:(void(^)(CMCanvas *edited))callback {
     EditorViewController *vc = [self editor];
-    [vc reinitializeWithCanvas:[canvas copy]];
+    [vc view];
+    [vc.canvas.canvas.contents addObjectsFromArray:[canvas.copy contents]];
+    CGRect bounds = [canvas boundingBoxForAllTime];
+    vc.canvas.centerOfVisibleArea = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+    vc.canvas.screenSpan = bounds.size.width * 2;
     vc.modalEditingCallback = callback;
     return vc;
 }
@@ -638,7 +644,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (void)doneButtonPressed {
     if (self.modalEditingCallback) {
         [self dismissViewControllerAnimated:YES completion:nil];
-        self.modalEditingCallback([self.canvas copy]);
+        self.modalEditingCallback([self.canvas.canvas copy]);
     } else {
         [self saveAndClose:YES callback:^{
             [self dismissViewControllerAnimated:YES completion:nil];
@@ -987,6 +993,25 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     }
     
     [self resetMode];
+}
+
+#pragma mark Edit prompt
+
+- (void)setEditPrompt:(NSString *)editPrompt {
+    _editPrompt = editPrompt;
+    if (editPrompt.length > 0 && !self.editPromptLabel) {
+        self.editPromptLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 20)];
+        self.editPromptLabel.textColor = [UIColor colorWithWhite:1 alpha:1];
+        self.editPromptLabel.backgroundColor = [UIColor blackColor];
+        self.editPromptLabel.font = [UIFont boldSystemFontOfSize:12];
+        self.editPromptLabel.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:self.editPromptLabel];
+        self.editPromptLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    } else if (editPrompt.length == 0) {
+        [self.editPromptLabel removeFromSuperview];
+        self.editPromptLabel = nil;
+    }
+    self.editPromptLabel.text = editPrompt.uppercaseString;
 }
 
 @end

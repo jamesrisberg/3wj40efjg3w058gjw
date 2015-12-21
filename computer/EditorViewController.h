@@ -28,13 +28,12 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 @interface EditorViewController : UIViewController <CMDocumentDelegate, CanvasDelegate>
 
 @property (nonatomic, readonly) CanvasEditor *canvas;
-- (void)showOptions;
 - (void)startFreehandDrawing;
 @property (nonatomic) EditorMode mode;
 - (void)enterSelectionMode;
 
 + (EditorViewController *)editor;
-+ (EditorViewController *)modalEditorForCanvas:(CanvasEditor *)canvas callback:(void(^)(CanvasEditor *edited))callback;
++ (EditorViewController *)modalEditorForCanvas:(CMCanvas *)canvas callback:(void(^)(CMCanvas *edited))callback;
 
 @property (nonatomic) CMDocument *document;
 
@@ -43,5 +42,7 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 - (void)beginExportFlow;
 
 - (void)beginCreatingGroup;
+
+@property (nonatomic) NSString *editPrompt;
 
 @end
