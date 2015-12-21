@@ -578,6 +578,17 @@
     }
 }
 
+- (void)ensureSelectionContainsOnlySelectableItems {
+    NSArray *items = [self.selectedItems.allObjects map:^id(id obj) {
+        if ([self.canvas.contents containsObject:obj]) {
+            return obj;
+        } else {
+            return nil;
+        }
+    }];
+    _selectedItems = [NSSet setWithArray:items];
+}
+
 #pragma mark Capture
 - (void)setPreparedForStaticScreenshot:(BOOL)preparedForStaticScreenshot {
     _preparedForStaticScreenshot = preparedForStaticScreenshot;
@@ -630,6 +641,8 @@
 
 - (void)render {
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:[self createRenderContext]];
+    
+    [self ensureSelectionContainsOnlySelectableItems];
     
     while (_selectionViews.count > _selectedItems.count) {
         [_selectionViews.lastObject removeFromSuperview];
