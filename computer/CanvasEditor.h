@@ -71,6 +71,8 @@
 
 @property (nonatomic,readonly) _CMCanvasView *canvasView;
 
+- (void)renderNow;
+
 #pragma mark Coordinates
 
 @property (nonatomic) CGPoint centerOfVisibleArea;

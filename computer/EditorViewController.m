@@ -803,7 +803,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (FrameTime *)durationForExport {
     FrameTime *endTime = self.canvas.duration;
     if (endTime.frame == 0) {
-        endTime = [[FrameTime alloc] initWithFrame:2 atFPS:1];
+        endTime = [[FrameTime alloc] initWithFrame:VC_LONGEST_STATIC_ANIMATION_PERIOD * 100 atFPS:100];
     }
     NSTimeInterval extraDuration = 0; // (self.canvas.reboundAnimation || self.canvas.repeatCount > 1) ? 0 : 2;
     endTime = [[FrameTime alloc] initWithFrame:endTime.frame + endTime.fps * extraDuration atFPS:endTime.fps];
@@ -820,6 +820,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 - (void)exporter:(Exporter *)exporter drawFrameAtTime:(FrameTime *)time inRect:(CGRect)drawIntoRect {
     [self.timeline scrollToTime:time.time animated:NO];
     self.canvas.time = time;
+    [self.canvas renderNow];
     [self.canvas.canvasView drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
 }
 

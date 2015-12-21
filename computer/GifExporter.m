@@ -89,7 +89,7 @@
                     [self.parentViewController shareGIFWithFileURL:gifURL callback:^(NSString *shareableURL) {
                         NSLog(@"got url: %@", shareableURL);
                         if (shareableURL) {
-                            NSURL *shareable = [NSURL URLWithString:shareableURL];
+                            // NSURL *shareable = [NSURL URLWithString:shareableURL];
                             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[shareableURL] applicationActivities:@[]];
                             [self.parentViewController presentViewController:activityVC animated:YES completion:nil];
                         }

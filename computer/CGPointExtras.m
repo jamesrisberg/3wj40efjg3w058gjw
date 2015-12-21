@@ -92,8 +92,11 @@ CGFloat NPRandomContinuousFloat(CGFloat x) {
     
     srand(floor(x));
     CGFloat f0 = NPRandomFloat();
+    srand(floor(x)+1);
     CGFloat f1 = NPRandomFloat();
+    srand(floor(x)+2);
     CGFloat f2 = NPRandomFloat();
+    srand(floor(x)+3);
     CGFloat f3 = NPRandomFloat();
     CGFloat val = NPEvaluateSmoothCurve(CGPointMake(0, f0), CGPointMake(1, f1), CGPointMake(2, f2), CGPointMake(3, f3), x - floor(x), NO).y;
     

@@ -93,9 +93,9 @@
 @implementation StaticAnimationPicker
 
 - (void)setup {
-    NSDictionary *slowBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK / 3.0), @"blinkMagnitude": @1};
-    NSDictionary *mediumBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK / 2.0), @"blinkMagnitude": @1};
-    NSDictionary *fastBlink = @{@"blinkRate": @(VC_FASTEST_STATIC_BLINK), @"blinkMagnitude": @1};
+    NSDictionary *slowBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 2), @"blinkMagnitude": @1}; // rate: 2/2 sec
+    NSDictionary *mediumBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 4), @"blinkMagnitude": @1}; // rate: 2/4 sec
+    NSDictionary *fastBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 8), @"blinkMagnitude": @1}; // rate: 2/8 sec
     NSArray *blinkSection = @[slowBlink, mediumBlink, fastBlink];
     
     NSDictionary *slowJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @5};
@@ -109,9 +109,9 @@
     NSDictionary *strongPulse = @{@"pulseMagnitude": @0.5, @"pulseRate": @1.1};
     NSArray *pulseSection = @[slowPulse, mediumPulse, strongPulse];
     
-    NSDictionary *slowRotate = @{@"rotationMagnitude": @1, @"rotationRate": @0.3};
-    NSDictionary *mediumRotate = @{@"rotationMagnitude": @1, @"rotationRate": @0.7};
-    NSDictionary *fastRotate = @{@"rotationMagnitude": @1, @"rotationRate": @1.5};
+    NSDictionary *slowRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(1.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
+    NSDictionary *mediumRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(2.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
+    NSDictionary *fastRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(4.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
     NSArray *rotateSection = @[slowRotate, mediumRotate, fastRotate];
     
     _sections = @[blinkSection, jitterSection, pulseSection, rotateSection];

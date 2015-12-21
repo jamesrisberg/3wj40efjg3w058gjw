@@ -669,6 +669,10 @@
     }
 }
 
+- (void)renderNow {
+    [self render];
+}
+
 #pragma mark Misc.
 
 - (NSArray<UIImage*>*)snapshotsOfAllDrawables {

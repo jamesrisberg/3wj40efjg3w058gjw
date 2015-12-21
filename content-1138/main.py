@@ -31,7 +31,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class GifHandler(webapp2.RequestHandler):
     def get(self, name):
-        g = ndb.Key('Gif', name).get()
+        g = ndb.Key('Gif', name.replace('+', ' ')).get()
         status = 503
         url = 'https://files.parsetfss.com/bf1ec351-355e-43bb-8dd8-984faf14ae43/tfss-91728182-0032-497c-8453-e3b29aebb300-Content.gif'
         if g:
