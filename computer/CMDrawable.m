@@ -360,9 +360,12 @@
 
 - (CGRect)outerBoundingBoxWithBounds:(CGSize)bounds {
     // TODO: better
-    CGRect box = CGRectMake(self.center.x - bounds.width/2, self.center.y - bounds.height/2, bounds.width, bounds.height);
+    CGRect box = CGRectMake( - bounds.width/2, - bounds.height/2, bounds.width, bounds.height);
     CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(self.rotation), self.scale, self.scale);
-    return CGRectApplyAffineTransform(box, transform);
+    box = CGRectApplyAffineTransform(box, transform);
+    box.origin.x += self.center.x;
+    box.origin.y += self.center.y;
+    return box;
 }
 
 @end

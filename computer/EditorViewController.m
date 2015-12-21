@@ -165,7 +165,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 #pragma mark Document
 
 - (void)setDocument:(CMDocument *)document {
-    void (^update)() = ^(CMDocument *doc) {
+    void (^update)() = ^() {
         _document.delegate = nil;
         
         _document = document;
@@ -942,8 +942,9 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 }
 
 - (void)beginCreatingGroup {
-    // self.mode = EditorModeCreatingGroup;
+    self.mode = EditorModeCreatingGroup;
     
+    /*
     // test:
     CMShapeDrawable *shape = [CMShapeDrawable new];
     CGRect r = CGRectMake(0, 0, 100, 100);
@@ -967,12 +968,25 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [g.contents addObject:star];
     
     [self.canvas insertDrawableAtCurrentTime:g];
+     */
 }
 
 - (void)createGroup {
-    [self resetMode];
+    NSArray *items = [self.canvas.selectedItems.allObjects sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger i1 = [self.canvas.canvas.contents indexOfObject:obj1];
+        NSInteger i2 = [self.canvas.canvas.contents indexOfObject:obj2];
+        return [@(i1) compare:@(i2)];
+    }];
+    if (items.count > 0) {
+        CMGroupDrawable *g = [CMGroupDrawable new];
+        [g.contents addObjectsFromArray:items];
+        for (CMDrawable *item in items) {
+            [self.canvas deleteDrawable:item];
+        }
+        [self.canvas insertDrawableAtCurrentTime:g];
+    }
     
-    // TODO
+    [self resetMode];
 }
 
 @end
