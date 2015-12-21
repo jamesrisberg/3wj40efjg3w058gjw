@@ -432,6 +432,7 @@
         [[[target canvas] contents] removeObject:drawable];
     }]];
     
+    self.selectedItems = [NSSet setWithObject:drawable];
 }
 
 - (void)copy:(id)sender {
