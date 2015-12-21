@@ -13,7 +13,6 @@
 #import "computer-Swift.h"
 #import "FilterOptionsView.h"
 #import "ConvenienceCategories.h"
-#import <SYImageColorGetter.h>
 #import "UIImage+ColorAtPixel.h"
 
 @interface FilterPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>

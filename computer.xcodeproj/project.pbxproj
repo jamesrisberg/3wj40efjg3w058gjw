@@ -181,6 +181,7 @@
 		5FDA80D21C03BF18006CDC21 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D11C03BF18006CDC21 /* API.m */; };
 		5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */; };
 		5FE6C6031C21516900344571 /* CMGroupDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE6C6021C21516900344571 /* CMGroupDrawable.m */; };
+		5FE6C6091C28782500344571 /* PerlinNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE6C6081C28782500344571 /* PerlinNoise.m */; };
 		5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */; };
 		5FE7C6091BEEC8F4009C0EBF /* GifExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE7C6081BEEC8F4009C0EBF /* GifExporter.m */; };
 		5FE8575C1BD9DA1800B4B245 /* StaticAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE8575B1BD9DA1800B4B245 /* StaticAnimation.m */; };
@@ -564,6 +565,8 @@
 		5FDA80D41C03E7C2006CDC21 /* UIColor+RandomColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RandomColors.m"; sourceTree = "<group>"; };
 		5FE6C6011C21516900344571 /* CMGroupDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMGroupDrawable.h; sourceTree = "<group>"; };
 		5FE6C6021C21516900344571 /* CMGroupDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMGroupDrawable.m; sourceTree = "<group>"; };
+		5FE6C6071C28782500344571 /* PerlinNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerlinNoise.h; sourceTree = "<group>"; };
+		5FE6C6081C28782500344571 /* PerlinNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerlinNoise.m; sourceTree = "<group>"; };
 		5FE7C6041BEEC64A009C0EBF /* GifOptimizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifOptimizer.h; sourceTree = "<group>"; };
 		5FE7C6051BEEC64A009C0EBF /* GifOptimizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GifOptimizer.m; sourceTree = "<group>"; };
 		5FE7C6071BEEC8F4009C0EBF /* GifExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GifExporter.h; sourceTree = "<group>"; };
@@ -1366,6 +1369,8 @@
 		5FEAF9611B9E2DB60071BC08 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5FE6C6071C28782500344571 /* PerlinNoise.h */,
+				5FE6C6081C28782500344571 /* PerlinNoise.m */,
 				5F6940311C09035900569335 /* ProgressBarWindow.h */,
 				5F6940321C09035900569335 /* ProgressBarWindow.m */,
 				5F5EA6051C1971D700DE85BF /* UIImage+ColorAtPixel.h */,
@@ -1727,6 +1732,7 @@
 				5F809A561BE1C3740030B538 /* BitmapCropManipulator.m in Sources */,
 				5F809A961BE318240030B538 /* HJImagesToVideo.m in Sources */,
 				5F7C88761C1151AC0046020B /* CMTextDrawable.m in Sources */,
+				5FE6C6091C28782500344571 /* PerlinNoise.m in Sources */,
 				5FE7C6061BEEC64A009C0EBF /* GifOptimizer.m in Sources */,
 				5FE6C6031C21516900344571 /* CMGroupDrawable.m in Sources */,
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,

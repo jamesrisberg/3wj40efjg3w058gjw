@@ -1,1 +1,0 @@
-../../../SYImageColorTools/Classes/UIColor+SYImageColorTools.h

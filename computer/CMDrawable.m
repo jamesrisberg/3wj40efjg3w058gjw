@@ -225,7 +225,6 @@
     CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
     
     NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
-    staticAnimationTime *= 0.3; // DONOTSUBMIT
     alpha = [keyframe.staticAnimation adjustAlpha:alpha time:staticAnimationTime];
     transform = [keyframe.staticAnimation adjustTransform:transform time:staticAnimationTime];
     

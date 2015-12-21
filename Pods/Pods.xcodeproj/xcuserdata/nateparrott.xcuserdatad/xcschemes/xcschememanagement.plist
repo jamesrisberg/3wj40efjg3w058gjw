@@ -54,30 +54,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SYImageColorTools.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0927CE59529F0BBD62DC6416B5088297</key>
+		<key>3829B1F924B690A9A64BEC7C880BB6A2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0A1A3E3D8ADF9DF6152F31634BFE0C5F</key>
+		<key>3DF1C5198ECAF82FC61C58C61E54C02C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5BE2F597E61B0402D86CF3AA2F857D02</key>
+		<key>45E16531305D69C9F5E5F22BF7BCEFBD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>66CDB374993BFEB33368AF6F1183966F</key>
+		<key>4B764D1E11D4642BBD04199FB5C2421D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4BCA4592ECE9AA2E9C7FF9AF0B9EE4B7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>57EB4C5BD3A5FE81549148AA5A1C9F4C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,32 +92,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>862028707260A3A4F8B09D871CAC7287</key>
+		<key>73A8E6E6FBC121E29A18B29AC627B829</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A443F51D1030CA4946CA5E711A43DCCC</key>
+		<key>AD77FF99A61DD51E68F8491806D7500E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A82C6BFAE1101290B44E3CF42D078C93</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AD428C8FDC5DEDBE8BA4CC38498D4608</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C96C6CE8D495235E5539170FE36A3E76</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FB8069190267C2C9980CD03C097B6243</key>
+		<key>EECEF410F718568912E43C6C3692F62A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

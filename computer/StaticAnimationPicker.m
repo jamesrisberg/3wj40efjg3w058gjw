@@ -98,10 +98,10 @@
     NSDictionary *fastBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 8), @"blinkMagnitude": @1}; // rate: 2/8 sec
     NSArray *blinkSection = @[slowBlink, mediumBlink, fastBlink];
     
-    NSDictionary *slowJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @5};
-    NSDictionary *fastJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @11};
-    NSDictionary *slowXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @5};
-    NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @11};
+    NSDictionary *slowJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @25};
+    NSDictionary *fastJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @50};
+    NSDictionary *slowXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @25};
+    NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @50};
     NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
     
     NSDictionary *slowPulse = @{@"pulseMagnitude": @0.1, @"pulseRate": @0.3};
