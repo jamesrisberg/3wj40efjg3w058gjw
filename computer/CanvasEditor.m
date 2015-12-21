@@ -661,7 +661,7 @@
         SelectionIndicatorView *selectionView = _selectionViews[i];
         CMDrawable *d = allSelectedItems[i];
         CMDrawableView *view = [_canvasView viewForDrawable:d];
-        CMDrawableKeyframe *keyframe = [d.keyframeStore keyframeAtTime:self.time];
+        CMDrawableKeyframe *keyframe = [d.keyframeStore interpolatedKeyframeAtTime:self.time];
         CGSize size = [self.canvasCoordinateSpace convertRect:CGRectMake(keyframe.center.x, keyframe.center.y, view.bounds.size.width * keyframe.scale, view.bounds.size.height * keyframe.scale) toCoordinateSpace:self].size;
         selectionView.bounds = CGRectMake(0, 0, size.width, size.height);
         selectionView.center = [self.canvasCoordinateSpace convertPoint:keyframe.center toCoordinateSpace:self];
