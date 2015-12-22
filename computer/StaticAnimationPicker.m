@@ -97,8 +97,8 @@
 
 - (void)setup {
     NSDictionary *slowBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 2), @"blinkMagnitude": @1}; // rate: 2/2 sec
-    NSDictionary *mediumBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 4), @"blinkMagnitude": @1}; // rate: 2/4 sec
-    NSDictionary *fastBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 8), @"blinkMagnitude": @1}; // rate: 2/8 sec
+    NSDictionary *mediumBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD), @"blinkMagnitude": @1}; // rate: 2/4 sec
+    NSDictionary *fastBlink = @{@"blinkRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD * 2), @"blinkMagnitude": @1}; // rate: 2/8 sec
     NSArray *blinkSection = @[slowBlink, mediumBlink, fastBlink];
     
     NSDictionary *slowJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @25};
@@ -107,10 +107,10 @@
     NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @50};
     NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
     
-    NSDictionary *slowPulse = @{@"pulseMagnitude": @0.1, @"pulseRate": @0.3};
-    NSDictionary *mediumPulse = @{@"pulseMagnitude": @0.2, @"pulseRate": @0.8};
-    NSDictionary *strongPulse = @{@"pulseMagnitude": @0.5, @"pulseRate": @1.1};
-    NSArray *pulseSection = @[slowPulse, mediumPulse, strongPulse];
+    NSDictionary *pulse1 = @{@"pulseMagnitude": @0.1, @"pulseRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 4)};
+    NSDictionary *pulse2 = @{@"pulseMagnitude": @0.2, @"pulseRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 2)};
+    NSDictionary *pulse3 = @{@"pulseMagnitude": @0.5, @"pulseRate": @((VC_LONGEST_STATIC_ANIMATION_PERIOD))};
+    NSArray *pulseSection = @[pulse1, pulse2, pulse3];
     
     NSDictionary *slowRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(1.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
     NSDictionary *mediumRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(2.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
