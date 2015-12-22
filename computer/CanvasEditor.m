@@ -462,11 +462,8 @@
 - (void)duplicateDrawable:(CMDrawable *)d {
     CGFloat translation = 10 / [self canvasZoom];
     CMDrawable *copy = [d copy];
-    [copy.keyframeStore changePropertyAcrossTime:@"center" block:^id(id val) {
-        CGPoint p = CGPointMake([val CGPointValue].x + translation, [val CGPointValue].y + translation);
-        return [NSValue valueWithCGPoint:p];
-    }];
-    
+    CMDrawableKeyframe *keyframe = [copy.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
+    keyframe.center = CGPointMake(keyframe.center.x + translation, keyframe.center.y + translation);
     [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
         [[target canvas].contents addObject:copy];
     } undo:^(id target) {
