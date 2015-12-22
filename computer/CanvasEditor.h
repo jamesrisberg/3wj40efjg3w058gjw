@@ -34,7 +34,7 @@
 @end
 
 
-@interface CanvasEditor : UIView <TimeAware>
+@interface CanvasEditor : UIView
 
 // - (void)insertDrawable:(Drawable *)drawable;
 // - (NSArray<__kindof Drawable*>*)drawables;

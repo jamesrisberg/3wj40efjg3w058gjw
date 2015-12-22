@@ -7,12 +7,9 @@
 //
 
 #import "CanvasEditor.h"
-#import "Drawable.h"
 #import "CGPointExtras.h"
 #import "ShapeStackList.h"
 #import "ConvenienceCategories.h"
-#import "SubcanvasDrawable.h"
-#import "VideoDrawable.h"
 #import "computer-Swift.h"
 #import "CMDrawable.h"
 #import "CMCanvas.h"
@@ -392,33 +389,6 @@
     return self;
 }
 
-- (void)_addDrawableToCanvas:(Drawable *)drawable {
-    [self _addDrawableToCanvas:drawable aboveDrawable:nil];
-}
-
-- (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other {
-    if (other) {
-        [self insertSubview:drawable aboveSubview:other];
-    } else {
-        [self addSubview:drawable];
-    }
-    drawable.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-    __weak CanvasEditor *weakSelf = self;
-    __weak Drawable *weakDrawable = drawable;
-    drawable.onKeyframePropertiesUpdated = ^{
-        [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:weakSelf];
-        weakDrawable.time = weakSelf.time;
-        [weakSelf updateDrawableForCurrentTime:weakDrawable];
-    };
-    [self updateDrawableForCurrentTime:weakDrawable];
-}
-
-- (void)_removeDrawable:(Drawable *)d {
-    d.onKeyframePropertiesUpdated = nil;
-    d.onShapeUpdate = nil;
-    [d removeFromSuperview];
-}
-
 #pragma mark Actions
 
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
@@ -436,18 +406,18 @@
 }
 
 - (void)copy:(id)sender {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItems.allObjects];
-    [[UIPasteboard generalPasteboard] setData:data forPasteboardType:DrawableArrayPasteboardType];
+    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItems.allObjects];
+    //[[UIPasteboard generalPasteboard] setData:data forPasteboardType:DrawableArrayPasteboardType];
 }
 
 - (void)paste:(id)sender {
-    if ([[UIPasteboard generalPasteboard] containsPasteboardTypes:@[DrawableArrayPasteboardType]]) {
+    /*if ([[UIPasteboard generalPasteboard] containsPasteboardTypes:@[DrawableArrayPasteboardType]]) {
         NSData *data = [[UIPasteboard generalPasteboard] dataForPasteboardType:DrawableArrayPasteboardType];
         NSArray *drawables = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         for (Drawable *d in drawables) {
             [self _addDrawableToCanvas:d]; // TODO: make sure this drawable would be visible onscreen
         }
-    }
+    }*/
 }
 
 - (void)deleteDrawable:(CMDrawable *)d {
@@ -488,13 +458,6 @@
 - (FrameTime *)loopingDuration {
     return nil; // TODO
 }
-
-- (void)updateDrawableForCurrentTime:(Drawable *)d {
-    d.time = self.time;
-    d.suppressTimingVisualizations = self.suppressTimingVisualizations;
-    d.useTimeForStaticAnimations = self.useTimeForStaticAnimations;
-}
-
 
 - (void)deleteSelection {
     NSSet *selection = self.selectedItems;

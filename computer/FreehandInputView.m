@@ -7,7 +7,6 @@
 //
 
 #import "FreehandInputView.h"
-#import "ShapeDrawable.h"
 #import "CMCanvas.h"
 #import "CMTransaction.h"
 #import "CMShapeDrawable.h"

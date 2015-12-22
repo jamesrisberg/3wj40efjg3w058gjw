@@ -14,7 +14,6 @@
 @class StaticAnimation;
 #import "CanvasEditor.h"
 #import "QuickCollectionModal.h"
-#import "OptionsView.h"
 #import "PropertyModel.h"
 
 @interface CMDrawableView : UIView

@@ -8,7 +8,6 @@
 
 #import "CMDrawable.h"
 #import "computer-Swift.h"
-#import "SliderOptionsCell.h"
 #import "PropertyViewTableCell.h"
 #import "StaticAnimation.h"
 #import "CGPointExtras.h"

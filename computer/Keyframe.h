@@ -46,10 +46,3 @@
 
 @end
 
-@protocol TimeAware <NSObject>
-
-@property (nonatomic) BOOL useTimeForStaticAnimations;
-@property (nonatomic) FrameTime *time;
-@property (nonatomic) BOOL suppressTimingVisualizations; // e.g. dimming
-
-@end

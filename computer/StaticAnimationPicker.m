@@ -8,8 +8,6 @@
 
 #import "StaticAnimationPicker.h"
 #import "StaticAnimation.h"
-#import "Drawable.h"
-#import "ShapeDrawable.h"
 #import "SKColorFill.h"
 #import "VideoConstants.h"
 #import "computer-Swift.h"
