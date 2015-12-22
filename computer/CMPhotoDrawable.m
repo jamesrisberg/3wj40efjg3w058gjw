@@ -11,6 +11,7 @@
 #import "FilterPickerViewController.h"
 #import "computer-Swift.h"
 #import "PropertyViewTableCell.h"
+#import "EditorViewController.h"
 
 @interface CMPhotoDrawableView : CMDrawableView {
     UIImageView *_imageView;
@@ -95,11 +96,13 @@
 }
 
 - (void)filter:(PropertyViewTableCell *)sender {
-    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:[FilterPickerViewController filterPickerWithImage:self.image callback:^(UIImage *filtered) {
+    FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithImage:self.image callback:^(UIImage *filtered) {
         if (filtered) {
             [self setImage:filtered withTransactionStack:sender.transactionStack];
         }
-    }] animated:YES completion:nil];
+    }];
+    picker.snapshotsForImagePicker = [sender.editor.canvas snapshotsOfAllDrawables];
+    [[NPSoftModalPresentationController getViewControllerForPresentationInWindow:[UIApplication sharedApplication].windows.firstObject] presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)cutOut:(PropertyViewTableCell *)sender {
