@@ -48,10 +48,6 @@
         v.boundsDiagonal = 300;
         v.media = mediaID;
         [self.canvas insertDrawableAtCurrentTime:v];
-        /*VideoDrawable *d = [VideoDrawable new];
-        d.frame = CGRectMake(0, 0, 250, 250);
-        d.media = mediaID;
-        [self.canvas insertDrawable:d];*/
     }];
 }
 
@@ -59,10 +55,6 @@
     CMPhotoDrawable *p = [CMPhotoDrawable new];
     p.boundsDiagonal = 300;
     [p setImage:image withTransactionStack:self.canvas.transactionStack];
-    /*PhotoDrawable *d = [PhotoDrawable new];
-    d.bounds = CGRectMake(0, 0, 250, 250);
-    [d setImage:image];
-    [self.canvas insertDrawable:d];*/
     [self.canvas insertDrawableAtCurrentTime:p];
 }
 

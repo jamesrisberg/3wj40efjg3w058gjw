@@ -235,4 +235,8 @@
     return NSLocalizedString(@"Video", @"");
 }
 
+- (FrameTime *)maxTime {
+    return self.videoDuration;
+}
+
 @end
