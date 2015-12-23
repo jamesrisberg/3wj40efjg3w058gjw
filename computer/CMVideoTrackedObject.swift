@@ -50,9 +50,11 @@ class CMVideoTrackedObject: NSObject, NSCoding {
     }
     
     func appendSample(feature: CIFaceFeature, imageSize: CGSize, transform: CGAffineTransform, time: NSTimeInterval) {
-        let bounds = CGRectApplyAffineTransform(feature.bounds, transform)
-        var boundsNormalized = CGRectMake(bounds.origin.x / imageSize.width, bounds.origin.y / imageSize.height, bounds.size.width / imageSize.width, bounds.size.height / imageSize.height)
-        boundsNormalized.origin.y = 1.0 - boundsNormalized.origin.y - boundsNormalized.size.height
+        var bounds = feature.bounds
+        bounds.origin.y = imageSize.height - bounds.origin.y - bounds.size.height
+        bounds = CGRectApplyAffineTransform(bounds, transform)
+        let boundsNormalized = CGRectMake(bounds.origin.x / imageSize.width - 0.5, bounds.origin.y / imageSize.height - 0.5, bounds.size.width / imageSize.width, bounds.size.height / imageSize.height)
+        // boundsNormalized = CGRectApplyAffineTransform(boundsNormalized, transform)
         let sample = Sample(time: time, bounds: boundsNormalized, rotation: feature.hasFaceAngle ? CGFloat(feature.faceAngle) : 0.0)
         _samples.append(sample)
     }

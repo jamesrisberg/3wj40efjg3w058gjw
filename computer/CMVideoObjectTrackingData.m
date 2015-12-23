@@ -32,7 +32,7 @@
         CGSize size = videoTrack.naturalSize;
         
         CIContext *context = [CIContext contextWithOptions:nil];
-        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy: CIDetectorAccuracyLow, CIDetectorTracking: @YES, CIDetectorAspectRatio: @(videoTrack.orientation)}];
+        CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh, CIDetectorTracking: @YES}];
         
         NSDictionary *outputSettings = @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithInt:kCVPixelFormatType_32BGRA] };
         AVAssetReaderTrackOutput *trackOutput = [[AVAssetReaderTrackOutput alloc] initWithTrack:videoTrack outputSettings:outputSettings];
@@ -54,7 +54,7 @@
                     NSTimeInterval time = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(buffer));
                     
                     CIImage *image = [CIImage imageWithCVImageBuffer:CMSampleBufferGetImageBuffer(buffer)];
-                    for (CIFaceFeature *feature in [detector featuresInImage:image]) {
+                    for (CIFaceFeature *feature in [detector featuresInImage:image options:@{CIDetectorImageOrientation: @(videoTrack.orientation)}]) {
                         NSNumber *trackingID = @([feature trackingID]);
                         CMVideoTrackedObject *object = objectsByTrackingID[trackingID];
                         if (!object) {

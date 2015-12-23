@@ -15,13 +15,13 @@
     CGFloat videoAngleRadians = atan2(txf.b, txf.a);
     CGFloat videoAngleDegrees = videoAngleRadians / M_PI * 180;
     if (videoAngleDegrees == 0) {
-        return kCGImagePropertyOrientationRight;
-    } else if (videoAngleDegrees == 90) {
         return kCGImagePropertyOrientationUp;
+    } else if (videoAngleDegrees == 90) {
+        return kCGImagePropertyOrientationRight;
     } else if (videoAngleDegrees == 180) {
-        return kCGImagePropertyOrientationLeft;
-    } else if (videoAngleDegrees == 270) {
         return kCGImagePropertyOrientationDown;
+    } else if (videoAngleDegrees == 270) {
+        return kCGImagePropertyOrientationLeft;
     }
     return kCGImagePropertyOrientationUp; // shouldn't happen (?)
 }
