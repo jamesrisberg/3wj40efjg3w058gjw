@@ -140,6 +140,8 @@
 		5FB39B5F1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B5E1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m */; };
 		5FB39B621C2A135700A22AC7 /* CMRenderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B611C2A135700A22AC7 /* CMRenderContext.m */; };
 		5FB39B651C2A13B400A22AC7 /* CMLayoutBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B641C2A13B400A22AC7 /* CMLayoutBase.m */; };
+		5FB39B681C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B671C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.m */; };
+		5FB39B6D1C2A3A9300A22AC7 /* CMVideoTrackedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B6C1C2A3A9300A22AC7 /* CMVideoTrackedObject.swift */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -488,6 +490,9 @@
 		5FB39B611C2A135700A22AC7 /* CMRenderContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMRenderContext.m; sourceTree = "<group>"; };
 		5FB39B631C2A13B400A22AC7 /* CMLayoutBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLayoutBase.h; sourceTree = "<group>"; };
 		5FB39B641C2A13B400A22AC7 /* CMLayoutBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLayoutBase.m; sourceTree = "<group>"; };
+		5FB39B661C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAssetTrack+Orientation.h"; sourceTree = "<group>"; };
+		5FB39B671C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAssetTrack+Orientation.m"; sourceTree = "<group>"; };
+		5FB39B6C1C2A3A9300A22AC7 /* CMVideoTrackedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CMVideoTrackedObject.swift; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -789,6 +794,7 @@
 				5F7C88811C1253650046020B /* CMVideoDrawable.m */,
 				5FB39B541C29CD8500A22AC7 /* CMVideoObjectTrackingData.h */,
 				5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */,
+				5FB39B6C1C2A3A9300A22AC7 /* CMVideoTrackedObject.swift */,
 				5F7C88831C13D04D0046020B /* SelectionIndicatorView.h */,
 				5F7C88841C13D04D0046020B /* SelectionIndicatorView.m */,
 				5F5543271C18CF0B00592152 /* CMRepeatingWrapper.h */,
@@ -1306,6 +1312,8 @@
 			children = (
 				5FEAF9721B9E3B950071BC08 /* UIImage+ImageEffects.h */,
 				5FEAF9701B9E3B8F0071BC08 /* UIImage+ImageEffects.m */,
+				5FB39B661C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.h */,
+				5FB39B671C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.m */,
 				5FE6C6071C28782500344571 /* PerlinNoise.h */,
 				5FE6C6081C28782500344571 /* PerlinNoise.m */,
 				5F6940311C09035900569335 /* ProgressBarWindow.h */,
@@ -1615,6 +1623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FB39B681C2A2E3D00A22AC7 /* AVAssetTrack+Orientation.m in Sources */,
 				5F6110101BB1E05C00DB4C82 /* SKFontPicker.m in Sources */,
 				5F900E221BBDE3A3000D4C7C /* ExpandingButton.m in Sources */,
 				5F809A541BE1C3740030B538 /* CGImageContainer.m in Sources */,
@@ -1695,6 +1704,7 @@
 				5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */,
 				5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */,
 				5F809A9C1BE40B650030B538 /* ImageSearchViewController.swift in Sources */,
+				5FB39B6D1C2A3A9300A22AC7 /* CMVideoTrackedObject.swift in Sources */,
 				5F809A651BE1C4490030B538 /* ExportTest.m in Sources */,
 				5F809A581BE1C3740030B538 /* BitmapScaleManipulator.m in Sources */,
 				5F858DAF1BFBB8A3004E658E /* Pattern.swift in Sources */,

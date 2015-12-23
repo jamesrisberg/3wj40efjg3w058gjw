@@ -24,6 +24,16 @@ CGFloat EVInterpolate(CGFloat a1, CGFloat a2, CGFloat progress) {
     return a1 * (1 - progress) + a2 * progress;
 }
 
+CGFloat EVInterpolateAngles(CGFloat a1, CGFloat a2, CGFloat progress) {
+    CGFloat x = cos(a1) * (1 - progress) + cos(a2) * progress;
+    CGFloat y = sin(a1) * (1 - progress) + sin(a2) * progress;
+    if (x == 0 && y == 0) {
+        return a1;
+    } else {
+        return atan2(y, x);
+    }
+}
+
 @implementation NSNumber (EVInterpolation)
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {

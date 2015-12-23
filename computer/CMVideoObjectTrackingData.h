@@ -8,17 +8,7 @@
 
 @import UIKit;
 @class FrameTime;
-@class CMLayoutBase;
-
-@interface CMVideoTrackedObject : NSObject <NSCoding>
-
-- (CMLayoutBase *)layoutBaseAtTime:(FrameTime *)time;
-
-@property (nonatomic,readonly) NSString *name;
-@property (nonatomic,readonly) NSString *uuid;
-
-@end
-
+@class CMVideoTrackedObject;
 
 @interface CMVideoObjectTrackingData : NSObject <NSCoding>
 

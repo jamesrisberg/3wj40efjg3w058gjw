@@ -8,3 +8,5 @@
 #import "AFImageSearchResultsViewController.h"
 #import "RGB-HSV.h"
 #import "AppDelegate.h"
+#import "EVInterpolation.h"
+#import "CMLayoutBase.h"

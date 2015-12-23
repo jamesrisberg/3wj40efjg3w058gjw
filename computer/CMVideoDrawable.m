@@ -325,10 +325,10 @@
             NSString *drawableKey = self.objectTrackingDict[objectId];
             CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
             CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
-            CMLayoutBase *base = [self.trackingData.objects[objectId] layoutBaseAtTime:ctx.time];
+            CMLayoutBase *base = [self.trackingData.objects[objectId] layoutBaseAtTime:ctx.time.time];
             // transform base for self:
-            CGFloat xScale = size.width * cos(keyframe.rotation) + size.height *  sin(keyframe.rotation);
-            CGFloat yScale = size.width * sin(keyframe.rotation) + size.height * cos(keyframe.rotation);
+            CGFloat xScale = keyframe.scale * ( size.width * cos(keyframe.rotation) + size.height *  sin(keyframe.rotation) );
+            CGFloat yScale = keyframe.scale * (size.width * sin(keyframe.rotation) + size.height * cos(keyframe.rotation) );
             base.center = CGPointMake(base.center.x * xScale + keyframe.center.x, base.center.y * yScale + keyframe.center.y);
             base.scale *= keyframe.scale;
             base.rotation += keyframe.rotation;

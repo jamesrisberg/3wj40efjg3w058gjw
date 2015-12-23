@@ -593,7 +593,7 @@
     ctx.time = self.time;
     ctx.renderMetaInfo = YES;
     ctx.forStaticScreenshot = self.preparedForStaticScreenshot;
-    ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations;
+    ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations || _touches.count > 0;
     ctx.coordinateSpace = [self canvasCoordinateSpace];
     ctx.canvasSize = self.bounds.size;
     ctx.atRoot = YES;
