@@ -291,7 +291,17 @@
             PropertyModel *label = [PropertyModel new];
             label.type = PropertyModelTypeLabel;
             label.labelText = NSLocalizedString(@"Select objects to move with each face", @"");
-            NSArray *objectModels = [self.trackingData.objects.allValues map:^id(id obj) {
+            NSArray *objectModels = [[self.trackingData.objects.allValues sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+                NSInteger f1 = [obj1 frameCount];
+                NSInteger f2 = [obj2 frameCount];
+                if (f1 < f2) {
+                    return NSOrderedDescending;
+                } else if (f1 == f2) {
+                    return NSOrderedSame;
+                } else {
+                    return NSOrderedAscending;
+                }
+            }] map:^id(id obj) {
                 PropertyModel *model = [PropertyModel new];
                 model.type = PropertyModelTypeAnotherDrawable;
                 model.title = [obj name];

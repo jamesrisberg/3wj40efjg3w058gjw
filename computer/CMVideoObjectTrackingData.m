@@ -13,6 +13,7 @@
 @import CoreImage;
 #import "AVAssetTrack+Orientation.h"
 #import "computer-Swift.h"
+#import "ConvenienceCategories.h"
 
 @interface CMVideoObjectTrackingData ()
 
@@ -40,7 +41,6 @@
         [reader startReading];
         
         NSMutableDictionary *objectsByTrackingID = [NSMutableDictionary new];
-        NSMutableDictionary *objectsByUUID = [NSMutableDictionary new];
         
         CMSampleBufferRef buffer = NULL;
         BOOL continueReading = YES;
@@ -60,8 +60,6 @@
                         if (!object) {
                             object = [CMVideoTrackedObject new];
                             objectsByTrackingID[trackingID] = object;
-                            objectsByUUID[object.uuid] = object;
-                            object.name = [NSString stringWithFormat:NSLocalizedString(@"Face #%@", @""), @(objectsByTrackingID.count)];
                         }
                         [object appendSample:feature imageSize:size transform:transform time:time];
                     }
@@ -74,7 +72,7 @@
                     continueReading = NO;
                     
                     CMVideoObjectTrackingData *result = [CMVideoObjectTrackingData new];
-                    result.objects = objectsByUUID;
+                    result.objects = [self matchAndNameObjects:objectsByTrackingID.allValues];
                     callback(result);
                 } break;
                 case AVAssetReaderStatusFailed: {
@@ -94,6 +92,57 @@
             }
         }
     });
+}
+
++ (NSDictionary<NSString*,CMVideoTrackedObject*>*)matchAndNameObjects:(NSArray<CMVideoTrackedObject*> *)objects {
+    NSArray *itemsByTime = [objects sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSTimeInterval t1 = [(CMVideoTrackedObject *)obj1 minFrameTime];
+        NSTimeInterval t2 = [(CMVideoTrackedObject *)obj2 minFrameTime];
+        if (t1 < t2) {
+            return NSOrderedAscending;
+        } else if (t1 == t2) {
+            return NSOrderedSame;
+        } else {
+            return NSOrderedDescending;
+        }
+    }];
+    NSMutableArray *finalObjects = [NSMutableArray new];
+    for (CMVideoTrackedObject *obj in itemsByTime) {
+        BOOL matched = NO;
+        /*for (CMVideoTrackedObject *other in finalObjects) {
+            if (![obj overlapsWithOtherObjectTemporally:other]) {
+                [other appendFramesFromObject:obj];
+                matched = YES;
+                break;
+            }
+        }*/
+        if (!matched) {
+            [finalObjects addObject:obj];
+        }
+    }
+    
+    // sort by frame count:
+    [finalObjects sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger f1 = [obj1 frameCount];
+        NSInteger f2 = [obj2 frameCount];
+        if (f1 < f2) {
+            return NSOrderedDescending;
+        } else if (f1 == f2) {
+            return NSOrderedSame;
+        } else {
+            return NSOrderedAscending;
+        }
+    }];
+    NSInteger i = 1;
+    for (CMVideoTrackedObject *obj in objects) {
+        obj.name = [NSString stringWithFormat:NSLocalizedString(@"Face #%@", @""), @(i++)];
+    }
+    
+    return [finalObjects mapToDict:^id(__autoreleasing id *key) {
+        CMVideoTrackedObject *obj = *key;
+        *key = obj.uuid;
+        return obj;
+    }];;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {

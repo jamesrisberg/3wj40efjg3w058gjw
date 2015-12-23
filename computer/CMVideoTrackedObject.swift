@@ -16,15 +16,16 @@ class CMVideoTrackedObject: NSObject, NSCoding {
         let time: NSTimeInterval
         let bounds: CGRect
         let rotation: CGFloat
+        let center: CGPoint
         func interpolateWith(other: Sample, progress: CGFloat) -> Sample {
             let p1 = 1.0 - progress
-            return Sample(time: time*Double(p1) + other.time*Double(progress), bounds: EVInterpolateRect(bounds, other.bounds, progress), rotation: EVInterpolateAngles(rotation, other.rotation, progress))
+            return Sample(time: time*Double(p1) + other.time*Double(progress), bounds: EVInterpolateRect(bounds, other.bounds, progress), rotation: EVInterpolateAngles(rotation, other.rotation, progress), center: EVInterpolatePoint(center, other.center, progress))
         }
         func toDict() -> [String: AnyObject] {
-            return ["time": time, "bounds": NSValue(CGRect: bounds), "rotation": rotation]
+            return ["time": time, "bounds": NSValue(CGRect: bounds), "rotation": rotation, "center": NSValue(CGPoint: center)]
         }
         static func fromDict(dict: [String: AnyObject]) -> Sample {
-            return Sample(time: (dict["time"] as! NSNumber).doubleValue, bounds: (dict["bounds"] as! NSValue).CGRectValue(), rotation: CGFloat((dict["rotation"] as! NSNumber).floatValue))
+            return Sample(time: (dict["time"] as! NSNumber).doubleValue, bounds: (dict["bounds"] as! NSValue).CGRectValue(), rotation: CGFloat((dict["rotation"] as! NSNumber).floatValue), center: (dict["center"] as! NSValue).CGPointValue())
         }
     }
     private var _samples = [Sample]()
@@ -50,13 +51,54 @@ class CMVideoTrackedObject: NSObject, NSCoding {
     }
     
     func appendSample(feature: CIFaceFeature, imageSize: CGSize, transform: CGAffineTransform, time: NSTimeInterval) {
+        var normalization = CGSizeApplyAffineTransform(imageSize, transform)
+        normalization = CGSizeMake(fabs(normalization.width), fabs(normalization.height))
+        
         var bounds = feature.bounds
         bounds.origin.y = imageSize.height - bounds.origin.y - bounds.size.height
         bounds = CGRectApplyAffineTransform(bounds, transform)
-        let boundsNormalized = CGRectMake(bounds.origin.x / imageSize.width - 0.5, bounds.origin.y / imageSize.height - 0.5, bounds.size.width / imageSize.width, bounds.size.height / imageSize.height)
+        let boundsNormalized = CGRectMake(bounds.origin.x / imageSize.width - 0.5, bounds.origin.y / imageSize.height - 0.5, bounds.size.width / normalization.width, bounds.size.height / normalization.height)
+        
+        var center = CGPointMake((feature.mouthPosition.x + feature.leftEyePosition.x + feature.rightEyePosition.x) / 3.0, (feature.mouthPosition.y + feature.leftEyePosition.y + feature.rightEyePosition.y) / 3.0)
+        center.y = imageSize.height - center.y
+        center = CGPointApplyAffineTransform(center, transform)
+        center = CGPointMake(center.x / normalization.width - 0.5, center.y / normalization.height - 0.5)
+        
+        // center = CGPointMake(CGRectGetMidX(boundsNormalized), CGRectGetMidY(boundsNormalized))
+        
         // boundsNormalized = CGRectApplyAffineTransform(boundsNormalized, transform)
-        let sample = Sample(time: time, bounds: boundsNormalized, rotation: feature.hasFaceAngle ? CGFloat(feature.faceAngle) : 0.0)
+        let sample = Sample(time: time, bounds: boundsNormalized, rotation: feature.hasFaceAngle ? CGFloat(feature.faceAngle) : 0.0, center: center)
         _samples.append(sample)
+    }
+    
+    var frameCount: Int {
+        get {
+            return _samples.count
+        }
+    }
+    
+    var minFrameTime: NSTimeInterval {
+        get {
+            return _samples[0].time
+        }
+    }
+    
+    var maxFrameTime: NSTimeInterval {
+        get {
+            return _samples.last!.time
+        }
+    }
+    
+    func appendFramesFromObject(object: CMVideoTrackedObject) {
+        _samples.appendContentsOf(object._samples)
+    }
+    
+    func overlapsWithOtherObjectTemporally(object: CMVideoTrackedObject) -> Bool {
+        if minFrameTime <= object.minFrameTime {
+            return maxFrameTime >= object.minFrameTime
+        } else {
+            return object.overlapsWithOtherObjectTemporally(self)
+        }
     }
     
     private func _interpolatedSampleAtTime(time: NSTimeInterval) -> Sample {
@@ -99,7 +141,7 @@ class CMVideoTrackedObject: NSObject, NSCoding {
         let layout = CMLayoutBase()
         layout.scale = _rectSize(sample.bounds) / _rectSize(_samples[0].bounds)
         // layout.rotation = sample.rotation
-        layout.center = CGPointMake(CGRectGetMidX(sample.bounds), CGRectGetMidY(sample.bounds))
+        layout.center = sample.center
         layout.visible = true
         return layout
     }
