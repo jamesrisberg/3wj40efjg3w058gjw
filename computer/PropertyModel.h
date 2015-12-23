@@ -14,7 +14,9 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
     PropertyModelTypeFill,
     PropertyModelTypeColor,
     PropertyModelTypeStaticAnimation,
-    PropertyModelTypeText
+    PropertyModelTypeText,
+    PropertyModelTypeLabel,
+    PropertyModelTypeAnotherDrawable
 };
 
 @interface PropertyModel : NSObject
@@ -32,6 +34,9 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
 @property (nonatomic) NSArray<NSString*> *buttonTitles;
 @property (nonatomic) NSArray<NSString*> *buttonSelectorNames;
 @property (nonatomic) NSArray<NSString*> *availabilitySelectors; // called to determine if buttons should be enabled
+
+// for PropertyModelTypeLabel
+@property (nonatomic) NSString *labelText;
 
 - (Class)cellClass;
 

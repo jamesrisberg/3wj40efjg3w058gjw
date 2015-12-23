@@ -38,7 +38,7 @@
     if (self.model.isKeyframeProperty) {
         self.value = [[[d keyframeStore] interpolatedKeyframeAtTime:self.time] valueForKey:self.model.key];
     } else {
-        self.value = [d valueForKey:self.model.key];
+        self.value = [d valueForKeyPath:self.model.key];
     }
 }
 
@@ -58,7 +58,7 @@
         if (self.model.isKeyframeProperty) {
             oldKeyframe = [[drawable.keyframeStore keyframeAtTime:self.time] copy];
         } else {
-            oldValue = [drawable valueForKey:weakSelf.model.key];
+            oldValue = [drawable valueForKeyPath:weakSelf.model.key];
         }
         
         _transaction = [[CMTransaction alloc] initImplicitlyFinalizaledWhenTouchesEndWithTarget:self action:^(id target) {
@@ -82,7 +82,7 @@
             [keyframe setValue:value forKey:weakSelf.model.key];
             [drawable.keyframeStore storeKeyframe:keyframe];
         } else {
-            [drawable setValue:value forKey:weakSelf.model.key];
+            [drawable setValue:value forKeyPath:weakSelf.model.key];
         }
     };
 }

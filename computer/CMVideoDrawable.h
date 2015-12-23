@@ -8,11 +8,15 @@
 
 #import "CMDrawable.h"
 @class CMMediaID;
+#import "CMVideoObjectTrackingData.h"
 
 @interface CMVideoDrawable : CMDrawable
 
 @property (nonatomic) CMMediaID *media;
 @property (nonatomic,readonly) FrameTime *videoDuration;
 @property (nonatomic,readonly) CGSize videoSize;
+@property (nonatomic,readonly) CMVideoObjectTrackingData *trackingData;
+
+- (NSDictionary<NSString*,NSString*> *)objectToDrawableTrackingMap;
 
 @end

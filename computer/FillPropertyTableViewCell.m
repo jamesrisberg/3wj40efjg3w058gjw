@@ -52,5 +52,4 @@
     return 44 + [[self class] standardInlineControlPadding] * 2;
 }
 
-
 @end

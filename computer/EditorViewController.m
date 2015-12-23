@@ -358,6 +358,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
 }
 
+- (void)updatePropertyEditors {
+    [_propertiesView setDrawables:self.canvas.selectedItems.allObjects withEditor:self time:self.canvas.time]; // TODO: support moving through time?
+}
+
 - (void)setDrawablesForPropertiesModal:(NSArray<CMDrawable *> *)drawablesForPropertiesModal {
     _drawablesForPropertiesModal = drawablesForPropertiesModal;
     [self setMode:drawablesForPropertiesModal.count > 0? EditorModeShowingPropertiesView : EditorModeNormal];
@@ -545,7 +549,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         } else if (mode == EditorModeShowingPropertiesView) {
             PropertiesView *propView = [[PropertiesView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 240)];
             _propertiesView = propView;
-            [propView setDrawables:self.canvas.selectedItems.allObjects withEditor:self time:self.canvas.time]; // TODO: support moving through time?
+            [self updatePropertyEditors];
             self.toolbarView = propView;
             
             [self addAuxiliaryModeResetButton];

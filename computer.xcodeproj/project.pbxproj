@@ -134,6 +134,12 @@
 		5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */; };
 		5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */; };
 		5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18491C000774000E6351 /* AnimatedExporter.m */; };
+		5FB39B561C29CD8500A22AC7 /* CMVideoObjectTrackingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */; };
+		5FB39B591C29E90600A22AC7 /* LabelPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B581C29E90600A22AC7 /* LabelPropertyViewTableCell.m */; };
+		5FB39B5C1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B5B1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m */; };
+		5FB39B5F1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B5E1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m */; };
+		5FB39B621C2A135700A22AC7 /* CMRenderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B611C2A135700A22AC7 /* CMRenderContext.m */; };
+		5FB39B651C2A13B400A22AC7 /* CMLayoutBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B641C2A13B400A22AC7 /* CMLayoutBase.m */; };
 		5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */; };
 		5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFB1BD5E8B1000FA3F4 /* ScratchViewController.m */; };
 		5FBF7BFE1BD5E8BF000FA3F4 /* Scratch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FBF7BFD1BD5E8BF000FA3F4 /* Scratch.storyboard */; };
@@ -470,6 +476,18 @@
 		5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepetitionPicker.m; sourceTree = "<group>"; };
 		5F9A18481C000774000E6351 /* AnimatedExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedExporter.h; sourceTree = "<group>"; };
 		5F9A18491C000774000E6351 /* AnimatedExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedExporter.m; sourceTree = "<group>"; };
+		5FB39B541C29CD8500A22AC7 /* CMVideoObjectTrackingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVideoObjectTrackingData.h; sourceTree = "<group>"; };
+		5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVideoObjectTrackingData.m; sourceTree = "<group>"; };
+		5FB39B571C29E90600A22AC7 /* LabelPropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelPropertyViewTableCell.h; sourceTree = "<group>"; };
+		5FB39B581C29E90600A22AC7 /* LabelPropertyViewTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabelPropertyViewTableCell.m; sourceTree = "<group>"; };
+		5FB39B5A1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnotherDrawablePropertyTableViewCell.h; sourceTree = "<group>"; };
+		5FB39B5B1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnotherDrawablePropertyTableViewCell.m; sourceTree = "<group>"; };
+		5FB39B5D1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawablePickerCollectionViewController.h; sourceTree = "<group>"; };
+		5FB39B5E1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawablePickerCollectionViewController.m; sourceTree = "<group>"; };
+		5FB39B601C2A135700A22AC7 /* CMRenderContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMRenderContext.h; sourceTree = "<group>"; };
+		5FB39B611C2A135700A22AC7 /* CMRenderContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMRenderContext.m; sourceTree = "<group>"; };
+		5FB39B631C2A13B400A22AC7 /* CMLayoutBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMLayoutBase.h; sourceTree = "<group>"; };
+		5FB39B641C2A13B400A22AC7 /* CMLayoutBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMLayoutBase.m; sourceTree = "<group>"; };
 		5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineView.h; sourceTree = "<group>"; };
 		5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimelineView.m; sourceTree = "<group>"; };
 		5FBF7BFA1BD5E8B1000FA3F4 /* ScratchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScratchViewController.h; sourceTree = "<group>"; };
@@ -748,6 +766,10 @@
 			children = (
 				5F6940A51C0BC9BA00569335 /* CMDrawable.h */,
 				5F6940A61C0BC9BA00569335 /* CMDrawable.m */,
+				5FB39B601C2A135700A22AC7 /* CMRenderContext.h */,
+				5FB39B611C2A135700A22AC7 /* CMRenderContext.m */,
+				5FB39B631C2A13B400A22AC7 /* CMLayoutBase.h */,
+				5FB39B641C2A13B400A22AC7 /* CMLayoutBase.m */,
 				5FE6C6011C21516900344571 /* CMGroupDrawable.h */,
 				5FE6C6021C21516900344571 /* CMGroupDrawable.m */,
 				5F6940AB1C0BD1B600569335 /* CMCanvas.h */,
@@ -765,6 +787,8 @@
 				5F9A17FD1BFD7B99000E6351 /* Particles */,
 				5F7C88801C1253650046020B /* CMVideoDrawable.h */,
 				5F7C88811C1253650046020B /* CMVideoDrawable.m */,
+				5FB39B541C29CD8500A22AC7 /* CMVideoObjectTrackingData.h */,
+				5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */,
 				5F7C88831C13D04D0046020B /* SelectionIndicatorView.h */,
 				5F7C88841C13D04D0046020B /* SelectionIndicatorView.m */,
 				5F5543271C18CF0B00592152 /* CMRepeatingWrapper.h */,
@@ -796,6 +820,10 @@
 				5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */,
 				5F7C887A1C118DA00046020B /* FillPropertyTableViewCell.h */,
 				5F7C887B1C118DA00046020B /* FillPropertyTableViewCell.m */,
+				5FB39B571C29E90600A22AC7 /* LabelPropertyViewTableCell.h */,
+				5FB39B581C29E90600A22AC7 /* LabelPropertyViewTableCell.m */,
+				5FB39B5A1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.h */,
+				5FB39B5B1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m */,
 			);
 			name = "Properties UI";
 			sourceTree = "<group>";
@@ -1326,6 +1354,8 @@
 				5F55432F1C1944C400592152 /* _CMPhotoPickerTestViewController.h */,
 				5F5543301C1944C400592152 /* _CMPhotoPickerTestViewController.m */,
 				5F55432D1C1940A400592152 /* CMPhotoPicker.storyboard */,
+				5FB39B5D1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.h */,
+				5FB39B5E1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -1609,6 +1639,7 @@
 				5F858DB91BFBB8A3004E658E /* Pixel.swift in Sources */,
 				5F7C88731C114A0C0046020B /* CMStarDrawable.m in Sources */,
 				5FDA80D51C03E7C2006CDC21 /* UIColor+RandomColors.m in Sources */,
+				5FB39B621C2A135700A22AC7 /* CMRenderContext.m in Sources */,
 				5FEAF9361B9E2B010071BC08 /* SKGradientColorStop.m in Sources */,
 				5FDA80D21C03BF18006CDC21 /* API.m in Sources */,
 				5F809A4C1BE1C3740030B538 /* ANGifImageFrame.m in Sources */,
@@ -1630,6 +1661,7 @@
 				5FEAF82C1B97A9CC0071BC08 /* UIFont+Sizing.m in Sources */,
 				5FEAF97F1B9F160A0071BC08 /* ShowcaseFilterListController.m in Sources */,
 				5FC53BEF1BD57BAB00910F91 /* QuickCollectionModal.m in Sources */,
+				5FB39B5C1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m in Sources */,
 				5FEAF8871B9C68A10071BC08 /* CMDocument.m in Sources */,
 				5F858DB81BFBB8A3004E658E /* AlphaSlider.swift in Sources */,
 				5F858DB01BFBB8A3004E658E /* PatternView.swift in Sources */,
@@ -1658,6 +1690,7 @@
 				5FEAF9221B9E2AE80071BC08 /* SKNullViewController.m in Sources */,
 				5F6940EA1C0FAF2900569335 /* ButtonsPropertyViewTableCell.m in Sources */,
 				5FEAF95A1B9E2B8A0071BC08 /* CPAlphaSlider.m in Sources */,
+				5FB39B5F1C29F4E600A22AC7 /* DrawablePickerCollectionViewController.m in Sources */,
 				5F809A471BE1C3740030B538 /* ANColorTable.m in Sources */,
 				5FBF7BF91BD5E059000FA3F4 /* TimelineView.m in Sources */,
 				5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */,
@@ -1702,6 +1735,7 @@
 				5FEAF8041B9788910071BC08 /* AppDelegate.m in Sources */,
 				5F7C887C1C118DA00046020B /* FillPropertyTableViewCell.m in Sources */,
 				5FEAF8011B9788910071BC08 /* main.m in Sources */,
+				5FB39B651C2A13B400A22AC7 /* CMLayoutBase.m in Sources */,
 				5FEAF8461B9A28C50071BC08 /* ShapeStackList.m in Sources */,
 				5FEAF9591B9E2B8A0071BC08 /* CPBrightnessSaturationView.m in Sources */,
 				5F858DB71BFBB8A3004E658E /* SatValGrid.swift in Sources */,
@@ -1732,6 +1766,7 @@
 				5FEAF9561B9E2B8A0071BC08 /* RGB-HSV.c in Sources */,
 				5FD860691C04086F00E5A754 /* CMMediaStore.m in Sources */,
 				5FEAF98B1B9F168E0071BC08 /* FilterViewController.m in Sources */,
+				5FB39B561C29CD8500A22AC7 /* CMVideoObjectTrackingData.m in Sources */,
 				5FBF7C061BD6DC82000FA3F4 /* Keyframe.m in Sources */,
 				5F2095FE1BEEBB2800E4C1F1 /* strerror.c in Sources */,
 				5F6940D41C0F794E00569335 /* PropertiesView.m in Sources */,
@@ -1753,6 +1788,7 @@
 				5F2095F81BEEBB2800E4C1F1 /* gifwrite.c in Sources */,
 				5F809A4E1BE1C3740030B538 /* ANImageBitmapRep.m in Sources */,
 				5F9A18421BFFF0B7000E6351 /* SimplePickerViewController.m in Sources */,
+				5FB39B591C29E90600A22AC7 /* LabelPropertyViewTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

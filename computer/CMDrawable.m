@@ -15,28 +15,6 @@
 #import "CMRepeatingWrapper.h"
 #import "CMCanvas.h"
 
-@implementation CMRenderContext
-
-- (id)copyWithZone:(NSZone *)zone {
-    return [self copy];
-}
-
-- (id)copy {
-    CMRenderContext *ctx = [CMRenderContext new];
-    ctx.time = self.time;
-    ctx.useFrameTimeForStaticAnimations = self.useFrameTimeForStaticAnimations;
-    ctx.renderMetaInfo = self.renderMetaInfo;
-    ctx.forStaticScreenshot = self.forStaticScreenshot;
-    ctx.coordinateSpace = self.coordinateSpace;
-    ctx.canvasView = self.canvasView;
-    ctx.canvasSize = self.canvasSize;
-    ctx.atRoot = self.atRoot;
-    return ctx;
-}
-
-@end
-
-
 
 @interface CMDrawable ()
 
@@ -128,6 +106,10 @@
     return NSLocalizedString(@"Object", @"");
 }
 
+- (NSString *)displayName {
+    return [self drawableTypeDisplayName];
+}
+
 - (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor {
     PropertyModel *opacity = [PropertyModel new];
     opacity.title = NSLocalizedString(@"Opacity", @"");
@@ -215,13 +197,23 @@
     
     CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
     CGPoint center = keyframe.center;
+    CGFloat scale = keyframe.scale;
+    CGFloat rotation = keyframe.rotation;
+    CGFloat alpha = keyframe.alpha;
+    
+    CMLayoutBase *layoutBase = ctx.layoutBasesForObjectsWithKeys[self.key];
+    if (layoutBase) {
+        center = CGPointMake(center.x + layoutBase.center.x, center.y + layoutBase.center.y);
+        scale *= layoutBase.scale;
+        rotation += layoutBase.rotation;
+        alpha = layoutBase.visible ? alpha : 0;
+    }
     
     CGFloat canvasScale = 1;
     if (ctx.coordinateSpace) canvasScale = [ctx.coordinateSpace convertRect:CGRectMake(center.x, center.y, canvasScale, canvasScale) toCoordinateSpace:ctx.canvasView].size.width;
     // NSLog(@"%@: %f", NSStringFromClass([self class]), canvasScale);
     
-    CGFloat alpha = keyframe.alpha;
-    CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(keyframe.rotation), keyframe.scale * canvasScale, keyframe.scale * canvasScale);
+    CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformMakeRotation(rotation), scale * canvasScale, scale * canvasScale);
     
     NSTimeInterval staticAnimationTime = ctx.useFrameTimeForStaticAnimations ? ctx.time.time : (NSTimeInterval)CFAbsoluteTimeGetCurrent();
     alpha = [keyframe.staticAnimation adjustAlpha:alpha time:staticAnimationTime];
@@ -290,6 +282,12 @@
             [self.keyframeStore storeKeyframe:oldKeyframe];
         }]];
     }
+}
+
+#pragma mark Relative layouts
+
+- (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForViewsWithKeysInRenderContext:(CMRenderContext *)ctx {
+    return nil;
 }
 
 #pragma mark Bounding boxes

@@ -15,25 +15,13 @@
 #import "CanvasEditor.h"
 #import "QuickCollectionModal.h"
 #import "PropertyModel.h"
+#import "CMRenderContext.h"
+#import "CMLayoutBase.h"
 
 @interface CMDrawableView : UIView
 
 - (CGRect)unrotatedBoundingBox;
 @property (nonatomic,weak) CMDrawableView *wrapsView;
-
-@end
-
-@interface CMRenderContext : NSObject <NSCopying>
-
-@property (nonatomic) FrameTime *time;
-@property (nonatomic) BOOL useFrameTimeForStaticAnimations;
-@property (nonatomic) BOOL renderMetaInfo;
-@property (nonatomic) BOOL forStaticScreenshot;
-@property (nonatomic) id<UICoordinateSpace> coordinateSpace;
-@property (nonatomic) CGPoint scale;
-@property (nonatomic) _CMCanvasView *canvasView;
-@property (nonatomic) CGSize canvasSize;
-@property (nonatomic) BOOL atRoot; // the view that's been passed this context is the root
 
 @end
 
@@ -60,6 +48,7 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 - (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor;
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor;
 - (NSString *)drawableTypeDisplayName;
+- (NSString *)displayName;
 
 - (NSArray<CMDrawableWrapperFunction>*)wrappers;
 
@@ -70,6 +59,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 @property (nonatomic) CGFloat yRepeatGap;
 
 - (CGRect)boundingBoxForAllTime;
+
+- (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForViewsWithKeysInRenderContext:(CMRenderContext *)cx;
 
 @end
 

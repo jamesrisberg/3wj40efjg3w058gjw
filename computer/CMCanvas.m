@@ -110,6 +110,15 @@
         childCtx.coordinateSpace = [self childCoordinateSpace:childCtx];
     }
     
+    NSMutableDictionary *layoutBases = [NSMutableDictionary new];
+    for (CMDrawable *d in self.contents) {
+        NSDictionary *bases = [d layoutBasesForViewsWithKeysInRenderContext:ctx];
+        if (bases){
+            [layoutBases addEntriesFromDictionary:bases];
+        }
+    }
+    childCtx.layoutBasesForObjectsWithKeys = layoutBases;
+    
     NSArray *keys = [self.contents map:^id(id obj) {
         return [obj key];
     }];

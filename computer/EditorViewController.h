@@ -45,4 +45,6 @@ typedef NS_ENUM(NSInteger, EditorMode) {
 
 @property (nonatomic) NSString *editPrompt;
 
+- (void)updatePropertyEditors;
+
 @end

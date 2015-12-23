@@ -12,6 +12,8 @@
 #import "StaticAnimationsPropertyTableViewCell.h"
 #import "TextPropertyTableViewCell.h"
 #import "FillPropertyTableViewCell.h"
+#import "LabelPropertyViewTableCell.h"
+#import "AnotherDrawablePropertyTableViewCell.h"
 
 @implementation PropertyModel
 
@@ -26,6 +28,10 @@
         return [TextPropertyTableViewCell class];
     } else if (_type == PropertyModelTypeFill || _type == PropertyModelTypeColor) {
         return [FillPropertyTableViewCell class];
+    } else if (_type == PropertyModelTypeLabel) {
+        return [LabelPropertyViewTableCell class];
+    } else if (_type == PropertyModelTypeAnotherDrawable) {
+        return [AnotherDrawablePropertyTableViewCell class];
     }
     return [PropertyViewTableCell class];
 }

@@ -15,6 +15,8 @@
 #import "FilterPickerViewController.h"
 #import "EditorViewController.h"
 #import "CanvasEditor.h"
+#import "ConvenienceCategories.h"
+#import "CGPointExtras.h"
 
 @interface _CMVideoDrawableView : CMDrawableView
 
@@ -176,11 +178,29 @@
 @end
 
 
+@interface CMVideoDrawable () {
+    BOOL _currentlyGeneratingObjectTrackingData;
+}
+
+@property (nonatomic) CMVideoObjectTrackingData *trackingData;
+@property (nonatomic) NSMutableDictionary *objectTrackingDict; // maps [face/object ID: drawable ID]
+
+@end
 
 @implementation CMVideoDrawable
 
+- (instancetype)init {
+    self = [super init];
+    self.objectTrackingDict = [NSMutableDictionary new];
+    return self;
+}
+
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"videoDuration", @"videoSize", @"media"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"videoDuration", @"videoSize", @"media", @"trackingData", @"objectTrackingDict"]];
+}
+
+- (NSDictionary<NSString*,NSString*> *)objectToDrawableTrackingMap {
+    return self.objectTrackingDict.copy;
 }
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
@@ -218,6 +238,10 @@
     return [[super uniqueObjectPropertiesWithEditor:editor] arrayByAddingObjectsFromArray:@[actions]];
 }
 
+- (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor {
+    return [[super propertyGroupsWithEditor:editor] arrayByAddingObject:[self objectTrackingPropertyGroup]];
+}
+
 - (void)filter:(PropertyViewTableCell *)sender {
     FilterPickerViewController *picker = [FilterPickerViewController filterPickerWithMediaID:self.media callback:^(CMMediaID *newMediaID) {
         [sender.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
@@ -237,6 +261,82 @@
 
 - (FrameTime *)maxTime {
     return self.videoDuration;
+}
+
+#pragma mark Object tracking
+
+- (void)createTrackingData:(PropertyViewTableCell *)cell {
+    EditorViewController *editor = cell.editor;
+    if (!_currentlyGeneratingObjectTrackingData) {
+        _currentlyGeneratingObjectTrackingData = YES;
+        [editor updatePropertyEditors];
+        [CMVideoObjectTrackingData trackObjectsInVideo:self.media.url callback:^(CMVideoObjectTrackingData *result) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _currentlyGeneratingObjectTrackingData = NO;
+                self.trackingData = result;
+                [editor updatePropertyEditors];
+            });
+        }];
+    }
+}
+
+- (PropertyGroupModel *)objectTrackingPropertyGroup {
+    PropertyGroupModel *g = [PropertyGroupModel new];
+    g.title = NSLocalizedString(@"Face Tracking", @"");
+    
+    if (self.trackingData) {
+        if (self.trackingData.objects.count > 0) {
+            PropertyModel *label = [PropertyModel new];
+            label.type = PropertyModelTypeLabel;
+            label.labelText = NSLocalizedString(@"Select objects to move with each face", @"");
+            NSArray *objectModels = [self.trackingData.objects.allValues map:^id(id obj) {
+                PropertyModel *model = [PropertyModel new];
+                model.type = PropertyModelTypeAnotherDrawable;
+                model.title = [obj name];
+                model.key = [@"objectTrackingDict." stringByAppendingString:[obj uuid]];
+                return model;
+            }];
+            g.properties = [objectModels arrayByAddingObject:label];
+        } else {
+            PropertyModel *label = [PropertyModel new];
+            label.type = PropertyModelTypeLabel;
+            label.labelText = NSLocalizedString(@"Couldn't find any faces", @"");
+            g.properties = @[label];
+        }
+    } else if (_currentlyGeneratingObjectTrackingData) {
+        PropertyModel *label = [PropertyModel new];
+        label.type = PropertyModelTypeLabel;
+        label.labelText = NSLocalizedString(@"Scanning video…", @"");
+        g.properties = @[label];
+    } else {
+        PropertyModel *button = [PropertyModel new];
+        button.type = PropertyModelTypeButtons;
+        button.buttonSelectorNames = @[@"createTrackingData:"];
+        button.buttonTitles = @[NSLocalizedString(@"Scan Video for Faces", @"")];
+        g.properties = @[button];
+    }
+    return g;
+}
+
+- (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForViewsWithKeysInRenderContext:(CMRenderContext *)ctx {
+    if (self.objectTrackingDict.count) {
+        NSMutableDictionary *bases = [NSMutableDictionary new];
+        for (NSString *objectId in self.objectTrackingDict) {
+            NSString *drawableKey = self.objectTrackingDict[objectId];
+            CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
+            CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
+            CMLayoutBase *base = [self.trackingData.objects[objectId] layoutBaseAtTime:ctx.time];
+            // transform base for self:
+            CGFloat xScale = size.width * cos(keyframe.rotation) + size.height *  sin(keyframe.rotation);
+            CGFloat yScale = size.width * sin(keyframe.rotation) + size.height * cos(keyframe.rotation);
+            base.center = CGPointMake(base.center.x * xScale + keyframe.center.x, base.center.y * yScale + keyframe.center.y);
+            base.scale *= keyframe.scale;
+            base.rotation += keyframe.rotation;
+            bases[drawableKey] = base;
+        }
+        return bases;
+    }
+    return nil;
 }
 
 @end
