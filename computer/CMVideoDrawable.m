@@ -180,6 +180,7 @@
 
 @interface CMVideoDrawable () {
     BOOL _currentlyGeneratingObjectTrackingData;
+    __weak _CMVideoDrawableView *_videoView;
 }
 
 @property (nonatomic) CMVideoObjectTrackingData *trackingData;
@@ -210,6 +211,7 @@
     v.preparedForStaticScreenshot = ctx.forStaticScreenshot;
     v.useTimeForStaticAnimations = ctx.useFrameTimeForStaticAnimations;
     v.time = ctx.time;
+    _videoView = v;
     return v;
 }
 
@@ -325,7 +327,11 @@
             NSString *drawableKey = self.objectTrackingDict[objectId];
             CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:ctx.time];
             CGSize size = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal, self.aspectRatio);
-            CMLayoutBase *base = [self.trackingData.objects[objectId] layoutBaseAtTime:ctx.time.time];
+            NSTimeInterval baseTime = ctx.time.time;
+            if (!ctx.useFrameTimeForStaticAnimations && _videoView.player) {
+                baseTime = CMTimeGetSeconds(_videoView.player.currentTime);
+            }
+            CMLayoutBase *base = [self.trackingData.objects[objectId] layoutBaseAtTime:baseTime];
             // transform base for self:
             CGFloat xScale = keyframe.scale * ( size.width * cos(keyframe.rotation) + size.height *  sin(keyframe.rotation) );
             CGFloat yScale = keyframe.scale * (size.width * sin(keyframe.rotation) + size.height * cos(keyframe.rotation) );
