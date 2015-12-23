@@ -342,6 +342,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     if (self.mode == EditorModePanelView || self.mode == EditorModeShowingPropertiesView) {
         [self resetMode];
     }
+    
+    self.iconBar.hasSelection = canvas.selectedItems.count > 0;
 }
 
 - (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas {
@@ -356,6 +358,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables {
     self.drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
+}
+
+- (void)showPropertyEditors {
+    self.drawablesForPropertiesModal = self.canvas.selectedItems.allObjects;
 }
 
 - (void)updatePropertyEditors {

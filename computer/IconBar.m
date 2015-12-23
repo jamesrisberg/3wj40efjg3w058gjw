@@ -10,11 +10,13 @@
 #import "CanvasEditor.h"
 #import "EditorViewController.h"
 #import "InsertItemViewController.h"
+#import "ConvenienceCategories.h"
 
 @interface IconBarModel : NSObject
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic,copy) void(^action)();
+@property (nonatomic) BOOL disableWhenNoSelection;
 
 @end
 
@@ -24,7 +26,8 @@
 
 
 
-@interface IconBar () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface IconBar () <UICollectionViewDataSource, UICollectionViewDelegate> {
+}
 
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSArray *models;
@@ -53,7 +56,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     UICollectionViewFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
-    layout.itemSize = CGSizeMake(self.bounds.size.height, self.bounds.size.height);
+    layout.minimumInteritemSpacing = 0;
+    layout.minimumLineSpacing = 0;
+    layout.itemSize = CGSizeMake(MAX(self.bounds.size.height, self.bounds.size.width / self.models.count), self.bounds.size.height);
     self.collectionView.frame = self.bounds;
 }
 
@@ -71,7 +76,16 @@
     }
     IconBarModel *model = self.models[indexPath.item];
     imageView.image = model.image;
+    imageView.alpha = 1;
+    if (model.disableWhenNoSelection && !self.hasSelection) {
+        imageView.alpha = 0.5;
+    }
     return cell;
+}
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    IconBarModel *model = self.models[indexPath.item];
+    return !(model.disableWhenNoSelection && !self.hasSelection);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,43 +95,40 @@
 }
 
 - (void)updateIconModels {
+    NSMutableArray *items = [NSMutableArray new];
     __weak IconBar *weakSelf = self;
-    IconBarModel *undo = [IconBarModel new];
-    undo.image = [UIImage imageNamed:@"Undo"];
-    IconBarModel *time = [IconBarModel new];
-    time.image = [UIImage imageNamed:@"Time"];
-    time.action = ^{
-        weakSelf.editor.mode = EditorModeTimeline;
-    };
-    IconBarModel *scroll = [IconBarModel new];
-    scroll.image = [UIImage imageNamed:@"Scroll"];
-    scroll.action = ^{
-        weakSelf.editor.mode = EditorModeScroll;
-    };
     
-    NSArray *leftItems = nil;
-    if (self.isModalEditing) {
-        IconBarModel *done = [IconBarModel new];
-        done.image = [UIImage imageNamed:@"BackDown"];
-        done.action = ^{
-            weakSelf.onDoneButtonPressed();
-        };
-        
-        leftItems = @[done];
-    } else {
-        IconBarModel *done = [IconBarModel new];
-        done.image = [UIImage imageNamed:@"BackDown"];
-        done.action = ^{
-            weakSelf.onDoneButtonPressed();
-        };
-        
+    IconBarModel *done = [IconBarModel new];
+    done.image = [UIImage imageNamed:@"BackDown"];
+    done.action = ^{
+        weakSelf.onDoneButtonPressed();
+    };
+    [items addObject:done];
+    if (!self.isModalEditing) {
         IconBarModel *share = [IconBarModel new];
         share.image = [UIImage imageNamed:@"Share"];
         share.action = ^{
             [weakSelf.editor beginExportFlow];
         };
-        leftItems = @[done, share];
+        [items addObject:share];
     }
+    
+    /*IconBarModel *undo = [IconBarModel new];
+    undo.image = [UIImage imageNamed:@"Undo"];*/
+    
+    IconBarModel *time = [IconBarModel new];
+    time.image = [UIImage imageNamed:@"Time"];
+    time.action = ^{
+        weakSelf.editor.mode = EditorModeTimeline;
+    };
+    [items addObject:time];
+    
+    IconBarModel *scroll = [IconBarModel new];
+    scroll.image = [UIImage imageNamed:@"Scroll"];
+    scroll.action = ^{
+        weakSelf.editor.mode = EditorModeScroll;
+    };
+    [items addObject:scroll];
     
     IconBarModel *add = [IconBarModel new];
     add.image = [UIImage imageNamed:@"Add"];
@@ -126,9 +137,25 @@
         inserter.editorVC = weakSelf.editor;
         [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
     };
+    [items addObject:add];
     
-    NSArray *rightItems = @[scroll, time, add];
-    self.models = [leftItems arrayByAddingObjectsFromArray:rightItems];
+    IconBarModel *props = [IconBarModel new];
+    props.image = [UIImage imageNamed:@"Controls"];
+    props.action = ^{
+        [weakSelf.editor showPropertyEditors];
+    };
+    props.disableWhenNoSelection = YES;
+    [items addObject:props];
+    
+    IconBarModel *delete = [IconBarModel new];
+    delete.image = [UIImage imageNamed:@"Delete"];
+    delete.action = ^{
+        [weakSelf.editor.canvas deleteSelection];
+    };
+    delete.disableWhenNoSelection = YES;
+    [items addObject:delete];
+    
+    self.models = items;
 }
 
 - (void)setModels:(NSArray *)models {
@@ -160,6 +187,16 @@
     } else {
         return self;
     }
+}
+
+- (void)setHasSelection:(BOOL)hasSelection {
+    _hasSelection = hasSelection;
+    NSArray *indexPathsToReload = [self.collectionView.indexPathsForVisibleItems map:^id(id obj) {
+        NSIndexPath *path = obj;
+        IconBarModel *model = self.models[path.item];
+        return model.disableWhenNoSelection ? path : nil;
+    }];
+    [self.collectionView reloadItemsAtIndexPaths:indexPathsToReload];
 }
 
 @end

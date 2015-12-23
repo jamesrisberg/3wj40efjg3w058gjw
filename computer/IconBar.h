@@ -15,5 +15,6 @@
 @property (nonatomic,weak) EditorViewController *editor;
 @property (nonatomic,copy) void (^onDoneButtonPressed)();
 @property (nonatomic) BOOL isModalEditing;
+@property (nonatomic) BOOL hasSelection;
 
 @end

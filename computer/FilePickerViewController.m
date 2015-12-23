@@ -103,6 +103,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     ExpandingButton *newDocButton = [[ExpandingButton alloc] initWithBackground:[UIImage imageNamed:@"NewDocBG"] glpyh:[UIImage imageNamed:@"NewDocGlyph"]];
     [self.view addSubview:newDocButton];
     newDocButton.frame = CGRectMake(self.view.bounds.size.width - newDocButton.frame.size.width, self.view.bounds.size.height - newDocButton.frame.size.height, newDocButton.frame.size.width, newDocButton.frame.size.height);
+    newDocButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
     [newDocButton addTarget:self action:@selector(addDocument:) forControlEvents:UIControlEventTouchUpInside];
     
     [self reload];
