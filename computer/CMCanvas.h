@@ -17,6 +17,8 @@
 
 - (CGRect)contentBoundingBox;
 
+- (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForContentsInRenderContext:(CMRenderContext *)ctx;
+
 @end
 
 @interface _CMCanvasView : CMDrawableView

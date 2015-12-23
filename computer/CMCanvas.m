@@ -96,6 +96,17 @@
     return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"contents"]];
 }
 
+- (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForContentsInRenderContext:(CMRenderContext *)ctx {
+    NSMutableDictionary *layoutBases = [NSMutableDictionary new];
+    for (CMDrawable *d in self.contents) {
+        NSDictionary *bases = [d layoutBasesForViewsWithKeysInRenderContext:ctx];
+        if (bases){
+            [layoutBases addEntriesFromDictionary:bases];
+        }
+    }
+    return layoutBases;
+}
+
 - (CMDrawableView *)renderToView:(CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {    
     _CMCanvasView *v = [existingOrNil isKindOfClass:[_CMCanvasView class]] ? (id)existingOrNil : [_CMCanvasView new];
     v.bounds = CGRectMake(0, 0, ctx.canvasSize.width, ctx.canvasSize.height);
@@ -110,14 +121,7 @@
         childCtx.coordinateSpace = [self childCoordinateSpace:childCtx];
     }
     
-    NSMutableDictionary *layoutBases = [NSMutableDictionary new];
-    for (CMDrawable *d in self.contents) {
-        NSDictionary *bases = [d layoutBasesForViewsWithKeysInRenderContext:ctx];
-        if (bases){
-            [layoutBases addEntriesFromDictionary:bases];
-        }
-    }
-    childCtx.layoutBasesForObjectsWithKeys = layoutBases;
+    childCtx.layoutBasesForObjectsWithKeys = [self layoutBasesForContentsInRenderContext:ctx];
     
     NSArray *keys = [self.contents map:^id(id obj) {
         return [obj key];

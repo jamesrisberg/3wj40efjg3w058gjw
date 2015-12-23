@@ -295,12 +295,15 @@
         if (_currentGestureTransformsDrawableAboutTouchPoint) {
             CGPoint touchMidpoint = CGPointMidpoint([down[0] locationInView:self], [down[1] locationInView:self]);
             CGPoint touchMidpointInCanvas = [self.canvasCoordinateSpace convertPoint:touchMidpoint fromCoordinateSpace:self];
-            CGPoint drawableOffset = CGPointMake(selectionKeyframe.center.x - touchMidpointInCanvas.x, selectionKeyframe.center.y - touchMidpointInCanvas.y);
+            NSDictionary<NSString*, CMLayoutBase*> *layoutBases = [self.canvas layoutBasesForContentsInRenderContext:[self createRenderContext]];
+            CMLayoutBase *base = layoutBases[self.singleSelection.key];
+            CGPoint drawableOffset = CGPointMake(selectionKeyframe.center.x + base.center.x - touchMidpointInCanvas.x, selectionKeyframe.center.y + base.center.y - touchMidpointInCanvas.y);
             drawableOffset = CGPointScale(drawableOffset, toScale);
             CGFloat offsetAngle = CGPointAngleBetween(CGPointZero, drawableOffset);
             CGFloat offsetDistance = CGPointDistance(CGPointZero, drawableOffset);
             drawableOffset = CGPointShift(CGPointZero, offsetAngle + toRotate, offsetDistance);
             selectionKeyframe.center = CGPointAdd(touchMidpointInCanvas, drawableOffset);
+            selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x - base.center.x, selectionKeyframe.center.y - base.center.y);
         }
         
         selectionKeyframe.center = CGPointMake(selectionKeyframe.center.x + (pos.x - prevPos.x) * motionMultiplier * translationScale, selectionKeyframe.center.y + (pos.y - prevPos.y) * motionMultiplier * translationScale);
@@ -601,7 +604,10 @@
 }
 
 - (void)render {
-    self.canvasView = (id)[self.canvas renderToView:self.canvasView context:[self createRenderContext]];
+    CMRenderContext *ctx = [self createRenderContext];
+    self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
+    
+    NSDictionary<NSString*, CMLayoutBase*> *layoutBases = [self.canvas layoutBasesForContentsInRenderContext:ctx];
     
     [self ensureSelectionContainsOnlySelectableItems];
     
@@ -622,10 +628,20 @@
         CMDrawable *d = allSelectedItems[i];
         CMDrawableView *view = [_canvasView viewForDrawable:d];
         CMDrawableKeyframe *keyframe = [d.keyframeStore interpolatedKeyframeAtTime:self.time];
-        CGSize size = [self.canvasCoordinateSpace convertRect:CGRectMake(keyframe.center.x, keyframe.center.y, view.bounds.size.width * keyframe.scale, view.bounds.size.height * keyframe.scale) toCoordinateSpace:self].size;
+        CGPoint center = keyframe.center;
+        CGFloat scale = keyframe.scale;
+        CGFloat rotation = keyframe.rotation;
+        CMLayoutBase *layoutBase = layoutBases[d.key];
+        if (layoutBase) {
+            center.x += layoutBase.center.x;
+            center.y += layoutBase.center.y;
+            scale *= layoutBase.scale;
+            rotation += layoutBase.rotation;
+        }
+        CGSize size = [self.canvasCoordinateSpace convertRect:CGRectMake(center.x, center.y, view.bounds.size.width * scale, view.bounds.size.height * scale) toCoordinateSpace:self].size;
         selectionView.bounds = CGRectMake(0, 0, size.width, size.height);
-        selectionView.center = [self.canvasCoordinateSpace convertPoint:keyframe.center toCoordinateSpace:self];
-        selectionView.transform = CGAffineTransformMakeRotation(keyframe.rotation);
+        selectionView.center = [self.canvasCoordinateSpace convertPoint:center toCoordinateSpace:self];
+        selectionView.transform = CGAffineTransformMakeRotation(rotation);
     }
 }
 
