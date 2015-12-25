@@ -19,6 +19,8 @@
 #import "CMLayoutBase.h"
 @class EditorViewController;
 
+extern NSString * const CMDrawableArrayPasteboardType;
+
 @interface CMDrawableView : UIView
 
 - (CGRect)unrotatedBoundingBox;

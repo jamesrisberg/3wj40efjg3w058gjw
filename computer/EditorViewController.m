@@ -566,22 +566,21 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             
             [self addAuxiliaryModeResetButton];
             
-            UIButton *delete = [UIButton buttonWithType:UIButtonTypeCustom];
-            [delete setTitle:NSLocalizedString(@"Delete", @"") forState:UIControlStateNormal];
-            [delete addTarget:self.canvas action:@selector(deleteSelection) forControlEvents:UIControlEventTouchUpInside];
+            UIButton *copy = [UIButton buttonWithType:UIButtonTypeCustom];
+            [copy setTitle:NSLocalizedString(@"Copy", @"") forState:UIControlStateNormal];
+            [copy addTarget:self action:@selector(copyAndResetMode:) forControlEvents:UIControlEventTouchUpInside];
             
             UIButton *duplicate = [UIButton buttonWithType:UIButtonTypeCustom];
             [duplicate setTitle:NSLocalizedString(@"Duplicate", @"") forState:UIControlStateNormal];
             [duplicate addTarget:self action:@selector(duplicateSelection) forControlEvents:UIControlEventTouchUpInside];
             
-            for (UIButton *button in @[delete, duplicate]) {
+            for (UIButton *button in @[copy, duplicate]) {
                 button.titleLabel.font = [UIFont boldSystemFontOfSize:12];
                 [self configureViewWithFloatingButtonAppearance:button];
             }
             
-            // TODO: reset mode on delete?
-            [self setFloatingButton:delete forPosition:FloatingButtonPositionBottomLeft];
             [self setFloatingButton:duplicate forPosition:FloatingButtonPositionTopLeft];
+            [self setFloatingButton:copy forPosition:FloatingButtonPositionTopRight];
         } else if (mode == EditorModeCreatingGroup) {
             [self addAuxiliaryModeResetButtonWithTitle:NSLocalizedString(@"Cancel", @"")];
             UIButton *create = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -962,40 +961,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)beginCreatingGroup {
     self.mode = EditorModeCreatingGroup;
-    
-    /*
-    // test:
-    CMShapeDrawable *shape = [CMShapeDrawable new];
-    CGRect r = CGRectMake(0, 0, 100, 100);
-    [shape setPath:[UIBezierPath bezierPathWithRect:r] usingTransactionStack:self.canvas.transactionStack updateAspectRatio:YES];
-    shape.pattern = [Pattern solidColor:[UIColor randomHue]];
-    shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
-    shape.strokeWidth = 2;
-    shape.boundsDiagonal = CGRectDiagonal(r);
-    CMDrawableKeyframe *shapeKeyframe = [shape.keyframeStore createKeyframeAtTimeIfNeeded:self.canvas.time];
-    shapeKeyframe.center = CGPointMake(0, 0);
-    
-    CMStarDrawable *star = [CMStarDrawable new];
-    star.pattern = [Pattern solidColor:[UIColor randomHue]];
-    star.strokePattern = [Pattern solidColor:[UIColor blackColor]];
-    star.strokeWidth = 2;
-    CMDrawableKeyframe *starKeyframe = [star.keyframeStore createKeyframeAtTimeIfNeeded:self.canvas.time];
-    starKeyframe.center = CGPointMake(100, 100);
-    
-    CMGroupDrawable *g = [CMGroupDrawable new];
-    [g.contents addObject:shape];
-    [g.contents addObject:star];
-    
-    [self.canvas insertDrawableAtCurrentTime:g];
-     */
 }
 
 - (void)createGroup {
-    NSArray *items = [self.canvas.selectedItems.allObjects sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        NSInteger i1 = [self.canvas.canvas.contents indexOfObject:obj1];
-        NSInteger i2 = [self.canvas.canvas.contents indexOfObject:obj2];
-        return [@(i1) compare:@(i2)];
-    }];
+    NSArray *items = [self.canvas selectedItemsOrderedByZ];
     if (items.count > 0) {
         CMGroupDrawable *g = [CMGroupDrawable new];
         [g.contents addObjectsFromArray:items];
@@ -1005,6 +974,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self.canvas insertDrawableAtCurrentTime:g];
     }
     
+    [self resetMode];
+}
+
+- (void)copyAndResetMode:(id)sender {
+    [self.canvas copy:sender];
     [self resetMode];
 }
 

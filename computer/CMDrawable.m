@@ -15,6 +15,7 @@
 #import "CMRepeatingWrapper.h"
 #import "CMCanvas.h"
 
+NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMDrawableArrayPasteboardType";
 
 @interface CMDrawable ()
 

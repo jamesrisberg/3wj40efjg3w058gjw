@@ -27,6 +27,7 @@
 @property (nonatomic) UICollectionView *collectionView;
 @property (nonatomic) NSArray *models;
 @property (nonatomic) UIToolbar *topToolbar;
+@property (nonatomic) UIBarButtonItem *pasteButton;
 
 @end
 
@@ -47,7 +48,9 @@
                   forToolbarPosition:UIToolbarPositionAny
                           barMetrics:UIBarMetricsDefault];
     [self.topToolbar setBackgroundColor:[UIColor clearColor]];
+    self.pasteButton = [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Paste", @"") target:self action:@selector(paste)];
     self.topToolbar.items = @[
+                              self.pasteButton,
                               [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                               [[UIBarButtonItem alloc] initUnborderedWithTitle:NSLocalizedString(@"Create Group", @"") target:self action:@selector(createGroup)]
                               ];
@@ -142,6 +145,12 @@
     self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, particle];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    BOOL canPaste = [[UIPasteboard generalPasteboard] containsPasteboardTypes:@[CMDrawableArrayPasteboardType]];
+    self.pasteButton.tintColor = canPaste ? nil : [UIColor colorWithWhite:0 alpha:0];
+}
+
 - (void)insertParticle {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Add Particle Effect", @"") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Fire", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -181,6 +190,11 @@
 - (void)createGroup {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.editorVC beginCreatingGroup];
+}
+
+- (void)paste {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.editorVC.canvas paste:nil];
 }
 
 @end

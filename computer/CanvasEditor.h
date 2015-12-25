@@ -45,6 +45,7 @@
 @property (nonatomic) CMCanvas *canvas;
 
 @property (nonatomic) NSSet<CMDrawable*> *selectedItems;
+- (NSArray<CMDrawable*>*)selectedItemsOrderedByZ;
 @property (nonatomic) BOOL multipleSelectionEnabled;
 - (void)userGesturedToSelectDrawable:(CMDrawable *)d;
 
@@ -55,8 +56,6 @@
 @property (nonatomic) BOOL useTimeForStaticAnimations;
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL suppressTimingVisualizations;
-
-- (void)_addDrawableToCanvas:(Drawable *)drawable aboveDrawable:(Drawable *)other;
 
 - (FrameTime *)duration;
 - (FrameTime *)loopingDuration; // may return nil

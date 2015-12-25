@@ -17,10 +17,10 @@
 #import "SelectionIndicatorView.h"
 #import "UIView+Snapshot.h"
 
+#define TAP_STACK_ENABLED NO
 #define HIT_TEST_CENTER_LEEWAY 27
 #define TAP_STACK_REUSE_MAX_DISTANCE 30
 #define TAP_STACK_REUSE_MAX_TIME 2.5
-
 
 @implementation CanvasCoordinateSpace
 
@@ -164,7 +164,7 @@
         _selectionBeforeFirstTap = self.singleSelection;
         
         CGPoint p = [rec locationInView:self];
-        if (CGPointDistance(p, _tapStackGeneratedAtPoint) <= TAP_STACK_REUSE_MAX_DISTANCE && CFAbsoluteTimeGetCurrent() - _tapStackGeneratedAtTime <= TAP_STACK_REUSE_MAX_TIME && _tapStack.count) {
+        if (TAP_STACK_ENABLED && CGPointDistance(p, _tapStackGeneratedAtPoint) <= TAP_STACK_REUSE_MAX_DISTANCE && CFAbsoluteTimeGetCurrent() - _tapStackGeneratedAtTime <= TAP_STACK_REUSE_MAX_TIME && _tapStack.count) {
             // reuse the tap stack:
             if (_lastSelection && [_tapStack containsObject:_lastSelection]) {
                 NSInteger i = [_tapStack indexOfObject:_lastSelection];
@@ -413,18 +413,18 @@
 }
 
 - (void)copy:(id)sender {
-    //NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItems.allObjects];
-    //[[UIPasteboard generalPasteboard] setData:data forPasteboardType:DrawableArrayPasteboardType];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.selectedItemsOrderedByZ];
+    [[UIPasteboard generalPasteboard] setData:data forPasteboardType:CMDrawableArrayPasteboardType];
 }
 
 - (void)paste:(id)sender {
-    /*if ([[UIPasteboard generalPasteboard] containsPasteboardTypes:@[DrawableArrayPasteboardType]]) {
-        NSData *data = [[UIPasteboard generalPasteboard] dataForPasteboardType:DrawableArrayPasteboardType];
+    if ([[UIPasteboard generalPasteboard] containsPasteboardTypes:@[CMDrawableArrayPasteboardType]]) {
+        NSData *data = [[UIPasteboard generalPasteboard] dataForPasteboardType:CMDrawableArrayPasteboardType];
         NSArray *drawables = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        for (Drawable *d in drawables) {
-            [self _addDrawableToCanvas:d]; // TODO: make sure this drawable would be visible onscreen
+        for (CMDrawable *d in drawables) {
+            [self.canvas.contents addObject:d]; // TODO: make sure this drawable would be visible onscreen
         }
-    }*/
+    }
 }
 
 - (void)deleteDrawable:(CMDrawable *)d {
@@ -555,6 +555,14 @@
         }
     }];
     _selectedItems = [NSSet setWithArray:items];
+}
+
+- (NSArray<CMDrawable*>*)selectedItemsOrderedByZ {
+    return [self.selectedItems.allObjects sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSInteger i1 = [self.canvas.contents indexOfObject:obj1];
+        NSInteger i2 = [self.canvas.contents indexOfObject:obj2];
+        return [@(i1) compare:@(i2)];
+    }];
 }
 
 #pragma mark Capture
