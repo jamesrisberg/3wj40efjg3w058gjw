@@ -30,6 +30,7 @@
 - (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel;
 - (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos;
 - (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables;
+- (void)canvas:(CanvasEditor *)canvas performDefaultEditActionForDrawables:(NSArray<CMDrawable*>*)drawables;
 
 @end
 

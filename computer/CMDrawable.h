@@ -17,6 +17,7 @@
 #import "PropertyModel.h"
 #import "CMRenderContext.h"
 #import "CMLayoutBase.h"
+@class EditorViewController;
 
 @interface CMDrawableView : UIView
 
@@ -61,6 +62,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 - (CGRect)boundingBoxForAllTime;
 
 - (NSDictionary<NSString*,CMLayoutBase*>*)layoutBasesForViewsWithKeysInRenderContext:(CMRenderContext *)cx;
+
+- (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor;
 
 @end
 

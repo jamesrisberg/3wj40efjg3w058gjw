@@ -41,16 +41,25 @@
 }
 
 - (void)editGroup:(PropertyViewTableCell *)cell {
+    [self editGroupWithEditor:cell.editor];
+}
+
+- (void)editGroupWithEditor:(EditorViewController *)editor {
     __weak CMGroupDrawable *weakSelf = self;
     EditorViewController *editorVC = [EditorViewController modalEditorForCanvas:self callback:^(CMCanvas *edited) {
         [weakSelf.contents removeAllObjects];
         [weakSelf.contents addObjectsFromArray:edited.contents];
         if (self.contents.count == 0) {
-            [cell.editor.canvas deleteDrawable:weakSelf];
+            [editor.canvas deleteDrawable:weakSelf];
         }
     }];
     editorVC.editPrompt = NSLocalizedString(@"Edit Group", @"");
-    [cell.editor presentViewController:editorVC animated:YES completion:nil];
+    [editor presentViewController:editorVC animated:YES completion:nil];
+}
+
+- (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor {
+    [self editGroupWithEditor:editor];
+    return YES;
 }
 
 @end

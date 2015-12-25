@@ -360,6 +360,12 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.drawablesForPropertiesModal = drawables; // TODO: don't hold on to these references (make 'em weak)
 }
 
+- (void)canvas:(CanvasEditor *)canvas performDefaultEditActionForDrawables:(NSArray<CMDrawable*>*)drawables {
+    if (drawables.count != 1 || ![drawables.firstObject performDefaultEditActionWithEditor:self]) {
+        [self canvas:canvas shouldShowPropertiesViewForDrawables:drawables];
+    }
+}
+
 - (void)showPropertyEditors {
     self.drawablesForPropertiesModal = self.canvas.selectedItems.allObjects;
 }

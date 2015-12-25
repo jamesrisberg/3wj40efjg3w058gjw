@@ -148,6 +148,7 @@
     doubleTap.numberOfTapsRequired = 2;
     [self addGestureRecognizer:doubleTap];
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    longPress.allowableMovement = 5;
     [self addGestureRecognizer:longPress];
     
     self.repeatCount = 1;
@@ -184,13 +185,16 @@
 
 - (void)doubleTap:(UITapGestureRecognizer *)rec {
     if (rec.state == UIGestureRecognizerStateRecognized) {
-        NSArray *hits = [self allHitsAtPoint:[rec locationInView:self]];
+        /*NSArray *hits = [self allHitsAtPoint:[rec locationInView:self]];
         if (_selectionBeforeFirstTap) {
             if ([hits containsObject:_selectionBeforeFirstTap] || hits.count == 0) {
                 [self userGesturedToSelectDrawable:_selectionBeforeFirstTap];
             }
         }
-        [self.delegate canvas:self shouldShowPropertiesViewForDrawables:self.selectedItems.allObjects];
+        [self.delegate canvas:self shouldShowPropertiesViewForDrawables:self.selectedItems.allObjects];*/
+        if (self.selectedItems.count) {
+            [self.delegate canvas:self performDefaultEditActionForDrawables:self.selectedItems.allObjects];
+        }
     }
 }
 

@@ -322,6 +322,9 @@
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             UIImage *filtered = [filter imageByFilteringImage:self.filteredImage ? : self.originalImage];
+            // WORKAROUND: for some reason, images come back with opaque backgrounds, but this is fixed w/ serialization
+            filtered = [UIImage imageWithData:UIImagePNGRepresentation(filtered)];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.filteredImage = filtered;
                 self.currentSourceImage = filtered;

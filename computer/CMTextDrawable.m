@@ -9,6 +9,8 @@
 #import "CMTextDrawable.h"
 #import <ReactiveCocoa.h>
 #import "NSAttributedString+ResizeToFit.h"
+#import "EditorViewController.h"
+#import "TextEditorViewController.h"
 
 @interface _CMTextDrawableView : CMDrawableView
 
@@ -107,6 +109,22 @@
     }
     
     return [@[textStart, textEnd] arrayByAddingObjectsFromArray:[super animatablePropertiesWithEditor:editor]];
+}
+
+- (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor {
+    __weak CMTextDrawable *weakSelf = self;
+    TextEditorViewController *textEditor = [[TextEditorViewController alloc] initWithNibName:@"TextEditorViewController" bundle:nil];
+    textEditor.text = [self text];
+    textEditor.textChanged = ^(NSAttributedString *text) {
+        NSAttributedString *oldText = weakSelf.text;
+        [editor.canvas.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:weakSelf action:^(id target) {
+            weakSelf.text = text;
+        } undo:^(id target) {
+            weakSelf.text = oldText;
+        }]];
+    };
+    [editor presentViewController:[[UINavigationController alloc] initWithRootViewController:textEditor] animated:YES completion:nil];
+    return YES;
 }
 
 @end

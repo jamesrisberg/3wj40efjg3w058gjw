@@ -306,6 +306,12 @@
     return box;
 }
 
+#pragma mark Actions
+
+- (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor {
+    return NO;
+}
+
 @end
 
 @implementation CMDrawableKeyframe
