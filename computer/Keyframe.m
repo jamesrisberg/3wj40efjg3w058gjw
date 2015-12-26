@@ -166,36 +166,36 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
         return exact;
     }
     
-    CMDrawableKeyframe *before = [self keyframeBeforeTime:time];
-    if (before.transition && ![[before.transition class] isEntranceAnimation] && time.time >= before.transition.endTime.time) {
-        // `time` comes directly after an exit transition, so pretend we have a `before` opacity of 0:
-        before = [before copy];
-        before.alpha = 0;
+    CMDrawableKeyframe *prev = [self keyframeBeforeTime:time];
+    if (prev.transition && ![[prev.transition class] isEntranceAnimation] && time.time >= prev.transition.endTime.time) {
+        // we're directly after an exit transition, so pretend we have a `from` opacity of 0:
+        prev = [prev copy];
+        prev.alpha = 0;
     }
     
-    CMDrawableKeyframe *after = [self keyframeAfterTime:time];
-    if (after.transition && [[after.transition class] isEntranceAnimation] && time.time <= after.transition.endTime.time) {
-        // `time` comes directly before an entrance transition, so pretend we have an `after` opacity of 0:
-        after = [after copy];
-        after.alpha = 0;
+    CMDrawableKeyframe *next = [self keyframeAfterTime:time];
+    if (next.transition && [[next.transition class] isEntranceAnimation] && time.time <= next.transition.endTime.time) {
+        // `time` comes directly before an entrance transition, so pretend we have a `to` opacity of 0:
+        next = [next copy];
+        next.alpha = 0;
     }
     
     CMDrawableKeyframe *interpolation = nil;
     
-    if (!before && after) {
-        interpolation = [after copy];
-    } else if (!after && before) {
-        interpolation = [before copy];
+    if (!prev && next) {
+        interpolation = [next copy];
+    } else if (!next && prev) {
+        interpolation = [prev copy];
     } else {
-        double progress = ([time time] - [before.frameTime time]) / ([after.frameTime time] - [before.frameTime time]);
-        interpolation = [before interpolatedWith:after progress:progress];
+        double progress = ([time time] - [prev.frameTime time]) / ([next.frameTime time] - [prev.frameTime time]);
+        interpolation = [prev interpolatedWith:next progress:progress];
     }
     
     // if this intersects a transition, carry it (multiple transitions at once aren't supported):
-    if (before.transition && [before.transition containsTime:time]) {
-        interpolation.transition = before.transition;
-    } else if (after.transition && [after.transition containsTime:time]) {
-        interpolation.transition = after.transition;
+    if (prev.transition && [prev.transition containsTime:time]) {
+        interpolation.transition = prev.transition;
+    } else if (next.transition && [next.transition containsTime:time]) {
+        interpolation.transition = next.transition;
     } else {
         interpolation.transition = nil;
     }
@@ -232,7 +232,16 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
 }
 
 - (FrameTime *)maxTime {
-    return [(CMDrawableKeyframe *)self.keyframes.lastObject frameTime] ? : [[FrameTime alloc] initWithFrame:0 atFPS:1];
+    CMDrawableKeyframe *lastKeyframe = self.keyframes.lastObject;
+    if (lastKeyframe) {
+        if (lastKeyframe.transition) {
+            return lastKeyframe.transition.endTime;
+        } else {
+            return lastKeyframe.frameTime;
+        }
+    } else {
+        return [[FrameTime alloc] initWithFrame:0 atFPS:1];
+    }
 }
 
 - (void)removeKeyframeAtTime:(FrameTime *)time {

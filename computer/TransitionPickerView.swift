@@ -61,6 +61,15 @@ class TransitionPickerView: UIView {
         }
     }
     
+    dynamic var enabled = true {
+        didSet {
+            for btn in [enterButton, exitButton] {
+                btn.alpha = enabled ? 1 : 0.5
+            }
+            userInteractionEnabled = enabled
+        }
+    }
+    
     var transition: Transition.Type? {
         didSet {
             _transitionChanged()
@@ -92,10 +101,16 @@ class TransitionPickerView: UIView {
     
     func addEntranceAnimation(sender: UIButton) {
         transition = Transition.allTransitions.filter({ $0.isEntranceAnimation }).first!
+        if let cb = onPickedTransition {
+            cb(transition)
+        }
     }
     
     func addExitAnimation(sender: UIButton) {
         transition = Transition.allTransitions.filter({ !$0.isEntranceAnimation }).first!
+        if let cb = onPickedTransition {
+            cb(transition)
+        }
     }
     
     func setTransitionFromKeyframe(keyframe: CMDrawableKeyframe?) {

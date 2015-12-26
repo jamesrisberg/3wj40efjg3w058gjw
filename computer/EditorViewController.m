@@ -803,15 +803,25 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     }];
     [transitionPicker rac_liftSelector:@selector(setTransitionFromKeyframe:) withSignals:currentKeyframeOfCurrentSelection, nil];
     
+    RAC(transitionPicker, enabled) = [RACObserve(self.canvas, selectedItems) map:^id(id value) {
+        return @([value count] == 1);
+    }];
+    
     transitionPicker.onPickedTransition = ^(Class transitionClass) {
         if (weakSelf.canvas.selectedItems.count == 1) {
-            
-            // TODO: set opacity for keyframes hidden by transition to 0
             
             FrameTime *time = weakSelf.canvas.time;
             KeyframeStore *keyframeStore = weakSelf.canvas.selectedItems.anyObject.keyframeStore;
             BOOL keyframeExistedBefore = [keyframeStore keyframeAtTime:time] != nil;
             Transition *oldTransition = [keyframeStore keyframeAtTime:time].transition;
+            
+            /*
+             important behavior detail:
+             if we add an entrance transition and the only keyframe _before_ the
+             entrance is at time=0, assume it was added implicitly and set opacity=0 on it
+             */
+            CMDrawableKeyframe *prevKeyframe = [keyframeStore keyframeBeforeTime:time];
+            BOOL updateZeroTimeOpacity = prevKeyframe.frameTime.frame == 0 && prevKeyframe.alpha == 1;
             
             [weakSelf.canvas.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:nil action:^(id target) {
                 CMDrawableKeyframe *keyframe = [keyframeStore createKeyframeAtTimeIfNeeded:time];
@@ -821,12 +831,18 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
                 } else {
                     keyframe.transition = nil;
                 }
+                if (updateZeroTimeOpacity) {
+                    prevKeyframe.alpha = 0;
+                }
                 weakSelf.transitionPickerView.transition = transitionClass; // refresh UI
             } undo:^(id target) {
                 if (keyframeExistedBefore) {
                     [keyframeStore keyframeAtTime:time].transition = oldTransition;
                 } else {
                     [keyframeStore removeKeyframeAtTime:time];
+                }
+                if (updateZeroTimeOpacity) {
+                    prevKeyframe.alpha = 1;
                 }
                 weakSelf.transitionPickerView.transition = oldTransition.class; // refresh UI
             }]];

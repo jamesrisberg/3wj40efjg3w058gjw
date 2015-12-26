@@ -70,7 +70,8 @@ class Transition: NSObject, NSCoding {
     static let allTransitions: [Transition.Type] = [
         FadeOutTransition.self,
         FadeInTransition.self,
-        ShrinkAwayTransition.self
+        ShrinkAwayTransition.self,
+        ScaleInTransition.self
     ]
 }
 
@@ -119,5 +120,21 @@ class ShrinkAwayTransition: Transition {
     }
     override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
         view.transform = CGAffineTransformScale(view.transform, 1.0 - progress, 1.0 - progress)
+    }
+}
+
+class ScaleInTransition: Transition {
+    override class var displayName: String! {
+        get {
+            return NSLocalizedString("Scale in", comment: "")
+        }
+    }
+    override class var isEntranceAnimation: Bool {
+        get {
+            return true
+        }
+    }
+    override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
+        view.transform = CGAffineTransformScale(view.transform, progress, progress)
     }
 }
