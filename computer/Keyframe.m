@@ -9,6 +9,7 @@
 #import "Keyframe.h"
 #import "EVInterpolation.h"
 #import "CMShapeDrawable.h"
+#import "computer-Swift.h"
 
 NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     while (b != 0) {
@@ -90,6 +91,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return [[FrameTime alloc] initWithFrame:(self.time + [(FrameTime *)other time]) * m / 2 atFPS:m];
 }
 
+- (FrameTime *)byAdding:(FrameTime *)other {
+    return [[FrameTime alloc] initWithFrame:self.frame * other.fps + other.frame * self.fps atFPS:self.fps * other.fps];
+}
+
 @end
 
 @interface KeyframeStore ()
@@ -160,16 +165,41 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     if (exact) {
         return exact;
     }
+    
     CMDrawableKeyframe *before = [self keyframeBeforeTime:time];
+    if (before.transition && ![[before.transition class] isEntranceAnimation] && time.time >= before.transition.endTime.time) {
+        // `time` comes directly after an exit transition, so pretend we have a `before` opacity of 0:
+        before = [before copy];
+        before.alpha = 0;
+    }
+    
     CMDrawableKeyframe *after = [self keyframeAfterTime:time];
+    if (after.transition && [[after.transition class] isEntranceAnimation] && time.time <= after.transition.endTime.time) {
+        // `time` comes directly before an entrance transition, so pretend we have an `after` opacity of 0:
+        after = [after copy];
+        after.alpha = 0;
+    }
+    
+    CMDrawableKeyframe *interpolation = nil;
+    
     if (!before && after) {
-        return after;
+        interpolation = [after copy];
+    } else if (!after && before) {
+        interpolation = [before copy];
+    } else {
+        double progress = ([time time] - [before.frameTime time]) / ([after.frameTime time] - [before.frameTime time]);
+        interpolation = [before interpolatedWith:after progress:progress];
     }
-    if (!after && before) {
-        return before;
+    
+    // if this intersects a transition, carry it (multiple transitions at once aren't supported):
+    if (before.transition && [before.transition containsTime:time]) {
+        interpolation.transition = before.transition;
+    } else if (after.transition && [after.transition containsTime:time]) {
+        interpolation.transition = after.transition;
+    } else {
+        interpolation.transition = nil;
     }
-    double interpolation = ([time time] - [before.frameTime time]) / ([after.frameTime time] - [before.frameTime time]);
-    return [before interpolatedWith:after progress:interpolation];
+    return interpolation;
 }
 
 - (CMDrawableKeyframe *)interpolatedKeyframeAtTime:(FrameTime *)time {

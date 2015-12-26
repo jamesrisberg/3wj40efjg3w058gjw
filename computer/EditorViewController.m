@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
     
     __weak PropertiesView *_propertiesView;
-    __weak TransitionPickerView *_transitionPickerView;
 }
 
 @property (nonatomic) UIView *toolbar;
@@ -62,7 +61,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) UIView *panelView;
 @property (nonatomic) UIView *topToolbar;
 
-@property (nonatomic) BOOL hideSelectionRects;
+@property (nonatomic,weak) TransitionPickerView *transitionPickerView;
 
 @property (nonatomic,copy) void (^modalEditingCallback)(CMCanvas *canvas);
 
@@ -506,6 +505,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Modes
 - (void)setMode:(EditorMode)mode {
+    __weak EditorViewController *weakSelf = self;
     if (mode != _mode) {
         EditorMode oldMode = _mode;
         _mode = mode;
@@ -521,7 +521,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         
         [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection || mode == EditorModeCreatingGroup);
-        // self.hideSelectionRects = (mode == EditorModeDrawing || mode == EditorModeExportCropping || mode == EditorModeExportRunning);
         self.playingPreviewNow = NO;
         
         self.canvas.preparedForStaticScreenshot = (mode == EditorModeExportRunning);
@@ -569,12 +568,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             self.timeline.delegate = self;
             [self addAuxiliaryModeResetButton];
             
-            TransitionPickerView *transitionPicker = [[TransitionPickerView alloc] initWithFrame:CGRectZero];
-            self.topToolbar = transitionPicker;
-            _transitionPickerView = transitionPicker;
-            transitionPicker.onPickedTransition = ^(Class transitionClass) {
-                
-            };
+            [self createTransitionPicker];
         } else if (mode == EditorModePanelView) {
             self.toolbarView = self.panelView;
             [self addAuxiliaryModeResetButton];
@@ -792,6 +786,52 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FrameTime *frameTime = [[FrameTime alloc] initWithFrame:frame atFPS:VC_TIMELINE_CELLS_PER_SECOND];
     self.canvas.time = frameTime;
     [self.timeline scrollToTime:frameTime.time animated:YES];
+}
+
+- (void)createTransitionPicker {
+    __weak EditorViewController *weakSelf = self;
+    
+    TransitionPickerView *transitionPicker = [[TransitionPickerView alloc] initWithFrame:CGRectZero];
+    self.topToolbar = transitionPicker;
+    self.transitionPickerView = transitionPicker;
+    RACSignal *currentKeyframeOfCurrentSelection = [RACSignal combineLatest:@[RACObserve(self.canvas, selectedItems), RACObserve(self.canvas, time)] reduce:^id(NSSet *selection, FrameTime *time) {
+        CMDrawableKeyframe *keyframe = nil;
+        if (selection.count == 1) {
+            keyframe = [[[selection anyObject] keyframeStore] keyframeAtTime:time];
+        }
+        return keyframe;
+    }];
+    [transitionPicker rac_liftSelector:@selector(setTransitionFromKeyframe:) withSignals:currentKeyframeOfCurrentSelection, nil];
+    
+    transitionPicker.onPickedTransition = ^(Class transitionClass) {
+        if (weakSelf.canvas.selectedItems.count == 1) {
+            
+            // TODO: set opacity for keyframes hidden by transition to 0
+            
+            FrameTime *time = weakSelf.canvas.time;
+            KeyframeStore *keyframeStore = weakSelf.canvas.selectedItems.anyObject.keyframeStore;
+            BOOL keyframeExistedBefore = [keyframeStore keyframeAtTime:time] != nil;
+            Transition *oldTransition = [keyframeStore keyframeAtTime:time].transition;
+            
+            [weakSelf.canvas.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:nil action:^(id target) {
+                CMDrawableKeyframe *keyframe = [keyframeStore createKeyframeAtTimeIfNeeded:time];
+                if (transitionClass) {
+                    keyframe.transition = [transitionClass new];
+                    keyframe.transition.startTime = time;
+                } else {
+                    keyframe.transition = nil;
+                }
+                weakSelf.transitionPickerView.transition = transitionClass; // refresh UI
+            } undo:^(id target) {
+                if (keyframeExistedBefore) {
+                    [keyframeStore keyframeAtTime:time].transition = oldTransition;
+                } else {
+                    [keyframeStore removeKeyframeAtTime:time];
+                }
+                weakSelf.transitionPickerView.transition = oldTransition.class; // refresh UI
+            }]];
+        }
+    };
 }
 
 #pragma mark Export

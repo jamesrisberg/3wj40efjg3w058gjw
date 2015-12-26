@@ -24,6 +24,8 @@
 
 + (FrameTime *)leastCommonMultipleForTimes:(NSArray<__kindof FrameTime*>*)times maxTime:(NSTimeInterval)max;
 
+- (FrameTime *)byAdding:(FrameTime *)time;
+
 @end
 
 @interface KeyframeStore : NSObject <NSCoding>

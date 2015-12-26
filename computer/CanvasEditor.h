@@ -28,7 +28,6 @@
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas;
 - (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas;
 - (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel;
-- (void)canvasShowShouldOptions:(CanvasEditor *)canvas withInteractivePresenter:(UIPercentDrivenInteractiveTransition *)presenter touchPos:(CGPoint)pos;
 - (void)canvas:(CanvasEditor *)canvas shouldShowPropertiesViewForDrawables:(NSArray<CMDrawable*>*)drawables;
 - (void)canvas:(CanvasEditor *)canvas performDefaultEditActionForDrawables:(NSArray<CMDrawable*>*)drawables;
 
@@ -36,9 +35,6 @@
 
 
 @interface CanvasEditor : UIView
-
-// - (void)insertDrawable:(Drawable *)drawable;
-// - (NSArray<__kindof Drawable*>*)drawables;
 
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable;
 

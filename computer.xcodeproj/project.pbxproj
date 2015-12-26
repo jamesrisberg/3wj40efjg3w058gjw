@@ -1094,6 +1094,26 @@
 			name = "Transition animations";
 			sourceTree = "<group>";
 		};
+		5FB39B791C2F09DA00A22AC7 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
+				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
+				5F6940CC1C0E924900569335 /* CMWindow.h */,
+				5F6940CD1C0E924900569335 /* CMWindow.m */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		5FB39B7A1C2F09E700A22AC7 /* Web API */ = {
+			isa = PBXGroup;
+			children = (
+				5FDA80D01C03BF18006CDC21 /* API.h */,
+				5FDA80D11C03BF18006CDC21 /* API.m */,
+			);
+			name = "Web API";
+			sourceTree = "<group>";
+		};
 		5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1179,22 +1199,18 @@
 		5FEAF7FE1B9788910071BC08 /* computer */ = {
 			isa = PBXGroup;
 			children = (
-				5FEAF8021B9788910071BC08 /* AppDelegate.h */,
-				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
-				5F6940CC1C0E924900569335 /* CMWindow.h */,
-				5F6940CD1C0E924900569335 /* CMWindow.m */,
-				5FDA80D01C03BF18006CDC21 /* API.h */,
-				5FDA80D11C03BF18006CDC21 /* API.m */,
+				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
+				5F6940C71C0BD20700569335 /* Drawables */,
+				5FB39B791C2F09DA00A22AC7 /* App */,
+				5FB39B7A1C2F09E700A22AC7 /* Web API */,
 				5FB39B781C2EF6D800A22AC7 /* Transition animations */,
 				5F6940E11C0F7CDE00569335 /* Properties UI */,
-				5F6940C71C0BD20700569335 /* Drawables */,
 				5F858DBA1BFBB8A7004E658E /* Pattern Picker */,
 				5F809A9D1BE40B690030B538 /* Image search */,
 				5FE857781BDB6C4900B4B245 /* File picking */,
 				5FE857711BDB60D700B4B245 /* Export */,
 				5FBF7BFF1BD5E8C8000FA3F4 /* Scratch */,
 				5FEAF9611B9E2DB60071BC08 /* Helpers */,
-				5FEAF9621B9E2DC20071BC08 /* Edit UI */,
 				5FEAF8851B9C68A10071BC08 /* CMDocument.h */,
 				5FEAF8861B9C68A10071BC08 /* CMDocument.m */,
 				5F6940C91C0CC84600569335 /* CMTransaction.h */,

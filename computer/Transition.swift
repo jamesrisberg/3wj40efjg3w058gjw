@@ -9,15 +9,21 @@
 import UIKit
 
 class Transition: NSObject, NSCoding {
+    override init() {
+        super.init()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init()
         uuid = aDecoder.decodeObjectForKey("uuid") as! String
-        startOffset = aDecoder.decodeObjectForKey("startOffset") as! FrameTime
+        startTime = aDecoder.decodeObjectForKey("startTime") as! FrameTime?
+        // startOffset = aDecoder.decodeObjectForKey("startOffset") as! FrameTime
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(uuid, forKey: "uuid")
-        aCoder.encodeObject(startOffset, forKey: "startOffset")
+        aCoder.encodeObject(startTime, forKey: "startTime")
+        // aCoder.encodeObject(startOffset, forKey: "startOffset")
     }
     
     class var displayName: String! {
@@ -26,9 +32,9 @@ class Transition: NSObject, NSCoding {
         }
     }
     
-    class var isEntranceAnimation: Bool! {
+    dynamic class var isEntranceAnimation: Bool {
         get {
-            return nil
+            return false
         }
     }
     
@@ -36,11 +42,26 @@ class Transition: NSObject, NSCoding {
         
     }
     
-    var startOffset: FrameTime = FrameTime(frame: 0, atFPS: 1)
+    func containsTime(time: FrameTime) -> Bool {
+        if let start = startTime, end = endTime {
+            return time.time() >= start.time() && time.time() <= end.time()
+        } else {
+            return false
+        }
+    }
+    
+    // var startOffset: FrameTime = FrameTime(frame: 0, atFPS: 1)
+    var startTime: FrameTime?
     
     var duration: FrameTime! {
         get {
             return FrameTime(frame: 1, atFPS: 4)
+        }
+    }
+    
+    var endTime: FrameTime? {
+        get {
+            return startTime?.byAdding(duration)
         }
     }
     
@@ -59,7 +80,7 @@ class FadeOutTransition: Transition {
             return NSLocalizedString("Fade out", comment: "")
         }
     }
-    override class var isEntranceAnimation: Bool! {
+    override class var isEntranceAnimation: Bool {
         get {
             return false
         }
@@ -75,7 +96,7 @@ class FadeInTransition: Transition {
             return NSLocalizedString("Fade in", comment: "")
         }
     }
-    override class var isEntranceAnimation: Bool! {
+    override class var isEntranceAnimation: Bool {
         get {
             return true
         }
@@ -91,7 +112,7 @@ class ShrinkAwayTransition: Transition {
             return NSLocalizedString("Shrink away", comment: "")
         }
     }
-    override class var isEntranceAnimation: Bool! {
+    override class var isEntranceAnimation: Bool {
         get {
             return false
         }

@@ -230,6 +230,11 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
         result.center = center;
     }
     
+    if (keyframe.transition) {
+        CGFloat progress = (ctx.time.time - keyframe.transition.startTime.time) / keyframe.transition.duration.time;
+        [keyframe.transition apply:self view:result context:ctx progress:progress];
+    }
+    
     return result;
 }
 
@@ -352,6 +357,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
     CMDrawableKeyframe *i = [[self class] new];
     for (NSString *key in [self keys]) {
+        if ([key isEqualToString:@"transition"]) continue;
         [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
     }
     return i;

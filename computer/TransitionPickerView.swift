@@ -97,4 +97,8 @@ class TransitionPickerView: UIView {
     func addExitAnimation(sender: UIButton) {
         transition = Transition.allTransitions.filter({ !$0.isEntranceAnimation }).first!
     }
+    
+    func setTransitionFromKeyframe(keyframe: CMDrawableKeyframe?) {
+        transition = keyframe?.transition?.dynamicType
+    }
 }
