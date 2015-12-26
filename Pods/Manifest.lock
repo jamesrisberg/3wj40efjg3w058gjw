@@ -19,6 +19,7 @@ PODS:
   - ReactiveCocoa/no-arc (2.5)
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
+  - spacetime (0.0.1)
 
 DEPENDENCIES:
   - ALGReversedFlowLayout
@@ -29,6 +30,7 @@ DEPENDENCIES:
   - OpenCV (= 2.4.9)
   - Parse
   - ReactiveCocoa
+  - spacetime
 
 SPEC CHECKSUMS:
   ALGReversedFlowLayout: edb883d4f573beeb64e9c8e79f1acd1de8f9f477
@@ -41,5 +43,6 @@ SPEC CHECKSUMS:
   OpenCV: bb17904e55fc19b1f0f6c3e29bc04a7dd31eddb9
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
+  spacetime: 9c25339b7772d8702f09233f83e26f0e8d0efa4c
 
 COCOAPODS: 0.38.2

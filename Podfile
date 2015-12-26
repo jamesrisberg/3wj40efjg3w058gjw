@@ -11,6 +11,7 @@ pod 'GPUImage'
 pod 'ALGReversedFlowLayout'
 pod 'Parse'
 pod 'ChameleonFramework'
+pod 'spacetime'
 
 end
 

@@ -18,6 +18,7 @@
 #import "CMRenderContext.h"
 #import "CMLayoutBase.h"
 @class EditorViewController;
+@class Transition;
 
 extern NSString * const CMDrawableArrayPasteboardType;
 
@@ -78,5 +79,6 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 @property (nonatomic) StaticAnimation *staticAnimation;
 - (NSArray<NSString*>*)keys;
 - (CGRect)outerBoundingBoxWithBounds:(CGSize)bounds;
+@property (nonatomic) Transition *transition; // optional
 
 @end

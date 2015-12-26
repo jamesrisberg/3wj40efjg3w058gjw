@@ -48,6 +48,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     NSMutableDictionary<__kindof NSNumber*, UIView*> *_floatingButtons;
     
     __weak PropertiesView *_propertiesView;
+    __weak TransitionPickerView *_transitionPickerView;
 }
 
 @property (nonatomic) UIView *toolbar;
@@ -59,6 +60,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 @property (nonatomic) UIScrollView *dummyScrollView;
 @property (nonatomic) TimelineView *timeline;
 @property (nonatomic) UIView *panelView;
+@property (nonatomic) UIView *topToolbar;
 
 @property (nonatomic) BOOL hideSelectionRects;
 
@@ -252,6 +254,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     
     UIView *topRight = _floatingButtons[@(FloatingButtonPositionTopRight)];
     topRight.frame = CGRectMake(self.view.bounds.size.width - topRight.frame.size.width - 15, [[self topLayoutGuide] length] + 15, topRight.frame.size.width, topRight.frame.size.height);
+    
+    self.topToolbar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 40);
 }
 
 - (void)setFloatingButton:(UIView *)buttonOrNil forPosition:(FloatingButtonPosition)pos {
@@ -419,6 +423,25 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     }
 }
 
+- (void)setTopToolbar:(UIView *)topToolbar {
+    UIView *old = _topToolbar;
+    _topToolbar = topToolbar;
+    
+    [self.view addSubview:topToolbar];
+    [self.view layoutIfNeeded];
+    
+    _topToolbar.transform = CGAffineTransformMakeTranslation(0, -_topToolbar.frame.size.height);
+    _topToolbar.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        _topToolbar.transform = CGAffineTransformIdentity;
+        _topToolbar.alpha = 1;
+        old.transform = CGAffineTransformMakeTranslation(0, -old.frame.size.height);
+        old.alpha = 0;
+    } completion:^(BOOL finished) {
+        [old removeFromSuperview];
+    }];
+}
+
 #pragma mark Scrolling
 
 - (void)exitScrollMode {
@@ -494,6 +517,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         
         self.transientOverlayView = nil;
         self.toolbarView = self.iconBar;
+        self.topToolbar = nil;
         
         [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection || mode == EditorModeCreatingGroup);
@@ -544,6 +568,13 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
             [self.timeline scrollToTime:self.canvas.time.time animated:NO];
             self.timeline.delegate = self;
             [self addAuxiliaryModeResetButton];
+            
+            TransitionPickerView *transitionPicker = [[TransitionPickerView alloc] initWithFrame:CGRectZero];
+            self.topToolbar = transitionPicker;
+            _transitionPickerView = transitionPicker;
+            transitionPicker.onPickedTransition = ^(Class transitionClass) {
+                
+            };
         } else if (mode == EditorModePanelView) {
             self.toolbarView = self.panelView;
             [self addAuxiliaryModeResetButton];

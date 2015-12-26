@@ -328,7 +328,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 }
 
 - (NSArray<NSString*>*)keys {
-    return @[@"center", @"scale", @"rotation", @"alpha", @"frameTime", @"staticAnimation"];
+    return @[@"center", @"scale", @"rotation", @"alpha", @"frameTime", @"staticAnimation", @"transition"];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
