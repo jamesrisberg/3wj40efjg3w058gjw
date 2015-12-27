@@ -165,8 +165,10 @@
     
     PropertyModel *strokeStart = [PropertyModel new];
     strokeStart.title = NSLocalizedString(@"Stroke start", @"");
+    strokeStart.key = @"strokeStart";
     PropertyModel *strokeEnd = [PropertyModel new];
     strokeEnd.title = NSLocalizedString(@"Stroke end", @"");
+    strokeEnd.key = @"strokeEnd";
     for (PropertyModel *model in @[strokeStart, strokeEnd]) {
         model.valueMax = 1;
         model.isKeyframeProperty = YES;
