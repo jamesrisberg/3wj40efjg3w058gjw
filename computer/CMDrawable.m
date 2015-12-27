@@ -232,6 +232,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
     
     if (keyframe.transition) {
         CGFloat progress = (ctx.time.time - keyframe.transition.startTime.time) / keyframe.transition.duration.time;
+        progress = [keyframe.transition computeTimingCurve:progress];
         [keyframe.transition apply:self view:result context:ctx progress:progress];
     }
     
