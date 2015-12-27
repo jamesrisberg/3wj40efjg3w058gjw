@@ -20,6 +20,7 @@
 #import "CMParticleDrawable.h"
 #import "CMPhotoDrawable.h"
 #import "UIBarButtonItem+BorderedButton.h"
+#import "CMCameraDrawable.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -142,7 +143,14 @@
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:d];
     };
     
-    self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, particle];
+    QuickCollectionItem *exportCamera = [QuickCollectionItem new];
+    exportCamera.label = NSLocalizedString(@"Camera", @"");
+    exportCamera.action = ^{
+        CMCameraDrawable *cam = [CMCameraDrawable new];
+        [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:cam];
+    };
+    
+    self.items = @[camera, photos, imageSearch, text, pen, circle, square, star, particle, exportCamera];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
