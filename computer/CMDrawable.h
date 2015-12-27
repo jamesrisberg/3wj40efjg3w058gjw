@@ -38,7 +38,7 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 @property (nonatomic) CGFloat boundsDiagonal;
 @property (nonatomic,readonly) KeyframeStore *keyframeStore;
 - (Class)keyframeClass;
-@property (nonatomic,readonly) NSString *key;
+@property (nonatomic) NSString *key;
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx;
 

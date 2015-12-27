@@ -422,7 +422,11 @@
         NSData *data = [[UIPasteboard generalPasteboard] dataForPasteboardType:CMDrawableArrayPasteboardType];
         NSArray *drawables = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         for (CMDrawable *d in drawables) {
+            d.key = [NSUUID UUID].UUIDString; // reassign keys so we don't have duplicates
             [self.canvas.contents addObject:d]; // TODO: make sure this drawable would be visible onscreen
+        }
+        if (drawables.lastObject) {
+            self.selectedItems = [NSSet setWithObject:drawables.lastObject];
         }
     }
 }

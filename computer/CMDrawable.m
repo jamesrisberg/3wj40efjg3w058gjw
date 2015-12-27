@@ -20,7 +20,6 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 @interface CMDrawable ()
 
 @property (nonatomic) KeyframeStore *keyframeStore;
-@property (nonatomic) NSString *key;
 
 @end
 
