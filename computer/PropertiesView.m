@@ -38,7 +38,14 @@
     _table.editor = editor;
     self.time = time;
     self.drawables = drawables;
-    self.groups = drawables.count == 1 ? [drawables.firstObject propertyGroupsWithEditor:editor.canvas] : @[];
+    if (drawables.count == 1) {
+        self.groups = [[drawables.firstObject propertyGroupsWithEditor:editor.canvas] map:^id(id obj) {
+            PropertyGroupModel *group = obj;
+            return group.properties.count > 0 ? group : nil;
+        }];
+    } else {
+        self.groups = @[];
+    }
 }
 
 - (void)reloadValues {

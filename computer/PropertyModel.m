@@ -14,26 +14,43 @@
 #import "FillPropertyTableViewCell.h"
 #import "LabelPropertyViewTableCell.h"
 #import "AnotherDrawablePropertyTableViewCell.h"
+#import "computer-Swift.h"
 
 @implementation PropertyModel
 
 - (Class)cellClass {
-    if (_type == PropertyModelTypeSlider) {
-        return [SliderPropertyViewTableCell class];
-    } else if (_type == PropertyModelTypeButtons) {
-        return [ButtonsPropertyViewTableCell class];
-    } else if (_type == PropertyModelTypeStaticAnimation) {
-        return [StaticAnimationsPropertyTableViewCell class];
-    } else if (_type == PropertyModelTypeText) {
-        return [TextPropertyTableViewCell class];
-    } else if (_type == PropertyModelTypeFill || _type == PropertyModelTypeColor) {
-        return [FillPropertyTableViewCell class];
-    } else if (_type == PropertyModelTypeLabel) {
-        return [LabelPropertyViewTableCell class];
-    } else if (_type == PropertyModelTypeAnotherDrawable) {
-        return [AnotherDrawablePropertyTableViewCell class];
+    switch (_type) {
+        case PropertyModelTypeSlider:
+            return [SliderPropertyViewTableCell class];
+            break;
+        case PropertyModelTypeButtons:
+            return [ButtonsPropertyViewTableCell class];
+            break;
+        case PropertyModelTypeStaticAnimation:
+            return [StaticAnimationsPropertyTableViewCell class];
+            break;
+        case PropertyModelTypeLabel:
+            return [LabelPropertyViewTableCell class];
+            break;
+        case PropertyModelTypeAnotherDrawable:
+            return [AnotherDrawablePropertyTableViewCell class];
+            break;
+        case PropertyModelTypeColor:
+            return [FillPropertyTableViewCell class];
+            break;
+        case PropertyModelTypeFill:
+            return [FillPropertyTableViewCell class];
+            break;
+        case PropertyModelTypeParticleImages:
+            return [ParticlesPickerPropertyTableViewCell class];
+            break;
+        case PropertyModelTypeText:
+            return [TextPropertyTableViewCell class];
+            break;
+        default:
+            return [PropertyViewTableCell class];
+            break;
     }
-    return [PropertyViewTableCell class];
 }
 
 @end

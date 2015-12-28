@@ -13,3 +13,8 @@
 #import "Keyframe.h"
 #import "CMDrawable.h"
 #import "CGPointExtras.h"
+#import "PropertyViewTableCell.h"
+#import "PropertyModel.h"
+#import "CMPhotoPicker.h"
+#import "EditorViewController.h"
+#import "CanvasEditor.h"

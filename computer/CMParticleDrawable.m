@@ -8,6 +8,7 @@
 
 #import "CMParticleDrawable.h"
 #import "ConvenienceCategories.h"
+#import "computer-Swift.h"
 
 @interface _CMParticleDrawableView : CMDrawableView {
     BOOL _wasRunning;
@@ -16,6 +17,7 @@
 @property (nonatomic) ParticlePreset particlePreset;
 @property (nonatomic,copy) void(^onUpdateParticleLayout)(CGSize size, CAEmitterLayer *emitter);
 @property (nonatomic) CAEmitterLayer *emitter;
+@property (nonatomic) NSArray<UIImage*> *customParticleImages;
 
 @end
 
@@ -53,6 +55,8 @@
         [self orbs];
     } else if (particlePreset == ParticlePresetSmoke) {
         [self smoke];
+    } else if (particlePreset == ParticlePresetCustom) {
+        [self setupCustomParticles];
     }
     
     if (self.onUpdateParticleLayout) {
@@ -236,7 +240,45 @@
         layer.emitterPosition = CGPointMake(size.width/2, size.height/2);
         layer.emitterSize = CGSizeMake(0.05, 0.05);
     };
+}
+
+#pragma mark Custom Particles
+
+- (void)setupCustomParticles {
+    self.emitter.emitterCells = [self.customParticleImages map:^id(id obj) {
+        CAEmitterCell *cell = [CAEmitterCell emitterCell];
+        cell.contents = (id)[obj CGImage];
+        cell.color = [UIColor colorWithWhite:1 alpha:0].CGColor;
+        cell.alphaRange = 0.1;
+        cell.alphaSpeed = 2;
+        return cell;
+    }];
     
+    for (CAEmitterCell *cell in self.emitter.emitterCells) {
+        cell.scale = 0.45;
+        cell.scaleSpeed = -0.12;
+        cell.lifetime = 0.45 / 0.12;
+        cell.emissionLongitude = M_PI/2;
+        // cell.emissionRange = 2*M_PI * 0.1;
+        cell.velocity = 90;
+        cell.velocityRange = 60;
+        cell.birthRate = 35.0 / self.emitter.emitterCells.count;
+        cell.spin = 0;
+        cell.spinRange = 0.9;
+    }
+    self.onUpdateParticleLayout = ^(CGSize size, CAEmitterLayer *layer) {
+        layer.emitterPosition = CGPointMake(size.width/2, size.height * 0.2);
+        layer.emitterSize = CGSizeMake(size.width * 0.9, size.height * 0.2);
+    };
+}
+
+- (void)setCustomParticleImages:(NSArray<UIImage *> *)customParticleImages {
+    if (customParticleImages != _customParticleImages) {
+        _customParticleImages = customParticleImages;
+        if (self.particlePreset == ParticlePresetCustom) {
+            [self setupCustomParticles];
+        }
+    }
 }
 
 @end
@@ -244,20 +286,25 @@
 
 
 
-@interface CMParticleDrawable ()
+@interface CMParticleDrawable () {
+    NSArray<UIImage*> *_imagesResizedForParticles;
+}
+
+@property (nonatomic) NSArray *customParticleImagesData;
 
 @end
 
 @implementation CMParticleDrawable
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"particlePreset"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"particlePreset", @"customParticleImagesData"]];
 }
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
     _CMParticleDrawableView *v = [existingOrNil isKindOfClass:[_CMParticleDrawableView class]] ? (id)existingOrNil : [_CMParticleDrawableView new];
     [super renderToView:v context:ctx];
     v.particlePreset = self.particlePreset;
+    v.customParticleImages = [self _imagesResizedForParticles];
     if (ctx.useFrameTimeForStaticAnimations) {
         [v setTime:ctx.time.time running:NO];
     } else {
@@ -271,13 +318,61 @@
                     @(ParticlePresetMacaroni): @3,
                     @(ParticlePresetSmoke): @2,
                     @(ParticlePresetSnow): @2,
-                    @(ParticlePresetFire): @2
+                    @(ParticlePresetFire): @2,
+                    @(ParticlePresetCustom): @2,
                     }[@(self.particlePreset)];
     return n.floatValue ? : 1;
 }
 
 - (NSString *)drawableTypeDisplayName {
     return NSLocalizedString(@"Particle Effect", @"");
+}
+
+#pragma mark Custom particles
+
+- (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor {
+    NSMutableArray *groups = [super propertyGroupsWithEditor:editor].mutableCopy;
+    if (self.particlePreset == ParticlePresetCustom) {
+        PropertyModel *editImages = [PropertyModel new];
+        editImages.key = @"customParticleImages";
+        editImages.type = PropertyModelTypeParticleImages;
+        PropertyGroupModel *group = [PropertyGroupModel new];
+        group.properties = @[editImages];
+        group.title = NSLocalizedString(@"Particles", @"");
+        group.singleView = YES;
+        [groups insertObject:group atIndex:0];
+    }
+    return groups;
+}
+
+- (NSArray *)customParticleImagesData {
+    return [self.customParticleImages map:^id(id obj) {
+        return UIImagePNGRepresentation(obj);
+    }];
+}
+
+- (void)setCustomParticleImagesData:(NSArray *)customParticleImagesData {
+    self.customParticleImages = [customParticleImagesData map:^id(id obj) {
+        return [UIImage imageWithData:obj];
+    }];
+}
+
+- (void)setCustomParticleImages:(NSArray<UIImage *> *)customParticleImages {
+    _customParticleImages = customParticleImages;
+    _imagesResizedForParticles = nil;
+}
+
+- (NSArray<UIImage*> *)_imagesResizedForParticles {
+    if (!_imagesResizedForParticles) {
+        _imagesResizedForParticles = [self.customParticleImages map:^id(id obj) {
+            return [[self class] resizeImageForCustomParticle:obj];
+        }];
+    }
+    return _imagesResizedForParticles;
+}
+
++ (UIImage *)resizeImageForCustomParticle:(UIImage *)image {
+    return [image resizedWithMaxDimension:110];
 }
 
 @end

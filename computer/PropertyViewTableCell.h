@@ -30,4 +30,6 @@
 
 + (CGFloat)standardInlineControlPadding;
 
+- (void)setupIfNeeded;
+
 @end

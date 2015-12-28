@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, PropertyModelType) {
     PropertyModelTypeStaticAnimation,
     PropertyModelTypeText,
     PropertyModelTypeLabel,
-    PropertyModelTypeAnotherDrawable
+    PropertyModelTypeAnotherDrawable,
+    PropertyModelTypeParticleImages
 };
 
 @interface PropertyModel : NSObject

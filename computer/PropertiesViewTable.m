@@ -70,11 +70,12 @@
     PropertyViewTableCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[prop.cellClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.editor = self.editor;
+        [cell setupIfNeeded];
     }
     cell.model = prop;
     cell.time = self.time;
     cell.drawables = self.drawables;
-    cell.editor = self.editor;
     [cell reloadValue];
     return cell;
 }

@@ -14,11 +14,13 @@ typedef NS_ENUM(NSInteger, ParticlePreset) {
     ParticlePresetSparkle = 3,
     ParticlePresetMacaroni = 4,
     ParticlePresetSmoke = 5,
-    ParticlePresetOrbs = 6
+    ParticlePresetOrbs = 6,
+    ParticlePresetCustom = 7
 };
 
 @interface CMParticleDrawable : CMDrawable
 
 @property (nonatomic) ParticlePreset particlePreset;
+@property (nonatomic) NSArray<UIImage*> *customParticleImages;
 
 @end

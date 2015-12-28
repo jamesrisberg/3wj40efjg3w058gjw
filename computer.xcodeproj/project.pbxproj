@@ -23,6 +23,10 @@
 		5F2096011BEEBB2800E4C1F1 /* xform.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095F01BEEBB2800E4C1F1 /* xform.c */; };
 		5F3CEDAE1BE1937E00D824E2 /* FilePreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */; };
 		5F44F1981C2F845300D436D8 /* CMCameraDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F1971C2F845300D436D8 /* CMCameraDrawable.m */; };
+		5F44F19C1C2F9A3C00D436D8 /* ridge-confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F44F1991C2F9A3C00D436D8 /* ridge-confetti.png */; };
+		5F44F19D1C2F9A3C00D436D8 /* triangle-confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F44F19A1C2F9A3C00D436D8 /* triangle-confetti.png */; };
+		5F44F19E1C2F9A3C00D436D8 /* oval-confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F44F19B1C2F9A3C00D436D8 /* oval-confetti.png */; };
+		5F44F1A01C31260300D436D8 /* ParticleImagesPickerPropertyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F44F19F1C31260300D436D8 /* ParticleImagesPickerPropertyTableViewCell.swift */; };
 		5F5543231C18C40200592152 /* NSMutableArray+Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543221C18C40200592152 /* NSMutableArray+Utility.m */; };
 		5F5543291C18CF0B00592152 /* CMRepeatingWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F5543281C18CF0B00592152 /* CMRepeatingWrapper.m */; };
 		5F55432C1C19403000592152 /* CMPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F55432B1C19403000592152 /* CMPhotoPicker.m */; };
@@ -299,6 +303,10 @@
 		5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilePreviewViewController.m; sourceTree = "<group>"; };
 		5F44F1961C2F845300D436D8 /* CMCameraDrawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMCameraDrawable.h; sourceTree = "<group>"; };
 		5F44F1971C2F845300D436D8 /* CMCameraDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMCameraDrawable.m; sourceTree = "<group>"; };
+		5F44F1991C2F9A3C00D436D8 /* ridge-confetti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ridge-confetti.png"; sourceTree = "<group>"; };
+		5F44F19A1C2F9A3C00D436D8 /* triangle-confetti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "triangle-confetti.png"; sourceTree = "<group>"; };
+		5F44F19B1C2F9A3C00D436D8 /* oval-confetti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oval-confetti.png"; sourceTree = "<group>"; };
+		5F44F19F1C31260300D436D8 /* ParticleImagesPickerPropertyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticleImagesPickerPropertyTableViewCell.swift; sourceTree = "<group>"; };
 		5F5543211C18C40200592152 /* NSMutableArray+Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Utility.h"; sourceTree = "<group>"; };
 		5F5543221C18C40200592152 /* NSMutableArray+Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utility.m"; sourceTree = "<group>"; };
 		5F5543271C18CF0B00592152 /* CMRepeatingWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMRepeatingWrapper.h; sourceTree = "<group>"; };
@@ -833,6 +841,7 @@
 				5F6940E91C0FAF2900569335 /* ButtonsPropertyViewTableCell.m */,
 				5F6940EB1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.h */,
 				5F6940EC1C10176C00569335 /* StaticAnimationsPropertyTableViewCell.m */,
+				5F44F19F1C31260300D436D8 /* ParticleImagesPickerPropertyTableViewCell.swift */,
 				5F7C88771C1181CC0046020B /* TextPropertyTableViewCell.h */,
 				5F7C88781C1181CC0046020B /* TextPropertyTableViewCell.m */,
 				5F7C887A1C118DA00046020B /* FillPropertyTableViewCell.h */,
@@ -1076,6 +1085,9 @@
 		5F9A17FD1BFD7B99000E6351 /* Particles */ = {
 			isa = PBXGroup;
 			children = (
+				5F44F1991C2F9A3C00D436D8 /* ridge-confetti.png */,
+				5F44F19A1C2F9A3C00D436D8 /* triangle-confetti.png */,
+				5F44F19B1C2F9A3C00D436D8 /* oval-confetti.png */,
 				5F9A17EF1BFD5889000E6351 /* spark.png */,
 				5F9A17F11BFD7229000E6351 /* sparkle.png */,
 				5F9A17F21BFD7229000E6351 /* sparkle2.png */,
@@ -1592,10 +1604,12 @@
 				5FD860601C03EBCF00E5A754 /* BPdotsDiamondBold.otf in Resources */,
 				5FD8605E1C03EBA200E5A754 /* comic_zine_ot.otf in Resources */,
 				5FEAF9201B9E2AE80071BC08 /* linearGradient.png in Resources */,
+				5F44F19E1C2F9A3C00D436D8 /* oval-confetti.png in Resources */,
 				5F55432E1C1940A400592152 /* CMPhotoPicker.storyboard in Resources */,
 				5FD860621C03EBEC00E5A754 /* Bahiana-Regular.otf in Resources */,
 				5F9A17F01BFD5889000E6351 /* spark.png in Resources */,
 				5FEE3E6B1C1D5D0B00423CA6 /* CMGreenScreenFilter-deltaE.fsh in Resources */,
+				5F44F19C1C2F9A3C00D436D8 /* ridge-confetti.png in Resources */,
 				5FD860561C03EB3100E5A754 /* PermanentMarker.ttf in Resources */,
 				5F858DBC1BFC3F3B004E658E /* Sniglet Regular.ttf in Resources */,
 				5F693FFB1C079BFE00569335 /* orb.png in Resources */,
@@ -1603,6 +1617,7 @@
 				5FD860541C03EB1700E5A754 /* Plain_Black_Wide.ttf in Resources */,
 				5F9A180A1BFE468B000E6351 /* Pacifico.ttf in Resources */,
 				5FEAF9381B9E2B010071BC08 /* SKColorStopDetail.xib in Resources */,
+				5F44F19D1C2F9A3C00D436D8 /* triangle-confetti.png in Resources */,
 				5F858DD11BFC3FC8004E658E /* knewave.ttf in Resources */,
 				5FEAF90A1B9E2A760071BC08 /* invertedShadow.png in Resources */,
 				5FD860521C03EAFB00E5A754 /* porter-sans-inline-block.otf in Resources */,
@@ -1670,6 +1685,7 @@
 				5F5EA6071C1971D700DE85BF /* UIImage+ColorAtPixel.m in Sources */,
 				5F2095FF1BEEBB2800E4C1F1 /* support.c in Sources */,
 				5FEAF9121B9E2A760071BC08 /* SKColorView.m in Sources */,
+				5F44F1A01C31260300D436D8 /* ParticleImagesPickerPropertyTableViewCell.swift in Sources */,
 				5FE857701BDB54E700B4B245 /* CropView.m in Sources */,
 				5F6940D11C0EA1F900569335 /* CMPhotoDrawable.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,

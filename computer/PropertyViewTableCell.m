@@ -15,16 +15,18 @@
 
 @interface PropertyViewTableCell () {
     CMTransaction *_transaction;
+    BOOL _setupYet;
 }
 
 @end
 
 @implementation PropertyViewTableCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    [self setup];
-    return self;
+- (void)setupIfNeeded {
+    if (!_setupYet) {
+        _setupYet = YES;
+        [self setup];
+    }
 }
 
 - (void)setup {

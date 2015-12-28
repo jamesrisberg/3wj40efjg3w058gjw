@@ -21,6 +21,7 @@
 #import "CMPhotoDrawable.h"
 #import "UIBarButtonItem+BorderedButton.h"
 #import "CMCameraDrawable.h"
+#import "ConvenienceCategories.h"
 @import MobileCoreServices;
 
 @interface InsertItemViewController ()
@@ -189,6 +190,15 @@
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Macaroni", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         CMParticleDrawable *d = [CMParticleDrawable new];
         d.particlePreset = ParticlePresetMacaroni;
+        [self.editorVC.canvas insertDrawableAtCurrentTime:d];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Custom", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        CMParticleDrawable *d = [CMParticleDrawable new];
+        d.boundsDiagonal *= 2;
+        d.particlePreset = ParticlePresetCustom;
+        d.customParticleImages = [@[@"ridge-confetti", @"oval-confetti", @"triangle-confetti"] map:^id(id obj) {
+            return [UIImage imageNamed:obj];
+        }];
         [self.editorVC.canvas insertDrawableAtCurrentTime:d];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Never mind", @"") style:UIAlertActionStyleCancel handler:nil]];

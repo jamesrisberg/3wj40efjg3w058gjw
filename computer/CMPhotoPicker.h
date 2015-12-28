@@ -10,7 +10,7 @@
 
 @interface CMPhotoPicker : UIViewController
 
-+ (instancetype)photoPicker;
++ (id)photoPicker;
 
 @property (nonatomic) NSArray<UIImage*> *viewSnapshots;
 @property (nonatomic,copy) void (^imageCallback)(UIImage *image);
