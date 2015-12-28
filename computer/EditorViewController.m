@@ -821,7 +821,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
              entrance is at time=0, assume it was added implicitly and set opacity=0 on it
              */
             CMDrawableKeyframe *prevKeyframe = [keyframeStore keyframeBeforeTime:time];
-            BOOL updateZeroTimeOpacity = prevKeyframe.frameTime.frame == 0 && prevKeyframe.alpha == 1;
+            BOOL updateZeroTimeOpacity = [transitionClass isEntranceAnimation] && prevKeyframe.frameTime.frame == 0 && prevKeyframe.alpha == 1;
             
             [weakSelf.canvas.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:nil action:^(id target) {
                 CMDrawableKeyframe *keyframe = [keyframeStore createKeyframeAtTimeIfNeeded:time];
