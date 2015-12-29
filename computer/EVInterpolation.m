@@ -34,10 +34,27 @@ CGFloat EVInterpolateAngles(CGFloat a1, CGFloat a2, CGFloat progress) {
     }
 }
 
+CGFloat EVCatmullRom(CGFloat p0, CGFloat p1, CGFloat p2, CGFloat p3, CGFloat t) {
+    // from http://tehc0dez.blogspot.com/2010/04/nice-curves-catmullrom-spline-in-c.html
+    
+    float t2 = t * t;
+    float t3 = t2 * t;
+    
+    return 0.5f * ((2.0f * p1) +
+                   (-p0 + p2) * t +
+                   (2.0f * p0 - 5.0f * p1 + 4 * p2 - p3) * t2 +
+                   (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * t3);
+}
+
+
 @implementation NSNumber (EVInterpolation)
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
     return @([self doubleValue] * (1 - progress) + [other doubleValue] * progress);
+}
+
+- (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress previousVal:(id)prev nextVal:(id)next {
+    return @(EVCatmullRom([prev doubleValue], [self doubleValue], [other doubleValue], [next doubleValue], progress));
 }
 
 @end
@@ -80,6 +97,26 @@ CGFloat EVInterpolateAngles(CGFloat a1, CGFloat a2, CGFloat progress) {
         return [NSValue valueWithCGRect:finalValue];
     }
     return nil;
+}
+
+- (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress previousVal:(id)prev nextVal:(id)next  {
+    const char *sourceType = [self objCType];
+    const char *targetType = [other objCType];
+    if (strcmp(sourceType, targetType) != 0) {
+        // Types don't match!
+        return nil;
+    }
+    if (strcmp(sourceType, @encode(CGPoint)) == 0) {
+        CGPoint p0 = [prev CGPointValue];
+        CGPoint p1 = [self CGPointValue];
+        CGPoint p2 = [other CGPointValue];
+        CGPoint p3 = [next CGPointValue];
+        CGFloat x = EVCatmullRom(p0.x, p1.x, p2.x, p3.x, progress);
+        CGFloat y = EVCatmullRom(p0.y, p1.y, p2.y, p3.y, progress);
+        return [NSValue valueWithCGPoint:CGPointMake(x, y)];
+    } else {
+        return [self interpolatedWith:other progress:progress];
+    }
 }
 
 @end

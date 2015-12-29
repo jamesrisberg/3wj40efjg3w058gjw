@@ -180,6 +180,9 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
         next.alpha = 0;
     }
     
+    CMDrawableKeyframe *beforePrev = prev ? [self keyframeBeforeTime:prev.frameTime] : nil;
+    CMDrawableKeyframe *afterNext = next ? [self keyframeAfterTime:next.frameTime] : nil;
+    
     CMDrawableKeyframe *interpolation = nil;
     
     if (!prev && next) {
@@ -188,7 +191,7 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
         interpolation = [prev copy];
     } else {
         double progress = ([time time] - [prev.frameTime time]) / ([next.frameTime time] - [prev.frameTime time]);
-        interpolation = [prev interpolatedWith:next progress:progress];
+        interpolation = [prev interpolatedWith:next progress:progress previousVal:beforePrev nextVal:afterNext];
     }
     
     // if this intersects a transition, carry it (multiple transitions at once aren't supported):

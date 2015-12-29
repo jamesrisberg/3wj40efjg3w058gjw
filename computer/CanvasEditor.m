@@ -678,23 +678,23 @@
     
     [self ensureSelectionContainsOnlySelectableItems];
     
-    while (_selectionViews.count > _selectedItems.count) {
+    NSArray *selectedItems = ctx.renderMetaInfo ? _selectedItems.allObjects : @[];
+    
+    while (_selectionViews.count > selectedItems.count) {
         [_selectionViews.lastObject removeFromSuperview];
         [_selectionViews removeLastObject];
     }
     
-    while (_selectionViews.count < _selectedItems.count) {
+    while (_selectionViews.count < selectedItems.count) {
         SelectionIndicatorView *v = [SelectionIndicatorView new];
         v.userInteractionEnabled = NO;
         [self addSubview:v];
         [_selectionViews addObject:v];
     }
     
-    NSArray *allSelectedItems = ctx.renderMetaInfo ? _selectedItems.allObjects : @[];
-    
     for (NSInteger i=0; i<_selectionViews.count; i++) {
         SelectionIndicatorView *selectionView = _selectionViews[i];
-        CMDrawable *d = allSelectedItems[i];
+        CMDrawable *d = selectedItems[i];
         CMDrawableView *view = [_canvasView viewForDrawable:d];
         CMDrawableKeyframe *keyframe = [d.keyframeStore interpolatedKeyframeAtTime:self.time];
         CGPoint center = keyframe.center;

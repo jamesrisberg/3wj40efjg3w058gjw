@@ -348,6 +348,13 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 }
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
+    return [self interpolatedWith:other progress:progress previousVal:nil nextVal:nil];
+}
+
+- (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress previousVal:(id)prev nextVal:(id)next {
+    prev = prev ? : self;
+    next = next ? : other;
+    
     CMDrawableKeyframe *i = [[self class] new];
     for (NSString *key in [self keys]) {
         
@@ -359,7 +366,15 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
             CGFloat val = CMInterpolateAngles(prev, next, progress);
             [i setValue:@(val) forKey:key];
         } else {
-            [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
+            id from = [self valueForKey:key];
+            id to = [other valueForKey:key];
+            id result;
+            if ([from respondsToSelector:@selector(interpolatedWith:progress:previousVal:nextVal:)]) {
+                result = [from interpolatedWith:to progress:progress previousVal:[prev valueForKey:key] nextVal:[next valueForKey:key]];
+            } else {
+                result = [from interpolatedWith:to progress:progress];
+            }
+            [i setValue:result forKey:key];
         }
     }
     return i;

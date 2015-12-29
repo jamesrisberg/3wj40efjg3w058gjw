@@ -18,6 +18,8 @@ CGFloat EVInterpolateAngles(CGFloat a1, CGFloat a2, CGFloat progress);
 @protocol EVInterpolation <NSObject>
 
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress; // [0..1]
+@optional
+- (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress previousVal:(id)prev nextVal:(id)next;
 
 @end
 
