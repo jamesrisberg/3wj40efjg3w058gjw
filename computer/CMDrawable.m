@@ -119,14 +119,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
     opacity.isKeyframeProperty = YES;
     opacity.key = @"alpha";
     
-    PropertyModel *keyframeActions = [PropertyModel new];
-    keyframeActions.title = NSLocalizedString(@"Current keyframe actions", @"");
-    keyframeActions.type = PropertyModelTypeButtons;
-    keyframeActions.buttonTitles = @[NSLocalizedString(@"Delete", @"")];
-    keyframeActions.buttonSelectorNames = @[@"deleteCurrentKeyframe:"];
-    keyframeActions.availabilitySelectors = @[@"canDeleteCurrentKeyframe:"];
-    
-    return @[opacity, keyframeActions];
+    return @[opacity];
 }
 
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
@@ -274,12 +267,12 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 
 #pragma mark Keyframe actions
 
-- (NSNumber *)canDeleteCurrentKeyframe:(PropertyViewTableCell *)cell {
-    return @(self.keyframeStore.allKeyframes.count > 1 && [self.keyframeStore keyframeAtTime:cell.time] != nil);
+- (BOOL)canDeleteKeyframeAtTime:(FrameTime *)time {
+    return @(self.keyframeStore.allKeyframes.count > 1 && [self.keyframeStore keyframeAtTime:time] != nil);
 }
 
 - (void)deleteCurrentKeyframe:(PropertyViewTableCell *)cell {
-    if ([self canDeleteCurrentKeyframe:cell].boolValue) {
+    if ([self canDeleteKeyframeAtTime:cell.time]) {
         CMDrawableKeyframe *oldKeyframe = [self.keyframeStore keyframeAtTime:cell.time];
         FrameTime *time = cell.time;
         [cell.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {

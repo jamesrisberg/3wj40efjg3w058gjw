@@ -68,7 +68,10 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 
 - (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor;
 
-@property (nonatomic) NSString *nameOfLastSelectedPropertiesTab; // DON'T SAVE when archiving
+- (BOOL)canDeleteKeyframeAtTime:(FrameTime *)time;
+
+// variables for usage by the editor that SHOULDN'T be persisted:
+@property (nonatomic) NSString *nameOfLastSelectedPropertiesTab;
 
 @end
 

@@ -529,6 +529,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self clearFloatingButtons];
         self.canvas.multipleSelectionEnabled = (mode == EditorModeSelection || mode == EditorModeCreatingGroup);
         self.playingPreviewNow = NO;
+        self.canvas.renderDeleteKeyframeButtons = (mode == EditorModeTimeline);
         
         self.canvas.preparedForStaticScreenshot = (mode == EditorModeExportRunning);
         

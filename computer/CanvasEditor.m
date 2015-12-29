@@ -17,6 +17,7 @@
 #import "SelectionIndicatorView.h"
 #import "UIView+Snapshot.h"
 #import "CMCameraDrawable.h"
+#import "DeleteKeyframeButton.h"
 
 #define TAP_STACK_ENABLED NO
 #define HIT_TEST_CENTER_LEEWAY 27
@@ -101,6 +102,10 @@
     CMTransaction *_currentObjectMoveTransaction;
     
     NSMutableArray<SelectionIndicatorView *> *_selectionViews;
+    
+    NSMutableArray<DeleteKeyframeButton *> *_deleteKeyframeButtons;
+    
+    NSArray<UIGestureRecognizer*> *_gestureRecognizers;
 }
 
 @property (nonatomic,readonly) CMDrawable *singleSelection;
@@ -142,6 +147,7 @@
 
 - (void)setup {
     _selectionViews = [NSMutableArray new];
+    _deleteKeyframeButtons = [NSMutableArray new];
     
     self.transactionStack = [CMTransactionStack new];
     
@@ -496,6 +502,10 @@
         [_canvasView removeFromSuperview];
         _canvasView = canvasView;
         [self addSubview:canvasView];
+        
+        for (UIGestureRecognizer *rec in _gestureRecognizers) {
+            [canvasView addGestureRecognizer:rec];
+        }
     }
 }
 
@@ -639,6 +649,17 @@
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
     self.canvasView.transform = CGAffineTransformMakeRotation(self.position.rotation);
     
+    [self renderSelectionIndicatorsInContext:ctx];
+    [self renderDeleteKeyframeButtonsInContext:ctx];
+}
+
+- (void)renderNow {
+    [self render];
+}
+
+#pragma mark Meta info, etc
+
+- (void)renderSelectionIndicatorsInContext:(CMRenderContext *)ctx {
     NSDictionary<NSString*, CMLayoutBase*> *layoutBases = [self.canvas layoutBasesForContentsInRenderContext:ctx];
     
     [self ensureSelectionContainsOnlySelectableItems];
@@ -650,11 +671,13 @@
     
     while (_selectionViews.count < _selectedItems.count) {
         SelectionIndicatorView *v = [SelectionIndicatorView new];
+        v.userInteractionEnabled = NO;
         [self addSubview:v];
         [_selectionViews addObject:v];
     }
     
-    NSArray *allSelectedItems = _selectedItems.allObjects;
+    NSArray *allSelectedItems = ctx.renderMetaInfo ? _selectedItems.allObjects : @[];
+    
     for (NSInteger i=0; i<_selectionViews.count; i++) {
         SelectionIndicatorView *selectionView = _selectionViews[i];
         CMDrawable *d = allSelectedItems[i];
@@ -677,8 +700,31 @@
     }
 }
 
-- (void)renderNow {
-    [self render];
+- (void)renderDeleteKeyframeButtonsInContext:(CMRenderContext *)ctx {
+    NSArray<CMDrawable*> *drawablesWithDeleteKeyframesButtons = @[];
+    if (self.renderDeleteKeyframeButtons) {
+        drawablesWithDeleteKeyframesButtons = [self.canvas.contents map:^id(id obj) {
+            return [obj canDeleteKeyframeAtTime:self.time] ? obj : nil;
+        }];
+    }
+    while (drawablesWithDeleteKeyframesButtons.count > _deleteKeyframeButtons.count) {
+        DeleteKeyframeButton *btn = [DeleteKeyframeButton new];
+        [self addSubview:btn];
+        [_deleteKeyframeButtons addObject:btn];
+    }
+    while (_deleteKeyframeButtons.count > drawablesWithDeleteKeyframesButtons.count) {
+        [_deleteKeyframeButtons.lastObject removeFromSuperview];
+        [_deleteKeyframeButtons removeLastObject];
+    }
+    __weak CanvasEditor *weakSelf = self;
+    for (NSInteger i=0; i<drawablesWithDeleteKeyframesButtons.count; i++) {
+        CMDrawable *drawable = drawablesWithDeleteKeyframesButtons[i];
+        DeleteKeyframeButton *btn = _deleteKeyframeButtons[i];
+        btn.center = [btn.superview convertPoint:CGPointZero fromView:[self.canvasView viewForDrawable:drawable]];
+        btn.onPress = ^{
+            [weakSelf deleteCurrentKeyframeForDrawable:drawable];
+        };
+    }
 }
 
 #pragma mark Misc.

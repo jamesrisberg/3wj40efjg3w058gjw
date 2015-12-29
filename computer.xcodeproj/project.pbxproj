@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */; };
 		5F1D7C5C1C32DECF0014D72B /* CanvasPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D7C5B1C32DECF0014D72B /* CanvasPosition.m */; };
+		5F1D7C5F1C3323740014D72B /* DeleteKeyframeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D7C5E1C3323740014D72B /* DeleteKeyframeButton.m */; };
 		5F1DDB861BE96BFA00D9F8E3 /* StrokePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DDB851BE96BFA00D9F8E3 /* StrokePickerViewController.m */; };
 		5F2095F11BEEBB2800E4C1F1 /* clp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095DE1BEEBB2800E4C1F1 /* clp.c */; };
 		5F2095F31BEEBB2800E4C1F1 /* giffunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095E01BEEBB2800E4C1F1 /* giffunc.c */; };
@@ -276,6 +277,8 @@
 		5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPSoftModalPresentationController.swift; sourceTree = "<group>"; };
 		5F1D7C5A1C32DECF0014D72B /* CanvasPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasPosition.h; sourceTree = "<group>"; };
 		5F1D7C5B1C32DECF0014D72B /* CanvasPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasPosition.m; sourceTree = "<group>"; };
+		5F1D7C5D1C3323740014D72B /* DeleteKeyframeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteKeyframeButton.h; sourceTree = "<group>"; };
+		5F1D7C5E1C3323740014D72B /* DeleteKeyframeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeleteKeyframeButton.m; sourceTree = "<group>"; };
 		5F1DDB841BE96BFA00D9F8E3 /* StrokePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrokePickerViewController.h; sourceTree = "<group>"; };
 		5F1DDB851BE96BFA00D9F8E3 /* StrokePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrokePickerViewController.m; sourceTree = "<group>"; };
 		5F2095DE1BEEBB2800E4C1F1 /* clp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clp.c; sourceTree = "<group>"; };
@@ -1149,6 +1152,8 @@
 			children = (
 				5FBF7BF71BD5E059000FA3F4 /* TimelineView.h */,
 				5FBF7BF81BD5E059000FA3F4 /* TimelineView.m */,
+				5F1D7C5D1C3323740014D72B /* DeleteKeyframeButton.h */,
+				5F1D7C5E1C3323740014D72B /* DeleteKeyframeButton.m */,
 				5FBF7C041BD6DC82000FA3F4 /* Keyframe.h */,
 				5FBF7C051BD6DC82000FA3F4 /* Keyframe.m */,
 				5FBF7C071BD74313000FA3F4 /* EVInterpolation.h */,
@@ -1825,6 +1830,7 @@
 				5FEAF8181B9788B20071BC08 /* CanvasEditor.m in Sources */,
 				5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */,
 				5F2095F51BEEBB2800E4C1F1 /* gifsicle.c in Sources */,
+				5F1D7C5F1C3323740014D72B /* DeleteKeyframeButton.m in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,
 				5F809A4F1BE1C3740030B538 /* BitmapContextRep.m in Sources */,
 				5FEAF9541B9E2B8A0071BC08 /* CPColorPicker.m in Sources */,

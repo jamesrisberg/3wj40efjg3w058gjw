@@ -54,6 +54,7 @@
 @property (nonatomic) BOOL useTimeForStaticAnimations;
 @property (nonatomic) FrameTime *time;
 @property (nonatomic) BOOL renderMetaInfo;
+@property (nonatomic) BOOL renderDeleteKeyframeButtons;
 
 - (FrameTime *)duration;
 - (FrameTime *)loopingDuration; // may return nil
