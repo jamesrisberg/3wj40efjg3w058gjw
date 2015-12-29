@@ -8,6 +8,7 @@
 
 #import "CMCameraDrawable.h"
 #import "CGPointExtras.h"
+#import "EditorViewController.h"
 
 @interface _CMCameraDrawableView : CMDrawableView
 
@@ -62,6 +63,11 @@
 
 - (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor {
     return @[]; // don't edit ANYTHING
+}
+
+- (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor {
+    [editor beginExportFlow];
+    return YES;
 }
 
 - (NSString *)drawableTypeDisplayName {

@@ -623,7 +623,7 @@
 - (CMRenderContext *)createRenderContext {
     CMRenderContext *ctx = [CMRenderContext new];
     ctx.time = self.time;
-    ctx.renderMetaInfo = YES;
+    ctx.renderMetaInfo = self.renderMetaInfo;
     ctx.forStaticScreenshot = self.preparedForStaticScreenshot;
     ctx.useFrameTimeForStaticAnimations = self.useTimeForStaticAnimations || _touches.count > 0;
     ctx.coordinateSpace = [self canvasCoordinateSpace];

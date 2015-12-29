@@ -133,10 +133,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)setModalEditingCallback:(void (^)(CMCanvas *))modalEditingCallback {
     _modalEditingCallback = modalEditingCallback;
     self.iconBar.isModalEditing = modalEditingCallback != nil;
@@ -158,7 +154,9 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.canvas.delegate = self;
     self.canvas.hidden = canvasWasHidden;
     [self.view insertSubview:self.canvas atIndex:0];
-    [self setMode:self.mode];
+    EditorMode mode = _mode;
+    _mode = -1;
+    [self setMode:mode];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(editorExecutedTransaction) name:CMTransactionStackDidExecuteTransactionNotification object:self.canvas.transactionStack];
 }
@@ -631,7 +629,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         }
         
         self.canvas.useTimeForStaticAnimations = (mode == EditorModeTimeline || mode == EditorModeExportRunning || mode == EditorModeExportCropping);
-        self.canvas.suppressTimingVisualizations = (mode == EditorModeExportCropping || mode == EditorModeExportRunning);
+        self.canvas.renderMetaInfo = !(mode == EditorModeExportCropping || mode == EditorModeExportRunning);
     }
 }
 

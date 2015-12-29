@@ -53,7 +53,7 @@
 
 @property (nonatomic) BOOL useTimeForStaticAnimations;
 @property (nonatomic) FrameTime *time;
-@property (nonatomic) BOOL suppressTimingVisualizations;
+@property (nonatomic) BOOL renderMetaInfo;
 
 - (FrameTime *)duration;
 - (FrameTime *)loopingDuration; // may return nil
