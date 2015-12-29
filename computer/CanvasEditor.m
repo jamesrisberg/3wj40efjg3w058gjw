@@ -501,7 +501,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.canvasView.frame = self.bounds;
+    self.canvasView.bounds = self.bounds;
+    self.canvasView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
 #pragma mark Selection
@@ -635,6 +636,7 @@
 - (void)render {
     CMRenderContext *ctx = [self createRenderContext];
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
+    self.canvasView.transform = CGAffineTransformMakeRotation(self.position.rotation);
     
     NSDictionary<NSString*, CMLayoutBase*> *layoutBases = [self.canvas layoutBasesForContentsInRenderContext:ctx];
     
