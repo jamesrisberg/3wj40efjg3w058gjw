@@ -68,6 +68,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 
 - (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor;
 
+@property (nonatomic) NSString *nameOfLastSelectedPropertiesTab; // DON'T SAVE when archiving
+
 @end
 
 

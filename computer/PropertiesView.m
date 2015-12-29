@@ -43,6 +43,11 @@
             PropertyGroupModel *group = obj;
             return group.properties.count > 0 ? group : nil;
         }];
+        for (PropertyGroupModel *group in self.groups) {
+            if ([[drawables.firstObject nameOfLastSelectedPropertiesTab] isEqualToString:group.title]) {
+                self.selectedGroupIndex = [self.groups indexOfObject:group];
+            }
+        }
     } else {
         self.groups = @[];
     }
@@ -69,6 +74,7 @@
     [self addSubview:_tabControl];
     _tabControl.onTabSelected = ^(NSInteger index) {
         weakSelf.selectedGroupIndex = index;
+        [weakSelf.drawables.firstObject setNameOfLastSelectedPropertiesTab:weakSelf.groups[index].title];
     };
     RAC(_tabControl, tabTitles) = [RACObserve(self, groups) map:^id(NSArray *groups) {
         return [groups map:^id(id obj) {
