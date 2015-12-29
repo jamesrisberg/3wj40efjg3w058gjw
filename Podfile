@@ -12,6 +12,7 @@ pod 'ALGReversedFlowLayout'
 pod 'Parse'
 pod 'ChameleonFramework'
 pod 'spacetime'
+pod 'AHEasing'
 
 end
 

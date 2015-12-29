@@ -132,3 +132,19 @@ CGSize CMSizeWithDiagonalAndAspectRatio(CGFloat d, CGFloat a) {
     return CGSizeMake(width, height);
 }
 
+CGFloat CMNormalizeAngle(CGFloat angle) {
+    return fmodf(angle, M_PI * 2);
+}
+
+CGFloat CMInterpolateAngles(CGFloat prev, CGFloat next, CGFloat progress) {
+    CGPoint p1 = CGPointMake(cos(prev), sin(prev));
+    CGPoint p2 = CGPointMake(cos(next), sin(next));
+    if (CGPointEqualToPoint(CGPointZero, CGPointAdd(p1, p2))) {
+        // angles are 180-degrees opposite, so it doesn't matter which way we interpolate them
+        return CMNormalizeAngle(prev) * (1-progress) + CMNormalizeAngle(next) * progress;
+    } else {
+        CGPoint sum = CGPointMake(p1.x * (1-progress) + p2.x * progress, p1.y * (1-progress) + p2.y * progress);
+        return atan2(sum.y, sum.x);
+    }
+}
+

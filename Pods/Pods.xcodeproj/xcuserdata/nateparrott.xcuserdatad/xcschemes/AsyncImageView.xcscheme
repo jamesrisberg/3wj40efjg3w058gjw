@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "70D781B543E83F6339626932"
+               BlueprintIdentifier = "05089DC317E46B9F1596D623"
                BuildableName = "libAsyncImageView.a"
                BlueprintName = "AsyncImageView"
                ReferencedContainer = "container:Pods.xcodeproj">

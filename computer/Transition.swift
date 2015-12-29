@@ -44,13 +44,10 @@ class Transition: NSObject, NSCoding {
     
     func computeTimingCurve(var progress: CGFloat) -> CGFloat {
         progress = min(1.0, max(0.0, progress))
-        let curveStrength: CGFloat = 1.7
         if self.dynamicType.isEntranceAnimation {
-            // ease-out animation curve
-            return 1 - pow(1 - progress, curveStrength)
+            return CGFloat(CubicEaseOut(Double(progress)))
         } else {
-            // ease-in animation curve
-            return pow(progress, curveStrength)
+            return CGFloat(CubicEaseIn(Double(progress)))
         }
     }
     

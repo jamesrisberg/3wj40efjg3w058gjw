@@ -600,7 +600,8 @@
 
 
 - (CGFloat)canvasZoom { // multiply to convert canvas coords to screen coords
-    return _canvasView.bounds.size.width / self.position.screenSpan.width;
+    return [self.canvasCoordinateSpace canvasZoom];
+    // return _canvasView.bounds.size.width / self.position.screenSpan.width;
 }
 
 #pragma mark Rendering

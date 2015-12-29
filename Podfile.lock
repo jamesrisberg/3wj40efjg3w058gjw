@@ -1,4 +1,5 @@
 PODS:
+  - AHEasing (1.2)
   - ALGReversedFlowLayout (0.1.0)
   - AsyncImageView (1.5.1)
   - AZEncodeURIComponent (1.1.0)
@@ -22,6 +23,7 @@ PODS:
   - spacetime (0.0.1)
 
 DEPENDENCIES:
+  - AHEasing
   - ALGReversedFlowLayout
   - AsyncImageView
   - ChameleonFramework
@@ -33,6 +35,7 @@ DEPENDENCIES:
   - spacetime
 
 SPEC CHECKSUMS:
+  AHEasing: 847f583bcd83a2bb850e38ccdb26d22e2593f34d
   ALGReversedFlowLayout: edb883d4f573beeb64e9c8e79f1acd1de8f9f477
   AsyncImageView: db9433939160710b34a5c249479e03af2a2121b0
   AZEncodeURIComponent: 6cacefb75b101041004189b15575200ba0f10985

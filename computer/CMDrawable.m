@@ -357,8 +357,17 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 - (instancetype)interpolatedWith:(id)other progress:(CGFloat)progress {
     CMDrawableKeyframe *i = [[self class] new];
     for (NSString *key in [self keys]) {
-        if ([key isEqualToString:@"transition"]) continue;
-        [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
+        
+        if ([key isEqualToString:@"transition"]) {
+            // pass
+        } else if ([key isEqualToString:@"rotation"]) {
+            CGFloat prev = [[self valueForKey:key] floatValue];
+            CGFloat next = [[other valueForKey:key] floatValue];
+            CGFloat val = CMInterpolateAngles(prev, next, progress);
+            [i setValue:@(val) forKey:key];
+        } else {
+            [i setValue:[[self valueForKey:key] interpolatedWith:[other valueForKey:key] progress:progress] forKey:key];
+        }
     }
     return i;
 }
