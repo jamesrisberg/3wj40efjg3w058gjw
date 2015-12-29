@@ -19,7 +19,8 @@
 
 @property (nonatomic,weak) _CMCanvasView *canvasView;
 @property (nonatomic) CGPoint center;
-@property (nonatomic) CGFloat screenSpan; // horizontal
+@property (nonatomic) CGSize screenSpan; // horizontal
+- (CGFloat)actualHorizontalScreenSpan;
 @property (nonatomic,readonly) CGRect bounds;
 
 @end

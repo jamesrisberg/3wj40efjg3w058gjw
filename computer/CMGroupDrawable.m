@@ -26,7 +26,7 @@
     
     CanvasCoordinateSpace *space = [CanvasCoordinateSpace new];
     space.canvasView = ctx.canvasView;
-    space.screenSpan = contentBounds.size.width;
+    space.screenSpan = contentBounds.size;
     space.center = CGPointMake(CGRectGetMidX(contentBounds), CGRectGetMidY(contentBounds));
     
     return space;

@@ -40,11 +40,11 @@
 }
 
 - (CGFloat)canvasZoom { // multiply to convert canvas coords to screen coords
-    return _canvasView.bounds.size.width / _screenSpan;
+    return _canvasView.bounds.size.width / [self actualHorizontalScreenSpan];
 }
 
 - (CGPoint)originOffset {
-    CGFloat screenSpanX = _screenSpan;
+    CGFloat screenSpanX = [self actualHorizontalScreenSpan];
     CGFloat screenSpanY = _canvasView.bounds.size.height / [self canvasZoom];
     return CGPointMake(_center.x - screenSpanX/2, _center.y - screenSpanY/2);
 }
@@ -71,6 +71,11 @@
     CGRect rectInView = [_canvasView convertRect:rect fromCoordinateSpace:coordinateSpace];
     CGPoint point = [self convertPointFromCanvasView:rectInView.origin];
     return CGRectMake(point.x, point.y, rectInView.size.width / [self canvasZoom], rectInView.size.height / [self canvasZoom]);
+}
+
+- (CGFloat)actualHorizontalScreenSpan {
+    CGFloat scale = MIN(self.canvasView.bounds.size.width / self.screenSpan.width, self.canvasView.bounds.size.height / self.screenSpan.height);
+    return self.canvasView.bounds.size.width / scale;
 }
 
 @end
@@ -587,7 +592,7 @@
     CanvasPosition *pos = [self position];
     CanvasCoordinateSpace *c = [CanvasCoordinateSpace new];
     c.center = pos.center;
-    c.screenSpan = pos.screenSpan.width * 1.4;
+    c.screenSpan = CGSizeMake(pos.screenSpan.width * 1.4, pos.screenSpan.height * 1.4);
     c.canvasView = self.canvasView;
     return c;
 }
