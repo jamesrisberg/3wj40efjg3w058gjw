@@ -10,7 +10,8 @@
 #import "Keyframe.h"
 @class Drawable, ShapeStackList;
 #import "CMTransaction.h"
-@class CMCanvas, CMDrawable;
+#import "CanvasPosition.h"
+@class CMCanvas, CMDrawable, CMCameraDrawable;
 
 @class CanvasEditor, _CMCanvasView;
 
@@ -71,9 +72,10 @@
 
 #pragma mark Coordinates
 
-@property (nonatomic) CGPoint centerOfVisibleArea;
-@property (nonatomic) CGFloat screenSpan; // if 100, then a 100pt-wide object will fill the canvas view
+@property (nonatomic,readonly) CanvasPosition *position;
 @property (nonatomic,readonly) CanvasCoordinateSpace *canvasCoordinateSpace;
+@property (nonatomic) CMCameraDrawable *trackingCamera;
+@property (nonatomic) CanvasPosition *defaultPosition; // used when trackingCamera=null
 
 - (CGFloat)canvasZoom; // multiply to convert canvas coords to screen coords
 
@@ -89,5 +91,7 @@
 #pragma mark Misc.
 
 - (NSArray<UIImage*>*)snapshotsOfAllDrawables;
+
+#pragma mark Camera
 
 @end

@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, EditorMode) {
     EditorModePanelView,
     EditorModeExportCropping,
     EditorModeExportRunning,
-    EditorModeSelection,
+    EditorModeSelection, // TODO: remove
     EditorModeShowingPropertiesView,
     EditorModeCreatingGroup
 };

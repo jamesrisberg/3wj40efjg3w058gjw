@@ -32,6 +32,8 @@
 #import "CMShapeDrawable.h"
 #import "UIColor+RandomColors.h"
 #import "CMStarDrawable.h"
+#import "ConvenienceCategories.h"
+#import "CMCameraDrawable.h"
 
 typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     FloatingButtonPositionBottomRight,
@@ -463,11 +465,11 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         }
         _scrollViewPreviousContentOffset = scrollView.contentOffset;
         
-        CGFloat translationScale = self.canvas.screenSpan / self.canvas.bounds.size.width;
+        CGFloat translationScale = 1.0 / [self.canvas canvasZoom];
         
-        self.canvas.screenSpan /= zoom;
+        self.canvas.defaultPosition.screenSpan = CGSizeMake(self.canvas.defaultPosition.screenSpan.width / zoom, self.canvas.defaultPosition.screenSpan.height / zoom);
         // NSLog(@"screen span: %f", self.canvas.screenSpan);
-        self.canvas.centerOfVisibleArea = CGPointMake(self.canvas.centerOfVisibleArea.x + translation.x * translationScale, self.canvas.centerOfVisibleArea.y + translation.y * translationScale);
+        self.canvas.defaultPosition.center = CGPointMake(self.canvas.defaultPosition.center.x + translation.x * translationScale, self.canvas.defaultPosition.center.y + translation.y * translationScale);
         // NSLog(@"Center: %@", NSStringFromCGPoint(self.canvas.centerOfVisibleArea));
     }
 }
@@ -505,7 +507,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Modes
 - (void)setMode:(EditorMode)mode {
-    __weak EditorViewController *weakSelf = self;
     if (mode != _mode) {
         EditorMode oldMode = _mode;
         _mode = mode;
@@ -513,6 +514,14 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         if (oldMode == EditorModeDrawing) {
             FreehandInputView *input = (id)self.transientOverlayView;
             [input insertWithCanvasEditor:self.canvas];
+        }
+        
+        self.canvas.trackingCamera = nil;
+        if (mode == EditorModeExportRunning || mode == EditorModeExportCropping) {
+            // find a camera:
+            self.canvas.trackingCamera = [self.canvas.canvas.contents map:^id(id obj) {
+                return [obj isKindOfClass:[CMCameraDrawable class]] ? obj : nil;
+            }].firstObject;
         }
         
         self.transientOverlayView = nil;
@@ -671,8 +680,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [vc view];
     [vc.canvas.canvas.contents addObjectsFromArray:[canvas.copy contents]];
     CGRect bounds = [canvas boundingBoxForAllTime];
-    vc.canvas.centerOfVisibleArea = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-    vc.canvas.screenSpan = bounds.size.width * 2;
+    vc.canvas.defaultPosition.center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
+    vc.canvas.defaultPosition.screenSpan = CGSizeMake(bounds.size.width * 2, bounds.size.height*2);
     vc.modalEditingCallback = callback;
     return vc;
 }
@@ -933,6 +942,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 #pragma mark Selection mode
 
+// TODO: remove this mode
+
 - (void)enterSelectionMode {
     self.mode = EditorModeSelection;
 }
@@ -959,8 +970,20 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     self.cropView = cropView;
     self.transientOverlayView = cropView;
     [self viewDidLayoutSubviews];
-    CGFloat cropSize = round(MIN(self.cropView.bounds.size.width, self.cropView.bounds.size.height) * 0.8);
-    cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - cropSize/2, self.cropView.bounds.size.height/2 - cropSize/2, cropSize, cropSize);
+    if (self.canvas.trackingCamera) {
+        // we're tracking a camera, so the crop is fixed:
+        CMDrawableKeyframe *keyframe = [self.canvas.trackingCamera.keyframeStore interpolatedKeyframeAtTime:self.canvas.time];
+        CGSize size = CMSizeWithDiagonalAndAspectRatio(self.canvas.trackingCamera.boundsDiagonal, self.canvas.trackingCamera.aspectRatio);
+        size.width *= keyframe.scale;
+        size.height *= keyframe.scale;
+        CGRect canvasRect = CGRectMake(keyframe.center.x - size.width/2, keyframe.center.y - size.height/2, size.width, size.height);
+        cropView.cropRect = [self.canvas.canvasCoordinateSpace convertRect:canvasRect toCoordinateSpace:cropView];
+        cropView.userInteractionEnabled = NO;
+    } else {
+        CGFloat cropSize = round(MIN(self.cropView.bounds.size.width, self.cropView.bounds.size.height) * 0.8);
+        cropView.cropRect = CGRectMake(self.cropView.bounds.size.width/2 - cropSize/2, self.cropView.bounds.size.height/2 - cropSize/2, cropSize, cropSize);
+        cropView.userInteractionEnabled = YES;
+    }
     
     UIButton *continueButton = [UIButton buttonWithType:UIButtonTypeCustom];
     continueButton.titleLabel.font = [UIFont boldSystemFontOfSize:continueButton.titleLabel.font.pointSize];

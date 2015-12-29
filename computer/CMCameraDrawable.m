@@ -7,6 +7,7 @@
 //
 
 #import "CMCameraDrawable.h"
+#import "CGPointExtras.h"
 
 @interface _CMCameraDrawableView : CMDrawableView
 
@@ -72,6 +73,15 @@
     v = [super renderToView:v context:ctx];
     v.hidden = !ctx.renderMetaInfo;
     return v;
+}
+
+- (CanvasPosition *)canvasPositionAtTime:(FrameTime *)time {
+    CMDrawableKeyframe *keyframe = [self.keyframeStore interpolatedKeyframeAtTime:time];
+    CanvasPosition *pos = [CanvasPosition new];
+    pos.center = keyframe.center;
+    pos.screenSpan = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal * keyframe.scale, self.aspectRatio);
+    pos.rotation = keyframe.rotation;
+    return pos;
 }
 
 @end

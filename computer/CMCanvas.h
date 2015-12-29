@@ -6,7 +6,7 @@
 //  Copyright © 2015 Nate Parrott. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import UIKit;
 #import "CMDrawable.h"
 
 @interface CMCanvas : CMDrawable

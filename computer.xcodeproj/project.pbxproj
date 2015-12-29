@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F093C551BD0B2B3001405AC /* NPSoftModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */; };
+		5F1D7C5C1C32DECF0014D72B /* CanvasPosition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F1D7C5B1C32DECF0014D72B /* CanvasPosition.m */; };
 		5F1DDB861BE96BFA00D9F8E3 /* StrokePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F1DDB851BE96BFA00D9F8E3 /* StrokePickerViewController.m */; };
 		5F2095F11BEEBB2800E4C1F1 /* clp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095DE1BEEBB2800E4C1F1 /* clp.c */; };
 		5F2095F31BEEBB2800E4C1F1 /* giffunc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F2095E01BEEBB2800E4C1F1 /* giffunc.c */; };
@@ -273,6 +274,8 @@
 		044906FE7B2B3BDF061BBDD3 /* libPods-computer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-computer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36339DF5BBC4DCBD05031757 /* Pods-computer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-computer.release.xcconfig"; path = "Pods/Target Support Files/Pods-computer/Pods-computer.release.xcconfig"; sourceTree = "<group>"; };
 		5F093C541BD0B2B3001405AC /* NPSoftModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NPSoftModalPresentationController.swift; sourceTree = "<group>"; };
+		5F1D7C5A1C32DECF0014D72B /* CanvasPosition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasPosition.h; sourceTree = "<group>"; };
+		5F1D7C5B1C32DECF0014D72B /* CanvasPosition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasPosition.m; sourceTree = "<group>"; };
 		5F1DDB841BE96BFA00D9F8E3 /* StrokePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StrokePickerViewController.h; sourceTree = "<group>"; };
 		5F1DDB851BE96BFA00D9F8E3 /* StrokePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StrokePickerViewController.m; sourceTree = "<group>"; };
 		5F2095DE1BEEBB2800E4C1F1 /* clp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = clp.c; sourceTree = "<group>"; };
@@ -1429,6 +1432,8 @@
 				5FD8606B1C044B1E00E5A754 /* EditorViewController+InsertMedia.m */,
 				5FEAF8161B9788B20071BC08 /* CanvasEditor.h */,
 				5FEAF8171B9788B20071BC08 /* CanvasEditor.m */,
+				5F1D7C5A1C32DECF0014D72B /* CanvasPosition.h */,
+				5F1D7C5B1C32DECF0014D72B /* CanvasPosition.m */,
 				5F6940EE1C102A4000569335 /* CanvasViewerLite.h */,
 				5F6940EF1C102A4000569335 /* CanvasViewerLite.m */,
 				5F6110051BB1144E00DB4C82 /* FreehandInputView.h */,
@@ -1710,6 +1715,7 @@
 				5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */,
 				5F6940AD1C0BD1B600569335 /* CMCanvas.m in Sources */,
 				5F858DB51BFBB8A3004E658E /* PatternTypePicker.swift in Sources */,
+				5F1D7C5C1C32DECF0014D72B /* CanvasPosition.m in Sources */,
 				5FBF7BFC1BD5E8B1000FA3F4 /* ScratchViewController.m in Sources */,
 				5FEAF8591B9ADB8B0071BC08 /* UIImage+Resize.swift in Sources */,
 				5FEAF90E1B9E2A760071BC08 /* SKColorPicker.m in Sources */,

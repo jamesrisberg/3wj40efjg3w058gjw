@@ -7,9 +7,11 @@
 //
 
 #import "CMDrawable.h"
+#import "CanvasPosition.h"
 
 @interface CMCameraDrawable : CMDrawable
 
 @property (nonatomic) CGFloat aspectRatio;
+- (CanvasPosition *)canvasPositionAtTime:(FrameTime *)time;
 
 @end

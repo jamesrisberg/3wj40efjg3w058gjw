@@ -16,6 +16,7 @@
 #import "CMPhotoDrawable.h"
 #import "SelectionIndicatorView.h"
 #import "UIView+Snapshot.h"
+#import "CMCameraDrawable.h"
 
 #define TAP_STACK_ENABLED NO
 #define HIT_TEST_CENTER_LEEWAY 27
@@ -156,7 +157,9 @@
     
     self.canvas = [CMCanvas new];
     
-    self.screenSpan = 1000;
+    self.defaultPosition = [CanvasPosition new];
+    self.defaultPosition.screenSpan = CGSizeMake(1000, 1000);
+    self.defaultPosition.center = CGPointZero;
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
@@ -264,7 +267,7 @@
     
     CGFloat motionMultiplier = self.touchForceFraction > 0.9 ? 0.4 : 1;
     
-    CGFloat translationScale = _screenSpan / _canvasView.bounds.size.width;
+    CGFloat translationScale = 1.0 / [self canvasZoom];
     
     if (_touches.count == 1) {
         CGPoint translation = CGPointMake((t1.x - t1prev.x) * motionMultiplier * translationScale, (t1.y - t1prev.y) * motionMultiplier * translationScale);
@@ -400,8 +403,8 @@
 
 - (void)insertDrawableAtCurrentTime:(CMDrawable *)drawable {
     CMDrawableKeyframe *keyframe = [drawable.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
-    keyframe.center = self.centerOfVisibleArea;
-    keyframe.scale = self.screenSpan / self.bounds.size.width;
+    keyframe.center = self.position.center;
+    keyframe.scale = 1.0 / self.canvasZoom;
     
     [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
         [[[target canvas] contents] addObject:drawable];
@@ -576,17 +579,22 @@
 
 #pragma mark Coordinates
 
+- (CanvasPosition *)position {
+    return self.trackingCamera ? [self.trackingCamera canvasPositionAtTime:self.time] : self.defaultPosition;
+}
+
 - (id<UICoordinateSpace>)canvasCoordinateSpace {
+    CanvasPosition *pos = [self position];
     CanvasCoordinateSpace *c = [CanvasCoordinateSpace new];
-    c.center = self.centerOfVisibleArea;
-    c.screenSpan = self.screenSpan;
+    c.center = pos.center;
+    c.screenSpan = pos.screenSpan.width * 1.4;
     c.canvasView = self.canvasView;
     return c;
 }
 
 
 - (CGFloat)canvasZoom { // multiply to convert canvas coords to screen coords
-    return _canvasView.bounds.size.width / _screenSpan;
+    return _canvasView.bounds.size.width / self.position.screenSpan.width;
 }
 
 #pragma mark Rendering
