@@ -45,7 +45,7 @@
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    CGFloat touchSize = 40;
+    CGFloat touchSize = 44;
     CGFloat inset = (self.bounds.size.width - touchSize)/2;
     return CGRectContainsPoint(CGRectInset(self.bounds, inset, inset), point);
 }

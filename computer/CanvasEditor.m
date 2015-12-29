@@ -18,6 +18,7 @@
 #import "UIView+Snapshot.h"
 #import "CMCameraDrawable.h"
 #import "DeleteKeyframeButton.h"
+#import "UIView+computer.h"
 
 #define TAP_STACK_ENABLED NO
 #define HIT_TEST_CENTER_LEEWAY 27
@@ -83,7 +84,7 @@
 
 
 
-@interface CanvasEditor () {
+@interface CanvasEditor () <UIGestureRecognizerDelegate> {
     BOOL _setup;
     NSMutableSet *_touches;
     BOOL _currentGestureTransformsDrawableAboutTouchPoint;
@@ -104,8 +105,6 @@
     NSMutableArray<SelectionIndicatorView *> *_selectionViews;
     
     NSMutableArray<DeleteKeyframeButton *> *_deleteKeyframeButtons;
-    
-    NSArray<UIGestureRecognizer*> *_gestureRecognizers;
 }
 
 @property (nonatomic,readonly) CMDrawable *singleSelection;
@@ -155,7 +154,8 @@
     self.multipleTouchEnabled = YES;
     if (!self.time) self.time = [[FrameTime alloc] initWithFrame:0 atFPS:1];
     
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)]];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+    [self addGestureRecognizer:tap];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
     doubleTap.numberOfTapsRequired = 2;
     [self addGestureRecognizer:doubleTap];
@@ -227,6 +227,11 @@
         [self.editorShapeStackList show];
         [self updateForceReading];
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    // only called for single-tap rec
+    return NO;
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -407,7 +412,12 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    return self;
+    UIView *hit = [super hitTest:point withEvent:event];
+    if ([hit viewHasAncestor:_canvasView]) {
+        return self;
+    } else {
+        return hit;
+    }
 }
 
 #pragma mark Actions
@@ -467,7 +477,15 @@
 }
 
 - (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d {
-    [d.keyframeStore removeKeyframeAtTime:self.time];
+    CMDrawableKeyframe *old = [d.keyframeStore keyframeAtTime:self.time];
+    __weak CanvasEditor *weakSelf = self;
+    [self.transactionStack doTransaction:[[CMTransaction alloc] initWithTarget:self action:^(id target) {
+        [d.keyframeStore removeKeyframeAtTime:self.time];
+        [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:self];
+    } undo:^(id target) {
+        [d.keyframeStore storeKeyframe:old];
+        [weakSelf.delegate canvasDidUpdateKeyframesForCurrentTime:self];
+    }]];
 }
 
 #pragma mark Time
@@ -502,10 +520,6 @@
         [_canvasView removeFromSuperview];
         _canvasView = canvasView;
         [self addSubview:canvasView];
-        
-        for (UIGestureRecognizer *rec in _gestureRecognizers) {
-            [canvasView addGestureRecognizer:rec];
-        }
     }
 }
 

@@ -268,7 +268,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 #pragma mark Keyframe actions
 
 - (BOOL)canDeleteKeyframeAtTime:(FrameTime *)time {
-    return @(self.keyframeStore.allKeyframes.count > 1 && [self.keyframeStore keyframeAtTime:time] != nil);
+    return self.keyframeStore.allKeyframes.count > 1 && [self.keyframeStore keyframeAtTime:time] != nil;
 }
 
 - (void)deleteCurrentKeyframe:(PropertyViewTableCell *)cell {

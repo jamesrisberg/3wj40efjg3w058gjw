@@ -17,4 +17,8 @@
     [superview insertSubview:replacement atIndex:index];
 }
 
+- (BOOL)viewHasAncestor:(UIView *)parent {
+    return parent == self || [self.superview viewHasAncestor:parent];
+}
+
 @end

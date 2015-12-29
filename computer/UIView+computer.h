@@ -11,5 +11,6 @@
 @interface UIView (computer)
 
 - (void)replaceWith:(UIView *)replacement;
+- (BOOL)viewHasAncestor:(UIView *)parent;
 
 @end
