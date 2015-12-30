@@ -7,46 +7,99 @@
 //
 
 #import "CMDocument.h"
-#import "CanvasEditor.h"
-
-@interface NSFileWrapper (CMAdditions)
-
-@end
-
-@implementation NSFileWrapper (CMAdditions)
-
-- (NSFileWrapper *)setData:(NSData *)data forChildWithName:(NSString *)name {
-    NSFileWrapper *existing = self.fileWrappers[name];
-    if (existing) [self removeFileWrapper:existing];
-    
-    NSFileWrapper *wrapper = [[NSFileWrapper alloc] initRegularFileWithContents:data];
-    wrapper.preferredFilename = name;
-    [self addFileWrapper:wrapper];
-    
-    return wrapper;
-}
-
-@end
-
+#import "CMCanvas.h"
+#import "CMWindow.h"
 
 @interface CMDocument () {
-    BOOL _hasUnsavedChanges;
+    NSTimer *_autoSaveTimer;
+    CFAbsoluteTime _timeOfEarliestUnsavedChange;
 }
 
-@property (nonatomic) NSFileWrapper *fileWrapper;
+@property (nonatomic) NSURL *url;
 
 @end
 
 @implementation CMDocument
 
-- (NSFileWrapper *)fileWrapper {
-    if (!_fileWrapper) {
-        _fileWrapper = [[NSFileWrapper alloc] initDirectoryWithFileWrappers:@{}];
+#pragma mark Loading
+
+- (instancetype)initWithURL:(NSURL *)url {
+    self = [super init];
+    self.url = url;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+        [[NSFileManager defaultManager] createDirectoryAtURL:self.url withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    return _fileWrapper;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(touchesEnded) name:CMWindowGlobalTouchesEndedNotification object:nil];
+    return self;
 }
 
-- (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
+- (void)setOpen:(BOOL)open {
+    if (open != _open) {
+        if (open) {
+            // initial opening:
+            _open = YES;
+            [self load];
+        } else {
+            // closing:
+            [self save];
+            _open = NO;
+        }
+    }
+}
+
+- (void)load {
+    CMCanvas *canvas;
+    NSURL *canvasURL = [self.url URLByAppendingPathComponent:@"Canvas"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:canvasURL.path]) {
+        canvas = [NSKeyedUnarchiver unarchiveObjectWithFile:canvasURL.path];
+    } else {
+        canvas = [CMCanvas new];
+    }
+    [self.delegate document:self loadedCanvas:canvas];
+}
+
+- (void)save {
+    // TODO: do everything atomically (?)
+    NSData *canvasData = [NSKeyedArchiver archivedDataWithRootObject:[self.delegate canvasForDocument:self]];
+    [canvasData writeToURL:[self.url URLByAppendingPathComponent:@"Canvas" isDirectory:NO] atomically:YES];
+    
+    UIImage *snapshot = [self.delegate canvasSnapshotForDocument:self];
+    if (snapshot) {
+        [UIImagePNGRepresentation(snapshot) writeToURL:[self.url URLByAppendingPathComponent:@"Snapshot.png"] atomically:YES];
+    }
+    self.hasUnsavedChanges = NO;
+}
+
+- (void)setHasUnsavedChanges:(BOOL)hasUnsavedChanges {
+    _hasUnsavedChanges = hasUnsavedChanges;
+    if (hasUnsavedChanges) {
+        if (!_timeOfEarliestUnsavedChange) {
+            _timeOfEarliestUnsavedChange = CFAbsoluteTimeGetCurrent();
+        }
+        if (!_autoSaveTimer) {
+            _autoSaveTimer = [NSTimer scheduledTimerWithTimeInterval:AUTOSAVE_INTERVAL target:self selector:@selector(autosaveIfNecessary) userInfo:nil repeats:YES];
+        }
+    } else {
+        [_autoSaveTimer invalidate];
+        _autoSaveTimer = nil;
+        _timeOfEarliestUnsavedChange = 0;
+    }
+}
+
+- (void)autosaveIfNecessary {
+    CMWindow *window = (CMWindow *)[UIApplication sharedApplication].windows.firstObject;
+    if (window.touchesAreDown) return;
+    
+    if (CFAbsoluteTimeGetCurrent() - _timeOfEarliestUnsavedChange >= AUTOSAVE_INTERVAL) {
+        [self save];
+    }
+}
+
+- (void)touchesEnded {
+    [self autosaveIfNecessary];
+}
+
+/*- (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError * _Nullable __autoreleasing *)outError {
     self.fileWrapper = contents;
     NSFileWrapper *canvasWrapper = [self.fileWrapper fileWrappers][@"Canvas"];
     CanvasEditor *canvas = [NSKeyedUnarchiver unarchiveObjectWithData:canvasWrapper.regularFileContents];
@@ -69,18 +122,17 @@
 - (void)saveToURL:(NSURL *)url forSaveOperation:(UIDocumentSaveOperation)saveOperation completionHandler:(void (^)(BOOL))completionHandler {
     _hasUnsavedChanges = NO;
     [super saveToURL:url forSaveOperation:saveOperation completionHandler:completionHandler];
+}*/
+
+
+#pragma mark Creation
+
++ (CMDocument *)createDocument {
+    CMDocument *doc = [[CMDocument alloc] initWithURL:[[self class] URLForNewDocument]];
+    return doc;
 }
 
-#pragma mark Save tracking
-- (void)maybeEdited {
-    _hasUnsavedChanges = YES;
-}
-
-- (BOOL)hasUnsavedChanges {
-    return _hasUnsavedChanges;
-}
-
-#pragma mark Paths
+#pragma mark URLs
 
 + (NSURL *)documentsURL {
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
@@ -89,7 +141,7 @@
 
 + (NSURL *)URLForNewDocument {
     NSString *filename = [[[NSUUID UUID] UUIDString] stringByAppendingPathExtension:@"computerdoc"];
-    return [[self documentsURL] URLByAppendingPathComponent:filename];
+    return [[self documentsURL] URLByAppendingPathComponent:filename isDirectory:YES];
 }
 
 #pragma mark Snapshot loading

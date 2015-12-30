@@ -164,44 +164,18 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 #pragma mark Document
 
 - (void)setDocument:(CMDocument *)document {
-    void (^update)() = ^() {
-        _document.delegate = nil;
-        
-        _document = document;
-        document.delegate = self;
-        [[UIApplication sharedApplication].windows.firstObject.rootViewController.view setUserInteractionEnabled:NO];
-        [document openWithCompletionHandler:^(BOOL success) {
-            [[UIApplication sharedApplication].windows.firstObject.rootViewController.view setUserInteractionEnabled:YES];
-        }];
-    };
-    if (_document) {
-        [self saveAndClose:YES callback:update];
-    } else {
-        update();
-    }
+    _document.open = NO;
+    _document.delegate = nil;
+    
+    [self loadViewIfNeeded];
+    
+    _document = document;
+    document.delegate = self;
+    document.open = YES;
 }
 
-- (void)save {
-    [self saveAndClose:NO callback:^{
-        
-    }];
-}
-
-- (void)saveAndClose:(BOOL)close callback:(void(^)())callback {
-    self.view.window.userInteractionEnabled = NO;
-    if (close) {
-        [self saveAndClose:NO callback:^{
-            [self.document closeWithCompletionHandler:^(BOOL success) {
-                self.view.window.userInteractionEnabled = YES;
-                callback();
-            }];
-        }];
-    } else {
-        [self.document saveToURL:self.document.fileURL forSaveOperation:UIDocumentSaveForOverwriting completionHandler:^(BOOL success) {
-            self.view.window.userInteractionEnabled = YES;
-            callback();
-        }];
-    }
+- (void)closeDocument {
+    self.document = nil;
 }
 
 #pragma mark Document delegate
@@ -337,6 +311,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     } else {
         [_propertiesView reloadValues];
     }
+    
+    self.document.hasUnsavedChanges = YES;
 }
 
 - (void)canvasDidChangeSelection:(CanvasEditor *)canvas {
@@ -351,7 +327,6 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
 
 - (void)canvasDidUpdateKeyframesForCurrentTime:(CanvasEditor *)canvas {
     [self.timeline keyframeAvailabilityUpdatedForTime:canvas.time];
-    [self.document maybeEdited];
 }
 
 - (void)canvas:(CanvasEditor *)canvas shouldShowEditingPanel:(UIView *)panel {
@@ -690,9 +665,8 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
         [self dismissViewControllerAnimated:YES completion:nil];
         self.modalEditingCallback([self.canvas.canvas copy]);
     } else {
-        [self saveAndClose:YES callback:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }];
+        [self closeDocument];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -927,7 +901,7 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     [self.timeline scrollToTime:time.time animated:NO];
     self.canvas.time = time;
     [self.canvas renderNow];
-    [self.canvas.canvasView drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
+    [self.canvas drawViewHierarchyInRect:drawIntoRect afterScreenUpdates:YES];
 }
 
 - (void)exporter:(Exporter *)exporter updateProgress:(double)progress {

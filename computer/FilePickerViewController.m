@@ -290,18 +290,18 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
         }];
     } else {
         NSMutableArray *fileURLs = self.fileURLs.mutableCopy;
-        NSURL *newDocURL = [CMDocument URLForNewDocument];
-        [fileURLs insertObject:newDocURL atIndex:0];
+        CMDocument *doc = [CMDocument createDocument];        
+        [fileURLs insertObject:doc.url atIndex:0];
         __weak FilePickerViewController *weakSelf = self;
         [self setFileURLs:fileURLs withAnimationCompletion:^{
-            [weakSelf openDocumentAtURL:newDocURL];
+            [weakSelf openDocumentAtURL:doc.url];
         }];
     }
 }
 
 - (void)openDocumentAtURL:(NSURL *)url {
     EditorViewController *editorVC = [EditorViewController editor];
-    editorVC.document = [[CMDocument alloc] initWithFileURL:url];
+    editorVC.document = [[CMDocument alloc] initWithURL:url];
     _FilePickerPreviewView *previewView = self.viewsForURLs[url];
     [editorVC presentFromSnapshot:previewView.imageView inViewController:self];
 }
