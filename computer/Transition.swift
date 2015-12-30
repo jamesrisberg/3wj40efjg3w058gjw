@@ -38,6 +38,10 @@ class Transition: NSObject, NSCoding {
         }
     }
     
+    class func canApplyToDrawable(drawable: CMDrawable) -> Bool {
+        return true
+    }
+    
     func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
         
     }
@@ -81,7 +85,11 @@ class Transition: NSObject, NSCoding {
         FadeInTransition.self,
         ShrinkAwayTransition.self,
         ScaleInTransition.self,
-        TVOffTransition.self
+        TVOffTransition.self,
+        StrokeInTransition.self,
+        StrokeOutTransition.self,
+        TypeInTransition.self,
+        TypeOutTransition.self
     ]
 }
 
@@ -162,5 +170,121 @@ class TVOffTransition: Transition {
     }
     override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
         view.transform = CGAffineTransformScale(view.transform, 1.0 / (1.0 - progress * 0.5), 1.0 - progress)
+    }
+}
+
+class StrokeInTransition: Transition {
+    override class var displayName: String! {
+        get {
+            return NSLocalizedString("Stroke in", comment: "")
+        }
+    }
+    
+    override func computeTimingCurve(progress: CGFloat) -> CGFloat {
+        return progress // linear
+    }
+    
+    override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
+        super.apply(drawable, view: view, context: context, progress: progress)
+        if let v = view as? _CMShapeView, shapeLayer = v.layer as? CAShapeLayer {
+            shapeLayer.strokeEnd = progress
+        }
+    }
+    
+    override class var isEntranceAnimation: Bool {
+        get {
+            return true
+        }
+    }
+    
+    override class func canApplyToDrawable(drawable: CMDrawable) -> Bool {
+        return (drawable as? CMShapeDrawable) != nil
+    }
+}
+
+class StrokeOutTransition: Transition {
+    override class var displayName: String! {
+        get {
+            return NSLocalizedString("Stroke out", comment: "")
+        }
+    }
+    
+    override func computeTimingCurve(progress: CGFloat) -> CGFloat {
+        return progress // linear
+    }
+    
+    override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
+        super.apply(drawable, view: view, context: context, progress: progress)
+        if let v = view as? _CMShapeView, shapeLayer = v.layer as? CAShapeLayer {
+            shapeLayer.strokeStart = progress
+        }
+    }
+    
+    override class var isEntranceAnimation: Bool {
+        get {
+            return false
+        }
+    }
+    
+    override class func canApplyToDrawable(drawable: CMDrawable) -> Bool {
+        return (drawable as? CMShapeDrawable) != nil
+    }
+}
+
+class TypeInTransition: Transition {
+    override class var displayName: String! {
+        get {
+            return NSLocalizedString("Type in", comment: "")
+        }
+    }
+    
+    override func computeTimingCurve(progress: CGFloat) -> CGFloat {
+        return progress // linear
+    }
+    
+    override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
+        super.apply(drawable, view: view, context: context, progress: progress)
+        if let v = view as? _CMTextDrawableView {
+            v.textEnd = progress
+        }
+    }
+    
+    override class var isEntranceAnimation: Bool {
+        get {
+            return true
+        }
+    }
+    
+    override class func canApplyToDrawable(drawable: CMDrawable) -> Bool {
+        return (drawable as? CMTextDrawable) != nil
+    }
+}
+
+class TypeOutTransition: Transition {
+    override class var displayName: String! {
+        get {
+            return NSLocalizedString("Backspace", comment: "")
+        }
+    }
+    
+    override func computeTimingCurve(progress: CGFloat) -> CGFloat {
+        return progress // linear
+    }
+    
+    override func apply(drawable: CMDrawable, view: CMDrawableView, context: CMRenderContext, progress: CGFloat) {
+        super.apply(drawable, view: view, context: context, progress: progress)
+        if let v = view as? _CMTextDrawableView {
+            v.textEnd = 1.0 - progress
+        }
+    }
+    
+    override class var isEntranceAnimation: Bool {
+        get {
+            return false
+        }
+    }
+    
+    override class func canApplyToDrawable(drawable: CMDrawable) -> Bool {
+        return (drawable as? CMTextDrawable) != nil
     }
 }

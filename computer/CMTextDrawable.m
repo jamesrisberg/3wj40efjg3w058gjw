@@ -12,15 +12,6 @@
 #import "EditorViewController.h"
 #import "TextEditorViewController.h"
 
-@interface _CMTextDrawableView : CMDrawableView
-
-@property (nonatomic) NSAttributedString *attributedString;
-@property (nonatomic) UILabel *label;
-@property (nonatomic) CGFloat textStart, textEnd;
-@property (nonatomic) NSAttributedString *fittedAttributedString;
-
-@end
-
 @implementation _CMTextDrawableView
 
 - (instancetype)init {

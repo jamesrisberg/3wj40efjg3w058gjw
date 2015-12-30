@@ -18,4 +18,6 @@
 #import "CMPhotoPicker.h"
 #import "EditorViewController.h"
 #import "CanvasEditor.h"
+#import "CMShapeDrawable.h"
+#import "CMTextDrawable.h"
 #import <AHEasing/easing.h>

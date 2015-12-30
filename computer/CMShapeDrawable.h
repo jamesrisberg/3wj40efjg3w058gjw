@@ -27,3 +27,11 @@
 @property (nonatomic) CGFloat strokeScale, strokeStart, strokeEnd;
 
 @end
+
+@interface _CMShapeView : CMDrawableView
+
+@property (nonatomic) UIView *patternView; // only set if needed
+@property (nonatomic) CAShapeLayer *maskShape; // only set if needed for patternView
+@property (nonatomic) Pattern *pattern;
+
+@end

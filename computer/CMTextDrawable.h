@@ -20,3 +20,12 @@
 @property (nonatomic) CGFloat textStart, textEnd;
 
 @end
+
+@interface _CMTextDrawableView : CMDrawableView
+
+@property (nonatomic) NSAttributedString *attributedString;
+@property (nonatomic) UILabel *label;
+@property (nonatomic) CGFloat textStart, textEnd;
+@property (nonatomic) NSAttributedString *fittedAttributedString;
+
+@end

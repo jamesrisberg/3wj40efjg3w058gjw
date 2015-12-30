@@ -61,12 +61,19 @@ class TransitionPickerView: UIView {
         }
     }
     
-    dynamic var enabled = true {
+    var _enabled = true {
         didSet {
             for btn in [enterButton, exitButton] {
-                btn.alpha = enabled ? 1 : 0.5
+                btn.alpha = _enabled ? 1 : 0.5
             }
-            userInteractionEnabled = enabled
+            userInteractionEnabled = _enabled
+        }
+    }
+    
+    dynamic var drawable: CMDrawable? {
+        didSet {
+            _enabled = (drawable != nil)
+            _transitionChanged()
         }
     }
     
@@ -83,8 +90,10 @@ class TransitionPickerView: UIView {
         
         if let t = transition {
             let isEntrance: Bool = t.isEntranceAnimation
-            showingTransitionClasses = Transition.allTransitions.filter({ $0.isEntranceAnimation == isEntrance })
-            transitionPicker.selectedIndex = showingTransitionClasses.indexOf({ $0 === t })! + 1
+            showingTransitionClasses = availableTransitions(isEntrance)
+            if let i = showingTransitionClasses.indexOf({ $0 === t }) {
+                transitionPicker.selectedIndex = i + 1
+            }
             transitionPicker.alpha = 1
         } else {
             enterExitContainer.alpha = 1
@@ -99,15 +108,23 @@ class TransitionPickerView: UIView {
         transitionPicker.frame = bounds
     }
     
+    func availableTransitions(entrance: Bool) -> [Transition.Type] {
+        if let selection = self.drawable {
+            return Transition.allTransitions.filter({ $0.isEntranceAnimation == entrance && $0.canApplyToDrawable(selection) })
+        } else {
+            return []
+        }
+    }
+    
     func addEntranceAnimation(sender: UIButton) {
-        transition = Transition.allTransitions.filter({ $0.isEntranceAnimation }).first!
+        transition = availableTransitions(true).first!
         if let cb = onPickedTransition {
             cb(transition)
         }
     }
     
     func addExitAnimation(sender: UIButton) {
-        transition = Transition.allTransitions.filter({ !$0.isEntranceAnimation }).first!
+        transition = availableTransitions(false).first!
         if let cb = onPickedTransition {
             cb(transition)
         }

@@ -785,8 +785,12 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     }];
     [transitionPicker rac_liftSelector:@selector(setTransitionFromKeyframe:) withSignals:currentKeyframeOfCurrentSelection, nil];
     
-    RAC(transitionPicker, enabled) = [RACObserve(self.canvas, selectedItems) map:^id(id value) {
-        return @([value count] == 1);
+    RAC(transitionPicker, drawable) = [RACObserve(self.canvas, selectedItems) map:^id(id value) {
+        if ([value count] == 1) {
+            return [value anyObject];
+        } else {
+            return nil;
+        }
     }];
     
     transitionPicker.onPickedTransition = ^(Class transitionClass) {
