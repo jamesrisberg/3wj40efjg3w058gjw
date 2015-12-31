@@ -26,6 +26,8 @@
 @property (nonatomic,readonly) NSURL *url;
 @property (nonatomic) BOOL open; // setting open=true causes callbacks to be fired; open=false causes save
 
+- (void)save;
+
 @property (nonatomic,weak) id<CMDocumentDelegate> delegate;
 
 + (NSURL *)documentsURL;

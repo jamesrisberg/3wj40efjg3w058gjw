@@ -31,7 +31,7 @@
     NSData *b64Name = [[NSData dataWithBytes:uuid length:sizeof(uuid)] base64EncodedDataWithOptions:0];
     NSString *name = [[NSString alloc] initWithData:b64Name encoding:NSUTF8StringEncoding];
     NSURLComponents *comps = [self URLComponents];
-    comps.path = [@"/" stringByAppendingString:name];
+    comps.path = [[@"/" stringByAppendingString:name] stringByAppendingPathExtension:@"gif"];
     return comps.URL.absoluteString;
 }
 

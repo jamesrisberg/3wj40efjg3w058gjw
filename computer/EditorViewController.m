@@ -174,6 +174,10 @@ typedef NS_ENUM(NSInteger, FloatingButtonPosition) {
     document.open = YES;
 }
 
+- (void)save {
+    [self.document save];
+}
+
 - (void)closeDocument {
     self.document = nil;
 }
