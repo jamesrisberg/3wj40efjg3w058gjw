@@ -25,6 +25,7 @@
 + (FrameTime *)leastCommonMultipleForTimes:(NSArray<__kindof FrameTime*>*)times maxTime:(NSTimeInterval)max;
 
 - (FrameTime *)byAdding:(FrameTime *)time;
+- (FrameTime *)bySubtracting:(FrameTime *)time;
 
 @end
 
@@ -45,6 +46,8 @@
 - (void)removeKeyframeAtTime:(FrameTime *)time;
 
 @property (nonatomic) Class keyframeClass;
+
+@property (nonatomic) FrameTime *motionDuration;
 
 @end
 

@@ -70,6 +70,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 
 - (BOOL)canDeleteKeyframeAtTime:(FrameTime *)time;
 
+@property (nonatomic) NSTimeInterval motionDuration;
+
 // variables for usage by the editor that SHOULDN'T be persisted:
 @property (nonatomic) NSString *nameOfLastSelectedPropertiesTab;
 

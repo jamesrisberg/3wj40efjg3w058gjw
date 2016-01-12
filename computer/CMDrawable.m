@@ -14,6 +14,7 @@
 #import "NSMutableArray+Utility.h"
 #import "CMRepeatingWrapper.h"
 #import "CMCanvas.h"
+#import "VideoConstants.h"
 
 NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMDrawableArrayPasteboardType";
 
@@ -53,7 +54,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 }
 
 - (NSArray<NSString*>*)keysForCoding {
-    return @[@"boundsDiagonal", @"keyframeStore", @"key", @"xRepeat", @"xRepeatGap", @"yRepeat", @"yRepeatGap"];
+    return @[@"boundsDiagonal", @"keyframeStore", @"key", @"xRepeat", @"xRepeatGap", @"yRepeat", @"yRepeatGap", @"motionDuration"];
 }
 
 - (Class)keyframeClass {

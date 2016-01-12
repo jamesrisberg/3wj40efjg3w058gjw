@@ -10,6 +10,7 @@
 #import "EVInterpolation.h"
 #import "CMShapeDrawable.h"
 #import "computer-Swift.h"
+#import "VideoConstants.h"
 
 NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     while (b != 0) {
@@ -95,6 +96,10 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
     return [[FrameTime alloc] initWithFrame:self.frame * other.fps + other.frame * self.fps atFPS:self.fps * other.fps];
 }
 
+- (FrameTime *)bySubtracting:(FrameTime *)other {
+    return [[FrameTime alloc] initWithFrame:self.frame * other.fps - other.frame * self.fps atFPS:self.fps * other.fps];
+}
+
 @end
 
 @interface KeyframeStore ()
@@ -105,14 +110,22 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
 
 @implementation KeyframeStore
 
+- (instancetype)init {
+    self = [super init];
+    self.motionDuration = [[FrameTime alloc] initWithFrame:1 atFPS:VC_TIMELINE_CELLS_PER_SECOND];
+    return self;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [super init];
     self.keyframes = [aDecoder decodeObjectForKey:@"keyframes"];
+    self.motionDuration = [aDecoder decodeObjectForKey:@"motionDuration"];
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.keyframes forKey:@"keyframes"];
+    [aCoder encodeObject:self.motionDuration forKey:@"motionDuration"];
 }
 
 - (void)storeKeyframe:(CMDrawableKeyframe *)keyframe {
@@ -166,18 +179,29 @@ NSInteger _FrameTimeGCD(NSInteger a, NSInteger b) {
         return exact;
     }
     
-    CMDrawableKeyframe *prev = [self keyframeBeforeTime:time];
+    /*
+     the animation starts self.motionDuration seconds before the keyframe
+     */
+    
+    CMDrawableKeyframe *prev = [[self keyframeBeforeTime:time] copy];
     if (prev.transition && ![[prev.transition class] isEntranceAnimation] && time.time >= prev.transition.endTime.time) {
         // we're directly after an exit transition, so pretend we have a `from` opacity of 0:
-        prev = [prev copy];
         prev.alpha = 0;
     }
     
-    CMDrawableKeyframe *next = [self keyframeAfterTime:time];
+    CMDrawableKeyframe *next = [[self keyframeAfterTime:time] copy];
     if (next.transition && [[next.transition class] isEntranceAnimation] && time.time <= next.transition.endTime.time) {
         // `time` comes directly before an entrance transition, so pretend we have a `to` opacity of 0:
-        next = [next copy];
         next.alpha = 0;
+    }
+    
+    FrameTime *animationStartTime = [next.frameTime bySubtracting:self.motionDuration];
+    if (time.time < animationStartTime.time) {
+        // the animation hasn't actually started yet;
+        next = [prev copy];
+        next.frameTime = animationStartTime;
+    } else {
+        prev.frameTime = animationStartTime;
     }
     
     CMDrawableKeyframe *beforePrev = prev ? [self keyframeBeforeTime:prev.frameTime] : nil;
