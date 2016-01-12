@@ -17,6 +17,7 @@
 @property (nonatomic) UIImage *image;
 @property (nonatomic,copy) void(^action)();
 @property (nonatomic) BOOL disableWhenNoSelection;
+@property (nonatomic) UIColor *color;
 
 @end
 
@@ -75,7 +76,8 @@
         cell.backgroundView = imageView;
     }
     IconBarModel *model = self.models[indexPath.item];
-    imageView.image = model.image;
+    imageView.image = [model.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    imageView.tintColor = model.color ? : [UIColor whiteColor];
     imageView.alpha = 1;
     if (model.disableWhenNoSelection && !self.hasSelection) {
         imageView.alpha = 0.5;
@@ -98,7 +100,10 @@
     NSMutableArray *items = [NSMutableArray new];
     __weak IconBar *weakSelf = self;
     
+    UIColor *specialColor = [UIColor colorWithRed:0.0 green:0.868658483028 blue:0.761248767376 alpha:1.0];
+    
     IconBarModel *done = [IconBarModel new];
+    done.color = specialColor;
     done.image = [UIImage imageNamed:@"BackDown"];
     done.action = ^{
         weakSelf.onDoneButtonPressed();
@@ -137,6 +142,7 @@
         inserter.editorVC = weakSelf.editor;
         [weakSelf.editor presentViewController:inserter animated:YES completion:nil];
     };
+    add.color = specialColor;
     [items addObject:add];
     
     IconBarModel *props = [IconBarModel new];
