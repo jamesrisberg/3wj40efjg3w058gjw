@@ -131,17 +131,17 @@
     fill.title = NSLocalizedString(@"Fill", @"");
     
     PropertyModel *strokeWidth = [PropertyModel new];
-    strokeWidth.title = NSLocalizedString(@"Stroke width", @"");
+    strokeWidth.title = NSLocalizedString(@"Stroke", @"");
     strokeWidth.key = @"strokeWidth";
     strokeWidth.valueMax = 10;
     strokeWidth.type = PropertyModelTypeSlider;
     
     PropertyModel *strokeColor = [PropertyModel new];
-    strokeColor.title = NSLocalizedString(@"Stroke color", @"");
+    // strokeColor.title = NSLocalizedString(@"Stroke color", @"");
     strokeColor.key = @"strokePattern";
     strokeColor.type = PropertyModelTypeColor;
     
-    return [@[fill, strokeColor, strokeWidth] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
+    return [@[fill, strokeWidth, strokeColor] arrayByAddingObjectsFromArray:[super uniqueObjectPropertiesWithEditor:editor]];
 }
 
 - (NSArray<PropertyModel*>*)animatablePropertiesWithEditor:(CanvasEditor *)editor {

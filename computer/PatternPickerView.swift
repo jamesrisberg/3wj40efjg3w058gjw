@@ -14,7 +14,7 @@ class PatternPickerView: UIView {
             if onlyAllowSolidColors && !(pattern.type == Pattern.PatternType.SolidColor) {
                 pattern = Pattern(type: .SolidColor, primaryColor: pattern.primaryColor, secondaryColor: nil)
             } else {
-                cell.hue = Float(pattern.primaryColor.hsva.0)
+                cell.hsva = pattern.primaryColor.hsva
                 cell.preview.pattern = pattern
             }
         }
@@ -48,22 +48,16 @@ class PatternPickerView: UIView {
         addSubview(cell)
         let p = self.pattern
         self.pattern = p
+        cell.showGrayscale = true
         
-        cell.onHueChanged = {
+        cell.onHsvaChanged = {
             [weak self]
-            (hue) in
+            (hsva) in
+            let (h,s,v,_) = hsva
             if let p = self {
-                var (_, s, v, a) = p.pattern.primaryColor.hsva
-                if s == 0 {
-                    s = 1
-                }
-                if v == 0 {
-                    v = 1
-                }
-                if a == 0 {
-                    a = 1
-                }
-                let newPrimaryColor = UIColor(hue: CGFloat(hue), saturation: s, brightness: v, alpha: a)
+                var a = p.pattern.primaryColor.hsva.3
+                if a == 0 { a = 1 }
+                let newPrimaryColor = UIColor(hue: h, saturation: s, brightness: v, alpha: a)
                 let pattern = Pattern(type: p.pattern.type, primaryColor: newPrimaryColor, secondaryColor: p.pattern.secondaryColor)
                 p._updatePattern(pattern)
             }

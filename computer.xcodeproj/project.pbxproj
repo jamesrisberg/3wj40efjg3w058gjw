@@ -65,6 +65,7 @@
 		5F7C887F1C12457D0046020B /* CMParticleDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C887E1C12457D0046020B /* CMParticleDrawable.m */; };
 		5F7C88821C1253650046020B /* CMVideoDrawable.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88811C1253650046020B /* CMVideoDrawable.m */; };
 		5F7C88851C13D04D0046020B /* SelectionIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C88841C13D04D0046020B /* SelectionIndicatorView.m */; };
+		5F80015E1C44B71900183BA4 /* GraySlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F80015D1C44B71900183BA4 /* GraySlider.swift */; };
 		5F809A411BE1C3740030B538 /* ANGifEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A081BE1C3740030B538 /* ANGifEncoder.m */; };
 		5F809A421BE1C3740030B538 /* ANGifGraphicControlExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0A1BE1C3740030B538 /* ANGifGraphicControlExt.m */; };
 		5F809A431BE1C3740030B538 /* ANGifLogicalScreenDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F809A0C1BE1C3740030B538 /* ANGifLogicalScreenDesc.m */; };
@@ -382,6 +383,7 @@
 		5F7C88811C1253650046020B /* CMVideoDrawable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVideoDrawable.m; sourceTree = "<group>"; };
 		5F7C88831C13D04D0046020B /* SelectionIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionIndicatorView.h; sourceTree = "<group>"; };
 		5F7C88841C13D04D0046020B /* SelectionIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionIndicatorView.m; sourceTree = "<group>"; };
+		5F80015D1C44B71900183BA4 /* GraySlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraySlider.swift; sourceTree = "<group>"; };
 		5F809A071BE1C3740030B538 /* ANGifEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifEncoder.h; sourceTree = "<group>"; };
 		5F809A081BE1C3740030B538 /* ANGifEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANGifEncoder.m; sourceTree = "<group>"; };
 		5F809A091BE1C3740030B538 /* ANGifGraphicControlExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANGifGraphicControlExt.h; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 				5F858DA71BFBB8A3004E658E /* PatternPickerViewController.swift */,
 				5F858DA81BFBB8A3004E658E /* ColorCell.swift */,
 				5F858DA91BFBB8A3004E658E /* HueSlider.swift */,
+				5F80015D1C44B71900183BA4 /* GraySlider.swift */,
 				5F858DAA1BFBB8A3004E658E /* PatternTypePicker.swift */,
 				5F858DAB1BFBB8A3004E658E /* ColorExtensions.swift */,
 				5F858DAC1BFBB8A3004E658E /* SatValGrid.swift */,
@@ -1807,6 +1810,7 @@
 				5F2095FD1BEEBB2800E4C1F1 /* quantize.c in Sources */,
 				5F7C88851C13D04D0046020B /* SelectionIndicatorView.m in Sources */,
 				5FEAF8211B978BF50071BC08 /* IconBar.m in Sources */,
+				5F80015E1C44B71900183BA4 /* GraySlider.swift in Sources */,
 				5FEAF9321B9E2B010071BC08 /* SKGradientEditor.m in Sources */,
 				5FB39B6F1C2DCFC600A22AC7 /* TransitionPickerView.swift in Sources */,
 				5F9A183F1BFEF9E1000E6351 /* UIBarButtonItem+BorderedButton.m in Sources */,

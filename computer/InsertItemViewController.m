@@ -115,7 +115,7 @@
         [shape setPath:[UIBezierPath bezierPathWithOvalInRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
-        shape.strokeWidth = 2;
+        // shape.strokeWidth = 2;
         shape.boundsDiagonal = CGRectDiagonal(r);
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:shape];
     };
@@ -129,7 +129,7 @@
         [shape setPath:[UIBezierPath bezierPathWithRect:r] usingTransactionStack:weakSelf.editorVC.canvas.transactionStack updateAspectRatio:YES];
         shape.pattern = [Pattern solidColor:[UIColor randomHue]];
         shape.strokePattern = [Pattern solidColor:[UIColor blackColor]];
-        shape.strokeWidth = 2;
+        // shape.strokeWidth = 2;
         shape.boundsDiagonal = CGRectDiagonal(r);
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:shape];
     };
@@ -140,7 +140,7 @@
         CMStarDrawable *d = [CMStarDrawable new];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
         d.strokePattern = [Pattern solidColor:[UIColor blackColor]];
-        d.strokeWidth = 2;
+        // d.strokeWidth = 2;
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:d];
     };
     

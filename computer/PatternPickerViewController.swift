@@ -50,12 +50,11 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
                 view.clipsToBounds = true
                 view.layer.cornerRadius = PatternPickerView.rounding
             }
-            hue.onHueChanged = {
+            hue.onHsvaChanged = {
                 [weak self]
-                (hue) in
+                (hsva) in
+                let hue = hsva.0
                 var (_,s,v,a) = self!.color.hsva
-                if s == 0 { s = 1 }
-                if v == 0 { v = 1 }
                 if a == 0 { a = 1 }
                 self!._updateColor(UIColor(hue: CGFloat(hue), saturation: s, brightness: v, alpha: a))
             }
@@ -77,7 +76,7 @@ class PatternPickerViewController: UIViewController, UIViewControllerTransitioni
         var color = UIColor.greenColor() {
             didSet {
                 let (h,s,v,a) = color.hsva
-                hue.hue = Float(h)
+                hue.hsva = color.hsva
                 satVal.satVal = (Float(s), Float(v))
                 satVal.hue = Float(h)
                 alphaSlider.selectedAlpha = Float(a)
