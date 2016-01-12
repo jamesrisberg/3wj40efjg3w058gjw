@@ -76,6 +76,12 @@
     return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"text", @"aspectRatio"]];
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    self.text = [self.text hack_replaceAppleColorEmojiWithSystemFont];
+    return self;
+}
+
 - (NSArray<PropertyModel*>*)uniqueObjectPropertiesWithEditor:(CanvasEditor *)editor {
     PropertyModel *text = [PropertyModel new];
     text.key = @"text";
