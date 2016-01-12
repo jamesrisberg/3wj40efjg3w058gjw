@@ -105,7 +105,13 @@
     NSDictionary *fastJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @10, @"jitterRate": @50};
     NSDictionary *slowXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @25};
     NSDictionary *fastXJitter = @{@"jitterXMagnitude": @10, @"jitterYMagnitude": @0, @"jitterRate": @50};
-    NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter];
+    NSDictionary *verySlowJitter = @{@"jitterXMagnitude": @30, @"jitterYMagnitude": @15, @"jitterRate": @5};
+    NSArray *jitterSection = @[slowJitter, fastJitter, slowXJitter, fastXJitter, verySlowJitter];
+    
+    NSDictionary *slowWobble = @{@"wobbleMagnitude": @0.15, @"wobbleRate": @0.5};
+    NSDictionary *mediumWobble = @{@"wobbleMagnitude": @0.5, @"wobbleRate": @1};
+    NSDictionary *fastWobble = @{@"wobbleMagnitude": @0.33, @"wobbleRate": @4};
+    NSArray *wobbleSection = @[slowWobble, mediumWobble, fastWobble];
     
     NSDictionary *pulse1 = @{@"pulseMagnitude": @0.1, @"pulseRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 4)};
     NSDictionary *pulse2 = @{@"pulseMagnitude": @0.2, @"pulseRate": @(VC_LONGEST_STATIC_ANIMATION_PERIOD / 2)};
@@ -117,7 +123,7 @@
     NSDictionary *fastRotate = @{@"rotationMagnitude": @1, @"rotationRate": @(4.0 / VC_LONGEST_STATIC_ANIMATION_PERIOD)};
     NSArray *rotateSection = @[slowRotate, mediumRotate, fastRotate];
     
-    _sections = @[blinkSection, jitterSection, pulseSection, rotateSection];
+    _sections = @[blinkSection, jitterSection, pulseSection, rotateSection, wobbleSection];
     
     UICollectionViewFlowLayout *flow = [UICollectionViewFlowLayout new];
     flow.itemSize = CGSizeMake(50, 50);
