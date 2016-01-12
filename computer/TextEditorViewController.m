@@ -100,7 +100,14 @@
 }
 
 - (void)typingAttributesChanged {
-    
+    CGFloat val = 0;
+    UIColor *color = self.textView.typingAttributes[NSForegroundColorAttributeName];
+    if (color) {
+        if (![color getHue:nil saturation:nil brightness:&val alpha:nil] && ![color getWhite:&val alpha:nil]) {
+            val = 0;
+        }
+    }
+    self.textView.backgroundColor = val > 0.65 ? [UIColor blackColor] : [UIColor whiteColor];
 }
 
 - (void)changeTextSize {
