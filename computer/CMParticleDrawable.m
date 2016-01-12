@@ -297,7 +297,7 @@
 @implementation CMParticleDrawable
 
 - (NSArray<NSString*>*)keysForCoding {
-    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"particlePreset", @"customParticleImagesData"]];
+    return [[super keysForCoding] arrayByAddingObjectsFromArray:@[@"particlePreset", @"customParticleImagesData", @"aspectRatio"]];
 }
 
 - (__kindof CMDrawableView *)renderToView:(__kindof CMDrawableView *)existingOrNil context:(CMRenderContext *)ctx {
@@ -314,14 +314,18 @@
 }
 
 - (CGFloat)aspectRatio {
-    NSNumber *n = @{
-                    @(ParticlePresetMacaroni): @3,
-                    @(ParticlePresetSmoke): @2,
-                    @(ParticlePresetSnow): @2,
-                    @(ParticlePresetFire): @2,
-                    @(ParticlePresetCustom): @2,
-                    }[@(self.particlePreset)];
-    return n.floatValue ? : 1;
+    if (_aspectRatio) {
+        return _aspectRatio;
+    } else {
+        NSNumber *n = @{
+                        @(ParticlePresetMacaroni): @3,
+                        @(ParticlePresetSmoke): @2,
+                        @(ParticlePresetSnow): @2,
+                        @(ParticlePresetFire): @2,
+                        @(ParticlePresetCustom): @2,
+                        }[@(self.particlePreset)];
+        return n.floatValue ? : 1;
+    }
 }
 
 - (NSString *)drawableTypeDisplayName {

@@ -22,5 +22,6 @@ typedef NS_ENUM(NSInteger, ParticlePreset) {
 
 @property (nonatomic) ParticlePreset particlePreset;
 @property (nonatomic) NSArray<UIImage*> *customParticleImages;
+@property (nonatomic) CGFloat aspectRatio;
 
 @end
