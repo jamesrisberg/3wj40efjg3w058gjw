@@ -171,7 +171,9 @@
     }
     CMTime time = [self CMTimeForTime:self.time];
     if (CMTimeCompare(time, kCMTimeInvalid) != 0) {
-        self.snapshotView.image = [UIImage imageWithCGImage:[self.snapshotGenerator copyCGImageAtTime:time actualTime:nil error:nil]];
+        CGImageRef img = [self.snapshotGenerator copyCGImageAtTime:time actualTime:nil error:nil];
+        self.snapshotView.image = [UIImage imageWithCGImage:img];
+        CGImageRelease(img);
     }
 }
 

@@ -8,6 +8,30 @@
 
 import UIKit
 
+/*
+// Modeled after the cubic y = x^3
+AHFloat CubicEaseIn(AHFloat p)
+{
+return p * p * p;
+}
+
+// Modeled after the cubic y = (x - 1)^3 + 1
+AHFloat CubicEaseOut(AHFloat p)
+{
+AHFloat f = (p - 1);
+return f * f * f + 1;
+}
+*/
+
+private func _CubicEaseIn(x: CGFloat) -> CGFloat {
+    return x * x * x;
+}
+
+private func _CubicEaseOut(x: CGFloat) -> CGFloat {
+    let f = x - 1;
+    return f * f * f + 1;
+}
+
 class Transition: NSObject, NSCoding {
     override init() {
         super.init()
@@ -49,9 +73,9 @@ class Transition: NSObject, NSCoding {
     func computeTimingCurve(var progress: CGFloat) -> CGFloat {
         progress = min(1.0, max(0.0, progress))
         if self.dynamicType.isEntranceAnimation {
-            return CGFloat(CubicEaseOut(Double(progress)))
+            return _CubicEaseOut(progress)
         } else {
-            return CGFloat(CubicEaseIn(Double(progress)))
+            return _CubicEaseIn(progress)
         }
     }
     
