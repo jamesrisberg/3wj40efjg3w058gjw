@@ -19,7 +19,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.sourceType = source;
     picker.mediaTypes = mediaTypes;
-    picker.allowsEditing = YES;
+    picker.allowsEditing = NO;
     picker.videoQuality = UIImagePickerControllerQualityTypeMedium;
     picker.delegate = (id)self;
     [self presentViewController:picker animated:YES completion:nil];
