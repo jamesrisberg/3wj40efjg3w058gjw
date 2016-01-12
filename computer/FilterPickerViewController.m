@@ -14,6 +14,7 @@
 #import "FilterOptionsView.h"
 #import "ConvenienceCategories.h"
 #import "UIImage+ColorAtPixel.h"
+#import "ConvenienceCategories.h"
 
 @interface FilterPickerViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -42,10 +43,14 @@
 
 @property (nonatomic,copy) void(^videoCallback)(CMMediaID *newMediaID);
 @property (nonatomic,copy) void(^imageCallback)(UIImage *filtered);
+@property (nonatomic,copy) void(^filterCallback)(FilterPickerFilterInfo *filter);
 
 @property (nonatomic) IBOutlet FilterOptionsView *filterOptionsView;
 
 @property (nonatomic) GPUImagePicture *secondaryInputImage;
+
+@property (nonatomic) IBOutlet UIBarButtonItem *applyButton;
+@property (nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end
 
@@ -65,8 +70,22 @@
     return vc;
 }
 
++ (FilterPickerViewController *)filterPickerWithImage:(UIImage *)image existingFilter:(FilterPickerFilterInfo *)filter callback:(void(^)(FilterPickerFilterInfo *newFilter))callback {
+    FilterPickerViewController *vc = [[FilterPickerViewController alloc] initWithNibName:@"FilterPickerViewController" bundle:nil];
+    vc.originalImage = image;
+    vc.filterCallback = callback;
+    return vc;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([self isFilterInfoPicker]) {
+        // remove the 'apply' button; only keep 'apply and close'
+        self.toolbar.items = [self.toolbar.items map:^id(id obj) {
+            return obj == self.applyButton ? nil : obj;
+        }];
+    }
     
     [self.collectionView registerClass:[FilterThumbnailCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     
@@ -342,6 +361,8 @@
         if ([self isVideo]) {
             [self.originalMediaID dispose];
             self.videoCallback(self.filteredMediaID);
+        } else if ([self isFilterInfoPicker]) {
+            self.filterCallback(self.currentFilterInfo == self.allFilters.firstObject ? nil : self.currentFilterInfo);
         } else {
             self.imageCallback(self.filteredImage);
         }
@@ -353,6 +374,10 @@
 
 - (BOOL)isVideo {
     return !!self.originalMediaID;
+}
+
+- (BOOL)isFilterInfoPicker {
+    return !!self.filterCallback;
 }
 
 #pragma mark Transcoding

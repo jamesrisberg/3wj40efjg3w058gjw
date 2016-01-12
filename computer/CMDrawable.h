@@ -17,6 +17,7 @@
 #import "PropertyModel.h"
 #import "CMRenderContext.h"
 #import "CMLayoutBase.h"
+@class FilterPickerFilterInfo;
 @class EditorViewController;
 @class Transition;
 
@@ -54,6 +55,8 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 - (NSString *)drawableTypeDisplayName;
 - (NSString *)displayName;
 
+@property (nonatomic) FilterPickerFilterInfo *filter;
+
 - (NSArray<CMDrawableWrapperFunction>*)wrappers;
 
 // repeating:
@@ -69,8 +72,6 @@ typedef CMDrawableView* (^CMDrawableWrapperFunction)(CMDrawableView *toWrap, CMD
 - (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor;
 
 - (BOOL)canDeleteKeyframeAtTime:(FrameTime *)time;
-
-@property (nonatomic) NSTimeInterval motionDuration;
 
 // variables for usage by the editor that SHOULDN'T be persisted:
 @property (nonatomic) NSString *nameOfLastSelectedPropertiesTab;

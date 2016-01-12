@@ -54,7 +54,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
 }
 
 - (NSArray<NSString*>*)keysForCoding {
-    return @[@"boundsDiagonal", @"keyframeStore", @"key", @"xRepeat", @"xRepeatGap", @"yRepeat", @"yRepeatGap", @"motionDuration"];
+    return @[@"boundsDiagonal", @"keyframeStore", @"key", @"xRepeat", @"xRepeatGap", @"yRepeat", @"yRepeatGap", @"filter"];
 }
 
 - (Class)keyframeClass {

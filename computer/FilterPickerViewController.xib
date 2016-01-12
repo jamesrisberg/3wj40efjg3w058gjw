@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FilterPickerViewController">
             <connections>
+                <outlet property="applyButton" destination="EnF-Rv-X73" id="WP8-Ti-N9K"/>
                 <outlet property="blockView" destination="hXa-NQ-avf" id="sFu-3r-ZU0"/>
                 <outlet property="collectionView" destination="Sbm-R2-dgZ" id="JL3-uC-sEl"/>
                 <outlet property="filterOptionsView" destination="D3S-i0-SaF" id="QUq-4F-XaY"/>
                 <outlet property="outputViewContainer" destination="rhU-jv-s89" id="lBx-Hz-vSe"/>
+                <outlet property="toolbar" destination="48e-dm-IKl" id="Ddy-cE-Hv0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -25,16 +27,13 @@
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="QXS-qI-Zfc">
                             <rect key="frame" x="142" y="265" width="37" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                            <animations/>
                         </activityIndicatorView>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.80136303191489366" colorSpace="calibratedWhite"/>
                 </view>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translucent="NO" id="48e-dm-IKl">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <items>
                         <barButtonItem title="Cancel" id="Zeh-Ji-EFh">
@@ -60,7 +59,6 @@
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" id="Sbm-R2-dgZ">
                     <rect key="frame" x="0.0" y="461" width="320" height="63"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="cw6-5C-Zqu">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -75,7 +73,6 @@
                 <view contentMode="scaleToFill" id="rhU-jv-s89">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="462"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" id="D3S-i0-SaF" customClass="FilterOptionsView">
@@ -85,7 +82,6 @@
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="CC8-bI-jo8">
                             <rect key="frame" x="28" y="418" width="264" height="31"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            <animations/>
                             <color key="tintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="minimumTrackTintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
                             <color key="maximumTrackTintColor" red="0.25098039220000001" green="0.25098039220000001" blue="0.25098039220000001" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -97,7 +93,6 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="tH2-kP-wlM">
                             <rect key="frame" x="20" y="19" width="76" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <animations/>
                             <color key="backgroundColor" red="0.015093259162303641" green="0.0020642454379515918" blue="0.0050370428438352441" alpha="0.5" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                             <state key="normal" title="Button">
@@ -105,7 +100,6 @@
                             </state>
                         </button>
                     </subviews>
-                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="action" destination="tH2-kP-wlM" id="ViF-da-AjW"/>
@@ -113,7 +107,6 @@
                     </connections>
                 </view>
             </subviews>
-            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="288" y="356"/>
         </view>

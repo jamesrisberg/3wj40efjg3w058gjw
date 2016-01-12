@@ -60,17 +60,21 @@
 
 - (IBAction)mainSliderChanged:(id)sender {
     if (self.mainSliderParam) {
-        [self.filter setValue:@(self.mainSlider.value) forKey:self.mainSliderParam.key];
-        self.onChange();
+        [self updateFilterParam:self.mainSliderParam value:@(self.mainSlider.value)];
     }
+}
+
+- (void)updateFilterParam:(FilterParameter *)param value:(id)value {
+    [self.filter setValue:value forKey:param.key];
+    [self.filterInfo.parameterValues setValue:value forKey:param.key];
+    self.onChange();
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self touchedAtPoint:[touches.anyObject locationInView:self]];
     if (self.colorFromImageParam) {
         self.getColorAtPointBlock([touches.anyObject locationInView:self], ^(UIColor *color){
-            [self.filter setValue:color forKey:self.colorFromImageParam.key];
-            self.onChange();
+            [self updateFilterParam:self.colorFromImageParam value:color];
         });
     }
 }
@@ -82,8 +86,7 @@
 - (void)touchedAtPoint:(CGPoint)point {
     if (self.mainPointParam) {
         CGPoint p = self.transformPointIntoImageCoordinates(point);
-        [self.filter setValue:[NSValue valueWithCGPoint:p] forKey:self.mainPointParam.key];
-        self.onChange();
+        [self updateFilterParam:self.mainPointParam value:[NSValue valueWithCGPoint:p]];
     }
 }
 

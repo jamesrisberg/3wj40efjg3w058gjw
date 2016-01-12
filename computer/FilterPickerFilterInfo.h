@@ -27,7 +27,8 @@ typedef NS_ENUM(NSInteger, FilterParameterType) {
 
 
 
-@interface FilterPickerFilterInfo : NSObject
+
+@interface FilterPickerFilterInfo : NSObject <NSCoding>
 
 - (GPUImageOutput<GPUImageInput> *)createFilter;
 
@@ -42,5 +43,7 @@ typedef NS_ENUM(NSInteger, FilterParameterType) {
 @property (nonatomic) BOOL showOnlyForVideo;
 @property (nonatomic) BOOL hasSecondaryInput;
 @property (nonatomic) NSString *customThumbnailImageName;
+
+@property (nonatomic,readonly) NSMutableDictionary<NSString*, id> *parameterValues;
 
 @end
