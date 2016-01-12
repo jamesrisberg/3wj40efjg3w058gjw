@@ -105,6 +105,8 @@
     NSMutableArray<SelectionIndicatorView *> *_selectionViews;
     
     NSMutableArray<DeleteKeyframeButton *> *_deleteKeyframeButtons;
+    
+    BOOL _tapCancelled;
 }
 
 @property (nonatomic,readonly) CMDrawable *singleSelection;
@@ -174,7 +176,7 @@
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)rec {
-    if (rec.state == UIGestureRecognizerStateRecognized) {
+    if (rec.state == UIGestureRecognizerStateRecognized && !_tapCancelled) {
         _selectionBeforeFirstTap = self.singleSelection;
         
         CGPoint p = [rec locationInView:self];
@@ -236,6 +238,11 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [_touches addObjectsFromArray:touches.allObjects];
+    if (touches.count == 1) {
+        _tapCancelled = NO;
+    } else if (touches.count > 1) {
+        _tapCancelled = YES;
+    }
     
     BOOL hasValidOpenTransaction = !!_currentObjectMoveTransaction && !_currentObjectMoveTransaction.finalized;
     if (!hasValidOpenTransaction && self.singleSelection) {
