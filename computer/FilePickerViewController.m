@@ -82,7 +82,9 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 
 @end
 
-@interface FilePickerViewController () <UIScrollViewDelegate>
+@interface FilePickerViewController () <UIScrollViewDelegate> {
+    CGSize _scrollViewLastLoadedWithSize;
+}
 
 @property (nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic) NSMutableDictionary<__kindof NSURL *, __kindof _FilePickerPreviewView *> *viewsForURLs;
@@ -156,7 +158,9 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.scrollView.frame = self.view.bounds;
-    [self updateRowsWithAnimationCompletion:nil];
+    if (!CGSizeEqualToSize(_scrollViewLastLoadedWithSize, self.scrollView.frame.size)) {
+        [self updateRowsWithAnimationCompletion:nil];
+    }
 }
 
 - (CGFloat)rowHeight {
@@ -168,6 +172,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 }
 
 - (void)updateRowsWithAnimationCompletion:(void(^)())animationCompletion {
+    _scrollViewLastLoadedWithSize = self.scrollView.frame.size;
     NSTimeInterval duration = 0.3;
     
     UIScrollView *scrollView = self.scrollView;
