@@ -45,6 +45,7 @@
 }
 
 - (void)applyTheming {
+    self.window.tintColor = [UIColor colorWithRed:1.0 green:0.169590711594 blue:0.42642134428 alpha:1.0];
     UILabel *defaultLabel = [UILabel new];
     [[UILabel appearance] setFont:[UIFont systemFontOfSize:defaultLabel.font.pointSize]];
 }
