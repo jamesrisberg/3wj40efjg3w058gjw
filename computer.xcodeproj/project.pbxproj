@@ -144,6 +144,7 @@
 		5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18491C000774000E6351 /* AnimatedExporter.m */; };
 		5F9DA4EA1C5281940058D5C0 /* UIFont+Theming.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9DA4E91C5281940058D5C0 /* UIFont+Theming.m */; };
 		5F9DA4ED1C5283870058D5C0 /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9DA4EC1C5283870058D5C0 /* CMNavigationController.m */; };
+		5F9DA4F11C52B2DE0058D5C0 /* DefaultDoc in Resources */ = {isa = PBXBuildFile; fileRef = 5F9DA4F01C52B2DE0058D5C0 /* DefaultDoc */; };
 		5FB39B561C29CD8500A22AC7 /* CMVideoObjectTrackingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */; };
 		5FB39B591C29E90600A22AC7 /* LabelPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B581C29E90600A22AC7 /* LabelPropertyViewTableCell.m */; };
 		5FB39B5C1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B5B1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m */; };
@@ -506,6 +507,7 @@
 		5F9DA4E91C5281940058D5C0 /* UIFont+Theming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Theming.m"; sourceTree = "<group>"; };
 		5F9DA4EB1C5283870058D5C0 /* CMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavigationController.h; sourceTree = "<group>"; };
 		5F9DA4EC1C5283870058D5C0 /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
+		5F9DA4F01C52B2DE0058D5C0 /* DefaultDoc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DefaultDoc; sourceTree = "<group>"; };
 		5FB39B541C29CD8500A22AC7 /* CMVideoObjectTrackingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVideoObjectTrackingData.h; sourceTree = "<group>"; };
 		5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVideoObjectTrackingData.m; sourceTree = "<group>"; };
 		5FB39B571C29E90600A22AC7 /* LabelPropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelPropertyViewTableCell.h; sourceTree = "<group>"; };
@@ -1210,6 +1212,7 @@
 				5F858DE01BFCFE5A004E658E /* SwipeMenuView.m */,
 				5F3CEDAC1BE1937E00D824E2 /* FilePreviewViewController.h */,
 				5F3CEDAD1BE1937E00D824E2 /* FilePreviewViewController.m */,
+				5F9DA4F01C52B2DE0058D5C0 /* DefaultDoc */,
 			);
 			name = "File picking";
 			sourceTree = "<group>";
@@ -1594,6 +1597,7 @@
 				5FEAF91F1B9E2AE80071BC08 /* color.png in Resources */,
 				5F9A17F31BFD7229000E6351 /* sparkle.png in Resources */,
 				5F9A17FA1BFD7B95000E6351 /* mac3.png in Resources */,
+				5F9DA4F11C52B2DE0058D5C0 /* DefaultDoc in Resources */,
 				5FEAF9551B9E2B8A0071BC08 /* CPColorPicker.xib in Resources */,
 				5F9A17FB1BFD7B95000E6351 /* mac1.png in Resources */,
 				5F9A18141BFE46E8000E6351 /* norwester.otf in Resources */,

@@ -60,6 +60,8 @@
 
 - (void)save {
     // TODO: do everything atomically (?)
+    if ([[self class] documentAtURLIsBundled:self.url]) return;
+    
     NSData *canvasData = [NSKeyedArchiver archivedDataWithRootObject:[self.delegate canvasForDocument:self]];
     [canvasData writeToURL:[self.url URLByAppendingPathComponent:@"Canvas" isDirectory:NO] atomically:YES];
     
@@ -142,6 +144,17 @@
 + (NSURL *)URLForNewDocument {
     NSString *filename = [[[NSUUID UUID] UUIDString] stringByAppendingPathExtension:@"computerdoc"];
     return [[self documentsURL] URLByAppendingPathComponent:filename isDirectory:YES];
+}
+
+#pragma mark Bundled documents
+
+
++ (BOOL)documentAtURLIsBundled:(NSURL *)url {
+    return [url isEqual:[self URLForDefaultBundledDocument]];
+}
+
++ (NSURL *)URLForDefaultBundledDocument {
+    return [[NSBundle mainBundle] URLForResource:@"DefaultDoc" withExtension:@""];
 }
 
 #pragma mark Snapshot loading

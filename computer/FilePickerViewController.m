@@ -13,9 +13,12 @@
 #import "EditorViewController.h"
 #import "FilePreviewViewController.h"
 #import "SwipeMenuView.h"
+@import MessageUI;
 
 const CGFloat _FilePickerPreviewViewAspectRatio = 1.61803398875; // golden ratio b/c why tf not
 const CGFloat _FilePickerPreviewLineSpacing = 7;
+
+NSString * const FilePickerDidDeleteDefaultDocUserDefaultsKey = @"FilePickerDidDeleteDefaultDocUserDefaultsKey";
 
 @interface _FilePickerPreviewView : SwipeMenuView <UIViewControllerPreviewingDelegate>
 
@@ -135,6 +138,9 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
         NSDate *date2 = lastModDates[obj2];
         return [date2 compare:date1];
     }];
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:@"FilePickerDidDeleteDefaultDocUserDefaultsKey"]) {
+        fileURLs = [fileURLs arrayByAddingObject:[CMDocument URLForDefaultBundledDocument]];
+    }
     self.fileURLs = fileURLs;
     // NSLog(@"%@", dirURL);
 }
@@ -262,7 +268,11 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
         [weakSelf openDocumentAtURL:url];
     };
     view.onDelete = ^{
-        [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+        if ([CMDocument documentAtURLIsBundled:url]) {
+            [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:FilePickerDidDeleteDefaultDocUserDefaultsKey];
+        } else {
+            [[NSFileManager defaultManager] removeItemAtURL:url error:nil];
+        }
         [weakSelf.viewsForURLs removeObjectForKey:url];
         NSMutableArray *urls = weakSelf.fileURLs.mutableCopy;
         [weakView.superview sendSubviewToBack:weakView.superview];
@@ -309,6 +319,16 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
     editorVC.document = [[CMDocument alloc] initWithURL:url];
     _FilePickerPreviewView *previewView = self.viewsForURLs[url];
     [editorVC presentFromSnapshot:previewView.imageView inViewController:self];
+}
+
+- (void)_exportDoc:(NSURL *)doc {
+    // for internal use, extracting the default doc
+    MFMailComposeViewController *vc = [MFMailComposeViewController new];
+    for (NSString *filename in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:doc.path error:nil]) {
+        NSString *path = [doc.path stringByAppendingPathComponent:filename];
+        [vc addAttachmentData:[NSData dataWithContentsOfFile:path] mimeType:@"application/octet-stream" fileName:filename];
+    }
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 @end

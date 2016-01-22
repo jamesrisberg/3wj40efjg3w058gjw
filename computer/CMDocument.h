@@ -36,4 +36,7 @@
 
 @property (nonatomic) BOOL hasUnsavedChanges;
 
++ (BOOL)documentAtURLIsBundled:(NSURL *)url;
++ (NSURL *)URLForDefaultBundledDocument;
+
 @end
