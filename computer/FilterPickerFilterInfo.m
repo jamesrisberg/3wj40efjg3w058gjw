@@ -377,7 +377,8 @@ typedef void (^FilterInfoConfigurationBlock)(FilterPickerFilterInfo *filter);
 }
 
 + (NSArray<NSString *> *)filterIDs {
-    return @[@"noFilter", @"brightness", @"invert", @"greenScreen", @"sat", @"exp", @"hue", @"gradientMap", @"witchHouse", @"colorize", @"gamma", @"contrast", @"unsharp", @"blur", @"sharpen", @"toon", @"pixellate", @"whiteBalance", @"haze", @"localBinary", @"erode", @"dilate", @"stretch", @"pinch", @"bulge", @"swirl", @"zoom", @"motion", @"vignette", @"kuwuhara", @"emboss", @"post", @"cga", @"tilt", @"sketch", @"xy", @"canny", @"sobel", @"crosshatch", @"halftone", @"polka", @"polarPix", @"avgLuminance", @"luminanceThreshold", @"adaptiveThreshold"];
+    return @[@"noFilter", @"brightness", @"invert", @"sat", @"exp", @"hue", @"gradientMap", @"witchHouse", @"colorize", @"gamma", @"contrast", @"unsharp", @"blur", @"sharpen", @"toon", @"pixellate", @"whiteBalance", @"haze", @"localBinary", @"erode", @"dilate", @"stretch", @"pinch", @"bulge", @"swirl", @"zoom", @"motion", @"vignette", @"kuwuhara", @"emboss", @"post", @"cga", @"tilt", @"sketch", @"xy", @"canny", @"sobel", @"crosshatch", @"halftone", @"polka", @"polarPix", @"avgLuminance", @"luminanceThreshold", @"adaptiveThreshold"];
+    // @"greenScreen"
 }
 
 - (void)addSliderForKey:(NSString *)key min:(CGFloat)min max:(CGFloat)max name:(NSString *)name {

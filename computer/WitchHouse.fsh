@@ -8,7 +8,7 @@ highp float rand(highp vec2 co){
 
 void main()
 {
-    highp vec2 point = textureCoordinate + vec2(rand(vec2(0.0, floor(textureCoordinate.y * 10.0))) * 0.03, 0.0);
+    highp vec2 point = textureCoordinate + vec2(rand(vec2(0.0, floor(textureCoordinate.y * 10.0))) * 0.015, 0.0);
     lowp vec4 left = texture2D(inputImageTexture, point + vec2(-0.007, 0.0));
     lowp vec4 right = texture2D(inputImageTexture, point + vec2(0.007, 0.0));
     lowp vec4 center = texture2D(inputImageTexture, point);

@@ -142,6 +142,8 @@
 		5F9A18441BFFF392000E6351 /* SimplePickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F9A18431BFFF392000E6351 /* SimplePickerViewController.xib */; };
 		5F9A18471BFFF4D8000E6351 /* RepetitionPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */; };
 		5F9A184A1C000774000E6351 /* AnimatedExporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A18491C000774000E6351 /* AnimatedExporter.m */; };
+		5F9DA4EA1C5281940058D5C0 /* UIFont+Theming.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9DA4E91C5281940058D5C0 /* UIFont+Theming.m */; };
+		5F9DA4ED1C5283870058D5C0 /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9DA4EC1C5283870058D5C0 /* CMNavigationController.m */; };
 		5FB39B561C29CD8500A22AC7 /* CMVideoObjectTrackingData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */; };
 		5FB39B591C29E90600A22AC7 /* LabelPropertyViewTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B581C29E90600A22AC7 /* LabelPropertyViewTableCell.m */; };
 		5FB39B5C1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB39B5B1C29EEE700A22AC7 /* AnotherDrawablePropertyTableViewCell.m */; };
@@ -500,6 +502,10 @@
 		5F9A18461BFFF4D8000E6351 /* RepetitionPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepetitionPicker.m; sourceTree = "<group>"; };
 		5F9A18481C000774000E6351 /* AnimatedExporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedExporter.h; sourceTree = "<group>"; };
 		5F9A18491C000774000E6351 /* AnimatedExporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimatedExporter.m; sourceTree = "<group>"; };
+		5F9DA4E81C5281940058D5C0 /* UIFont+Theming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Theming.h"; sourceTree = "<group>"; };
+		5F9DA4E91C5281940058D5C0 /* UIFont+Theming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Theming.m"; sourceTree = "<group>"; };
+		5F9DA4EB1C5283870058D5C0 /* CMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavigationController.h; sourceTree = "<group>"; };
+		5F9DA4EC1C5283870058D5C0 /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
 		5FB39B541C29CD8500A22AC7 /* CMVideoObjectTrackingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMVideoObjectTrackingData.h; sourceTree = "<group>"; };
 		5FB39B551C29CD8500A22AC7 /* CMVideoObjectTrackingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMVideoObjectTrackingData.m; sourceTree = "<group>"; };
 		5FB39B571C29E90600A22AC7 /* LabelPropertyViewTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabelPropertyViewTableCell.h; sourceTree = "<group>"; };
@@ -1127,6 +1133,8 @@
 				5FEAF8031B9788910071BC08 /* AppDelegate.m */,
 				5F6940CC1C0E924900569335 /* CMWindow.h */,
 				5F6940CD1C0E924900569335 /* CMWindow.m */,
+				5F9DA4EB1C5283870058D5C0 /* CMNavigationController.h */,
+				5F9DA4EC1C5283870058D5C0 /* CMNavigationController.m */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -1257,6 +1265,8 @@
 				5FEAF9631B9E2DD70071BC08 /* Image extraction */,
 				5FEAF8321B97AB660071BC08 /* TextEditorViewController.xib */,
 				5FEAF8081B9788910071BC08 /* Main.storyboard */,
+				5F9DA4E81C5281940058D5C0 /* UIFont+Theming.h */,
+				5F9DA4E91C5281940058D5C0 /* UIFont+Theming.m */,
 				5FEAF80B1B9788910071BC08 /* Assets.xcassets */,
 				5F858DBD1BFC3F3E004E658E /* Fonts */,
 				5FEAF80D1B9788910071BC08 /* LaunchScreen.storyboard */,
@@ -1703,6 +1713,7 @@
 				5F6940D11C0EA1F900569335 /* CMPhotoDrawable.m in Sources */,
 				5FEAF9811B9F160A0071BC08 /* ShowcaseFilterViewController.m in Sources */,
 				5FEAF8331B97AB660071BC08 /* TextEditorViewController.m in Sources */,
+				5F9DA4EA1C5281940058D5C0 /* UIFont+Theming.m in Sources */,
 				5F2095F11BEEBB2800E4C1F1 /* clp.c in Sources */,
 				5F6940AA1C0BCBA000569335 /* CMShapeDrawable.m in Sources */,
 				5FEAF82E1B97AB340071BC08 /* NPKeyboardAvoidanceView.m in Sources */,
@@ -1833,6 +1844,7 @@
 				5F809A511BE1C3740030B538 /* OSCommonImage.m in Sources */,
 				5FEAF8181B9788B20071BC08 /* CanvasEditor.m in Sources */,
 				5FBF7C0B1BD74313000FA3F4 /* EVInterpolation.m in Sources */,
+				5F9DA4ED1C5283870058D5C0 /* CMNavigationController.m in Sources */,
 				5F2095F51BEEBB2800E4C1F1 /* gifsicle.c in Sources */,
 				5F1D7C5F1C3323740014D72B /* DeleteKeyframeButton.m in Sources */,
 				5FEAF9351B9E2B010071BC08 /* SKGradientColorStopEditor.m in Sources */,
@@ -1994,7 +2006,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "computer/computer-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -2013,7 +2025,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "computer/computer-Bridging-Header.h";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

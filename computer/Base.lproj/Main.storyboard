@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="t4C-fp-FAF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="g4E-WH-Le3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--File Picker View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="sAi-Cj-Txn">
+            <objects>
+                <navigationController id="g4E-WH-Le3" customClass="CMNavigationController" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Abz-b1-YGM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="t4C-fp-FAF" kind="relationship" relationship="rootViewController" id="lMk-Hm-ltt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wsD-AX-4hW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-673" y="-78"/>
+        </scene>
+        <!--Content-->
         <scene sceneID="xC3-ze-JJV">
             <objects>
                 <viewController id="t4C-fp-FAF" customClass="FilePickerViewController" sceneMemberID="viewController">
@@ -32,6 +52,7 @@
                             <constraint firstAttribute="trailing" secondItem="u6L-fn-Rw1" secondAttribute="trailing" id="zBD-zP-X9A"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Content" id="EJA-Zb-0Fc"/>
                     <connections>
                         <outlet property="scrollView" destination="u6L-fn-Rw1" id="GtT-SX-YMs"/>
                     </connections>

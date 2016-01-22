@@ -13,6 +13,7 @@
 #import <Parse.h>
 #import "FilterPickerViewController.h"
 #import "CMWindow.h"
+#import "UIFont+Theming.h"
 
 @interface AppDelegate () {
     NSInteger _activityIndicatorCount;
@@ -27,32 +28,25 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    [self applyTheming];
+    
     [Parse setApplicationId:@"HOKpgx4PlskFPZkAvtBxk1OnpIAWQlJpdNuGUo1w"
                   clientKey:@"AKgMJl0JTZ32BGgVmgGL5h19ia0NBBeMEYc2q1oi"];
     
     srand(time(0));
-    
-    // self.window.rootViewController = [[UIStoryboard storyboardWithName:@"CMPhotoPicker" bundle:nil] instantiateViewControllerWithIdentifier:@"Test"];
-    
-    // [ExportTest exportTestWithVC:self.window.rootViewController];
-    
-    /*FilterPickerViewController *vc = [FilterPickerViewController filterPickerWithImage:[UIImage imageNamed:@"bliss.jpg"] callback:^(UIImage *filtered) {
-        
-    }];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.window.rootViewController presentViewController:vc animated:YES completion:nil];
-    });*/
-    
-    /*EditorViewController *editorVC = (id)self.window.rootViewController;
-    NSURL *singleDoc  = [[CMDocument documentsURL] URLByAppendingPathComponent:@"doc.computerdoc"];
-    NSLog(@"Doc: %@", singleDoc);
-    editorVC.document = [[CMDocument alloc] initWithFileURL:singleDoc];*/
-    // [ExportTest exportTestWithVC:self.window.rootViewController];
     return YES;
 }
 
+
+
 - (FilePickerViewController *)filePicker {
-    return (FilePickerViewController *)self.window.rootViewController;
+    UINavigationController *nav = (id)self.window.rootViewController;
+    return (FilePickerViewController *)nav.viewControllers.firstObject;
+}
+
+- (void)applyTheming {
+    UILabel *defaultLabel = [UILabel new];
+    [[UILabel appearance] setFont:[UIFont systemFontOfSize:defaultLabel.font.pointSize]];
 }
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
@@ -92,6 +86,7 @@
 - (UIWindow *)window {
     if (!_window) {
         _window = [[CMWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        _window.windowLevel = UIWindowLevelNormal;
     }
     return _window;
 }

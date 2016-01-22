@@ -150,7 +150,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 #pragma mark Layout
 
 - (BOOL)prefersStatusBarHidden {
-    return YES;
+    return NO;
 }
 
 - (void)viewDidLayoutSubviews {
