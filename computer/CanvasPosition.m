@@ -10,4 +10,10 @@
 
 @implementation CanvasPosition
 
+- (instancetype)init {
+    self = [super init];
+    self.transform = CGAffineTransformIdentity;
+    return self;
+}
+
 @end

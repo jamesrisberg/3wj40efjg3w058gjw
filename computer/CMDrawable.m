@@ -89,6 +89,12 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
     unique.title = [self drawableTypeDisplayName];
     unique.properties = [self uniqueObjectPropertiesWithEditor:editor];
     
+    PropertyGroupModel *repeating = [self repeatingPropertiesGroupModel];
+    
+    return @[unique, animatable, [self staticAnimationGroup], repeating];
+}
+
+- (PropertyGroupModel *)staticAnimationGroup {
     PropertyGroupModel *staticAnimation = [PropertyGroupModel new];
     staticAnimation.title = NSLocalizedString(@"Animation", @"");
     staticAnimation.singleView = YES;
@@ -97,10 +103,7 @@ NSString * const CMDrawableArrayPasteboardType = @"com.nateparrott.content57.CMD
     staticAnimationProp.type = PropertyModelTypeStaticAnimation;
     staticAnimationProp.key = @"staticAnimation";
     staticAnimation.properties = @[staticAnimationProp];
-    
-    PropertyGroupModel *repeating = [self repeatingPropertiesGroupModel];
-    
-    return @[unique, animatable, staticAnimation, repeating];
+    return staticAnimation;
 }
 
 - (NSString *)drawableTypeDisplayName {

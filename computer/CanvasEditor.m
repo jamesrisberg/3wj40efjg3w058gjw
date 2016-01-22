@@ -668,7 +668,7 @@
 - (void)render {
     CMRenderContext *ctx = [self createRenderContext];
     self.canvasView = (id)[self.canvas renderToView:self.canvasView context:ctx];
-    self.canvasView.transform = CGAffineTransformMakeRotation(-self.position.rotation);
+    self.canvasView.transform = CGAffineTransformInvert(self.position.transform);
     
     [self renderSelectionIndicatorsInContext:ctx];
     [self renderDeleteKeyframeButtonsInContext:ctx];

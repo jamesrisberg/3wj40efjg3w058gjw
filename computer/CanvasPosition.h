@@ -12,6 +12,6 @@
 
 @property (nonatomic) CGSize screenSpan; // if screenSpan = {100, 100}, fit _at least_ a 100x100 object on screen
 @property (nonatomic) CGPoint center;
-@property (nonatomic) CGFloat rotation;
+@property (nonatomic) CGAffineTransform transform;
 
 @end

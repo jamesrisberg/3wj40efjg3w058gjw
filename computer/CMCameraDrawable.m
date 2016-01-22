@@ -9,6 +9,7 @@
 #import "CMCameraDrawable.h"
 #import "CGPointExtras.h"
 #import "EditorViewController.h"
+#import "StaticAnimation.h"
 
 @interface _CMCameraDrawableView : CMDrawableView
 
@@ -62,7 +63,7 @@
 }
 
 - (NSArray<PropertyGroupModel*>*)propertyGroupsWithEditor:(CanvasEditor *)editor {
-    return @[]; // don't edit ANYTHING
+    return @[[self staticAnimationGroup]];
 }
 
 - (BOOL)performDefaultEditActionWithEditor:(EditorViewController *)editor {
@@ -86,7 +87,8 @@
     CanvasPosition *pos = [CanvasPosition new];
     pos.center = keyframe.center;
     pos.screenSpan = CMSizeWithDiagonalAndAspectRatio(self.boundsDiagonal * keyframe.scale, self.aspectRatio);
-    pos.rotation = keyframe.rotation;
+    pos.transform = [keyframe.staticAnimation adjustTransform:pos.transform time:time.time];
+    // pos.transform = CGAffineTransformScale(pos.transform, 1.0 / keyframe.scale, 1.0 / keyframe.scale);
     return pos;
 }
 
