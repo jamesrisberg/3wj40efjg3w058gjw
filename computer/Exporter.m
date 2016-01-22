@@ -8,6 +8,12 @@
 
 #import "Exporter.h"
 
+@interface Exporter ()
+
+@property (nonatomic) BOOL wasCancelled;
+
+@end
+
 @implementation Exporter
 
 - (void)_askDelegateToRenderFrame:(FrameTime *)time {
@@ -19,7 +25,7 @@
 }
 
 - (void)cancel {
-    
+    self.wasCancelled = YES;
 }
 
 @end

@@ -19,6 +19,7 @@
             NSInteger direction = dir.integerValue;
             for (NSInteger frame=0; frame<numFramesPerRun; frame++){
                 NSInteger effectiveFrame = (direction == -1) ? (numFramesPerRun - 1 - frame) : frame;
+                if (self.wasCancelled) return;
                 block([[FrameTime alloc] initWithFrame:effectiveFrame atFPS:self.fps]);
             }
         }

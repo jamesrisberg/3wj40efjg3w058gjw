@@ -33,4 +33,6 @@
 - (void)_askDelegateToRenderFrame:(FrameTime *)time;
 - (void)cancel;
 
+@property (nonatomic,readonly) BOOL wasCancelled;
+
 @end
