@@ -282,7 +282,7 @@ const CGFloat _FilePickerPreviewLineSpacing = 7;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.scrollView.contentOffset = CGPointZero;
+    self.scrollView.contentOffset = CGPointMake(0, -self.scrollView.contentInset.top);
     [self reload];
 }
 

@@ -55,6 +55,7 @@
     
     self.showsHorizontalScrollIndicator = NO;
     self.pagingEnabled = YES;
+    self.scrollsToTop = NO;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
