@@ -17,9 +17,20 @@
 @import ImageIO;
 @import MobileCoreServices;
 
+@interface GifExporter () {
+    BOOL _alreadyOfferedToShorten;
+}
+
+@end
+
 @implementation GifExporter
 
 - (void)start {
+    if (self.endTime.time * (self.rebound ? 2 : 1) > VC_LONGEST_STATIC_ANIMATION_PERIOD * 2 && !_alreadyOfferedToShorten) {
+        [self offerToShorten];
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"export.gif"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
@@ -103,6 +114,28 @@
             });
         }];
     });
+}
+
+- (void)offerToShorten {
+    NSString *lengthDesc = [NSString stringWithFormat:(self.rebound ? NSLocalizedString(@"%@ seconds, then reversed", @"") : NSLocalizedString(@"%@ seconds", @"")), @(self.endTime.time)];
+    NSString *lengthSuggestion = [NSString stringWithFormat:(self.rebound ? NSLocalizedString(@"Save first %@ seconds, then reverse", @"") : NSLocalizedString(@"Save first %@ seconds", @"")), @(VC_LONGEST_STATIC_ANIMATION_PERIOD)];
+    
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"This GIF is long (%@) and it might take a long time to save.", @""), lengthDesc];
+    
+    UIAlertController *prompt = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"🚨 Big GIF Alert 🚨", @"") message:message preferredStyle:UIAlertControllerStyleAlert];
+    [prompt addAction:[UIAlertAction actionWithTitle:lengthSuggestion style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.endTime = [[FrameTime alloc] initWithFrame:VC_LONGEST_STATIC_ANIMATION_PERIOD * 100 atFPS:100];
+        [self start];
+    }]];
+    [prompt addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Save full GIF", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        _alreadyOfferedToShorten = YES;
+        [self start];
+    }]];
+     [prompt addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+         [self done];
+    }]];
+    
+    [[NPSoftModalPresentationController getViewControllerForPresentation] presentViewController:prompt animated:YES completion:nil];
 }
 
 - (void)done {
