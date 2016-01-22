@@ -11,6 +11,9 @@
 @implementation NSAttributedString (ResizeToFit)
 
 - (NSAttributedString *)resizeToFitInside:(CGSize)size {
+    if (size.width <= 0 || size.height <= 0) {
+        return [self copy];
+    }
     // TODO: binary search
     NSMutableAttributedString *scaled = self.mutableCopy;
     
