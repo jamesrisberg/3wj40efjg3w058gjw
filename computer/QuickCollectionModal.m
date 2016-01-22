@@ -12,6 +12,48 @@
 
 #define RAND_FLOAT ((rand() % 10000) / 10000.0)
 
+@interface QuickCollectionModalCell : UICollectionViewCell
+
+@property (nonatomic) QuickCollectionItem *item;
+@property (nonatomic) UILabel *label;
+@property (nonatomic) UIImageView *icon;
+
+@end
+
+@implementation QuickCollectionModalCell
+
+- (void)setItem:(QuickCollectionItem *)item {
+    if (!self.label) {
+        // do some setup:
+        self.label = [UILabel new];
+        self.label.font = [UIFont boldSystemFontOfSize:12];
+        self.label.textAlignment = NSTextAlignmentCenter;
+        self.label.textColor = [UIColor whiteColor];
+        self.label.alpha = 0.8;
+        [self.contentView addSubview:self.label];
+        
+        self.icon = [UIImageView new];
+        self.icon.contentMode = UIViewContentModeCenter;
+        self.icon.layer.cornerRadius = 5;
+        [self.contentView addSubview:self.icon];
+    }
+    self.label.text = item.label;
+    self.icon.image = item.icon;
+    self.icon.backgroundColor = item.color;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.icon.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width);
+    [self.label sizeToFit];
+    CGFloat width = MIN(self.label.bounds.size.width, self.bounds.size.width + 25);
+    self.label.frame = CGRectMake((self.bounds.size.width - width) / 2, self.icon.frame.size.height, width, self.bounds.size.height - self.icon.frame.size.height);
+}
+
+@end
+
+
+
 @implementation QuickCollectionItem
 
 @end
@@ -36,13 +78,13 @@
     [super viewDidLoad];
     
     UICollectionViewFlowLayout *flow = [ALGReversedFlowLayout new];
-    flow.itemSize = CGSizeMake(70, 70);
+    flow.itemSize = CGSizeMake(70, 90);
     CGFloat margin = 20;
     flow.minimumInteritemSpacing = margin;
     flow.sectionInset = UIEdgeInsetsMake(margin, margin, margin, margin);
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flow];
     [self.view addSubview:self.collectionView];
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+    [self.collectionView registerClass:[QuickCollectionModalCell class] forCellWithReuseIdentifier:@"Cell"];
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     
@@ -70,23 +112,8 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    QuickCollectionItem *model = self.items[indexPath.item];
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    if (model.icon) {
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:model.icon];
-        imageView.contentMode = UIViewContentModeCenter;
-        cell.backgroundView = imageView;
-    } else if (model.label) {
-        UILabel *label = [UILabel new];
-        label.font = [UIFont boldSystemFontOfSize:12];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.textColor = [UIColor whiteColor];
-        label.text = model.label;
-        cell.backgroundView = label;
-    }
-    cell.backgroundView.backgroundColor = model.color;
-    cell.backgroundView.layer.cornerRadius = 5;
-    cell.backgroundView.clipsToBounds = YES;
+    QuickCollectionModalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.item = self.items[indexPath.item];
     return cell;
 }
 

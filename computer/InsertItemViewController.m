@@ -66,16 +66,19 @@
     
     QuickCollectionItem *camera = [QuickCollectionItem new];
     camera.icon = [UIImage imageNamed:@"Camera"];
+    camera.label = NSLocalizedString(@"Camera", @"");
     camera.action = ^{
         [weakSelf.editorVC insertMediaWithSource:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeImage, (id)kUTTypeMovie]];
     };
     QuickCollectionItem *photos = [QuickCollectionItem new];
     photos.icon = [UIImage imageNamed:@"Pictures"];
+    photos.label = NSLocalizedString(@"Photos", @"");
     photos.action = ^{
         [weakSelf.editorVC insertMediaWithSource:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeImage, (id)kUTTypeMovie]];;
     };
     QuickCollectionItem *imageSearch = [QuickCollectionItem new];
     imageSearch.icon = [UIImage imageNamed:@"Search"];
+    imageSearch.label = NSLocalizedString(@"Image Search", @"");
     imageSearch.action = ^{
         CMPhotoDrawable *p = [CMPhotoDrawable new];
         [p setImage:[UIImage imageNamed:@"PlaceholderImage"] withTransactionStack:transactionStack];
@@ -86,6 +89,7 @@
     };
     QuickCollectionItem *text = [QuickCollectionItem new];
     text.icon = [UIImage imageNamed:@"Text"];
+    text.label = NSLocalizedString(@"Text", @"");
     text.action = ^{
         CMTextDrawable *d = [CMTextDrawable new];
         d.aspectRatio = 1.6;
@@ -98,16 +102,19 @@
     };
     QuickCollectionItem *particle = [QuickCollectionItem new];
     particle.icon = [UIImage imageNamed:@"Fire"];
+    particle.label = NSLocalizedString(@"Effects", @"");
     particle.action = ^{
         [weakSelf insertParticle];
     };
     QuickCollectionItem *pen = [QuickCollectionItem new];
     pen.icon = [UIImage imageNamed:@"Pen"];
+    pen.label = NSLocalizedString(@"Drawing", @"");
     pen.action = ^{
         [weakSelf.editorVC startFreehandDrawing];
     };
     QuickCollectionItem *circle = [QuickCollectionItem new];
     circle.icon = [UIImage imageNamed:@"Circle"];
+    circle.label = NSLocalizedString(@"Circle", @"");
     circle.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGSize size = CMSizeWithDiagonalAndAspectRatio([[self class] defaultItemSize], 1);
@@ -122,6 +129,7 @@
     
     QuickCollectionItem *square = [QuickCollectionItem new];
     square.icon = [UIImage imageNamed:@"Square"];
+    square.label = NSLocalizedString(@"Square", @"");
     square.action = ^{
         CMShapeDrawable *shape = [CMShapeDrawable new];
         CGSize size = CMSizeWithDiagonalAndAspectRatio([[self class] defaultItemSize], 1);
@@ -136,6 +144,7 @@
     
     QuickCollectionItem *star = [QuickCollectionItem new];
     star.icon = [UIImage imageNamed:@"Star"];
+    star.label = NSLocalizedString(@"Polygon", @"");
     star.action = ^{
         CMStarDrawable *d = [CMStarDrawable new];
         d.pattern = [Pattern solidColor:[UIColor randomHue]];
@@ -145,7 +154,8 @@
     };
     
     QuickCollectionItem *exportCamera = [QuickCollectionItem new];
-    exportCamera.label = NSLocalizedString(@"Camera", @"");
+    exportCamera.icon = [UIImage imageNamed:@"Viewport"];
+    exportCamera.label = NSLocalizedString(@"Viewport", @"");
     exportCamera.action = ^{
         CMCameraDrawable *cam = [CMCameraDrawable new];
         [weakSelf.editorVC.canvas insertDrawableAtCurrentTime:cam];
