@@ -110,6 +110,7 @@ class ImageSearchViewController: UIViewController, AFImageSearchResultsViewContr
                     }
                 } else if let e = error {
                     let alertController = UIAlertController(title: nil, message: NSLocalizedString("That image couldn't be downloaded.", comment: ""), preferredStyle: UIAlertControllerStyle.Alert)
+                    alertController.addAction(UIAlertAction(title: NSLocalizedString("Okay", comment: ""), style: .Cancel, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
                 }
                 self.downloadTask = nil

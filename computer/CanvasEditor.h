@@ -84,7 +84,7 @@
 #pragma mark Actions
 
 - (void)deleteDrawable:(CMDrawable *)d;
-- (void)duplicateDrawable:(CMDrawable *)d;
+- (CMDrawable *)duplicateDrawable:(CMDrawable *)d;
 - (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d;
 
 - (void)deleteSelection;

@@ -78,8 +78,8 @@
     [super viewDidLoad];
     
     UICollectionViewFlowLayout *flow = [ALGReversedFlowLayout new];
-    flow.itemSize = CGSizeMake(70, 90);
-    CGFloat margin = 20;
+    flow.itemSize = [self preferredItemSize];
+    CGFloat margin = [self margin];
     flow.minimumInteritemSpacing = margin;
     flow.sectionInset = UIEdgeInsetsMake(margin, margin, margin, margin);
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flow];
@@ -94,6 +94,22 @@
     bgView.backgroundColor = [UIColor clearColor];
     self.collectionView.backgroundView = bgView;
     [bgView addGestureRecognizer:tapRec];
+}
+
+- (CGFloat)margin {
+    if ([UIScreen mainScreen].bounds.size.height <= 500) {
+        return 10;
+    } else {
+        return 20;
+    }
+}
+
+- (CGSize)preferredItemSize {
+    if ([UIScreen mainScreen].bounds.size.height <= 500) {
+        return CGSizeMake(50, 75);
+    } else {
+        return CGSizeMake(70, 90);
+    }
 }
 
 - (void)setItems:(NSArray<__kindof QuickCollectionItem *> *)items {

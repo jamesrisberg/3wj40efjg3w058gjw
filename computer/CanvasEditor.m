@@ -471,7 +471,7 @@
     }]];
 }
 
-- (void)duplicateDrawable:(CMDrawable *)d {
+- (CMDrawable *)duplicateDrawable:(CMDrawable *)d {
     CGFloat translation = 10 / [self canvasZoom];
     CMDrawable *copy = [d copy];
     CMDrawableKeyframe *keyframe = [copy.keyframeStore createKeyframeAtTimeIfNeeded:self.time];
@@ -481,6 +481,7 @@
     } undo:^(id target) {
         [[target canvas].contents removeObject:copy];
     }]];
+    return copy;
 }
 
 - (void)deleteCurrentKeyframeForDrawable:(CMDrawable *)d {
@@ -517,7 +518,10 @@
 
 - (void)duplicateSelection {
     NSSet *selection = self.selectedItems;
-    for (CMDrawable *d in selection) [self duplicateDrawable:d];
+    NSArray *newSelection = [selection.allObjects map:^id(id obj) {
+        return [self duplicateDrawable:obj];
+    }];
+    self.selectedItems = [NSSet setWithArray:newSelection];
 }
 
 #pragma mark Layout
